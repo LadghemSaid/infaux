@@ -1,0 +1,24 @@
+easy_admin:
+  user:
+    # this method/property must return the string representation of the user
+    # (Symfony will look for getusername(), isusername(), ..., and 'username' property)
+    name_property_path: 'username'
+    display_avatar: false
+  design:
+    form_theme: # Both themes are for ckeditor integration
+      - "@EasyAdmin/form/bootstrap_4.html.twig"
+      - "@FOSCKEditor/Form/ckeditor_widget.html.twig"
+    menu:
+      - label: 'Contenu'
+        icon: 'newspaper-o'
+        children:
+          - {entity: 'Article', icon: 'scroll', label: 'Articles'}
+          - {entity: 'Comment', icon: 'comment', label: 'Commentaires'}
+
+      - label: 'Gestion'
+        icon: 'cog'
+        children:
+          - {entity: 'Categorie', icon: 'inbox', label: 'Categories'}
+          - {entity: 'Tags',  icon: 'tags', label: 'Tags'}
+          - {entity: 'User',  icon: 'user', label: 'Utilisateurs'}
+          - {entity: 'MaillingList',  icon: 'envelope', label: 'Mails'}

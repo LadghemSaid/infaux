@@ -1,0 +1,22 @@
+{# templates/emails/registration.html.twig #}
+<h3>Un message du site {{ site_name }} !</h3>
+
+<div>
+    <p>Email de :{{ mail }}</p>
+</div>
+<div>
+    <p>Nom :{{ name }}</p>
+</div>
+<div>
+    <p>Message :{{ message }}</p>
+</div>
+
+
+
+
+{# example, assuming you have a route named "login" #}
+<a href="https://pop-web.fr">{{ site_name_pretty }}</a>.
+
+
+{# Makes an absolute URL to the /images/logo.png file #}
+{#<img src="{{ absolute_url(asset('images/logo.png')) }}">#}

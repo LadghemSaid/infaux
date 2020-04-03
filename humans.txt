@@ -1,0 +1,41 @@
+/* TEAM */
+
+                            
+Mon rôle sur ce projet: Agence Web
+
+                            
+Site: http://34.77.181.91/popweb/contact
+
+                            
+Location: Lens, France
+
+                         
+                 
+                        [...]
+						
+
+							
+/* THANKS */
+
+							
+Name: http://34.77.181.91/popweb/
+
+						
+                 
+                        [...]
+                        
+
+                            
+/* SITE */
+
+                            
+Last update:  2020/03/23
+
+                            
+Standards: HTML5, CSS3, SYMPHONY
+
+                            
+Components: Bootstrap, jQuery, etc.
+
+                            
+Software: Logiciels utilisés pour le développement
