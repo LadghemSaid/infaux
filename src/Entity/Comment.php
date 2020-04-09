@@ -55,6 +55,12 @@ class Comment
      */
     private $username;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Posts", inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $posts;
+
 
 
     public function __construct()
@@ -141,6 +147,18 @@ class Comment
     public function setUsername(string $username): self
     {
         $this->username = $username;
+
+        return $this;
+    }
+
+    public function getPosts(): ?Posts
+    {
+        return $this->posts;
+    }
+
+    public function setPosts(?Posts $posts): self
+    {
+        $this->posts = $posts;
 
         return $this;
     }

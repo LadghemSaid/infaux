@@ -11,10 +11,11 @@
     "private": true,
     "scripts": {
         "dev-server": "encore dev-server",
-        "dev": "encore dev",
-        "watch": "encore dev --watch",
+        "dev": "encore dev --config-name dev",
+        "watch": "encore dev --watch --config-name dev",
         "test": "echo 'hello-world'",
-        "build": "encore production"
+        "build-dev": "encore production --config-name dev",
+        "build": "encore production --config-name prod"
     },
     "dependencies": {}
 }
