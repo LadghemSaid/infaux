@@ -64,9 +64,20 @@ class Posts
      */
     private $published;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $reports;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="post")
+     */
+    private $likes;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -82,6 +93,18 @@ class Posts
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getReports(): ?int
+    {
+        return $this->reports;
+    }
+
+    public function setReports(int $reports): self
+    {
+        $this->reports = $reports;
 
         return $this;
     }
@@ -206,6 +229,37 @@ class Posts
     public function __toString()
     {
         return $this->title;
+    }
+
+    /**
+     * @return Collection|Like[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): self
+    {
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
+            // set the owning side to null (unless already changed)
+            if ($like->getPost() === $this) {
+                $like->setPost(null);
+            }
+        }
+
+        return $this;
     }
 
 }

@@ -62,10 +62,28 @@ class User implements UserInterface
      */
     private $comments;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="user")
+     */
+    private $likes;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="friends")
+     */
+    private $friendList;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="friendList")
+     */
+    private $friends;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->likes = new ArrayCollection();
+        $this->friendList = new ArrayCollection();
+        $this->friends = new ArrayCollection();
     }
 
     public function serialize()
@@ -256,6 +274,91 @@ class User implements UserInterface
             if ($comment->getUser() === $this) {
                 $comment->setUser(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Like[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): self
+    {
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
+            // set the owning side to null (unless already changed)
+            if ($like->getUser() === $this) {
+                $like->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getFriendList(): Collection
+    {
+        return $this->friendList;
+    }
+
+    public function addFriendList(self $friendList): self
+    {
+        if (!$this->friendList->contains($friendList)) {
+            $this->friendList[] = $friendList;
+        }
+
+        return $this;
+    }
+
+    public function removeFriendList(self $friendList): self
+    {
+        if ($this->friendList->contains($friendList)) {
+            $this->friendList->removeElement($friendList);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getFriends(): Collection
+    {
+        return $this->friends;
+    }
+
+    public function addFriend(self $friend): self
+    {
+        if (!$this->friends->contains($friend)) {
+            $this->friends[] = $friend;
+            $friend->addFriendList($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFriend(self $friend): self
+    {
+        if ($this->friends->contains($friend)) {
+            $this->friends->removeElement($friend);
+            $friend->removeFriendList($this);
         }
 
         return $this;

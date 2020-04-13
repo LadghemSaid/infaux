@@ -69,11 +69,16 @@ class Comment
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="comment")
+     */
+    private $likes;
+
 
 
     public function __construct()
     {
-
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -180,6 +185,37 @@ class Comment
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Like[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setComment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): self
+    {
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
+            // set the owning side to null (unless already changed)
+            if ($like->getComment() === $this) {
+                $like->setComment(null);
+            }
+        }
 
         return $this;
     }

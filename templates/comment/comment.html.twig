@@ -1,76 +1,78 @@
-    <section class="comments">
-        {% for comment in comments %}
+<section class="comments">
+    {% for comment in comments %}
 
-            <article class="comment" id="commentId-{{ comment.id }}">
-                <p class="comment__img" >
-                    <img src="https://api.adorable.io/avatars/50/{{ comment.id }}@adorable.io.png" alt=""
-                         width="50" height="50">
-                </p>
-                <div class="comment__body">
+        <article class="comment" id="commentId-{{ comment.id }}">
+            <p class="comment__img">
+                <img src="https://api.adorable.io/avatars/50/{{ comment.id }}@adorable.io.png" alt=""
+                     width="50" height="50">
+            </p>
+            <div class="comment__body">
 
-                    <div class="comment__header">
+                <div class="comment__header">
 
-                        <p  class="comment__author">{{ comment.username }}</p>
-                        <span class="comment__createdat" data-date="{{  comment.createdAt | date('U') }}"></span>
-                        {% if comment.username == app.user %}
-                            <ul class="comment__actions">
-                                <li class="comment__edit"><a id="{{ comment.id }}" href="#" onclick="edit(event)"
-                                                             class="btn btn-primary btn-sm"><i
-                                                class="fa fa-cog"></i></a>
-                                </li>
-                                <li class="comment__edit--validate"><a id="{{ comment.id }}" href="#"
-                                                                       onclick="submitEditComment(event)"
-                                                                       class="btn btn-primary btn-sm"><i
-                                                class="fa fa-lg fa-check"></i></a></li>
-                                <li class="comment__delete"><a
-                                            href="{{ path('delete.comment',{'comment' : comment.id}) }}"
-                                            class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
-                                </li>
-                            </ul>
-                        {% endif %}
-                    </div>
-                    <div class="comment__text">
-                        <p>{{ comment.textComment }}</p>
-                    </div>
-
+                    <p class="comment__author">{{ comment.username }}</p>
+                    <span class="comment__createdat" data-date="{{ comment.createdAt | date('U') }}"></span>
+                    <span class="comment__likes">{{ comment.likes | length }}</span>
+                    <a href="{{path('like.add',{'entity': 'comment', 'id': comment.id})}}">Liker</a>
+                    {% if comment.username == app.user %}
+                        <ul class="comment__actions">
+                            <li class="comment__edit"><a id="{{ comment.id }}" href="#" onclick="edit(event)"
+                                                         class="btn btn-primary btn-sm"><i
+                                            class="fa fa-cog"></i></a>
+                            </li>
+                            <li class="comment__edit--validate"><a id="{{ comment.id }}" href="#"
+                                                                   onclick="submitEditComment(event)"
+                                                                   class="btn btn-primary btn-sm"><i
+                                            class="fa fa-lg fa-check"></i></a></li>
+                            <li class="comment__delete"><a
+                                        href="{{ path('delete.comment',{'comment' : comment.id}) }}"
+                                        class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                            </li>
+                        </ul>
+                    {% endif %}
+                </div>
+                <div class="comment__text">
+                    <p>{{ comment.textComment }}</p>
                 </div>
 
-            </article>
-        {% endfor %}
-    </section>
+            </div>
 
-        {{ form_start(formComment,{'attr': {'class': 'commentForm'}}) }}
-        <div class="container">
-<div class="row">
-<div class="col-sm-12">
-<p class="text-left">Ecrire un commentraire </p>
+        </article>
+    {% endfor %}
+</section>
+
+{{ form_start(formComment,{'attr': {'class': 'commentForm'}}) }}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <p class="text-left">Ecrire un commentraire </p>
+        </div>
+        <div class="col-sm-5">
+
+            {{ form_row(formComment.email, {'attr': {'placeholder':"Email"}, 'label_attr': {'class': 'sr-only'}}) }}
+            {{ form_row(formComment.username , {'attr': {'placeholder':"Pseudo"}, 'label_attr': {'class': 'sr-only'}}) }}
+        </div>
+        <div class="col-sm-7">
+            {{ form_row(formComment.textComment,{'attr': {'class': 'commentForm__textarea', 'placeholder':"Votre commentaire ..."},'label_attr': {'class': 'sr-only'}}) }}
+            <div class="d-flex justify-content-end">{{ form_row(formComment.submit,{'attr': {'class': 'btn btn-pink'},'label': 'Envoyer'}) }}</div>
+            {{ form_end(formComment) }}
+        </div>
+    </div>
 </div>
-<div class="col-sm-5">
-
-        {{ form_row(formComment.email, {'attr': {'placeholder':"Email"}, 'label_attr': {'class': 'sr-only'}})}}
-        {{ form_row(formComment.username , {'attr': {'placeholder':"Pseudo"}, 'label_attr': {'class': 'sr-only'}})}}
-</div>
-<div class="col-sm-7">
-{{ form_row(formComment.textComment,{'attr': {'class': 'commentForm__textarea', 'placeholder':"Votre commentaire ..."},'label_attr': {'class': 'sr-only'}}) }}
-    <div class="d-flex justify-content-end">{{ form_row(formComment.submit,{'attr': {'class': 'btn btn-pink'},'label': 'Envoyer'}) }}</div>
-    {{ form_end(formComment) }}
-</div>
-</div>
-</div>
 
 
-    {% block javascripts %}
-        <script>
+{% block javascripts %}
+    <script>
 
-            document.addEventListener("DOMContentLoaded", function (event) {
-                $(function () {
+        document.addEventListener("DOMContentLoaded", function (event) {
+            $(function () {
 
-                    moment.locale('fr');
-                    $(".comment__createdat").map((x, i) => {
-                        i.innerText = moment.unix(i.dataset.date).local().fromNow();
-                    });
+                moment.locale('fr');
+                $(".comment__createdat").map((x, i) => {
+                    i.innerText = moment.unix(i.dataset.date).local().fromNow();
                 });
             });
-        </script>
-    {% endblock %}
+        });
+    </script>
+{% endblock %}
 
