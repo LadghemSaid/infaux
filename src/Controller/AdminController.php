@@ -1,14 +1,15 @@
 <?php
 namespace App\Controller;
 
-use App\Entity\Article;
+use AlterPHP\EasyAdminExtensionBundle\EasyAdminExtensionBundle;
+use App\Entity\Posts;
 use App\Entity\User;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
 
-class AdminController extends EasyAdminController
+class AdminController extends EasyAdminExtensionBundle
 {
     private $encoder;
     public function __construct( UserPasswordEncoderInterface $encoder)
@@ -37,6 +38,7 @@ class AdminController extends EasyAdminController
         //$encoder = $passwordEncoderFactory->getEncoder($user);
         return $this->encoder->encodePassword($password, $user->getSalt());
     }
+
 
 
 }

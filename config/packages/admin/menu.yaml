@@ -12,13 +12,13 @@ easy_admin:
       - label: 'Contenu'
         icon: 'newspaper-o'
         children:
-          - {entity: 'Article', icon: 'scroll', label: 'Articles'}
-          - {entity: 'Comment', icon: 'comment', label: 'Commentaires'}
+          - {entity: 'Posts', icon: 'scroll', label: 'Posts'}
+          - {entity: 'Comment', icon: 'comment', label: 'Commentaires modération'}
 
       - label: 'Gestion'
         icon: 'cog'
         children:
-          - {entity: 'Categorie', icon: 'inbox', label: 'Categories'}
-          - {entity: 'Tags',  icon: 'tags', label: 'Tags'}
           - {entity: 'User',  icon: 'user', label: 'Utilisateurs'}
           - {entity: 'MaillingList',  icon: 'envelope', label: 'Mails'}
+#easy_admin_extension:
+#  minimum_role: ROLE_ADMIN

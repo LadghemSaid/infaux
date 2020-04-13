@@ -7,30 +7,35 @@ easy_admin:
           - {property: 'approved' }
           - {property: 'textComment' }
           - {property: 'username' }
+          - {property: 'user' }
           - {property: 'email' }
           - {property: 'createdAt' }
-          - {property: 'project' }
-          - {property: 'job' }
-          - {property: 'article' }
+          - {property: 'posts' }
+          - {property: 'reports' }
       list:
+        batch_actions: ['delete']
+        dql_filter: 'entity.reports > 2 '
         actions: ['-new']
         fields:
           -  'approved'
           -  'created_at'
           -  'textComment'
           -  'username'
+          -  'user'
           -  'email'
-          -  'project'
-          -  'job'
-          -  'article'
-
-
+          -  'posts'
+          -  'reports'
       form:
         fields:
           - {property: 'approved' }
           - {property: 'textComment' }
+          - {property: 'user' }
           - {property: 'username' }
           - {property: 'email' }
+          - {property: 'reports' }
+          - { property: posts, label: 'Post', type: embedded_list }
+
+
         actions:
           - {name: 'edit', icon: 'pencil', label: false, css_class: 'btn btn-secondary'}
           - {name: 'delete', icon: 'trash', label: false, css_class: 'btn btn-danger'}

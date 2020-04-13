@@ -1,12 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ site_name }} - Contact
+    PopWeb - {{ post.title }}
 {% endblock %}
 {% block gtag %}
     <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107718823-2"></script>
     <script>
-        (tarteaucitron.job = tarteaucitron.job || []).push('gajs');
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'UA-107718823-2');
     </script>
 {% endblock %}
 {% block meta_description %}
@@ -25,8 +34,7 @@
     <div class="img-banner">
         <img src="{{ asset('pho/banner-blog.jpg') }}" alt="Bannière blog" class="banner">
         <div class="text">
-            <h1>Notre Contact</h1>
-            <p>Découvrez en plus sur nous, on en découvrira plus sur vous.</p>
+            <h1>{{ post.title }}</h1>
         </div>
     </div>
 
@@ -35,59 +43,45 @@
             {{ message }}
         </div>
     {% endfor %}
-
     {% for message in app.flashes('error') %}
         <div class="alert alert-danger">
             {{ message }}
         </div>
     {% endfor %}
-    <div class="contact">
 
-        <div class="container mt-50 mb-50">
-            <div class="row">
-                <div class="col-md-8 p40">
-                    <h2>Contactez nous</h2>
-                    <p>Une question, un projet, nous vous répondrons au plus vite !</p>
-
-                    {{ form_start(formContact,{'attr':{'class':'contact_form','id':'contact-form'}}) }}
-                    {{ form_row(formContact.fullName , {'attr': {'class': '','placeholder':"Votre nom" }, 'label_attr': {'class': 'sr-only'}}) }}
-                    {{ form_row(formContact.fromEmail , {'attr': {'class': '','placeholder':"Votre email" }, 'label_attr': {'class': 'sr-only'}}) }}
-                    {{ form_row(formContact.message , {'attr': {'class': '','placeholder':"Votre message ..." }, 'label_attr': {'class': 'sr-only'}}) }}
-                    <div class="g-recaptcha" data-sitekey="6Levh-QUAAAAAMEWZS61dszdMbHwyaOLJjKby5Qa"></div>
-                    {{ form_end(formContact) }}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 post-item-show">
+                <div class="title-section">
+                    <h1 class="p-title">{{ post.title }}</h1>
+                    <p class="p-date">Mis en ligne le
+                        : {{ post.updatedAt | date('d/m/Y H:i', timezone='Europe/Paris') }} </p>
                 </div>
-                <div class="col-md-4 p40 grey-background">
-                    <h2>Venir nous rencontrer</h2>
-                    <div class="d-flex">
-                        <i class="fa fa-lg fa-envelope"></i>
-                        <a href="mailto:{{ site_mail }}">{{ site_mail }}</a>
-                    </div>
+                <div class="image-section">
 
-                    <div class="d-flex mt-10">
-                        <i class="fa fa-lg fa-map-marker-alt"></i>
-                        <p>l'université SP, <br>16 Rue de l'Université, <br>62307 Lens</p>
-                    </div>
-                    <div class="social">
-                        <a href="https://www.facebook.com/popweb.conception/" target="_blank"><i
-                                    class="fa fa-lg fa-facebook-square"></i></a>
-                        <a href="https://twitter.com/PopWeb3" target="_blank"><i class="fa fa-lg fa-twitter-square"></i></a>
-                    </div>
+                </div>
+                <div class="p-text">
+                    <p class="p-description">{{ post.text | raw }}</p>
                 </div>
             </div>
         </div>
 
+        {% include '/comment/comment.html.twig' %}
 
-    </div>
     </div>
 
 
 {% endblock %}
 {% block javascripts %}
     <script>
-        function onSubmit(token) {
-            $('#contact-form').submit();
-        }
+
+        $(document).ready(() => {
+
+        });
+
+
     </script>
+
 {% endblock %}
 
 

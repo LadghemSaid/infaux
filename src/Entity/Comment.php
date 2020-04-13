@@ -41,17 +41,14 @@ class Comment
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Article", inversedBy="comments")
-     */
-    private $article;
-
-    /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255 )
+     *  @ORM\JoinColumn(nullable=true)
      */
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255 )
+     *  @ORM\JoinColumn(nullable=true)
      */
     private $username;
 
@@ -60,6 +57,17 @@ class Comment
      * @ORM\JoinColumn(nullable=false)
      */
     private $posts;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $reports;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $user;
 
 
 
@@ -115,17 +123,6 @@ class Comment
 
 
 
-    public function getArticle(): ?Article
-    {
-        return $this->article;
-    }
-
-    public function setArticle(?Article $article): self
-    {
-        $this->article = $article;
-
-        return $this;
-    }
 
     public function getEmail(): ?string
     {
@@ -159,6 +156,30 @@ class Comment
     public function setPosts(?Posts $posts): self
     {
         $this->posts = $posts;
+
+        return $this;
+    }
+
+    public function getReports(): ?int
+    {
+        return $this->reports;
+    }
+
+    public function setReports(int $reports): self
+    {
+        $this->reports = $reports;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

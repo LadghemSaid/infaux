@@ -3,6 +3,8 @@ easy_admin:
     MaillingList:
       class: App\Entity\MaillingList
       list:
+        batch_actions: ['delete']
+
         fields:
           - 'mail'
           - 'contactMail'

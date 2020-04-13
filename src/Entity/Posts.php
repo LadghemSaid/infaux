@@ -49,6 +49,21 @@ class Posts
      */
     private $updatedAt;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $favorite;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $published;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -149,4 +164,48 @@ class Posts
 
         return $this;
     }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getFavorite(): ?bool
+    {
+        return $this->favorite;
+    }
+
+    public function setFavorite(bool $favorite): self
+    {
+        $this->favorite = $favorite;
+
+        return $this;
+    }
+
+    public function getPublished(): ?bool
+    {
+        return $this->published;
+    }
+
+    public function setPublished(bool $published): self
+    {
+        $this->published = $published;
+
+        return $this;
+    }
+    /**
+     * @return mixed
+     */
+    public function __toString()
+    {
+        return $this->title;
+    }
+
 }

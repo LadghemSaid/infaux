@@ -4,9 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Form\CommentType;
-use App\Repository\JobRepository;
-use App\Repository\ArticleRepository;
-use App\Repository\ProjectRepository;
+use App\Repository\PostsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +29,7 @@ class CommentsController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Exception
      */
-    public function add(Request $req,$id, ArticleRepository $articleRepo)
+    public function add(Request $req,$id, PostsRepository $postRepo)
     {
         //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $comment = new Comment();
@@ -43,13 +41,13 @@ class CommentsController extends AbstractController
             $com = $form->getData();
             //dd($jobRepo->find($id));
 
-             if ($referer[3] === "article" ) {
-                $post = $articleRepo->find($id);
+             if ($referer[3] === "post" ) {
+                $post = $postRepo->find($id);
                 $commentValidatingAuto = false;
                 if (array_search('commentValidatingAuto', $post->getAllowComment())) {
                     $commentValidatingAuto = true;
                 }
-                $com->setArticle($post)
+                $com->setPost($post)
                     ->setCreatedAt(new \DateTime())
                     ->setApproved($commentValidatingAuto);
                 $this->em->persist($com);
@@ -58,7 +56,7 @@ class CommentsController extends AbstractController
 
                 $this->addFlash('succes',"Commentaire ajouté avec succés :)");
 
-                return $this->redirectToRoute('article.show', array('slug' => $post->getSlug()));
+                return $this->redirectToRoute('post.show', array('slug' => $post->getSlug()));
 
             }else{
                $this->addFlash('error',"Un problème est survenu nous y travaillons ! :)");

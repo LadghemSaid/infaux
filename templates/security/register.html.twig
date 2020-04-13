@@ -1,0 +1,37 @@
+{% extends '/base.html.twig' %}
+
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+    <div class="img-banner">
+        <img src="{{ asset('pho/banner-agence.jpg') }}" alt="Bannière accueil" class="banner">
+        <div class="text">
+            <h1>Inscription</h1>
+            <p>...</p>
+        </div>
+    </div>
+    <div class="container mt-50 mb-50">
+
+
+
+        {% if app.user %}
+            <div class="mb-3">
+                Vous etes connecté en tant que : {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+            </div>
+
+        {% else %}
+            {{ form_start(registrationForm) }}
+            {{ form_row(registrationForm.email) }}
+            {{ form_row(registrationForm.username) }}
+            {{ form_row(registrationForm.plainPassword) }}
+            {{ form_row(registrationForm.agreeTerms) }}
+
+            <button class="btn btn-primary btn-block">S'inscrire</button>
+            {{ form_end(registrationForm) }}
+        {% endif %}
+
+
+    </div>
+
+{% endblock %}
