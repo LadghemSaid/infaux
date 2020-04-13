@@ -18,15 +18,6 @@ class IndexController extends AbstractController
 
 
 
-    /**
-     * @Route("/account", name="account.show")
-     */
-    public function showAbout()
-    {
-        return $this->render('/account/account.html.twig', [
-            "current_menu" => "account"
-        ]);
-    }
 
 
     # get success response from recaptcha and return it to controller
@@ -47,61 +38,17 @@ class IndexController extends AbstractController
         return $data->success;
     }
 
+
     /**
-     * @Route("/contact", name="contact.show")
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     * @Route("/robot.txt")
      */
-    public function showContact(Request $request, \Swift_Mailer $mailer, MaillingListRepository $mailRepo)
+    public function showRobot()
     {
-
-        $form = $this->createForm(ContactType::class);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid() && $this->captchaverify($request->get('g-recaptcha-response'))) {
-
-            $contactFormData = $form->getData();
-
-            $poolEmail = $mailRepo->findBy(array('contactMail' => true));
-            $newPoolEmail = [];
-            foreach ($poolEmail as $email) {
-                array_push($newPoolEmail, $email->getMail());
-            }
-
-            $message = (new \Swift_Message('Une personne contact l\'agence ! '))
-                ->setFrom($contactFormData['fromEmail'])
-                ->setTo($newPoolEmail)
-                ->setBody(
-                    $this->renderView(
-                    // templates/emails/registration.html.twig
-                        '/emails/contact.html.twig',
-                        [
-                            'name' => $contactFormData['fullName'],
-                            'mail' => $contactFormData['fromEmail'],
-                            'message' => $contactFormData['message']
-                        ]
-                    ),
-                    'text/html'
-                );
-
-            $mailer->send($message);
-
-
-            $msg = "POPWEB: Un mail a été envoyé sur ta boite mail";
-            $msg = urlencode($msg);
-            $result = file_get_contents("https://smsapi.free-mobile.fr/sendmsg?user=" . $_ENV['SMS_USER'] . "&pass=" . $_ENV['SMS_PASS'] . "&msg=" . $msg);
-
-
-            $this->addFlash('success', 'Nous avons bien recu votre demande ! à bientot');
-
-            return $this->redirectToRoute('contact.show');
-        }
-
-        return $this->render('/contact/show.html.twig', [
-            "current_menu" => "contact",
-            'formContact' => $form->createView(),
-
+        return $this->render('/seo/robots.txt.twig', [
         ]);
     }
+
+
 
     /**
      * @Route("/sitemaps.xml", name="sitemap")
