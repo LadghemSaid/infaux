@@ -5,7 +5,10 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -61,6 +64,20 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user", orphanRemoval=true)
      */
     private $comments;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=false)
+     * @var string
+     */
+    private $image;
+
+    /**
+     * @Vich\UploadableField(mapping="article_images", fileNameProperty="image")
+     * @Assert\Image(mimeTypes={"image/png", "image/jpeg", "image/jpg", "image/gif"})
+     * @var File
+     */
+    private $imageFile;
+
 
     public function __construct()
     {
@@ -220,6 +237,38 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImage(): string
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param string $image
+     */
+    public function setImage(string $image): void
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * @return File
+     */
+    public function getImageFile(): File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param File $imageFile
+     */
+    public function setImageFile(File $imageFile): void
+    {
+        $this->imageFile = $imageFile;
     }
 
     /**
