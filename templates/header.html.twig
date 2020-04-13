@@ -1,36 +1,51 @@
 <header>
-    <div id="marge-du-header">
+    <nav class="d-flex justify-content-between align-items-center nav-menu">
         <a href="{{ path("index") }}"><img src="{{ asset("img/logo.svg") }}" alt="Agence Pop Web logo"/></a>
-        <div id="menu-du-header">
+        <nav>
+            <input type="checkbox" id="nav" class="hidden"/>
+            <label for="nav" class="nav-open">
+                <i></i>
+                <i></i>
+                <i></i>
+            </label>
+            <div class="nav-container">
+                <ul>
+                    <li>
+                        <a class="nav-link {% if current_menu is defined and current_menu == 'posts' %}active{% endif %}"
+                           href="{{ path('index') }}">Questions
+                            <span class="sr-only">(current)</span>
+                        </a></li>
+                    <li>
+                        <a class="nav-link {% if current_menu is defined and current_menu == 'search' %}active{% endif %}"
+                           href="{{ path('index') }}">Recherchez
+                            <span class="sr-only">(current)</span>
+                        </a></li>
+                    {% if app.user %}
 
-            <a class="nav-link {% if current_menu is defined and current_menu == 'posts' %}active{% endif %}"
-               href="{{ path('index') }}">Questions <span class="sr-only">(current)</span></a>
-            {% if app.user %}
+                        <li><a class=" {% if current_menu is defined and current_menu == 'account' %}active{% endif %}"
+                               href="{{ path('index') }}">Mon profil</a></li>
+                        <li><a class=" {% if current_menu is defined and current_menu == 'logout' %}active{% endif %}"
+                               href="{{ path('app_logout') }}">Se déconnecter</a></li>
+
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li><a class="nav-link " href="/admin">Admin</a></li>
 
 
+                        {% endif %}
 
-                <a class="nav-link {% if current_menu is defined and current_menu == 'account' %}active{% endif %}"
-                   href="{{ path('account.show') }}">Mon profil <span class="sr-only">(current)</span></a>
-                <a class=" {% if current_menu is defined and current_menu == 'logout' %}active{% endif %}"
-                   href="{{ path('app_logout') }}">Se déconnecter</a>
-                {% if is_granted('ROLE_ADMIN') %}
-
-
-                    <a class="nav-link " href="/admin">Admin</a>
-
-                {% endif %}
-            {% else %}
+                    {% else %}
+                        <li><a class=" {% if current_menu is defined and current_menu == 'login' %}active{% endif %}"
+                               href="{{ path('app_login') }}">Se connecter</a></li>
+                        <li><a class=" {% if current_menu is defined and current_menu == 'register' %}active{% endif %}"
+                               href="{{ path('app_register') }}">S'inscrire</a></li>
 
 
-                <a class=" {% if current_menu is defined and current_menu == 'login' %}active{% endif %}"
-                   href="{{ path('app_login') }}">Se connecter</a>
-                <a class=" {% if current_menu is defined and current_menu == 'register' %}active{% endif %}"
-                   href="{{ path('app_register') }}">S'inscrire</a>
-
-            {% endif %}
+                    {% endif %}
 
 
-        </div>
-    </div>
+                </ul>
+            </div>
+        </nav>
+
+    </nav>
 </header>
-

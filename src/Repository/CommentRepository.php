@@ -55,13 +55,13 @@ class CommentRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findArticleComment($id, $order)
+    public function findPostsComment($id, $order)
     {
-        return $this->createQueryBuilder('article')
-            ->andWhere('article.article = :val')
-            ->andWhere('article.approved = 1')
+        return $this->createQueryBuilder('posts')
+            ->andWhere('posts.posts = :val')
+            ->andWhere('posts.approved = 1')
             ->setParameter('val', $id)
-            ->orderBy('article.created_at' ,$order)
+            ->orderBy('posts.created_at' ,$order)
             ->getQuery()
             ->getResult();
     }
