@@ -18,6 +18,8 @@
 		<meta name="theme-color" content="#00103e">
 		<meta property="og:image" content="img/icon.png"/>
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/595ca4abfa.js" crossorigin="anonymous"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
 		<script type="text/javascript" src="{{ asset('js/tarteaucitron/tarteaucitron.js') }}"></script>
 		<script type="text/javascript">
 			tarteaucitron.init({
@@ -59,6 +61,7 @@ tarteaucitron.user.gajsMore = function () { /* add here your optionnal _ga.push(
 		<div class="login limiter">
 			<div class="container-login">
 				<div class="wrap-login">
+                <a href="{{ path("index") }}" class="pb-60 d-flex justify-content-end"><i class="fas fa-times"></i></a>
 					{% if error %}
 						<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 					{% endif %}
@@ -72,11 +75,8 @@ tarteaucitron.user.gajsMore = function () { /* add here your optionnal _ga.push(
 
 					{% else %}
 						<form method="post" class="login-form validate-form">
-							<span class="login-form-title pb-20">
+							<span class="login-form-title pb-50">
 								Infaux
-							</span>
-							<span class="login-form-title pb-40">
-								<i class="zmdi zmdi-font"></i>
 							</span>
 
 							<div class="wrap-input validate-input" data-validate="Valid email is: a@b.c">
@@ -120,7 +120,7 @@ tarteaucitron.user.gajsMore = function () { /* add here your optionnal _ga.push(
 									Vous n'avez pas de compte ?
 								</span>
 
-								<a class="txt2" href="#">
+								<a class="txt2" href="{{ path('app_register') }}">
 									Inscription
 								</a>
 							</div>
@@ -137,6 +137,7 @@ tarteaucitron.user.gajsMore = function () { /* add here your optionnal _ga.push(
 		<script src="{{ asset("js/lazysizes.min.js") }}"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
 		<script src="{{ asset("build/app.js") }}"></script>
+        <script src="{{ asset("build/login.js") }}"></script>
 		<a aria-label="Button permettant de retourner en haut de la page" id="scrollToTop"></a>
 		<script>
 			var btn = $('#scrollToTop');

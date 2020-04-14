@@ -62,12 +62,10 @@ tarteaucitron.user.gajsMore = function () { /* add here your optionnal _ga.push(
 		<div class="login limiter">
 			<div class="container-login">
 				<div class="wrap-login">
+                <a href="{{ path("index") }}" class="pb-30 d-flex justify-content-end"><i class="fas fa-times"></i></a>
 					<form method="post" class="login-form validate-form">
-						<span class="login-form-title pb-20">
+						<span class="login-form-title pb-50">
 							Infaux
-						</span>
-						<span class="login-form-title pb-40">
-							<i class="zmdi zmdi-font"></i>
 						</span>
 
 						<div class="wrap-input validate-input" data-validate="Valid email is: a@b.c">
@@ -110,7 +108,7 @@ tarteaucitron.user.gajsMore = function () { /* add here your optionnal _ga.push(
 								Vous avez déjà un compte ?
 							</span>
 
-							<a class="txt2" href="#">
+							<a class="txt2" href="{{ path('app_login') }}">
 								Connexion
 							</a>
 						</div>
