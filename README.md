@@ -1,5 +1,5 @@
 # Infaux
-site de l'agence
+site d'infos
 1) git pull
 2) composer install
 3) npm install
