@@ -1,7 +1,6 @@
 <header>
     <nav class="d-flex justify-content-between align-items-center nav-menu">
-        <a href="{{ path("index") }}"><img src="{{ asset("img/logo.svg") }}" alt="Agence Pop Web logo"/></a>
-        <nav>
+        <a class="logo" href="{{ path("index") }}"><img src="{{ asset("img/logo_infaux.png") }}" alt="Agence Pop Web logo"/></a>
             <input type="checkbox" id="nav" class="hidden"/>
             <label for="nav" class="nav-open">
                 <i></i>
@@ -22,9 +21,9 @@
                         </a></li>
                     {% if app.user %}
 
-                        <li><a class=" {% if current_menu is defined and current_menu == 'account' %}active{% endif %}"
+                        <li><a class="nav-link {% if current_menu is defined and current_menu == 'account' %}active{% endif %}"
                                href="{{ path('index') }}">Mon profil</a></li>
-                        <li><a class=" {% if current_menu is defined and current_menu == 'logout' %}active{% endif %}"
+                        <li><a class="nav-link {% if current_menu is defined and current_menu == 'logout' %}active{% endif %}"
                                href="{{ path('app_logout') }}">Se déconnecter</a></li>
 
                         {% if is_granted('ROLE_ADMIN') %}
@@ -32,9 +31,9 @@
                         {% endif %}
 
                     {% else %}
-                        <li><a class=" {% if current_menu is defined and current_menu == 'login' %}active{% endif %}"
+                        <li><a class="nav-link {% if current_menu is defined and current_menu == 'login' %}active{% endif %}"
                                href="{{ path('app_login') }}">Se connecter</a></li>
-                        <li><a class=" {% if current_menu is defined and current_menu == 'register' %}active{% endif %}"
+                        <li><a class="nav-link {% if current_menu is defined and current_menu == 'register' %}active{% endif %}"
                                href="{{ path('app_register') }}">S'inscrire</a></li>
 
 
@@ -43,7 +42,5 @@
 
                 </ul>
             </div>
-        </nav>
-
     </nav>
 </header>

@@ -9,13 +9,14 @@ p, a, span, button, label, ::placeholder {
 }
 
 .nav-menu img {
-    width: 70%;
+    width: 50%;
 }
 
 nav {
-    padding: 30px;
+    padding: 10px 30px;
     ul {
         float: right;
+        margin-bottom: 0;
         li {
             display: inline-block;
             float: left;
@@ -35,6 +36,9 @@ nav {
         li:not(:first-child) {
             margin-left: 25px;
         }
+    }
+    a.logo {
+        z-index: 9999;
     }
 }
 
@@ -89,12 +93,6 @@ nav {
         }
     }
     .nav-open {
-        position: fixed;
-        right: 10px;
-        top: 10px;
-        display: block;
-        width: 48px;
-        height: 48px;
         cursor: pointer;
         z-index: 9999;
         border-radius: 50%;
@@ -119,6 +117,12 @@ nav {
 
 #nav:checked + .nav-open {
     transform: rotate(45deg);
+    position: fixed;
+    right: 5px;
+    top: 25px;
+    display: block;
+    width: 48px;
+    height: 48px;
     i {
         background: rgb(15, 15, 15);
         transition: transform .2s ease;
