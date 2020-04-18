@@ -36,48 +36,7 @@
     </style>
 {% endblock %}
 {% block body %}
-    <div class="img-banner">
-        <img src="{{ asset('pho/banner-blog.jpg') }}" alt="Bannière blog" class="banner">
-        <div class="text">
-            <h1>Notre aide</h1>
-            <p>Découvrez l'aide que l'on vous apporte.</p>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="jumbotron">
-            <h1>On peut vous renseigner sur les sujets suivants :</h1>
-        </div>
-        <div class="row">
-
-            {% for post in posts %}
-
-                <div class="col-sm-4 post-item">
-                    <a href="{{ path('post.show',{'slug':post.slug}) }}">
-
-                    </a>
-
-                    <a href="{{ path('post.show',{'slug':post.slug}) }}">
-                        <h2> {{ post.title|striptags|length >20 ? post.title|striptags|slice(0, 50) ~ '...' : post.title|striptags }} </h2>
-                    </a>
-                    <p class="p-date" data-date="{{ post.updatedAt| date('U') }}"></p>
-                    <p class="p-description">{{ post.title|striptags|length > 100 ? post.title|striptags|slice(0, 100) ~ '...' : post.title|striptags }}</p>
-                    <a href="{{ path('post.show',{'slug':post.slug}) }}" class="more">Voir plus</a>
-                </div>
-
-
-
-            {% endfor %}
-            {% if posts|length == 0 %}
-                <div class="fullHeight">
-                    <p>Les posts seront bientot en ligne :)</p>
-                </div>
-            {% endif %}
-        </div>
-
-    </div>
-
-
+<p>text</p>
 {% endblock %}
 
 

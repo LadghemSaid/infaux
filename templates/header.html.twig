@@ -1,77 +1,81 @@
 <header>
-    <nav class="d-flex bd-highlight mb-3 align-items-center nav-menu">
-        <a class="logo mr-auto bd-highlight" href="{{ path("index") }}"><img src="{{ asset("img/logo_infaux.png") }}" alt="Agence Pop Web logo"/></a>
-            <input type="checkbox" id="nav" class="hidden"/>
-            <label for="nav" class="nav-open">
-                <i></i>
-                <i></i>
-                <i></i>
-            </label>
-            <div class="nav-container bd-highlight">
-                <ul>
-                    <li>
-                        <a class="nav-link {% if current_menu is defined and current_menu == 'posts' %}active{% endif %}"
-                           href="{{ path('index') }}"><i class="fas fa-home"></i>  Accueil
-                            <span class="sr-only">(current)</span>
-                        </a></li>
-                        {% if app.user %}
-                        <li>
-                        <a class="nav-link {% if current_menu is defined and current_menu == 'posts' %}active{% endif %}"
-                           href="{{ path('index') }}"><i class="fas fa-bell"></i> Notifications
-                            <span class="sr-only">(current)</span>
-                        </a></li>
-                        <li><a class="nav-link {% if current_menu is defined and current_menu == 'account' %}active{% endif %}"
-                               href="{{ path('index') }}"><i class="fas fa-user"></i> Mon profil</a></li>
-                               <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle {% if current_menu is defined and current_menu == 'search' %}active{% endif %}" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-cog"></i> Paramètres
-          <span class="sr-only">(current)</span>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="#"><i class="fas fa-cog"></i> Paramètres du profil</a>
-          <a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
-        </div>
-      </li>
-                        
-
-                        {% if is_granted('ROLE_ADMIN') %}
-                        <li>
-                        <a class="nav-link {% if current_menu is defined and current_menu == 'posts' %}active{% endif %}"
-                           href="{{ path('index') }}"><i class="fas fa-bell"></i> Notifications
-                            <span class="sr-only">(current)</span>
-                        </a></li>
-                            <li><a class="nav-link " href="/admin"><i class="fas fa-user"></i> Admin</a></li>
-                            <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle {% if current_menu is defined and current_menu == 'search' %}active{% endif %}" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-cog"></i> Paramètres
-          <span class="sr-only">(current)</span>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="#"><i class="fas fa-cog"></i> Paramètres du profil</a>
-          <a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
-        </div>
-      </li>
-                        {% endif %}
-
-                    {% else %}
-                        <li><a class="nav-link {% if current_menu is defined and current_menu == 'login' %}active{% endif %}"
-                               href="{{ path('app_login') }}"><i class="fas fa-user"></i> Connexion</a></li>
-                    {% endif %}
-              </ul>
+  <nav class="d-flex bd-highlight mb-3 align-items-center nav-menu">
+      <a class="logo mr-auto bd-highlight" href="{{ path("index") }}"><img src="{{ asset("img/logo_infaux.png") }}" alt="Agence Pop Web logo"/></a>
+      <input type="checkbox" id="nav" class="hidden"/>
+      <label for="nav" class="nav-open">
+          <i></i>
+          <i></i>
+          <i></i>
+      </label>
+      <div class="nav-container bd-highlight">
+        <ul>
+          <li>
+            <a class="nav-link {% if current_menu is defined and current_menu == 'posts' %}active{% endif %}"
+              href="{{ path('index') }}"><i class="fas fa-home"></i>  Accueil
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          {% if app.user %}
+          <li>
+            <a class="nav-link {% if current_menu is defined and current_menu == 'posts' %}active{% endif %}"
+              href="{{ path('index') }}"><i class="fas fa-bell"></i> Notifications
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link {% if current_menu is defined and current_menu == 'account' %}active{% endif %}"
+              href="{{ path('index') }}"><i class="fas fa-user"></i> Mon profil</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle {% if current_menu is defined and current_menu == 'search' %}active{% endif %}" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-cog"></i> Paramètres
+              <span class="sr-only">(current)</span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="#"><i class="fas fa-cog"></i> Paramètres du profil</a>
+              <a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
             </div>
-            <a class="pl-30 pl-20Mobile pt-10Mobile bd-highlight nav-link mk-search-trigger mk-fullscreen-trigger" href="#" id="search-button-listener">
-    <div id="search-button"><i class="fa fa-search"></i></div>
-  </a>
+          </li>
+          {% if is_granted('ROLE_ADMIN') %}
+          <li>
+            <a class="nav-link {% if current_menu is defined and current_menu == 'posts' %}active{% endif %}"
+              href="{{ path('index') }}"><i class="fas fa-bell"></i> Notifications
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li><a class="nav-link " href="/admin"><i class="fas fa-user"></i> Admin</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle {% if current_menu is defined and current_menu == 'search' %}active{% endif %}" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-cog"></i> Paramètres
+              <span class="sr-only">(current)</span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="#"><i class="fas fa-cog"></i> Paramètres du profil</a>
+              <a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+            </div>
+          </li>
+          {% endif %}
+
+          {% else %}
+          <li><a class="nav-link {% if current_menu is defined and current_menu == 'login' %}active{% endif %}"
+            href="{{ path('app_login') }}"><i class="fas fa-user"></i> Connexion</a>
+          </li>
+            {% endif %}
+        </ul>
+      </div>
+      <a class="pl-30 pl-20Mobile pt-10Mobile bd-highlight nav-link mk-search-trigger mk-fullscreen-trigger" href="#" id="search-button-listener">
+        <div id="search-button"><i class="fa fa-search"></i></div>
+      </a>
     </nav>
     <div class="overlay">
-    <div class="mk-fullscreen-search-overlay" id="mk-search-overlay">
-    <a href="#" class="mk-fullscreen-close" id="mk-fullscreen-close-button"><i class="fa fa-times"></i></a>
-    <div id="mk-fullscreen-search-wrapper">
-      <form method="get" id="mk-fullscreen-searchform" action="">
-        <input class="input" type="text" value="" placeholder="Rechercher..." id="mk-fullscreen-search-input">
-        <i class="fa fa-search fullscreen-search-icon"><input value="" type="submit"></i>
-      </form>
+      <div class="mk-fullscreen-search-overlay" id="mk-search-overlay">
+        <a href="#" class="mk-fullscreen-close" id="mk-fullscreen-close-button"><i class="fa fa-times"></i></a>
+        <div id="mk-fullscreen-search-wrapper">
+          <form method="get" id="mk-fullscreen-searchform" action="">
+            <input class="input" type="text" value="" placeholder="Rechercher..." id="mk-fullscreen-search-input">
+            <i class="fa fa-search fullscreen-search-icon"><input value="" type="submit"></i>
+          </form>
+        </div>
+      </div>
     </div>
-  </div>
-  </div>
 </header>

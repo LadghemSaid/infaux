@@ -1,32 +1,4 @@
 <footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <a href="index.php"><img id="logofooter" src="{{ asset('img/logo_lite.svg') }}" alt="logo de BlueCake"/></a>
-                <p>{{ site_name_pretty }} est une agence web qui vous accompagne dans votre transformation numérique, vous guide lors d’une refonte de site web et vous aide à créer un contenu adapté à votre cible.</p>
-            </div>
-            <div class="col-md-4">
-                <p class="subtitle">Contact</p>
-                <div class="d-flex">
-                    <i class="fa fa-lg fa-envelope"></i>
-                    <a href="mailto:{{ site_mail }}">{{ site_mail }}</a>
-                </div>
-
-                <div class="d-flex adresse">
-                    <i class="fa fa-lg fa-map-marker-alt"></i>
-                    <p>l'université SP, <br>16 Rue de l'Université, <br>62307 Lens</p>
-                </div>
-            </div>
-            <div class="col-md-2">
-            <p class="subtitle">Suis nous !</p>
-                <a href="https://www.facebook.com/popweb.conception/" target="_blank"><i class="fa fa-lg fa-facebook-square"></i></a>
-                <a href="https://twitter.com/PopWeb3" target="_blank"><i class="fa fa-lg fa-twitter-square"></i></a>
-            </div>
-        </div>
-        <div class="rights">
-        <p>Tous droits réservés {{ site_name }}  ·  <span id="annee">X</span><a href="{{ path('app_login') }}" style="color:white;"> ♥ </a></p>
-        </div>
-    </div>
 
 </footer>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -42,14 +14,6 @@
 <script>
 //Program created by Ryan Tarson Updated 6.15.16, under this code is my pure JS Version
 jQuery(document).ready(function($) {
-  var wHeight = window.innerHeight;
-  //search bar middle alignment
-  $('#mk-fullscreen-searchform').css('top', wHeight / 2);
-  //reform search bar
-  jQuery(window).resize(function() {
-    wHeight = window.innerHeight;
-    $('#mk-fullscreen-searchform').css('top', wHeight / 2);
-  });
   // Search
   $('#search-button').click(function() {
     console.log("Open Search, Search Centered");
@@ -59,6 +23,7 @@ jQuery(document).ready(function($) {
   $("a.mk-fullscreen-close").click(function() {
     console.log("Closed Search");
     $("div.mk-fullscreen-search-overlay").removeClass("mk-fullscreen-search-overlay-show");
+    $(".nav-open").css('display', 'inline-block');
   });
 });
 </script>

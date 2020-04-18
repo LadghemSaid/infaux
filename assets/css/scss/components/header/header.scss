@@ -176,8 +176,6 @@ nav {
 .overlay{
 	height: 100%;
 	width: 100%;
-	background: $fade-white;
-	
 }
 
 /* Search Overlay */
@@ -309,6 +307,8 @@ nav {
   -o-transform: scale(1);
   transform: scale(1);
   ms-transform: scale(1);
+  top: 40%;
+  position: relative;
 }
 
 .mk-fullscreen-search-overlay #mk-fullscreen-search-wrapper {
