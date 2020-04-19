@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Like;
 use App\Repository\LikeRepository;
+use App\Service\LikeService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -17,48 +18,45 @@ use Symfony\Component\Security\Core\Security;
 class LikeController extends AbstractController
 {
     private $em;
+    /**
+     * @var LikeService
+     */
+    private $likeService;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, LikeService $likeService)
     {
         $this->em = $em;
+        $this->likeService = $likeService;
     }
 
     /**
      * @Route("/add/{entity}/{id}", name="add")
      */
-    public function add($entity, $id, Request $request, LikeRepository $likeRepository)
+    public function add($entity, $id, Request $request)
     {
         $user = $this->getUser();
         $like = new Like();
-        if(!$user) {
-            //Verification de la présence d'un vote dans la db pour l'entité soit post ou comment
-            $test = $likeRepository->findOneBy(['ip' => $request->getClientIps()[0], $entity=> $id]);
-
-
-            if($test) {
-                //Si on entre ici c'est que le post/comment est deja liké et qu'on le supprime(ou ne fait rien)
-                $this->em->remove($test);
-                $this->em->flush();
-                //Redirection sur la page d'ou l'ont viens
+        //Si l'user est null alors c'est qu'on est anonyme
+        if (!$user) {
+            $isLiked = $this->likeService->verify($request, $entity, $id, $type = 'ip', $user = null);
+            if (!$isLiked) {
+                //Enregistrement de l'ip car on est anonyme
+                $like->setIp($request->getClientIps()[0]);
+            } else {
                 $referer = $request->headers->get('referer');
                 return new RedirectResponse($referer);
             }
-
-            //Si l'user est null alors c'est qu'on est anonyme
-            $like->setIp($request->getClientIps()[0]);
+        } else {
+            $isLiked = $this->likeService->verify($request, $entity, $id, $type = 'user', $user);
+            if (!$isLiked) {
+                //Enregistrement de l'user car un user est connecté
+                $like->setUser($user);
+            } else {
+                $referer = $request->headers->get('referer');
+                return new RedirectResponse($referer);
+            }
         }
 
-        $test = $likeRepository->findOneBy(['user' => $user,$entity => $id]);
-        if($test) {
-            //Si on entre ici c'est que le post/comment est deja liké et qu'on le supprime(ou ne fait rien)
-            $this->em->remove($test);
-            $this->em->flush();
-
-            //Redirection sur la page d'ou l'ont viens
-            $referer = $request->headers->get('referer');
-            return new RedirectResponse($referer);
-
-        }
 
         //Repo vaut soit postRepository soit commentRepository
         $repo = $this->em->getRepository('App:' . ucfirst($entity));
@@ -68,8 +66,6 @@ class LikeController extends AbstractController
         $func = "set" . ucfirst($entity);
         // equivaut soit a setPost($posts) ou setComment($comment)
         $like->$func($payload);
-        //Enregistrement de l'user car un user est connecté
-        $like->setUser($user);
 
         $this->em->persist($like);
         $this->em->flush();

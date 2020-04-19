@@ -5,18 +5,23 @@ App\Entity\User:
     password: <encodePassword(@user_1, 'admin')>
     roles: [ROLE_ADMIN]
     comments: '30x @comment_*'
+    postsFollowed: '2x @post_*'
+
   user_2:
     username: 'writer'
     email: 'writer@writer.fr'
     password: <encodePassword(@user_2, 'writer')>
     roles: [ROLE_WRITER]
     comments: '30x @comment_*'
+    postsFollowed: '2x @post_*'
+
   user_3:
     username: 'user'
     email: 'user@user.fr'
     password: <encodePassword(@user_3, 'user')>
     roles: []
     comments: '30x @comment_*'
+    postsFollowed: '2x @post_*'
 
 
 App\Entity\Post:

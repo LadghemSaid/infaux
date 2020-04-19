@@ -4,19 +4,47 @@ namespace App\Controller;
 
 
 use App\Form\ContactType;
+use App\Mercure\CookieGenerator;
 use App\Repository\PostRepository;
 use App\Repository\MaillingListRepository;
 use Doctrine\ORM\EntityManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\CurlHttpClient;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mercure\Update;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class IndexController extends AbstractController
 {
 
 
+    /**
+     * Liste l'ensemble des posts triés par date de publication pour une page donnée.
+     *
+     * @Route("/", name="index")
+     * @Template("XxxYyyBundle:Front/post:index.html.twig")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function index(CookieGenerator $cookieGenerator, PostRepository $postrepo): Response
+    {
+
+        $posts = $postrepo->findAll(); //On récupère les posts
+        $response = $this->render('posts/index.html.twig', [
+            'current_menu' => 'posts',
+            'posts' => $posts,
+        ]);
+        if ($this->getUser()) {
+            $response->headers->setCookie($cookieGenerator->generate($this->getUser()));
+        }
+        return $response;
+        //Pour 1 -> ...find($id);   avec une valeur de champ -> ...findOneBy(['title'=>'Post Du vendredi 13']);
+
+
+    }
 
 
 

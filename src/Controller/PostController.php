@@ -2,96 +2,98 @@
 
 namespace App\Controller;
 
+use App\Entity\Notification;
 use App\Entity\Post;
 use App\Entity\Comment;
 use App\Form\CommentType;
+use App\Mercure\CookieGenerator;
 use App\Repository\PostRepository;
 use App\Repository\CommentRepository;
 use App\Repository\UserRepository;
+use App\Service\NotificationService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mercure\Update;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+/**
+ * Class PostController
+ * @package App\Controller
+ * @Route("/post", name="post.")
+ */
 class PostController extends AbstractController
 {
-    private $repository;
-    private $repository_user;
+    private $postRepository;
     /**
      * @var Request
      */
     private $request;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+    /**
+     * @var NotificationService
+     */
+    private $notificationService;
 
-    public function __construct(PostRepository $property_repo, UserRepository $users)
+    public function __construct(PostRepository $postRepository, EntityManagerInterface $em,NotificationService $notificationService)
     {
-        $this->repository = $property_repo;
-        $this->repository_user = $users;
-        $this->request = Request::createFromGlobals();
+        $this->postRepository = $postRepository;
+        $this->em = $em;
+        $this->notificationService = $notificationService;
     }
 
 
-
-
     /**
-     * @Route("/post/{slug}" , name="post.show", requirements={"slug"="[a-z0-9\-]*"})
-     * @param string $slug
-     * @param CommentRepository $commentsRepository
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @Route("/addfollow/{entity}/{id}", name="addfollow")
      */
-    public function show(Post $post, string $slug, CommentRepository $commentsRepository)
+    public function addFollow($entity, $id, Request $request)
     {
-        if ($post->getSlug() !== $slug) {
-
-            return $this->redirectToRoute('post.show', [
-                'id' => $post->getId(),
-                'slug' => $post->getSlug()
-
-            ], 301);
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //Repo vaut soit postRepository soit commentRepository
+        $repo = $this->em->getRepository('App:' . ucfirst($entity));
+        //$payload vaut soit un commentaire soit un post
+        $payload = $repo->find($id);
+        foreach ($this->getUser()->getPostFollowed() as $post) {
+            if($post === $payload){
+                //Ce post est déja présent dans notre liste de postFollowed
+                $this->deleteFollow($entity, $id, $request,$payload);
+                $referer = $request->headers->get('referer');
+                return new RedirectResponse($referer);
+            }
         }
 
-        $comment = new Comment();
-        $formComment = $this->createForm(CommentType::class, $comment, [
-            'action' => $this->generateUrl('add.comment', array('id' => $post->getId())),
+        //Ajout de l'user dans le tableau des user du post/comment qui le suivent et recevront ainsi les notification lié a ce post/commentaire
+        $payload->addFollowedBy($this->getUser());
 
-        ]);
+        //Notification pour l'auteur du post
+        $this->notificationService->add( $payload->getUser(), $message="un utilisateur vient de suivre votre post");
 
-        $post = $this->repository->find($post);
-        $comments = $commentsRepository->findPostsComment($post->getId(), 'DESC');
 
-        // dd($allowComment,$commentValidatingAuto );
-        return $this->render('posts/show.html.twig', [
-            'current_menu' => 'posts',
-            'post' => $post,
-            'formComment' => $formComment->createView(),
-            'comments' => $comments,
+        $this->em->persist($payload);
+        $this->em->flush();
 
-        ]);
+        $referer = $request->headers->get('referer');
+        return new RedirectResponse($referer);
 
     }
 
     /**
-     * Liste l'ensemble des posts triés par date de publication pour une page donnée.
-     *
-     * @Route("/", name="index")
-     * @Template("XxxYyyBundle:Front/post:index.html.twig")
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/deletefollow/{entity}/{id}", name="deletefollow")
      */
-    public function index(PostRepository $postrepo)
+    public function deleteFollow($entity, $id, Request $request, $payload=null)
     {
-
-        $posts = $postrepo->findAll(); //On récupère les posts
-
-
-
-        //Pour 1 -> ...find($id);   avec une valeur de champ -> ...findOneBy(['title'=>'Post Du vendredi 13']);
-        return $this->render('posts/index.html.twig', [
-            'current_menu' => 'posts',
-            'posts' => $posts,
-
-
-
-        ]);
-
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $func = "remove" . ucfirst($entity)."Followed";
+        $this->getUser()->$func($payload);
+        $this->em->persist($payload);
+        $this->em->flush();
     }
 
 

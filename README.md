@@ -10,3 +10,12 @@ site d'infos
 8) php bin/console c:c
 9) npm run watch
 10) php bin/console s:run
+
+
+Linux
+
+- ./mercure --jwt-key='mdpsaid' ACME_HOSTS='http://34.77.181.91/infaux' --addr='localhost:3000' --debug --allow-anonymous --cors-allowed-origins='*' --publish-allowed-origins='http://34.77.181.91:3000'
+
+Windows
+
+ export JWT_KEY='mdpsaid';export ADDR=':3000';export DEMO='0';export ALLOW_ANONYMOUS='0';export CORS_ALLOWED_ORIGINS=http://localhost:8000; export PUBLISH_ALLOWED_ORIGINS='http://localhost'; ./mercure_win/mercure.exe -d

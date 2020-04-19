@@ -82,6 +82,17 @@ class User implements UserInterface
      */
     private $reports;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Notification", mappedBy="user", orphanRemoval=true)
+     */
+    private $notifications;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Post", mappedBy="followedBy")
+     */
+    private $postFollowed;
+
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -90,6 +101,8 @@ class User implements UserInterface
         $this->friendList = new ArrayCollection();
         $this->friends = new ArrayCollection();
         $this->reports = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
+        $this->postFollowed = new ArrayCollection();
     }
 
     public function serialize()
@@ -400,6 +413,66 @@ class User implements UserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection|Notification[]
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): self
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications[] = $notification;
+            $notification->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): self
+    {
+        if ($this->notifications->contains($notification)) {
+            $this->notifications->removeElement($notification);
+            // set the owning side to null (unless already changed)
+            if ($notification->getUser() === $this) {
+                $notification->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Post[]
+     */
+    public function getPostFollowed(): Collection
+    {
+        return $this->postFollowed;
+    }
+
+    public function addPostsFollowed(Post $postFollowed): self
+    {
+        if (!$this->postFollowed->contains($postFollowed)) {
+            $this->postFollowed[] = $postFollowed;
+            $postFollowed->addFollowedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostFollowed(Post $postFollowed): self
+    {
+        if ($this->postFollowed->contains($postFollowed)) {
+            $this->postFollowed->removeElement($postFollowed);
+            $postFollowed->removeFollowedBy($this);
+        }
+
+        return $this;
+    }
+
 
 
 }

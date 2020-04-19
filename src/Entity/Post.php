@@ -76,11 +76,17 @@ class Post
      */
     private $reports;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="postFollowed")
+     */
+    private $followedBy;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->likes = new ArrayCollection();
         $this->reports = new ArrayCollection();
+        $this->followedBy = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -281,6 +287,32 @@ class Post
             if ($report->getPost() === $this) {
                 $report->setPost(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getFollowedBy(): Collection
+    {
+        return $this->followedBy;
+    }
+
+    public function addFollowedBy(User $followedBy): self
+    {
+        if (!$this->followedBy->contains($followedBy)) {
+            $this->followedBy[] = $followedBy;
+        }
+
+        return $this;
+    }
+
+    public function removeFollowedBy(User $followedBy): self
+    {
+        if ($this->followedBy->contains($followedBy)) {
+            $this->followedBy->removeElement($followedBy);
         }
 
         return $this;

@@ -3,26 +3,36 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Entity\Notification;
 use App\Form\CommentType;
+use App\Mercure\MercureService;
 use App\Repository\PostRepository;
+use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mercure\Update;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
 /**
- * @Route("/comment/", name="comment.")
+ * @Route("/comment", name="comment.")
  */
 class CommentsController extends AbstractController
 {
     private $em;
+    /**
+     * @var NotificationService
+     */
+    private $notificationService;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em,NotificationService $notificationService)
     {
         $this->em = $em;
 
+        $this->notificationService = $notificationService;
     }
 
     /**
@@ -32,7 +42,7 @@ class CommentsController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function add(Request $req, $id, PostRepository $postRepo, Security $security)
+    public function add(Request $req, $id, PostRepository $postRepo, Security $security, MessageBusInterface $bus)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $comment = new Comment();
@@ -53,8 +63,22 @@ class CommentsController extends AbstractController
             $this->em->flush();
 
 
-            $this->addFlash('succes', "Commentaire ajouté avec succés :)");
+            //Ajout de la notification au group de gens qui suivent le post
+            foreach ($post->getFollowedBy() as $user) {
+                if ($user == $security->getUser()) {
 
+
+                } else {
+                    $this->notificationService->add($user, $message="Un commentaire à été ajouter sur un post que vous suiver");
+
+
+                }
+
+
+            }
+
+
+            $this->addFlash('success', "Commentaire ajouté avec succés :)");
             return $this->redirectToRoute('index', array('slug' => $post->getSlug()));
 
 
