@@ -77,7 +77,7 @@ class LikeController extends AbstractController
         $this->em->flush();
 
         //Notification pour l'user auteur du post/comment
-        $this->notificationService->add($payload->getUser(), $message = "Votre {$entity} à été liker par : {$user->getUsername()}");
+        $this->notificationService->add($payload->getUser(), $message = "Votre {$entity} à été liker");
 
 
         //Redirection sur la page d'ou l'ont viens
