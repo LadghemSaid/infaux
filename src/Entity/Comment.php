@@ -41,44 +41,35 @@ class Comment
 
 
     /**
-     * @ORM\Column(type="string", length=255 )
-     *  @ORM\JoinColumn(nullable=true)
-     */
-    private $email;
-
-    /**
-     * @ORM\Column(type="string", length=255 )
-     *  @ORM\JoinColumn(nullable=true)
-     */
-    private $username;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Posts", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Post", inversedBy="comments", fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $posts;
+    private $post;
+
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $reports;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments", fetch="EAGER")
      * @ORM\JoinColumn(nullable=true)
      */
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="comment")
+     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="comment", fetch="EXTRA_LAZY")
      */
     private $likes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Report", mappedBy="comment")
+     */
+    private $reports;
 
 
 
     public function __construct()
     {
         $this->likes = new ArrayCollection();
+        $this->reports = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -129,53 +120,19 @@ class Comment
 
 
 
-    public function getEmail(): ?string
+    public function getPost(): ?Post
     {
-        return $this->email;
+        return $this->post;
     }
 
-    public function setEmail(string $email): self
+    public function setPost(?Post $post): self
     {
-        $this->email = $email;
+        $this->post = $post;
 
         return $this;
     }
 
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
 
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    public function getPosts(): ?Posts
-    {
-        return $this->posts;
-    }
-
-    public function setPosts(?Posts $posts): self
-    {
-        $this->posts = $posts;
-
-        return $this;
-    }
-
-    public function getReports(): ?int
-    {
-        return $this->reports;
-    }
-
-    public function setReports(int $reports): self
-    {
-        $this->reports = $reports;
-
-        return $this;
-    }
 
     public function getUser(): ?User
     {
@@ -219,6 +176,40 @@ class Comment
 
         return $this;
     }
+    function __toString()
+    {
+     return $this->textComment;
+    }
 
+    /**
+     * @return Collection|Report[]
+     */
+    public function getReports(): Collection
+    {
+        return $this->reports;
+    }
+
+    public function addReport(Report $report): self
+    {
+        if (!$this->reports->contains($report)) {
+            $this->reports[] = $report;
+            $report->setComment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReport(Report $report): self
+    {
+        if ($this->reports->contains($report)) {
+            $this->reports->removeElement($report);
+            // set the owning side to null (unless already changed)
+            if ($report->getComment() === $this) {
+                $report->setComment(null);
+            }
+        }
+
+        return $this;
+    }
 
 }

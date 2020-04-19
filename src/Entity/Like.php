@@ -28,7 +28,7 @@ class Like
     private $ip;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Posts", inversedBy="likes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Post", inversedBy="likes")
      */
     private $post;
 
@@ -66,12 +66,12 @@ class Like
         return $this;
     }
 
-    public function getPost(): ?Posts
+    public function getPost(): ?Post
     {
         return $this->post;
     }
 
-    public function setPost(?Posts $post): self
+    public function setPost(?Post $post): self
     {
         $this->post = $post;
 

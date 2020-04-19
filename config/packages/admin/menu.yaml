@@ -12,7 +12,7 @@ easy_admin:
       - label: 'Contenu'
         icon: 'newspaper-o'
         children:
-          - {entity: 'Posts', icon: 'scroll', label: 'Posts'}
+          - {entity: 'Post', icon: 'scroll', label: 'Post'}
           - {entity: 'Comment', icon: 'comment', label: 'Commentaires modération'}
 
       - label: 'Gestion'

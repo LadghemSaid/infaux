@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\PostsRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
  */
-class Posts
+class Post
 {
     /**
      * @ORM\Id()
@@ -19,13 +19,13 @@ class Posts
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="posts", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post", orphanRemoval=true , fetch="EAGER")
      */
     private $comments;
 
@@ -64,20 +64,23 @@ class Posts
      */
     private $published;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $reports;
+
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="post")
+     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="post", fetch="EAGER")
      */
     private $likes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Report", mappedBy="post")
+     */
+    private $reports;
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->likes = new ArrayCollection();
+        $this->reports = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -97,17 +100,7 @@ class Posts
         return $this;
     }
 
-    public function getReports(): ?int
-    {
-        return $this->reports;
-    }
 
-    public function setReports(int $reports): self
-    {
-        $this->reports = $reports;
-
-        return $this;
-    }
 
     /**
      * @return Collection|Comment[]
@@ -256,6 +249,37 @@ class Posts
             // set the owning side to null (unless already changed)
             if ($like->getPost() === $this) {
                 $like->setPost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Report[]
+     */
+    public function getReports(): Collection
+    {
+        return $this->reports;
+    }
+
+    public function addReport(Report $report): self
+    {
+        if (!$this->reports->contains($report)) {
+            $this->reports[] = $report;
+            $report->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReport(Report $report): self
+    {
+        if ($this->reports->contains($report)) {
+            $this->reports->removeElement($report);
+            // set the owning side to null (unless already changed)
+            if ($report->getPost() === $this) {
+                $report->setPost(null);
             }
         }
 

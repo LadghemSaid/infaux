@@ -8,7 +8,7 @@ easy_admin:
           - {property: 'username' }
           - {property: 'email' }
           - {property: 'roles' }
-          - { property: posts, label: 'Posts', type: embedded_list }
+          - { property: posts, label: 'Post', type: embedded_list }
           - { property: comments, label: 'Commentaires', type: embedded_list }
 
       list:
@@ -24,4 +24,4 @@ easy_admin:
         fields:
           - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN': 'ROLE_SUPER_ADMIN', 'ROLE_WRITER': 'ROLE_WRITER' } } }
           - { property: comments, label: 'Commentaires', type: embedded_list }
-          - { property: posts, label: 'Posts', type: embedded_list }
+          - { property: posts, label: 'Post', type: embedded_list }

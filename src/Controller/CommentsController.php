@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Form\CommentType;
-use App\Repository\PostsRepository;
+use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
+/**
+ * @Route("/comment/", name="comment.")
+ */
 class CommentsController extends AbstractController
 {
     private $em;
@@ -23,59 +26,53 @@ class CommentsController extends AbstractController
     }
 
     /**
-     * @Route("/add/comment/{id}", name="add.comment", methods={"POST"})
+     * @Route("/add/{id}", name="add", methods={"POST"})
      * @param Request $req
      * @param Security $security
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return Response
      * @throws \Exception
      */
-    public function add(Request $req,$id, PostsRepository $postRepo)
+    public function add(Request $req, $id, PostRepository $postRepo, Security $security)
     {
-        //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $comment = new Comment();
 
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($req);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $referer = explode('/', $req->headers->get('referer'));
+
+        if ($form->isSubmitted()) {
+
             $com = $form->getData();
-            //dd($jobRepo->find($id));
 
-             if ($referer[3] === "post" ) {
-                $post = $postRepo->find($id);
-                $commentValidatingAuto = false;
-                if (array_search('commentValidatingAuto', $post->getAllowComment())) {
-                    $commentValidatingAuto = true;
-                }
-                $com->setPost($post)
-                    ->setCreatedAt(new \DateTime())
-                    ->setApproved($commentValidatingAuto);
-                $this->em->persist($com);
-                $this->em->flush();
+            $post = $postRepo->find($id);
+            $com->setPost($post)
+                ->setCreatedAt(new \DateTime())
+                ->setApproved(true)
+                ->setUser($security->getUser());
+            $this->em->persist($com);
+            $this->em->flush();
 
 
-                $this->addFlash('succes',"Commentaire ajouté avec succés :)");
+            $this->addFlash('succes', "Commentaire ajouté avec succés :)");
 
-                return $this->redirectToRoute('post.show', array('slug' => $post->getSlug()));
+            return $this->redirectToRoute('index', array('slug' => $post->getSlug()));
 
-            }else{
-               $this->addFlash('error',"Un problème est survenu nous y travaillons ! :)");
-            }
 
-            return $this->redirect($req->headers->get('referer'));
         }
+        $this->addFlash('error', "Un problème est survenu nous y travaillons ! :)");
+        return $this->redirect($req->headers->get('referer'));
+
     }
 
     /**
-     * @Route("/comment/delete/{comment}", name="delete.comment", methods={"GET"})
+     * @Route("/delete/{comment}", name="delete", methods={"GET"})
      */
     public function delete(Comment $comment, Security $security, Request $req)
     {
-     //   $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //   $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         if ($security->getUser() === $comment->getUser()) {
             $referer = explode('/', $req->headers->get('referer'));
             //dd($jobRepo->find($id));
-
 
 
         }
@@ -87,7 +84,7 @@ class CommentsController extends AbstractController
     }
 
     /**
-     * @Route("/comment/edit/{comment}", name="comment_edit")
+     * @Route("/edit/{comment}", name="edit")
      */
     public function edit(Comment $comment, Request $request)
     {

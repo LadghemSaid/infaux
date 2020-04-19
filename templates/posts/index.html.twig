@@ -36,7 +36,132 @@
     </style>
 {% endblock %}
 {% block body %}
-<p>text</p>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="container">
+        {% for post in posts %}
+            <div class="post-container">
+                <div class="content">
+                    <div class="header">
+                        <img src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"
+                             alt="" class="img">
+                        <p class="username"><strong>{{ post.user.username }}</strong></p>
+                        <p class="text">{{ post.text }}</p>
+                    </div>
+
+                    <div class="footer">
+                        <p class="icons">
+                        <form name="like" method="post"
+                              action="{{ path('like.add',{"entity":"post",'id':post.id}) }}" class="likeForm">
+                            <button type="submit" id="like_submit" name="like[submit]" class="btn btn-pink ">
+                                <i class="fa fa-thumbs-up">
+                                        <span class="number">
+                                            {{ post.likes|length }}
+                                        </span>
+                                </i>
+                            </button>
+                        </form>
+                        </p>
+                        <p class="icons">
+                            <i class="fa fa-map-pin"><span class="number">10</span></i>
+                        </p>
+                        <p class="icons">
+                            <i class="fa fa-comment"><span class="number">{{ post.comments | length }}</span></i>
+                        </p>
+                        <p class="icons">
+                            <i class="fa fa-clock-o"><span data-createdAt="{{ post.createdAt | date('U') }}"
+                                                           class="number p-date">{{ post.createdAt | date('U') }}</span></i>
+
+                        </p>
+                        <p class="icons">
+                        <form name="report" method="post"
+                              action="{{ path('report.add',{"entity":"post",'id':post.id}) }}" class="reportForm">
+                            <button type="submit" id="report_submit" name="report[submit]" class="btn btn-pink ">
+                                <i class="fa fa-flag"><span class="number ">Signalez</span></i>
+                            </button>
+                        </form>
+                        </p>
+
+                    </div>
+                </div>
+                {% if app.user %}
+                    <div class="formComment">
+                        <form name="comment" method="post" action="{{ path('comment.add',{'id':post.id}) }}"
+                              class="commentForm">
+                            <div class="form-group">
+                                <label class="sr-only required" for="comment_textComment">Commentaire</label>
+                                <textarea id="comment_textComment" name="comment[textComment]" required="required"
+                                          class="commentForm__textarea form-control"
+                                          placeholder="Votre commentaire ..."></textarea>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <div class="form-group">
+                                    <button type="submit" id="comment_submit" name="comment[submit]"
+                                            class="btn btn-pink btn">Envoyer
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                {% endif %}
+
+                {% set comment = post.comments | last %}
+                <div class="comments-container">
+                    <div class="content">
+                        <div class="header">
+                            <img src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"
+                                 alt="" class="img">
+                            <p class="username"><strong>{{ comment.user }}</strong></p>
+
+                            <p class="text">{{ comment.textComment }} </p>
+                        </div>
+
+                        <div class="footer">
+                            <p class="icons">
+                            <form name="like" method="post"
+                                  action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}" class="likeForm">
+                                <button type="submit" id="like_submit" name="like[submit]" class="btn btn-pink ">
+                                    <i class="fa fa-thumbs-up">
+                                        <span class="number">
+                                            {{ comment.likes|length }}
+                                        </span>
+                                    </i>
+                                </button>
+                            </form>
+                            </p>
+                            <p class="icons">
+                                <i class="fa fa-clock-o"><span data-createdAt="{{ comment.createdAt | date('U') }}"
+                                                               class="number p-date">{{ comment.createdAt | date('U') }}</span></i>
+
+                            </p>
+                            <p class="icons">
+                            <form name="report" method="post"
+                                  action="{{ path('report.add',{"entity":"post",'id':post.id}) }}" class="reportForm">
+                                <button type="submit" id="report_submit" name="report[submit]" class="btn btn-pink ">
+                                    <i class="fa fa-flag"><span class="number ">Signalez</span></i>
+                                </button>
+                            </form>
+                            </p>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
 
 
@@ -48,7 +173,7 @@
 
                   moment.locale('fr');
                   $(".p-date").map((x, i) => {
-                      i.innerText = moment.unix(i.dataset.date).local().fromNow();
+                      i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
                   });
               });
           });

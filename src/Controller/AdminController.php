@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use AlterPHP\EasyAdminExtensionBundle\EasyAdminExtensionBundle;
-use App\Entity\Posts;
+use App\Entity\Post;
 use App\Entity\User;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;

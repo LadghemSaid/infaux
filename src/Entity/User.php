@@ -53,7 +53,7 @@ class User implements UserInterface
     private $salt;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Posts", mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user", orphanRemoval=true)
      */
     private $posts;
 
@@ -77,6 +77,11 @@ class User implements UserInterface
      */
     private $friends;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Report", mappedBy="user")
+     */
+    private $reports;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -84,6 +89,7 @@ class User implements UserInterface
         $this->likes = new ArrayCollection();
         $this->friendList = new ArrayCollection();
         $this->friends = new ArrayCollection();
+        $this->reports = new ArrayCollection();
     }
 
     public function serialize()
@@ -210,14 +216,14 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|Posts[]
+     * @return Collection|Post[]
      */
     public function getPosts(): Collection
     {
         return $this->posts;
     }
 
-    public function addPost(Posts $post): self
+    public function addPost(Post $post): self
     {
         if (!$this->posts->contains($post)) {
             $this->posts[] = $post;
@@ -227,7 +233,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function removePost(Posts $post): self
+    public function removePost(Post $post): self
     {
         if ($this->posts->contains($post)) {
             $this->posts->removeElement($post);
@@ -359,6 +365,37 @@ class User implements UserInterface
         if ($this->friends->contains($friend)) {
             $this->friends->removeElement($friend);
             $friend->removeFriendList($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Report[]
+     */
+    public function getReports(): Collection
+    {
+        return $this->reports;
+    }
+
+    public function addReport(Report $report): self
+    {
+        if (!$this->reports->contains($report)) {
+            $this->reports[] = $report;
+            $report->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReport(Report $report): self
+    {
+        if ($this->reports->contains($report)) {
+            $this->reports->removeElement($report);
+            // set the owning side to null (unless already changed)
+            if ($report->getUser() === $this) {
+                $report->setUser(null);
+            }
         }
 
         return $this;

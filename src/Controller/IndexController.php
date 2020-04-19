@@ -4,7 +4,7 @@ namespace App\Controller;
 
 
 use App\Form\ContactType;
-use App\Repository\PostsRepository;
+use App\Repository\PostRepository;
 use App\Repository\MaillingListRepository;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -53,7 +53,7 @@ class IndexController extends AbstractController
     /**
      * @Route("/sitemaps.xml", name="sitemap")
      */
-    public function sitemap(Request $request, PostsRepository $postRepository)
+    public function sitemap(Request $request, PostRepository $postRepository)
     {
         $urls = [];
         // We store the hostname of our website
