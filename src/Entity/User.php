@@ -457,7 +457,7 @@ class User implements UserInterface
         return $this->postFollowed;
     }
 
-    public function addPostsFollowed(Post $postFollowed): self
+    public function addPostFollowed(Post $postFollowed): self
     {
         if (!$this->postFollowed->contains($postFollowed)) {
             $this->postFollowed[] = $postFollowed;
