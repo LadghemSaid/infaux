@@ -14,9 +14,15 @@ site d'infos
 
 Linux
 
-- ./mercure --jwt-key='mdpsaid' ACME_HOSTS=':3000' --addr='0.0.0.0:3000' --debug --allow-anonymous --cors-allowed-origins='http:/34.77.181.91:8000/infaux' --publish-allowed-origins='http:/34.77.181.91'
+ ./mercure --jwt-key='mdpsaid' --addr=':3000' --debug  --cors-allowed-origins='http:/34.77.181.91' --publish-allowed-origins='http:/34.77.181.91:8000'
 
 
 Windows
 
- export JWT_KEY='mdpsaid';export ADDR=':3000';export DEMO='0';export ALLOW_ANONYMOUS='0';export CORS_ALLOWED_ORIGINS=http://localhost:8000; export PUBLISH_ALLOWED_ORIGINS='http://localhost'; ./mercure_win/mercure.exe -d
+ export JWT_KEY='mdpsaid';
+ export ADDR=':3000';
+ export DEMO='0';
+ export ALLOW_ANONYMOUS='0';
+ export CORS_ALLOWED_ORIGINS=http://localhost:8000;
+ export PUBLISH_ALLOWED_ORIGINS='http://localhost';
+ ./mercure_win/mercure.exe 
