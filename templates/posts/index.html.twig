@@ -48,8 +48,8 @@
         </div>
     {% endfor %}
     <div class="container">
+
         {% for post in posts %}
-            <div id="mercure-content-receiver"></div>
 
 
             <div class="post-container">
@@ -79,7 +79,8 @@
                         <form name="report" method="post"
                               action="{{ path('post.addfollow',{"entity":"post",'id':post.id}) }}" class="reportForm">
                             <button type="submit" id="report_submit" name="report[submit]" class="btn btn-pink ">
-                                <i class="fa fa-flag"><span class="number ">{{ post.followedBy | length }} epingler</span></i>
+                                <i class="fa fa-flag"><span
+                                            class="number ">{{ post.followedBy | length }} epingler</span></i>
                             </button>
                         </form>
                         </p>
@@ -198,7 +199,7 @@
           const url = new URL('{{ mercure_publish_url }}');
           console.log(url);
           url.searchParams.append('topic', '/message');
-          const eventSource = new EventSource(url, { withCredentials: true });
+          const eventSource = new EventSource(url, {withCredentials: true});
           eventSource.onmessage = (evt) => {
               const data = JSON.parse(evt.data);
               if (!data.message) {

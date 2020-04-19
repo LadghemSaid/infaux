@@ -28,7 +28,7 @@ class CommentsController extends AbstractController
      */
     private $notificationService;
 
-    public function __construct(EntityManagerInterface $em,NotificationService $notificationService)
+    public function __construct(EntityManagerInterface $em, NotificationService $notificationService)
     {
         $this->em = $em;
 
@@ -67,13 +67,9 @@ class CommentsController extends AbstractController
             foreach ($post->getFollowedBy() as $user) {
                 if ($user == $security->getUser()) {
 
-
                 } else {
-                    $this->notificationService->add($user, $message="Un commentaire à été ajouter sur un post que vous suiver");
-
-
+                    $this->notificationService->add($user, $message = "Un commentaire à été ajouter sur un post que vous suiver");
                 }
-
 
             }
 

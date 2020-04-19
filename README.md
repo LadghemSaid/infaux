@@ -14,7 +14,8 @@ site d'infos
 
 Linux
 
-- ./mercure --jwt-key='mdpsaid' ACME_HOSTS='http://34.77.181.91/infaux' --addr='localhost:3000' --debug --allow-anonymous --cors-allowed-origins='*' --publish-allowed-origins='http://34.77.181.91:3000'
+- ./mercure --jwt-key='mdpsaid' ACME_HOSTS=':3000' --addr='0.0.0.0:3000' --debug --allow-anonymous --cors-allowed-origins='http:/34.77.181.91:8000/infaux' --publish-allowed-origins='http:/34.77.181.91'
+
 
 Windows
 

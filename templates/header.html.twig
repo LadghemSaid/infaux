@@ -11,15 +11,15 @@
         <div class="nav-container bd-highlight">
             <ul>
                 <li>
-                    <a class="nav-link {% if current_menu is defined and current_menu == 'posts' %}active{% endif %}"
+                    <a class="nav-link {% if current_menu is defined and current_menu == 'home' %}active{% endif %}"
                        href="{{ path('index') }}"><i class="fas fa-home"></i> Accueil
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
                 {% if app.user %}
                     <li>
-                        <a class="nav-link {% if current_menu is defined and current_menu == 'posts' %}active{% endif %}"
-                           href="{{ path('index') }}"><i class="fas fa-bell"></i> Notifications ({{ app.user.notifications | length }})
+                        <a class="nav-link {% if current_menu is defined and current_menu == 'notifications' %}active{% endif %}"
+                           href="{{ path('notification') }}"><i class="fas fa-bell"></i> Notifications ({{ app.user.notificationNotSeen | length }})
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
@@ -51,7 +51,7 @@
                            href="{{ path('app_login') }}"><i class="fas fa-user"></i> Connexion</a>
                     </li>
                     <li>
-                        <a class="nav-link {% if current_menu is defined and current_menu == 'login' %}active{% endif %}"
+                        <a class="nav-link {% if current_menu is defined and current_menu == 'register' %}active{% endif %}"
                            href="{{ path('app_register') }}"><i class="fas fa-user"></i> Inscription</a>
                     </li>
                 {% endif %}

@@ -93,6 +93,9 @@ class User implements UserInterface
     private $postFollowed;
 
 
+    private $notificationNotSeen;
+
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -104,6 +107,7 @@ class User implements UserInterface
         $this->notifications = new ArrayCollection();
         $this->postFollowed = new ArrayCollection();
     }
+
 
     public function serialize()
     {
@@ -473,6 +477,27 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getNotificationNotSeen()
+    {
+        $notificationNotSeen =[];
+        foreach ($this->notifications as $notif){
+            if(!$notif->getSeen()){
+                array_push($notificationNotSeen,$notif);
+            }
+        }
+        return $notificationNotSeen;
+    }
+
+    /**
+     * @param mixed $notificationNotSeen
+     */
+    public function setNotificationNotSeen($notificationNotSeen): void
+    {
+        $this->notificationNotSeen = $notificationNotSeen;
+    }
 
 
 }
