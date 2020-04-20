@@ -14,15 +14,13 @@ site d'infos
 
 Linux
 
- ./mercure --jwt-key='mdpsaid' --addr=':3000' --debug  --cors-allowed-origins='http:/34.77.181.91' --publish-allowed-origins='http:/34.77.181.91:8000'
+ ./mercure_lin/.mercure --jwt-key='mdptest' --addr=':3000' --debug  --cors-allowed-origins='http:/34.77.181.91' --publish-allowed-origins='http:/34.77.181.91:8000'
 
 
 Windows
 
- export JWT_KEY='mdpsaid';
- export ADDR=':3000';
- export DEMO='0';
- export ALLOW_ANONYMOUS='0';
- export CORS_ALLOWED_ORIGINS=http://localhost:8000;
- export PUBLISH_ALLOWED_ORIGINS='http://localhost';
- ./mercure_win/mercure.exe 
+ export JWT_KEY='mdptest'; export ADDR=':3000'; export DEMO='0';  export ALLOW_ANONYMOUS='1'; export CORS_ALLOWED_ORIGINS=http://localhost:8000; export PUBLISH_ALLOWED_ORIGINS='http://localhost'; ./mercure_win/mercure.exe 
+
+
+Generer un password 
+bin/console security:encode-password 'mdptest'

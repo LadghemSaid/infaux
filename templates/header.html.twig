@@ -19,7 +19,7 @@
                 {% if app.user %}
                     <li>
                         <a class="nav-link {% if current_menu is defined and current_menu == 'notifications' %}active{% endif %}"
-                           href="{{ path('notification') }}"><i class="fas fa-bell"></i> Notifications ({{ app.user.notificationNotSeen | length }})
+                           href="{{ path('notification') }}"><i class="fas fa-bell"></i> Notifications (<span class="number_notif">{{ app.user.notificationNotSeen | length }}</span>)
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>

@@ -38,7 +38,8 @@ class IndexController extends AbstractController
             'posts' => $posts,
         ]);
         if ($this->getUser()) {
-            $response->headers->setCookie($cookieGenerator->generate($this->getUser()));
+            $response->headers->set('set-cookie', $cookieGenerator->generate($this->getUser()));
+            //$response->headers->setCookie($cookieGenerator->generate($this->getUser()));
         }
         return $response;
         //Pour 1 -> ...find($id);   avec une valeur de champ -> ...findOneBy(['title'=>'Post Du vendredi 13']);

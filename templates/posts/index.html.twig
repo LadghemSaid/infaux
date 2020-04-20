@@ -190,22 +190,24 @@
 
 
       </script>
+      {% if app.user %}
+          <script type="text/javascript">
+              const _receiver = document.getElementById('mercure-content-receiver');
+              const numberNotifs = $('.number_notif');
+              console.log();
 
-      <script type="text/javascript">
-          const _receiver = document.getElementById('mercure-content-receiver');
-          const _messageInput = document.getElementById('mercure-message-input');
+              const url = new URL('{{ mercure_publish_url }}');
 
-
-          const url = new URL('{{ mercure_publish_url }}');
-          console.log(url);
-          url.searchParams.append('topic', '/message');
-          const eventSource = new EventSource(url, {withCredentials: true});
-          eventSource.onmessage = (evt) => {
-              const data = JSON.parse(evt.data);
-              if (!data.message) {
-                  return;
-              }
-              _receiver.insertAdjacentHTML('beforeend', `<div class="message">${data.message}</div>`);
-          };
-      </script>
+              url.searchParams.append('topic', '/message');
+              const eventSource = new EventSource(url, {withCredentials: true});
+              eventSource.onmessage = (evt) => {
+                  const data = JSON.parse(evt.data);
+                  if (!data.message) {
+                      return;
+                  }
+                  numberNotifs[0].innerText ++;
+                  _receiver.insertAdjacentHTML('beforeend', `<div class="message">${data.message}</div>`);
+              };
+          </script>
+      {% endif %}
   {% endblock %}

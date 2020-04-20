@@ -68,10 +68,15 @@ class CommentsController extends AbstractController
                 if ($user == $security->getUser()) {
 
                 } else {
-                    $this->notificationService->add($user, $message = "Un commentaire à été ajouter sur un post que vous suiver");
+                    $this->notificationService->add($user, $message = "Un commentaire à été ajouter sur un post");
                 }
 
             }
+            //Envoie de la notif a l'auteur du post
+            $this->notificationService->add($post->getUser(), $message = "Un commentaire à été ajouter sur votre post");
+
+
+
 
 
             $this->addFlash('success', "Commentaire ajouté avec succés :)");

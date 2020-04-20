@@ -21,17 +21,17 @@ class Report
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Post", inversedBy="reports")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Post", inversedBy="reports" )
      */
     private $post;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Comment", inversedBy="reports")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Comment", inversedBy="reports" )
      */
     private $comment;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reports")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reports" )
      */
     private $user;
 

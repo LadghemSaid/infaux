@@ -53,17 +53,17 @@ class User implements UserInterface
     private $salt;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user", orphanRemoval=true )
      */
     private $posts;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user", orphanRemoval=true )
      */
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="user" )
      */
     private $likes;
 
@@ -73,22 +73,22 @@ class User implements UserInterface
     private $friendList;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="friendList")
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="friendList" )
      */
     private $friends;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Report", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Report", mappedBy="user" )
      */
     private $reports;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Notification", mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Notification", mappedBy="user", orphanRemoval=true )
      */
     private $notifications;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Post", mappedBy="followedBy")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Post", mappedBy="followedBy" , fetch="EXTRA_LAZY")
      */
     private $postFollowed;
 

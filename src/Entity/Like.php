@@ -33,7 +33,7 @@ class Like
     private $post;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Comment", inversedBy="likes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Comment", inversedBy="likes" )
      */
     private $comment;
 
