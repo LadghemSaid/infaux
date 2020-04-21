@@ -124,63 +124,129 @@
                     </div>
 
                 {% endif %}
-
                 {% set comment = post.comments | last %}
-                <div class="comments-container">
-                    <div class="content">
-                        <div class="header">
-                            <img src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"
-                                 alt="" class="img">
-                            <p class="username"><strong>{{ comment.user }}</strong></p>
 
-                            <p class="text">{{ comment.textComment }} </p>
-                        </div>
 
-                        <div class="footer">
-                            <p class="icons">
-                            <form name="like" method="post"
-                                  action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}" class="likeForm">
-                                <button type="submit" id="like_submit" name="like[submit]" class="btn btn-pink ">
-                                    <i class="fa fa-thumbs-up">
+                <div class="wrapper-comments">
+                    <a data-page="0" data-post="{{  post.id }}" class="btn btn-primaire view-more-button" onclick="getNextComment(event)"
+                       href="{{ path('comment.paginate',{'post': post.id}) }}">Voir plus</a>
+
+                    <div class="nextComment">
+
+                    </div>
+                    <div class="comments-container">
+                        <div class="content">
+                            <div class="header">
+                                <img src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"
+                                     alt="" class="img">
+                                <p class="username"><strong>{{ comment.user }}</strong></p>
+
+                                <p class="text">{{ comment.textComment }} </p>
+                            </div>
+
+                            <div class="footer">
+                                <p class="icons">
+                                <form name="like" method="post"
+                                      action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
+                                      class="likeForm">
+                                    <button type="submit" id="like_submit" name="like[submit]" class="btn btn-pink ">
+                                        <i class="fa fa-thumbs-up">
                                         <span class="number">
                                             {{ comment.likes|length }}
                                         </span>
-                                    </i>
-                                </button>
-                            </form>
-                            </p>
-                            <p class="icons">
-                                <i class="fa fa-clock-o"><span data-createdAt="{{ comment.createdAt | date('U') }}"
-                                                               class="number p-date">{{ comment.createdAt | date('U') }}</span></i>
+                                        </i>
+                                    </button>
+                                </form>
+                                </p>
+                                <p class="icons">
+                                    <i class="fa fa-clock-o"><span data-createdAt="{{ comment.createdAt | date('U') }}"
+                                                                   class="number p-date">{{ comment.createdAt | date('U') }}</span></i>
 
-                            </p>
-                            <p class="icons">
-                            <form name="report" method="post"
-                                  action="{{ path('report.add',{"entity":"post",'id':post.id}) }}" class="reportForm">
-                                <button type="submit" id="report_submit" name="report[submit]" class="btn btn-pink ">
-                                    <i class="fa fa-flag"><span class="number ">Signalez</span></i>
-                                </button>
-                            </form>
-                            </p>
+                                </p>
+                                <p class="icons">
+                                <form name="report" method="post"
+                                      action="{{ path('report.add',{"entity":"post",'id':post.id}) }}"
+                                      class="reportForm">
+                                    <button type="submit" id="report_submit" name="report[submit]"
+                                            class="btn btn-pink ">
+                                        <i class="fa fa-flag"><span class="number ">Signalez</span></i>
+                                    </button>
+                                </form>
+                                </p>
 
 
+                            </div>
                         </div>
+
                     </div>
                 </div>
 
 
             </div>
         {% endfor %}
+        {{ knp_pagination_render(posts) }}
+
+    </div>
+
+    <div class="page-load-status">
+        <p class="infinite-scroll-request">Chargement...</p>
+        <p class="infinite-scroll-last">Plus aucun post a afficher</p>
+        <p class="infinite-scroll-error">No more pages to load</p>
     </div>
 {% endblock %}
 
 
   {% block javascripts %}
+      <script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js"></script>
       <script>
+          //Comment Ajax load
+          function getNextComment(event) {
+              var compteur = 0;
+              event.preventDefault()
+              console.log(parseInt(event.target.dataset.page) + 1)
+              var url = $(event.target).attr('href');
+              var newUrl = "/comment/post/"+event.target.dataset.post+"?page=" +( parseInt(event.target.dataset.page) + 1) ;
+              const containerComment = $(event.target).next('.nextComment')[0];
+
+              $.get(url, function(data,response) {
+                  if (response == "success") {
+
+                      console.log("External content loaded successfully!" , data);
+                      $(data).prependTo(containerComment).fadeIn("slow");
+                      $(event.target).attr('href', newUrl)
+                      $(event.target).attr('data-page',( parseInt(event.target.dataset.page) + 1) )
+                  }
+                  if (response == "error") {
+                      console.log("Error: " + xhr.status + ": " + xhr.statusText);
+                  }
+              });
+          }
+
+
 
           document.addEventListener("DOMContentLoaded", function (event) {
-              $(function () {
 
+
+              //Post infinite scroll
+              var infiniteScroll = $('.container').infiniteScroll({
+                  // options
+                  path: '.next a',
+                  append: '.post-container',
+                  history: false,
+                  elementScroll: false,
+                  hideNav: '.pagination',
+                  status: '.page-load-status'
+              });
+              infiniteScroll.on('load.infiniteScroll', function () {
+                  $(function () {
+                      moment.locale('fr');
+                      $(".p-date").map((x, i) => {
+                          i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
+                      });
+                  });
+              });
+
+              $(function () {
                   moment.locale('fr');
                   $(".p-date").map((x, i) => {
                       i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
@@ -205,7 +271,7 @@
                   if (!data.message) {
                       return;
                   }
-                  numberNotifs[0].innerText ++;
+                  numberNotifs[0].innerText++;
                   _receiver.insertAdjacentHTML('beforeend', `<div class="message">${data.message}</div>`);
               };
           </script>
