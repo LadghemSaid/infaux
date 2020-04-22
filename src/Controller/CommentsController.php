@@ -6,9 +6,12 @@ use App\Entity\Comment;
 use App\Entity\Notification;
 use App\Form\CommentType;
 use App\Mercure\MercureService;
+use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
 use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -123,6 +126,30 @@ class CommentsController extends AbstractController
 
         }
         return new Response;
+    }
+
+    /**
+     * @Route("/post/{post}", name="paginate")
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @param $commentsrepo
+     * @return Response
+     */
+    public function getPaginateComment(Request $request, PaginatorInterface $paginator,CommentRepository $commentsrepo,$post)
+    {
+
+        $comments = $commentsrepo->findByPostField($post); //On récupère les commentaire du post
+        $comments = $paginator->paginate(
+            $comments, //Donnée a paginé
+            $request->query->getInt('page', 1), //Numéros de la page courante est 1 par default
+            3
+        );
+        $response = $this->render('comment/index.html.twig', [
+            'current_menu' => 'comments',
+            'comments' => $comments,
+        ]);
+        return $response;
+
     }
 
 }

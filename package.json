@@ -17,5 +17,7 @@
         "build-dev": "encore production --config-name dev",
         "build": "encore production --config-name prod"
     },
-    "dependencies": {}
+    "dependencies": {
+        "event-source-polyfill": "^1.0.12"
+    }
 }

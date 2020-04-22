@@ -23,10 +23,10 @@ class CommentRepository extends ServiceEntityRepository
     //  * @return Comment[] Returns an array of Comment objects
     //  */
 
-    public function findByArticleField($value)
+    public function findByPostField($value)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.article = :val')
+            ->andWhere('c.post = :val')
             ->setParameter('val', $value)
             ->setMaxResults(10)
             ->getQuery()

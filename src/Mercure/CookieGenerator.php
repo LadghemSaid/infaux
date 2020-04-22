@@ -24,6 +24,15 @@ class CookieGenerator
             ->getToken(new Sha256(), new Key($this->secret));
 
         return "mercureAuthorization={$token}; Path=/.well-known/mercure; HttpOnly; ";
-        return Cookie::create('mercureAuthorization', $token, 0, '/.well-known/mercure', '', 'HttpOnly');
+        //return Cookie::create('mercureAuthorization', $token, 0, '/.well-known/mercure', '', 'HttpOnly');
+    }
+    public function generateToken(User $user)
+    {
+        $token = (new Builder())
+            ->withClaim('mercure', ['subscribe' => ["/user/{$user->getId()}"]])
+            ->getToken(new Sha256(), new Key($this->secret));
+
+        return $token;
+
     }
 }
