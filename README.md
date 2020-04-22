@@ -31,4 +31,8 @@ Windows
 Generer un password 
 bin/console security:encode-password 'mdptest'
 
+ - sudo systemctl restart mercure.service
+ - sudo systemctl stop mercure.service
+ - sudo systemctl start mercure.service
 
+ /var/www/mercure_lin/mercure --jwt-key='mdptest' --addr=':3000' --debug  --cors-allowed-origins='http://34.77.181.91,http://localhost:8000'  --publish-allowed-origins='http://34.77.181.91,http://localhost:8000' 

@@ -128,7 +128,8 @@
 
 
                 <div class="wrapper-comments">
-                    <a data-page="0" data-post="{{  post.id }}" class="btn btn-primaire view-more-button" onclick="getNextComment(event)"
+                    <a data-page="0" data-post="{{ post.id }}" class="btn btn-primaire view-more-button"
+                       onclick="getNextComment(event)"
                        href="{{ path('comment.paginate',{'post': post.id}) }}">Voir plus</a>
 
                     <div class="nextComment">
@@ -205,23 +206,22 @@
               event.preventDefault()
               console.log(parseInt(event.target.dataset.page) + 1)
               var url = $(event.target).attr('href');
-              var newUrl = "/comment/post/"+event.target.dataset.post+"?page=" +( parseInt(event.target.dataset.page) + 1) ;
+              var newUrl = "/comment/post/" + event.target.dataset.post + "?page=" + (parseInt(event.target.dataset.page) + 1);
               const containerComment = $(event.target).next('.nextComment')[0];
 
-              $.get(url, function(data,response) {
+              $.get(url, function (data, response) {
                   if (response == "success") {
 
-                      console.log("External content loaded successfully!" , data);
+                      console.log("External content loaded successfully!", data);
                       $(data).prependTo(containerComment).fadeIn("slow");
                       $(event.target).attr('href', newUrl)
-                      $(event.target).attr('data-page',( parseInt(event.target.dataset.page) + 1) )
+                      $(event.target).attr('data-page', (parseInt(event.target.dataset.page) + 1))
                   }
                   if (response == "error") {
                       console.log("Error: " + xhr.status + ": " + xhr.statusText);
                   }
               });
           }
-
 
 
           document.addEventListener("DOMContentLoaded", function (event) {
@@ -256,16 +256,25 @@
 
 
       </script>
+      {{ encore_entry_script_tags('app') }}
+
       {% if app.user %}
           <script type="text/javascript">
               const _receiver = document.getElementById('mercure-content-receiver');
               const numberNotifs = $('.number_notif');
-              console.log();
 
               const url = new URL('{{ mercure_publish_url }}');
 
               url.searchParams.append('topic', '/message');
-              const eventSource = new EventSource(url, {withCredentials: true});
+              //  const eventSource = new EventSource(url, {withCredentials: true});
+             // const eventSource = new EventSource(url, {withCredentials: true,headers: {Authorization: bearer}});
+
+              const eventSource =  new EventSourcePolyfill(url, {
+                  headers: {
+                      'Authorization': 'Bearer {{ bearerToken }}'
+                  }
+              });
+
               eventSource.onmessage = (evt) => {
                   const data = JSON.parse(evt.data);
                   if (!data.message) {

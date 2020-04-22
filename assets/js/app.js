@@ -12,3 +12,7 @@ require('../css/scss/imports.scss');
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
 // const $ = require('jquery');
 //console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+var { NativeEventSource, EventSourcePolyfill } = require('event-source-polyfill/src/eventsource');
+const EventSource = NativeEventSource || EventSourcePolyfill
+global.EventSource = EventSource;
+global.EventSourcePolyfill = EventSourcePolyfill;
