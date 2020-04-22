@@ -57,8 +57,10 @@
                     <div class="header">
                         <img src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"
                              alt="" class="img">
+                    <div class="l-post">
                         <p class="username"><strong>{{ post.user.username }}</strong></p>
                         <p class="text">{{ post.text }}</p>
+                    </div>
                     </div>
 
                     <div class="footer">
@@ -140,9 +142,11 @@
                             <div class="header">
                                 <img src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"
                                      alt="" class="img">
-                                <p class="username"><strong>{{ comment.user }}</strong></p>
+                                     <div class="l-post">
+                                    <p class="username"><strong>{{ comment.user }}</strong></p>
 
-                                <p class="text">{{ comment.textComment }} </p>
+                                    <p class="text">{{ comment.textComment }} </p>
+                             </div>   
                             </div>
 
                             <div class="footer">
