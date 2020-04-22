@@ -11,7 +11,7 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 
 Encore
     .setOutputPath('public/build/')
-    .setPublicPath('/infaux/build')
+    .setPublicPath('/build')
     .setManifestKeyPrefix('build/')
     .addEntry('app', './assets/js/app.js')
     .splitEntryChunks()
