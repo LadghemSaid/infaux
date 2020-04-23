@@ -18,6 +18,8 @@
         "build": "encore production --config-name prod"
     },
     "dependencies": {
-        "event-source-polyfill": "^1.0.12"
+        "animate.css": "^3.7.2",
+        "event-source-polyfill": "^1.0.12",
+        "swup": "^2.0.9"
     }
 }
