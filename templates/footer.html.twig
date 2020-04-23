@@ -5,22 +5,6 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 
 <script>
-//Program created by Ryan Tarson Updated 6.15.16, under this code is my pure JS Version
-jQuery(document).ready(function($) {
-  // Search
-  $('#search-button').click(function() {
-    console.log("Open Search, Search Centered");
-    $("div.mk-fullscreen-search-overlay").addClass("mk-fullscreen-search-overlay-show");
-    $(".nav-open").css('display', 'none');
-  });
-  $("a.mk-fullscreen-close").click(function() {
-    console.log("Closed Search");
-    $("div.mk-fullscreen-search-overlay").removeClass("mk-fullscreen-search-overlay-show");
-    $(".nav-open").css('display', 'inline-block');
-  });
-});
-</script>
-<script>
 (function ($) {
     "use strict";
 
