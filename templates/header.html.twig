@@ -22,12 +22,6 @@
                 <a href="{{ path('notification') }}"><i class="fas fa-bell"></i><span class="number_notif notif">{{ app.user.notificationNotSeen | length }}</span></a>
             </div>		
         </div>
-        {% else %}
-        <div class="mobile-bottom-nav__item disable">
-            <div class="mobile-bottom-nav__item-content">
-                <a href="{{ path('notification') }}"><i class="fas fa-bell"></i><span class="number_notif notif">{{ app.user.notificationNotSeen | length }}</span></a>
-            </div>		
-        </div>
         {% endif %}
         <div class="mobile-bottom-nav__item">
             <div class="mobile-bottom-nav__item-content">
