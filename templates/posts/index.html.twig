@@ -273,19 +273,16 @@ Integer efficitur dictum metus ac tincidunt. Vivamus luctus eros auctor tortor a
       </script>
       {{ encore_entry_script_tags('app') }}
 
-
-
-
       {% if app.user %}
           <script type="text/javascript">
-              //const _receiver = document.getElementById('mercure-content-receiver');
+              const _receiver = document.getElementById('mercure-content-receiver');
               const numberNotifs = $('.number_notif');
 
               const url = new URL('{{ mercure_publish_url }}');
 
               url.searchParams.append('topic', '/message');
-              //const eventSource = new EventSource(url, {withCredentials: true});
-              //const eventSource = new EventSource(url, {withCredentials: true,headers: {Authorization: bearer}});
+              //  const eventSource = new EventSource(url, {withCredentials: true});
+             // const eventSource = new EventSource(url, {withCredentials: true,headers: {Authorization: bearer}});
 
               const eventSource =  new EventSourcePolyfill(url, {
                   headers: {
@@ -299,9 +296,7 @@ Integer efficitur dictum metus ac tincidunt. Vivamus luctus eros auctor tortor a
                       return;
                   }
                   numberNotifs[0].innerText++;
-                  notifyMe(data.message);
-                  console.log(data);
-                  //_receiver.insertAdjacentHTML('beforeend', `<div class="message">${data.message}</div>`);
+                  _receiver.insertAdjacentHTML('beforeend', `<div class="message">${data.message}</div>`);
               };
           </script>
       {% endif %}

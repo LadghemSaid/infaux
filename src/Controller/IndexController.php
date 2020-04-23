@@ -122,5 +122,4 @@ class IndexController extends AbstractController
     }
 
 
-
 }

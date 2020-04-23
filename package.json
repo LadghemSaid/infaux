@@ -5,25 +5,19 @@
         "node-sass": "^4.13.1",
         "regenerator-runtime": "^0.13.2",
         "sass-loader": "^7.3.1",
-        "webpack-notifier": "^1.6.0",
-        "workbox-webpack-plugin": "^5.1.2"
+        "webpack-notifier": "^1.6.0"
     },
     "license": "UNLICENSED",
     "private": true,
     "scripts": {
         "dev-server": "encore dev-server",
         "dev": "encore dev --config-name dev",
-        "watch": "encore dev --watch --config-name prod",
+        "watch": "encore dev --watch --config-name dev",
         "test": "echo 'hello-world'",
+        "build-dev": "encore production --config-name dev",
         "build": "encore production --config-name prod"
     },
     "dependencies": {
-        "bootstrap": "^4.4.1",
-        "event-source-polyfill": "^1.0.12",
-        "glob-all": "^3.2.1",
-        "postcss-loader": "^3.0.0",
-        "purgecss-webpack-plugin": "^2.1.2",
-        "webpackbar": "^4.0.0"
         "animate.css": "^3.7.2",
         "event-source-polyfill": "^1.0.12",
         "swup": "^2.0.9"

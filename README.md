@@ -35,4 +35,4 @@ bin/console security:encode-password 'mdptest'
  - sudo systemctl stop mercure.service
  - sudo systemctl start mercure.service
 
- /var/www/mercure_lin/mercure --jwt-key='mdptest' --addr=':3000' --debug  --cors-allowed-origins='https://www.infaux.ga,http://localhost:8000,https://infaux.ga'  --publish-allowed-origins='https://s-website.ga,http://localhost:8000,https://www.infaux.ga' 
+ /var/www/mercure_lin/mercure --jwt-key='mdptest' --addr=':3000' --debug  --cors-allowed-origins='http://34.77.181.91,http://localhost:8000'  --publish-allowed-origins='http://34.77.181.91,http://localhost:8000' 
