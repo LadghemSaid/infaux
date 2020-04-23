@@ -6,99 +6,105 @@
         <div class="mobile-bottom-nav__item">
             <div class="mobile-bottom-nav__item-content">
                 <a class="{% if current_menu is defined and current_menu == 'home' %}active{% endif %}"
-                       href="{{ path('index') }}"><i class="fas fa-home"></i>
-                        <span class="sr-only">(current)</span>
-                    </a>
-            </div>		
+                   href="{{ path('index') }}"><i class="fas fa-home"></i>
+                    <span class="sr-only">(current)</span>
+                </a>
+            </div>
         </div>
-        <div class="mobile-bottom-nav__item">		
+        <div class="mobile-bottom-nav__item">
             <div class="mobile-bottom-nav__item-content">
                 <a href=""><i class="fas fa-search"></i></a>
             </div>
         </div>
         {% if app.user %}
-        <div class="mobile-bottom-nav__item">
-            <div class="mobile-bottom-nav__item-content">
-                <a href="{{ path('notification') }}"><i class="fas fa-bell"></i><span class="number_notif notif">{{ app.user.notificationNotSeen | length }}</span></a>
-            </div>		
-        </div>
+            <div class="mobile-bottom-nav__item">
+                <div class="mobile-bottom-nav__item-content">
+                    <a href="{{ path('notification') }}"><i class="fas fa-bell"></i><span
+                                class="number_notif notif">{{ app.user.notificationNotSeen | length }}</span></a>
+                </div>
+            </div>
         {% else %}
-        <div class="mobile-bottom-nav__item disable">
-            <div class="mobile-bottom-nav__item-content">
-                <a href="{{ path('notification') }}"><i class="fas fa-bell"></i><span class="number_notif notif">{{ app.user.notificationNotSeen | length }}</span></a>
-            </div>		
-        </div>
+
         {% endif %}
         <div class="mobile-bottom-nav__item">
             <div class="mobile-bottom-nav__item-content">
                 <a class="" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                     <i class="fas fa-bars"></i>
                 </a>
-            </div>		
+            </div>
         </div>
     </nav>
     <!-- Modal -->
-<div class="modal fade menu-collapse" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog mt-0 mb-0 mr-0  m-0Mobile" role="document">
-    <div class="modal-content collapse-navbar">
-      <div class="modal-header">
-        <img src="{{ asset("img/logo_infaux.png") }}" alt="Infaux logo"/></a>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="container d-flex flex-column align-items-center">
-                <div class="user-picture-background mt-40 mt-40Mobile mb-10 mb-10Mobile">
-                    <div class="user-picture">
+    <div class="modal fade menu-collapse" id="exampleModal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog mt-0 mb-0 mr-0  m-0Mobile" role="document">
+            <div class="modal-content collapse-navbar">
+                <div class="modal-header">
+                    <img src="{{ asset("img/logo_infaux.png") }}" alt="Infaux logo"/></a>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container d-flex flex-column align-items-center">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                            <label class="custom-control-label" for="customSwitch1">Mode nuit</label>
+                        </div>
+                        <div class="user-picture-background mt-40 mt-40Mobile mb-10 mb-10Mobile">
+                            <div class="user-picture">
+                                {% if app.user %}
+                                    <img src="{{ asset("img/user.svg") }}" alt="user"/></a>
+                                {% else %}
+                                    <img src="{{ asset("img/user.svg") }}" alt="user"/></a>
+                                {% endif %}
+                            </div>
+                        </div>
                         {% if app.user %}
-                        <img src="{{ asset("img/user.svg") }}" alt="user"/></a>
+                            <h3 class="fc-black">John Doe</h3>
+                            <p class="fc-black">112 abonnées</p>
+                            <a href="">
+                                <button type="button" class="btn btn-black btn-lg btn-block mt-20 mt-20Mobile">Voir le
+                                    profil
+                                </button>
+                            </a>
                         {% else %}
-                        <img src="{{ asset("img/user.svg") }}" alt="user"/></a>
+                            <h3 class="fc-black">Vous n'êtes pas connecté</h3>
+                            <a href="{{ path('app_login') }}">
+                                <button type="button" class="btn btn-black btn-lg btn-block mt-20 mt-20Mobile">Se
+                                    connecter
+                                </button>
+                            </a>
+                            <a href="{{ path('app_register') }}">
+                                <button type="button" class="btn btn-black btn-lg btn-block mt-5 mt-5Mobile">
+                                    Inscription
+                                </button>
+                            </a>
                         {% endif %}
+                        <div class="d-flex flex-column justify-content-start w-100 mt-40 mt-40Mobile">
+
+
+                            {% if app.user %}
+                                {% if is_granted('ROLE_ADMIN') %}
+
+                                    <a class="mt-30 mt-30Mobile" href="/admin">Administration</a>
+
+                                {% endif %}
+                                <a href="{{ path('notification') }}" class="mt-30 mt-30Mobile">Notifications (<span
+                                            class="number_notif">{{ app.user.notificationNotSeen | length }}</span>)</a>
+                                <a href="" class="mt-30 mt-30Mobile">Paramètres</a>
+                                <a href="" class="mt-30 mt-30Mobile">Voir mes postes épinglés</a>
+                                <a href="{{ path('app_logout') }}" class="mt-30 mt-30Mobile">Déconnexion</a>
+
+                            {% endif %}
+
+                        </div>
                     </div>
                 </div>
-                {% if app.user %}
-                <h3  class="fc-black">John Doe</h3>
-                <p class="fc-black">112 abonnées</p>
-                <a href=""><button type="button" class="btn btn-black btn-lg btn-block mt-20 mt-20Mobile">Voir le profil</button></a>
-                {% else %}
-                <h3  class="fc-black">Vous n'êtes pas connecté</h3>
-                <a href="{{ path('app_login') }}"><button type="button" class="btn btn-black btn-lg btn-block mt-20 mt-20Mobile">Se connecter</button></a>
-                <a href="{{ path('app_register') }}"><button type="button" class="btn btn-black btn-lg btn-block mt-5 mt-5Mobile">Inscription</button></a>
-                {% endif %}
-                <div class="d-flex flex-column justify-content-start w-100 mt-40 mt-40Mobile">
-                    <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                    <label class="custom-control-label" for="customSwitch1">Mode nuit</label>
-                    </div>
-                    {% if is_granted('ROLE_ADMIN') %}
 
-                    <a class="mt-30 mt-30Mobile" href="/admin">Administration</a>
-
-                    {% endif %}
-                    {% if app.user %}
-                    <a href="{{ path('notification') }}" class="mt-30 mt-30Mobile">Notifications (<span class="number_notif">{{ app.user.notificationNotSeen | length }}</span>)</a>
-                    {% else %}
-                    <a href="" class="mt-30 mt-30Mobile disable">Notifications</a>
-                    {% endif %}
-                    <a href="" class="mt-30 mt-30Mobile">Paramètres</a>
-                    {% if app.user %}
-                    <a href="" class="mt-30 mt-30Mobile">Voir mes postes épinglés</a>
-                    {% else %}
-                    <a href="" class="mt-30 mt-30Mobile disable">Voir mes postes épinglés</a>
-                    {% endif %}
-                    {% if app.user %}
-                    <a href="" class="mt-30 mt-30Mobile">Déconnexion</a>
-                    {% else %}
-                    <a href="" class="mt-30 mt-30Mobile disable">Déconnexion</a>
-                    {% endif %}
-                </div>
             </div>
-      </div>
-
-  </div>
-</div>
+        </div>
+    </div>
     {# <div class="collapse menu-collapse" id="nav-collapse">
         <div class="card card-body collapse-navbar">
             <a class="" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
