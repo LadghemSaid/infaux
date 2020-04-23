@@ -56,6 +56,7 @@ Encore
             filename: Encore.isProduction() ? '[name].[contenthash].css' : '[name].css',
         }),
     )
+
     .addPlugin(
         new OptimizeCssAssetsPlugin({
             assetNameRegExp: /\.(c|s[ac])ss$/,
