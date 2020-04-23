@@ -2,29 +2,28 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Infaux{% endblock %}</title>
+    <title>{% block title %}Agence Web - PopWeb{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block meta_description %}{% endblock %}
     {% block meta_keywords %}{% endblock %}
     {% block meta_robots %}{% endblock %}
     {% block meta_google %}{% endblock %}
-    <link type="text/plain" rel="author" href="/humans.txt"/>
-    <link rel="manifest" href="/manifest.webmanifest.json">
-
-    <script src="https://kit.fontawesome.com/595ca4abfa.js" crossorigin="anonymous" defer></script>
+    <link type="text/plain" rel="author" href="Nom de domaine/humans.txt"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+    <script src="https://kit.fontawesome.com/595ca4abfa.js" crossorigin="anonymous"></script>
     {% block stylesheets %}
 
     {% endblock %}
-    {{ encore_entry_link_tags('main') }}
 
     {{ encore_entry_link_tags('app') }}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
 
     <link rel="icon" type="image/png" href="img/favicon.png"/>
     <meta name="theme-color" content="#00103e">
     <meta property="og:image" content="img/icon.png"/>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
     <script type="text/javascript" src="{{ asset('js/tarteaucitron/tarteaucitron.js') }}"></script>
     <script type="text/javascript">
         tarteaucitron.init({
@@ -62,20 +61,18 @@
 
 </head>
 {% include "header.html.twig" %}
-
+<body>
 <div id="mercure-content-receiver"></div>
 
-<div class="transition-fade" id="swup">
+
 {% block body %}
 
 {% endblock %}
-</div>
 
 
 
 {% include "footer.html.twig" %}
 
-<a aria-label="Button permettant de retourner en haut de la page" id="scrollToTop"></a>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
@@ -83,8 +80,7 @@
 <script src="{{ asset("js/lazysizes.min.js") }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
 <script src="{{ asset("build/app.js") }}"></script>
-{{ encore_entry_link_tags('app') }}
-
+<a aria-label="Button permettant de retourner en haut de la page" id="scrollToTop"></a>
 <script>
     var btn = $('#scrollToTop');
 
@@ -102,48 +98,6 @@
     });
 
 </script>
-
-<script>
-    //PWA - Service worker et notifcation
-    function notifyMe(msg) {
-        if (!window.Notification) {
-            console.log('Browser does not support notifications.');
-        } else {
-            // check if permission is already granted
-            if (Notification.permission === 'granted') {
-                // show notification here
-                var notify = new Notification('Tu as reçu une notifications !', {
-                    body: msg,
-                    icon: '/img/logo_infaux.png',
-                });
-            } else {
-                // request permission from user
-                Notification.requestPermission().then(function (p) {
-                    if (p === 'granted') {
-                        // show notification here
-                        var notify = new Notification('Tu as reçu une notifications !', {
-                            body: msg,
-                            icon: '/img/logo_infaux.png',
-                        });
-                    } else {
-                        console.log('User blocked notifications.');
-                    }
-                }).catch(function (err) {
-                    console.error(err);
-                });
-            }
-        }
-    }
-
-    // Check that service workers are supported
-    if ('serviceWorker' in navigator) {
-        // Use the window load event to keep the page load performant
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/build/service-worker.js');
-        });
-    }
-</script>
-
 {% block javascripts %}{% endblock %}
 
 </body>
