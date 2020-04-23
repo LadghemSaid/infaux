@@ -1,7 +1,9 @@
 /* BASE SETTINGS */
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
 :root {
-    font-family: 'Roboto', sans-serif !important;
+    font-family: 'Poppins', sans-serif !important;
     box-sizing: border-box !important;
     font-size: 62.5%;
 }
@@ -11,10 +13,10 @@
 }
 
 html, body {
-    font-family: 'Roboto', sans-serif !important;
+    font-family: 'Poppins', sans-serif !important;
     height: 100%;
     font-size: 1.6rem;
-    background-color: $white;
+    background-color: #F2F2F2;
 
 }
 
@@ -26,6 +28,12 @@ a {
         text-decoration: unset;
         font-weight: unset;
     }
+}
+
+.disable {
+    opacity: 40%;
+    pointer-events: none;
+    cursor: default;
 }
 
 /*
