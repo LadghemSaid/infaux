@@ -43,13 +43,14 @@
     color: #fff;
   }
 
+  $red:#F6145F;
   &:hover {
     cursor: pointer;
     background-color: $red;
   }
 
   &:active {
-    background-color: #F6145F;
+    background-color: $red;
   }
 
   &.show {
