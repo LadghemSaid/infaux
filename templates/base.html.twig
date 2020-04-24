@@ -174,12 +174,16 @@
                             numberNotifs[0].innerText++;
                             //  notifyMe(data.message);
                             console.log(data);
-                            registration.showNotification(data.message);
+                            registration.showNotification('Tu as reçu une notifications !', {
+                                body: data.message,
+                                icon: '/img/logo_infaux.png',
+                            });
 
                         };
                     })
 
-
+                } else {
+                    console.log("Notification refused")
                 }
                 ;
             });
