@@ -9,7 +9,7 @@
     {% block meta_robots %}{% endblock %}
     {% block meta_google %}{% endblock %}
     <link type="text/plain" rel="author" href="{{ preload('/humans.txt', { as: 'font', importance: 'low' }) }}"/>
-    <link rel="manifest" href="/manifest.webmanifest.json">
+    <link rel="manifest" href="{{ preload('/manifest.webmanifest.json', { as: 'font', importance: 'low' }) }}">
 
 
     {% block stylesheets %}
@@ -19,12 +19,17 @@
     {{ encore_entry_link_tags('main') }}
 
     <link rel="icon" type="image/png" href="{{ preload('/img/favicon.png', { as: 'image' }) }}"/>
-    <link rel="apple-touch-icon" sizes="96x96" href="{{ preload('/img/favicon96.png', { as: 'image', importance: 'low' }) }}">
-    <link rel="apple-touch-icon" sizes="192x192" href="{{ preload('/img/favicon192.png', { as: 'image', importance: 'low' }) }}">
+    <link rel="apple-touch-icon" sizes="96x96"
+          href="{{ preload('/img/favicon96.png', { as: 'image', importance: 'low' }) }}">
+    <link rel="apple-touch-icon" sizes="192x192"
+          href="{{ preload('/img/favicon192.png', { as: 'image', importance: 'low' }) }}">
     <meta property="og:image" content="{{ preload('/img/icon.png', { as: 'image', importance: 'low' }) }}"/>
     <meta name="theme-color" content="#00103e">
-    <script type="text/javascript" src="{{ preload('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js', { as: 'script' }) }}" defer></script>
-    <script type="text/javascript" src="{{ preload(asset('js/tarteaucitron/tarteaucitron.js'), { as: 'script', importance: 'low' }) }}"></script>
+    <script type="text/javascript"
+            src="{{ preload('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js', { as: 'script' }) }}"
+            defer></script>
+    <script type="text/javascript"
+            src="{{ preload(asset('js/tarteaucitron/tarteaucitron.js'), { as: 'script', importance: 'low' }) }}"></script>
 
     <script type="text/javascript" defer>
         tarteaucitron.init({
@@ -76,10 +81,13 @@
 
 <a aria-label="Button permettant de retourner en haut de la page" id="scrollToTop"></a>
 
-<script src="{{ preload('https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js', { as: 'script' }) }}" ></script>
-<script src="{{ preload('https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js', { as: 'script' }) }}" defer></script>
-<script src="{{ preload('https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js', { as: 'script' }) }}" defer></script>
-<script src="{{ preload('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js', { as: 'script' }) }}" defer></script>
+<script src="{{ preload('https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js', { as: 'script' }) }}"></script>
+<script src="{{ preload('https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js', { as: 'script' }) }}"
+        defer></script>
+<script src="{{ preload('https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js', { as: 'script' }) }}"
+        defer></script>
+<script src="{{ preload('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js', { as: 'script' }) }}"
+        defer></script>
 
 {{ encore_entry_script_tags('app') }}
 
@@ -134,53 +142,49 @@
         }
     }
 
-    // Check that service workers are supported
-    if ('serviceWorker' in navigator) {
-        // Use the window load event to keep the page load performant
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/service-worker.js').then((reg)=>{
-                console.log('Registration succeed')
-            }).catch((err)=>{
-                console.log('Registration failed :'+ err)
-            })
-        });
-    }else{
-        console.log('Service Worker not supported')
 
-    }
 </script>
 
 {% if app.user %}
 
-    <script type="text/javascript" >
-        $(document).ready(function(){
+    <script type="text/javascript">
+        $(document).ready(function () {
 
             //const _receiver = document.getElementById('mercure-content-receiver');
             const numberNotifs = $('.number_notif');
-
             const url = new URL('{{ mercure_publish_url }}');
-
             url.searchParams.append('topic', '/message');
-            //const eventSource = new EventSource(url, {withCredentials: true});
-            //const eventSource = new EventSource(url, {withCredentials: true,headers: {Authorization: bearer}});
 
-            const eventSource =  new EventSourcePolyfill(url, {
-                headers: {
-                    'Authorization': 'Bearer {{ bearerToken }}'
+
+            navigator.serviceWorker.register('/service-worker.js');
+            Notification.requestPermission(function (result) {
+                if (result === 'granted') {
+                    navigator.serviceWorker.ready.then(function (registration) {
+                        const eventSource = new EventSourcePolyfill(url, {
+                            headers: {
+                                'Authorization': 'Bearer {{ bearerToken }}'
+                            }
+                        });
+
+                        eventSource.onmessage = (evt) => {
+                            const data = JSON.parse(evt.data);
+                            if (!data.message) {
+                                return;
+                            }
+                            numberNotifs[0].innerText++;
+                            //  notifyMe(data.message);
+                            console.log(data);
+                            registration.showNotification(data.message);
+
+                        };
+                    })
+
+
                 }
+                ;
             });
-
-            eventSource.onmessage = (evt) => {
-                const data = JSON.parse(evt.data);
-                if (!data.message) {
-                    return;
-                }
-                numberNotifs[0].innerText++;
-                notifyMe(data.message);
-                console.log(data);
-                //_receiver.insertAdjacentHTML('beforeend', `<div class="message">${data.message}</div>`);
-            };
         })
+
 
     </script>
 {% endif %}
