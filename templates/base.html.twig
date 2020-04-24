@@ -12,9 +12,8 @@
     <link rel="manifest" href="/manifest.webmanifest.json">
 
     <script src="https://kit.fontawesome.com/595ca4abfa.js" crossorigin="anonymous" defer></script>
-    {% block stylesheets %}
-
-    {% endblock %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <script src="https://unpkg.com/swup@latest/dist/swup.min.js"></script>  
     {{ encore_entry_link_tags('main') }}
 
     <link rel="icon" type="image/png" href="img/favicon.png"/>
@@ -60,10 +59,11 @@
 <body>
 <div id="mercure-content-receiver"></div>
 
+<div class="transition-fade" id="swup">
+    {% block body %}
 
-{% block body %}
-
-{% endblock %}
+    {% endblock %}
+</div>
 
 
 
