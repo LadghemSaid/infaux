@@ -9,7 +9,7 @@
     {% block meta_robots %}{% endblock %}
     {% block meta_google %}{% endblock %}
     <link type="text/plain" rel="author" href="{{ preload('/humans.txt', { as: 'font', importance: 'low' }) }}"/>
-    <link rel="manifest" href="/manifest.webmanifest.json">
+    <link rel="manifest" href="{{ preload('/manifest.webmanifest.json', { as: 'font', importance: 'low' }) }}">
 
 
     {% block stylesheets %}
@@ -59,7 +59,15 @@
 
     </script>
     {% block gtag %}{% endblock %}
-
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+    <script>
+        var OneSignal = window.OneSignal || [];
+        OneSignal.push(function() {
+            OneSignal.init({
+                appId: "63ed285b-29e0-4f43-96aa-d4cd643d220a",
+            });
+        });
+    </script>
 </head>
 {% include "header.html.twig" %}
 <body>
