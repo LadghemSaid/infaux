@@ -59,15 +59,7 @@
 
     </script>
     {% block gtag %}{% endblock %}
-    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
-    <script>
-        var OneSignal = window.OneSignal || [];
-        OneSignal.push(function() {
-            OneSignal.init({
-                appId: "63ed285b-29e0-4f43-96aa-d4cd643d220a",
-            });
-        });
-    </script>
+
 </head>
 {% include "header.html.twig" %}
 <body>
@@ -142,20 +134,16 @@
         }
     }
 
-    // Check that service workers are supported
-    if ('serviceWorker' in navigator) {
-        // Use the window load event to keep the page load performant
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/service-worker.js').then((reg)=>{
-                console.log('Registration succeed')
-            }).catch((err)=>{
-                console.log('Registration failed :'+ err)
-            })
-        });
-    }else{
-        console.log('Service Worker not supported')
 
-    }
+    navigator.serviceWorker.register('/service-worker.js');
+    Notification.requestPermission(function(result) {
+        if (result === 'granted') {
+            navigator.serviceWorker.ready.then(function(registration) {
+                registration.showNotification('Notification with ServiceWorker');
+            });
+        }
+    });
+
 </script>
 
 {% if app.user %}

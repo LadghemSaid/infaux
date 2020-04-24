@@ -19,7 +19,7 @@ self.addEventListener('fetch', function(evt) {
     //console.log('The service worker intercept the following network\'s request : ', evt.request.url);
 
     evt.respondWith(
-        fromNetwork(evt.request, 40000)
+        fromNetwork(evt.request, 1000)
             .catch(function(){
                 // console.log('FROM CACHE');
                 return fromCache(evt.request);
