@@ -4,7 +4,7 @@ a {
 	font-family: Poppins-Regular;
 	font-size: 14px;
 	line-height: 1.7;
-	color: #666666;
+	color: $black;
 	margin: 0px;
 	transition: all 0.4s;
 	-webkit-transition: all 0.4s;
@@ -18,14 +18,14 @@ a:focus {
 
 a:hover {
 	text-decoration: none;
-  color: #00D47F;
+  color: $green;
 }
 
 p {
 	font-family: Poppins-Regular;
 	font-size: 14px;
 	line-height: 1.7;
-	color: #666666;
+	color: $black;
 	margin: 0px;
 }
 
@@ -60,15 +60,15 @@ textarea:focus:-moz-placeholder { color:transparent; }
 textarea:focus::-moz-placeholder { color:transparent; }
 textarea:focus:-ms-input-placeholder { color:transparent; }
 
-input::-webkit-input-placeholder { color: #adadad;}
-input:-moz-placeholder { color: #adadad;}
-input::-moz-placeholder { color: #adadad;}
-input:-ms-input-placeholder { color: #adadad;}
+input::-webkit-input-placeholder { color: $dark-grey;}
+input:-moz-placeholder { color: $dark-grey;}
+input::-moz-placeholder { color: $dark-grey;}
+input:-ms-input-placeholder { color: $dark-grey;}
 
-textarea::-webkit-input-placeholder { color: #adadad;}
-textarea:-moz-placeholder { color: #adadad;}
-textarea::-moz-placeholder { color: #adadad;}
-textarea:-ms-input-placeholder { color: #adadad;}
+textarea::-webkit-input-placeholder { color: $dark-grey;}
+textarea:-moz-placeholder { color: $dark-grey;}
+textarea::-moz-placeholder { color: $dark-grey;}
+textarea:-ms-input-placeholder { color: $dark-grey;}
 
 /*---------------------------------------------*/
 button {
@@ -91,14 +91,14 @@ iframe {
 .txt1 {
   font-family: Poppins-Regular;
   font-size: 13px;
-  color: #666666;
+  color: $dark-grey;
   line-height: 1.5;
 }
 
 .txt2 {
   font-family: Poppins-Regular;
   font-size: 13px;
-  color: #333333;
+  color: $black;
   line-height: 1.5;
 }
 
@@ -122,13 +122,13 @@ iframe {
   justify-content: center;
   align-items: center;
   padding: 15px;
-  background: #f2f2f2;  
+  background: $fade-white;  
 }
 
 .wrap-login {
   width: 390px;
-  background: #fff;
-  border-radius: 10px;
+  background: $fade-white-3;
+  border-radius: 24px;
   overflow: hidden;
   padding: 33px 55px 33px 55px;
 
@@ -151,7 +151,7 @@ iframe {
   display: block;
   font-family: Poppins-Bold;
   font-size: 30px;
-  color: #333333;
+  color: $black;
   line-height: 1.2;
   text-align: center;
 }
@@ -165,14 +165,14 @@ iframe {
 .wrap-input {
   width: 100%;
   position: relative;
-  border-bottom: 2px solid #adadad;
+  border-bottom: 2px solid $dark-grey;
   margin-bottom: 37px;
 }
 
 .input {
   font-family: Poppins-Regular;
   font-size: 15px;
-  color: #555555;
+  color: $dark-grey;
   line-height: 1.2;
 
   display: block;
@@ -207,13 +207,13 @@ iframe {
   -moz-transition: all 0.4s;
   transition: all 0.4s;
 
-  background: #00D47F;
+  background: $green;
 }
 
 .focus-input::after {
   font-family: Poppins-Regular;
   font-size: 15px;
-  color: #999999;
+  color: $dark-grey;
   line-height: 1.2;
 
   content: attr(data-placeholder);
@@ -249,7 +249,7 @@ iframe {
 /*---------------------------------------------*/
 .btn-show-pass {
   font-size: 15px;
-  color: #999999;
+  color: $dark-grey;
 
   display: -webkit-box;
   display: -webkit-flex;
@@ -270,11 +270,11 @@ iframe {
 }
 
 .btn-show-pass:hover {
-  color: #00D47F;
+  color: $green;
 }
 
 .btn-show-pass.active {
-  color: #00D47F;
+  color: $green;
 }
 
 
@@ -307,7 +307,7 @@ iframe {
   z-index: -1;
   width: 300%;
   height: 100%;
-  background: #00D47F;
+  background: $green;
   top: 0;
   left: -100%;
 
@@ -320,7 +320,7 @@ iframe {
 .login-form-btn {
   font-family: Poppins-Medium;
   font-size: 15px;
-  color: #fff;
+  color: $white;
   line-height: 1.2;
   text-transform: uppercase;
 
@@ -363,8 +363,8 @@ iframe {
   content: attr(data-validate);
   position: absolute;
   max-width: 70%;
-  background-color: #fff;
-  border: 1px solid #c80000;
+  background-color: $white;
+  border: 1px solid $red;
   border-radius: 2px;
   padding: 4px 25px 4px 10px;
   top: 50%;
@@ -377,7 +377,7 @@ iframe {
   pointer-events: none;
 
   font-family: Poppins-Regular;
-  color: #c80000;
+  color: $red;
   font-size: 13px;
   line-height: 1.4;
   text-align: left;
@@ -395,11 +395,11 @@ iframe {
   content: "\f06a";
   font-family: FontAwesome;
   font-size: 16px;
-  color: #c80000;
+  color: $red;
 
   display: block;
   position: absolute;
-  background-color: #fff;
+  background-color: $white;
   top: 50%;
   -webkit-transform: translateY(-50%);
   -moz-transform: translateY(-50%);

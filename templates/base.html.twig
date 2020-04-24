@@ -11,6 +11,10 @@
     <link type="text/plain" rel="author" href="{{ preload('/humans.txt', { as: 'font', importance: 'low' }) }}"/>
     <link rel="manifest" href="{{ preload('/manifest.webmanifest.json', { as: 'font', importance: 'low' }) }}">
 
+    <script src="https://kit.fontawesome.com/595ca4abfa.js" crossorigin="anonymous" defer></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <script src="https://unpkg.com/swup@latest/dist/swup.min.js"></script>
 
     {% block stylesheets %}
 
@@ -70,10 +74,11 @@
 <body>
 <div id="mercure-content-receiver"></div>
 
+<div class="transition-fade" id="swup">
+    {% block body %}
 
-{% block body %}
-
-{% endblock %}
+    {% endblock %}
+</div>
 
 
 
