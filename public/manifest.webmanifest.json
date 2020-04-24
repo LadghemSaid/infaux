@@ -2,19 +2,30 @@
   "short_name": "Infaux",
   "name": "Infaux site d'information communautaire",
   "description": "Partage ton avis et decouvre ce que les autres en pense",
+
   "icons": [
     {
-      "src": "/img/logo_infaux192.png",
+      "src": "/img/favicon48.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "/img/favicon96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "/img/favicon192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "/img/logo_infaux512.png",
+      "src": "/img/favicon512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
   ],
-  "start_url": "/?source=pwa",
+  "start_url": "./",
   "background_color": "#3367D6",
   "display": "fullscreen",
   "scope": "/",

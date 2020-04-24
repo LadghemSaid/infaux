@@ -51,11 +51,6 @@ Encore
             'sass-loader',
         ],
     })
-    .addPlugin(
-        new MiniCssExtractPlugin({
-            filename: Encore.isProduction() ? '[name].[contenthash].css' : '[name].css',
-        }),
-    )
 
     .addPlugin(
         new OptimizeCssAssetsPlugin({
@@ -73,6 +68,12 @@ Encore
             canPrint: true,
         }),
     )
+    .addPlugin(
+        new MiniCssExtractPlugin({
+            filename: Encore.isProduction() ? '[name].[contenthash].css' : '[name].css',
+        }),
+    )
+
     .addPlugin(
         new TerserPlugin({
             terserOptions: {
@@ -105,8 +106,34 @@ Encore
 const prod = Encore.getWebpackConfig();
 prod.name = 'prod';
 
+Encore.reset();
+
+Encore
+    .setOutputPath('public/build/')
+    .setPublicPath('/build')
+    .setManifestKeyPrefix('build/')
+    .addEntry('app', './assets/js/app.js')
+    .addStyleEntry('main', './assets/css/scss/imports.scss')
+
+    .splitEntryChunks()
+    .enableSingleRuntimeChunk()
+    .cleanupOutputBeforeBuild()
+    .enableBuildNotifications()
+    .enableSourceMaps(!Encore.isProduction())
+    .enableVersioning(Encore.isProduction())
+    .configureBabel(() => {}, {
+        useBuiltIns: 'usage',
+        corejs: 3
+    })
+    .enableSassLoader()
+;
+const dev = Encore.getWebpackConfig();
+dev.name = 'dev';
 
 
-module.exports = [prod];
+module.exports = [prod, dev];
+
+
+
 
 
