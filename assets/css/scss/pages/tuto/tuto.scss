@@ -11,11 +11,13 @@
         background: rgba(255, 255, 255, 0.644);
         border-radius: 100%;
         margin: 10px;
-        svg {
-            width: 50%;
-            height: 50%;
-            margin: 25%;
-            color: $custom-grey;
+        .upload {
+            padding: 20%;
+            text-align: center;
+        }
+        i {
+            font-size: 40px;
+            color: $dark-grey;
         }
     }
 }
