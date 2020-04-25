@@ -24,6 +24,8 @@ Encore
     .setPublicPath('/build')
     .setManifestKeyPrefix('build/')
     .addEntry('app', './assets/js/app.js')
+    .addEntry('ajax', './assets/js/ajax.js')
+    .addEntry('login', './assets/js/login.js')
     .addStyleEntry('main', './assets/css/scss/imports.scss')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
@@ -100,7 +102,11 @@ Encore
             // these options encourage the ServiceWorkers to get in there fast
             // and not allow any straggling "old" SWs to hang around
             clientsClaim: true,
-            skipWaiting: true
+            skipWaiting: true,
+            runtimeCaching: [{
+                urlPattern: new RegExp('127.0.0.1:8000/'),
+                handler: 'StaleWhileRevalidate'
+            }]
         }))
 ;
 const prod = Encore.getWebpackConfig();

@@ -1,9 +1,18 @@
+// swup
+.transition-fade {
+    transition: 0.4s;
+    opacity: 1;
+  }
+  
+  html.is-animating .transition-fade {
+    opacity: 0;
+  }
+
 .hidden {
     display: none;
 }
 
 .logo-header {
-    width: 100%;
     background-color: $fade-white;
     padding: 10px 0;
     position: fixed;
@@ -53,6 +62,15 @@
     }
 }
 
+.modal.fade{
+    opacity:1;
+  }
+  .modal.fade .modal-dialog {
+     -webkit-transform: translate(0);
+     -moz-transform: translate(0);
+     transform: translate(0);
+  }
+
 .collapse-navbar {
     background-color: $green;
     border-radius: 0;
@@ -64,6 +82,10 @@
         height: 50px;
         width: auto;
     }
+}
+
+.menu-collapse {
+    background-color: rgba(0, 0, 0, 0.466);
 }
 
 .modal-header {
@@ -142,4 +164,10 @@ span.notif {
     padding: 3px 6px;
     bottom: 5px;
     z-index: -1;
+}
+
+.disabled {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.3;
 }

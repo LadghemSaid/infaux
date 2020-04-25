@@ -18,17 +18,18 @@
                       class="likeForm">
                     <button type="submit" id="like_submit" name="like[submit]" class="btn btn-pink ">
                         <i class="fa fa-thumbs-up">
-                                        <span class="number">
+
+                        </i>
+                        <span class="number">
                                             {{ comment.likes|length }}
                                         </span>
-                        </i>
                     </button>
                 </form>
                 </p>
                 <p class="icons">
-                    <i class="fa fa-clock-o"><span data-createdAt="{{ comment.createdAt | date('U') }}"
-                                                   class="number p-date">{{ comment.createdAt | date('U') }}</span></i>
-
+                    <i class="fa fa-clock"></i>
+                    <span data-createdAt="{{ comment.createdAt | date('U') }}"
+                          class="number p-date">{{ comment.createdAt | date('U') }}</span>
                 </p>
                 <p class="icons">
                 <form name="report" method="post"
@@ -36,7 +37,7 @@
                       class="reportForm">
                     <button type="submit" id="report_submit" name="report[submit]"
                             class="btn btn-pink ">
-                        <i class="fa fa-flag"><span class="number ">Signalez</span></i>
+                        <i class="fa fa-flag"></i><span class="number ">Signalez</span>
                     </button>
                 </form>
                 </p>
