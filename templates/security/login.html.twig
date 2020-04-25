@@ -1,7 +1,7 @@
 {% extends '/base.html.twig' %}
 
 {% block title %}
-    Infaux - Inscription
+    Infaux - Connexion
 {% endblock %}
 {% block gtag %}
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -48,10 +48,10 @@
 					{% endif %}
 
 					{% if app.user %}
-						<div class="mb-3">
+						<div class="mb-3 pb-60">
 							Vous etes connecté en tant que :
 							{{ app.user.username }},
-							<a href="{{ path('app_logout') }}">Logout</a>
+							<a href="{{ path('app_logout') }}">Déconnexion</a>
 						</div>
 
 					{% else %}

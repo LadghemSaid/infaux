@@ -1,0 +1,41 @@
+.upload-picture-background {
+    width: 100px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.527);
+    background: linear-gradient(135deg, rgba(255,255,255,0) 0%, $green 200%);
+    border-radius: 100%;
+    margin: auto;
+    .upload-picture {
+        width: 80%;
+        height: 80%;
+        background: rgba(255, 255, 255, 0.644);
+        border-radius: 100%;
+        margin: 10px;
+        svg {
+            width: 50%;
+            height: 50%;
+            margin: 25%;
+            color: $custom-grey;
+        }
+    }
+}
+
+.login .description textarea {
+    background-color: $transparent-green;
+    border-radius: 22px;
+    font-size: 16px;
+    color: $black;
+    padding: 1.375rem 1.75rem;
+}
+
+.login .description textarea::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: $black;
+        font-size: 16px;
+        font-weight: 200;
+        opacity: 1; /* Firefox */
+}
+
+.login .description textarea:focus {
+    background-color: $transparent-green;
+    border-radius: 22px;
+}

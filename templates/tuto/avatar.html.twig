@@ -1,49 +1,63 @@
 {% extends '/base.html.twig' %}
 
 {% block title %}
-    PopWeb - Blog
+	Infaux - Inscription
 {% endblock %}
 {% block gtag %}
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107718823-2"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107718823-2"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
 
-        function gtag() {
-            dataLayer.push(arguments);
-        }
+function gtag() {
+dataLayer.push(arguments);
+}
 
-        gtag('js', new Date());
+gtag('js', new Date());
 
-        gtag('config', 'UA-107718823-2');
-    </script>
+gtag('config', 'UA-107718823-2');
+	</script>
 {% endblock %}
 {% block meta_description %}
-    <meta name="description"
-          content="Agence web à Lens. Conception et développement de sites sur mesure. Communication digitale, référencement SEO Google."/>{% endblock %}
+	<meta name="description" content="Agence web à Lens. Conception et développement de sites sur mesure. Communication digitale, référencement SEO Google."/>
+{% endblock %}
 {% block meta_keywords %}
-    <meta name="keywords"
-          content="Agence web de communication web marketing, stratégie digitale à Lens, France, creation site internet, agence de développement web, Création site internet, Lens, Lille, France, creation site internet, 59, 62, Nord Pas de Calais, Nord, Haut de France, création site internet vitrine, community management entreprise, community management personnel, création boutique en ligne, site internet, site web, création site internet boutique en ligne, Création site web, 75, Paris, Création site web e commerce, agence de référencement, agence seo, seo, référencement naturel, web marketing, agence web, agence de communication, vidéo promotionnelle, vidéo commercial, création site catalogue, création site internet responsive, généré du trafic sur mon site internet, première page google, référencement google, création de site internet france, conseil et webdesign, référencement internet, agence web, site internet responsive, site responsive, création et optimisation de site web, web design et développement de site internet, communication digitale, webmarketing, création site internet boutique en ligne, boutique en ligne, créer boutique en ligne, refonte boutique en ligne, refonte site internet e-commerce, responsive web design, refonte site internet responsive, site adaptable, site internet, site web, création site internet, création site web, responsive, création site internet e-commerce"/>{% endblock %}
+	<meta name="keywords" content="Agence web de communication web marketing, stratégie digitale à Lens, France, creation site internet, agence de développement web, Création site internet, Lens, Lille, France, creation site internet, 59, 62, Nord Pas de Calais, Nord, Haut de France, création site internet vitrine, community management entreprise, community management personnel, création boutique en ligne, site internet, site web, création site internet boutique en ligne, Création site web, 75, Paris, Création site web e commerce, agence de référencement, agence seo, seo, référencement naturel, web marketing, agence web, agence de communication, vidéo promotionnelle, vidéo commercial, création site catalogue, création site internet responsive, généré du trafic sur mon site internet, première page google, référencement google, création de site internet france, conseil et webdesign, référencement internet, agence web, site internet responsive, site responsive, création et optimisation de site web, web design et développement de site internet, communication digitale, webmarketing, création site internet boutique en ligne, boutique en ligne, créer boutique en ligne, refonte boutique en ligne, refonte site internet e-commerce, responsive web design, refonte site internet responsive, site adaptable, site internet, site web, création site internet, création site web, responsive, création site internet e-commerce"/>
+{% endblock %}
 {% block meta_robots %}
-    <meta name="robots" content="unavailable_after: [date ]">{% endblock %}
+	<meta name="robots" content="unavailable_after: [date ]">
+{% endblock %}
 {% block google %}
-    <meta name="google" content="unavailable_after: [date ]">{% endblock %}
+	<meta name="google" content="unavailable_after: [date ]">
+{% endblock %}
 
 {% block style_custom %}
 
-    <style>
-
-    </style>
+	<style></style>
 {% endblock %}
 {% block body %}
 
-    <div class="mt-5">
-        Renseigner votre avatar
+	<div class="login limiter">
+		<div class="container-login">
+			<div class="wrap-login">
+                <a href="{{ path("index") }}" class="pb-30 pb-30Mobile d-flex justify-content-end"><i class="fas fa-times"></i></a>
+                <h2>Débutez dans Infaux</h2>
+                <p>Commençons par ajoutez un avatar à votre profil</p>
+                <div class=" d-flex flex-column align-items-center">
+                <div class="upload-picture-background mt-40 mt-40Mobile mb-10 mb-10Mobile">
+                    <div class="upload-picture">
+                        <i class="fas fa-file-import"></i>
+                    </div>
+                </div>
 
+                <a href="" class="">Choisir un fichier</a>
+                </div>
+                <div class="d-flex justify-content-between mt-40 mt-40Mobile">
+				<a class="" href="{{ path('tuto.description') }}">Passer</a>
+                <a class="" href="{{ path('tuto.description') }}">Valider</a>
+                </a>
+			</div>
+		</div>
+	</div>
 
-        <a class="btn btn-primary" href="{{ path('tuto.description') }}">Passer a l'etape suivante</a>
-
-    </div>
-
-
-{% endblock %}
+</div>{% endblock %}
