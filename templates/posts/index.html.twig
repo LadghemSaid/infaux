@@ -199,7 +199,7 @@
                         <div class="img"
                              style="background:url(https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80)">
                         </div>
-                        <form name="comment" method="post" action="{{ path('comment.add',{'id':post.id}) }}"
+                        <form onsubmit="handleAddComment(event)" name="comment" method="post" action="{{ path('comment.add',{'id':post.id}) }}"
                               class="commentForm">
                             <div class="form-group">
                                 <label class="sr-only required" for="comment_textComment">Commentaire</label>
