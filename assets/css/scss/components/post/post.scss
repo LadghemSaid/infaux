@@ -5,6 +5,7 @@ $radius:15px;
 $white: rgba(255,255,255,.34);
 
 .post-container {
+  font-family: 'Poppins', sans-serif;
   display: flex;
   flex-direction: column;
   margin-top:93px;
@@ -29,7 +30,7 @@ $white: rgba(255,255,255,.34);
         display: flex;
 
         .img {
-          width: 45px;
+          width: 55px;
           height: 45px;
           background-size: cover !important;
           background-position: center !important;
@@ -190,6 +191,42 @@ $white: rgba(255,255,255,.34);
     margin-bottom: 50px;
 
   }
+  }
+
+
+  .formComment{
+    
+    display: flex;
+    flex-direction: row;
+
+    .img {
+      width: 55px;
+      height: 45px;
+      background-size: cover !important;
+      background-position: center !important;
+      background-repeat: no-repeat !important;
+      border-radius: 100px;
+    }
+
+    .commentForm{
+      padding: 0 !important;
+      margin-left: 10px;
+      display: flex;
+      flex-direction:column;
+      align-items: flex-end;
+
+      .form-group{
+        width: 100%;
+        input{
+          background-color:rgba($color: white, $alpha: .34);
+          border-radius: 15px;
+          height:30px !important;
+          border:0px black solid;
+          font-size: $small;
+          padding: 15px !important;
+        }
+      }
+    }
   }
 }
 
