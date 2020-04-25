@@ -24,7 +24,7 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ( $form->isSubmitted() &&  $form->isValid() ) {
             // encode the plain password
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
@@ -41,10 +41,9 @@ class RegistrationController extends AbstractController
                     'main'
                 );
 
-            return $this->render('tuto/avatar.html.twig', [
-
-            ]);
+            return $this->redirectToRoute('tuto.avatar');
         }
+
 
         return $this->render('security/register.html.twig', [
             'registrationForm' => $form->createView(),

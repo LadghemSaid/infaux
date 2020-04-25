@@ -58,22 +58,24 @@
                     <div class="header">
                         <img src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"
                              alt="" class="img">
-                    <div class="l-post">
-                        <p class="username"><strong>{{ post.user.username }}</strong></p>
-                        <p class="text">{{ post.text }}</p>
-                    </div>
+                        <div class="l-post">
+                            <p class="username"><strong>{{ post.user.username }}</strong></p>
+                            <p class="text">{{ post.text }}</p>
+                        </div>
                     </div>
 
                     <div class="footer">
                         <p class="icons">
                         <form name="like" method="post"
                               action="{{ path('like.add',{"entity":"post",'id':post.id}) }}" class="likeForm">
-                            <button type="submit" id="like_submit-post-{{ post.id }}" name="like[submit]" class="btn btn-pink ">
+                            <button type="submit" id="like_submit-post-{{ post.id }}" name="like[submit]"
+                                    class="btn btn-pink ">
                                 <i class="fa fa-thumbs-up">
-                                        <span class="number">
-                                            {{ post.likes|length }}
-                                        </span>
+
                                 </i>
+                                <span class="number">
+                                            {{ post.likes|length }}
+                                </span>
                             </button>
                         </form>
                         </p>
@@ -81,25 +83,27 @@
 
                         <form name="report" method="post"
                               action="{{ path('post.addfollow',{"entity":"post",'id':post.id}) }}" class="reportForm">
-                            <button type="submit" id="report_submit-post-{{ post.id }}" name="report[submit]" class="btn btn-pink ">
-                                <i class="fa fa-flag"><span
-                                            class="number ">{{ post.followedBy | length }} epingler</span></i>
+                            <button type="submit" id="report_submit-post-{{ post.id }}" name="report[submit]"
+                                    class="btn btn-pink ">
+                                <i class="fa fa-flag"></i><span
+                                        class="number ">{{ post.followedBy | length }} epingler</span>
                             </button>
                         </form>
                         </p>
                         <p class="icons">
-                            <i class="fa fa-comment"><span class="number">{{ post.comments | length }}</span></i>
+                            <i class="fa fa-comment"></i><span class="number">{{ post.comments | length }}</span>
                         </p>
                         <p class="icons">
-                            <i class="fa fa-clock-o"><span data-createdAt="{{ post.createdAt | date('U') }}"
-                                                           class="number p-date">{{ post.createdAt | date('U') }}</span></i>
+                            <i class="fa fa-clock"></i><span data-createdAt="{{ post.createdAt | date('U') }}"
+                                                             class="number p-date">{{ post.createdAt | date('U') }}</span>
 
                         </p>
                         <p class="icons">
                         <form name="report" method="post"
                               action="{{ path('report.add',{"entity":"post",'id':post.id}) }}" class="reportForm">
-                            <button type="submit" id="report_submit-post-{{ post.id }}" name="report[submit]" class="btn btn-pink ">
-                                <i class="fa fa-flag"><span class="number ">Signalez</span></i>
+                            <button type="submit" id="report_submit-post-{{ post.id }}" name="report[submit]"
+                                    class="btn btn-pink ">
+                                <i class="fa fa-flag"></i><span class="number ">Signalez</span>
                             </button>
                         </form>
                         </p>
@@ -143,11 +147,11 @@
                             <div class="header">
                                 <img src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"
                                      alt="" class="img">
-                                     <div class="l-post">
+                                <div class="l-post">
                                     <p class="username"><strong>{{ comment.user }}</strong></p>
 
                                     <p class="text">{{ comment.textComment }} </p>
-                             </div>   
+                                </div>
                             </div>
 
                             <div class="footer">
@@ -155,27 +159,31 @@
                                 <form name="like" method="post"
                                       action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
                                       class="likeForm">
-                                    <button type="submit" id="like_submit-comment-post-{{ post.id }}" name="like[submit]" class="btn btn-pink ">
+                                    <button type="submit" id="like_submit-comment-post-{{ post.id }}"
+                                            name="like[submit]" class="btn btn-pink ">
                                         <i class="fa fa-thumbs-up">
+
+                                        </i>
                                         <span class="number">
                                             {{ comment.likes|length }}
                                         </span>
-                                        </i>
                                     </button>
                                 </form>
                                 </p>
                                 <p class="icons">
-                                    <i class="fa fa-clock-o"><span data-createdAt="{{ comment.createdAt | date('U') }}"
-                                                                   class="number p-date">{{ comment.createdAt | date('U') }}</span></i>
+                                    <i class="fa fa-clock"></i><span
+                                            data-createdAt="{{ comment.createdAt | date('U') }}"
+                                            class="number p-date">{{ comment.createdAt | date('U') }}</span>
 
                                 </p>
                                 <p class="icons">
                                 <form name="report" method="post"
                                       action="{{ path('report.add',{"entity":"post",'id':post.id}) }}"
                                       class="reportForm">
-                                    <button type="submit" id="report_submit-comment-post-{{ post.id }}" name="report[submit]"
+                                    <button type="submit" id="report_submit-comment-post-{{ post.id }}"
+                                            name="report[submit]"
                                             class="btn btn-pink ">
-                                        <i class="fa fa-flag"><span class="number ">Signalez</span></i>
+                                        <i class="fa fa-flag"></i><span class="number ">Signalez</span>
                                     </button>
                                 </form>
                                 </p>
@@ -234,7 +242,7 @@
 
 
               //Post infinite scroll
-              var infiniteScroll = $('.container').infiniteScroll({
+              var infiniteScroll = $('.transition-fade .container').infiniteScroll({
                   // options
                   path: '.next a',
                   append: '.post-container',
@@ -264,6 +272,54 @@
       </script>
 
 
+
+      {% if app.user %}
+
+          <script type="text/javascript">
+              $(document).ready(function () {
+
+                  //const _receiver = document.getElementById('mercure-content-receiver');
+                  const numberNotifs = $('.number_notif');
+                  const url = new URL('{{ mercure_publish_url }}');
+                  url.searchParams.append('topic', '/message');
+
+
+                  navigator.serviceWorker.register('/build/service-worker.js');
+                  Notification.requestPermission(function (result) {
+                      if (result === 'granted') {
+                          navigator.serviceWorker.ready.then(function (registration) {
+                              const eventSource = new EventSourcePolyfill(url, {
+                                  headers: {
+                                      'Authorization': 'Bearer {{ bearerToken }}'
+                                  }
+                              });
+
+                              eventSource.onmessage = (evt) => {
+                                  const data = JSON.parse(evt.data);
+                                  if (!data.message) {
+                                      return;
+                                  }
+                                  numberNotifs[0].innerText++;
+                                  //  notifyMe(data.message);
+                                  console.log(data);
+                                  registration.showNotification('Tu as reçu une notifications !', {
+                                      body: data.message,
+                                      icon: '/img/logo_infaux.png',
+                                  });
+
+                              };
+                          })
+
+                      } else {
+                          console.log("Notification refused")
+                      }
+                      ;
+                  });
+              })
+
+
+          </script>
+      {% endif %}
 
 
 
