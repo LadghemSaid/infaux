@@ -55,8 +55,14 @@ $white: rgba(255,255,255,.34);
           }
 
           .option{
-            color:$green;
+            .btn-opt-post{
+              color: $green;
+            }
+            .opt-post{
+              background-color: red;
+            }
           }
+          
         }
       }
     
@@ -242,3 +248,5 @@ $white: rgba(255,255,255,.34);
   display: flex;
   flex-direction: column;
 }
+
+

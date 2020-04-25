@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -38,10 +39,9 @@ class ReportController extends AbstractController
 
             if ($test) {
                 //Si on entre ici c'est que le post/comment est deja reporté et qu'on le supprime(ou ne fait rien)
-                $this->addFlash('error', "Vous ne pouvez pas signalez deux fois le meme contenu");
+                //$this->addFlash('error', "Vous ne pouvez pas signalez deux fois le meme contenu");
                 //Redirection sur la page d'ou l'ont viens
-                $referer = $request->headers->get('referer');
-                return new RedirectResponse($referer);
+                return new Response("+0");
             }
 
             //Si l'user est null alors c'est qu'on est anonyme
@@ -51,11 +51,10 @@ class ReportController extends AbstractController
             if($test) {
                 //Si on entre ici c'est que le post/comment est deja reporté et qu'on le supprime(ou ne fait rien)
 
-                $this->addFlash('error', "Vous ne pouvez pas signalez deux fois le meme contenu");
+                //$this->addFlash('error', "Vous ne pouvez pas signalez deux fois le meme contenu");
 
                 //Redirection sur la page d'ou l'ont viens
-                $referer = $request->headers->get('referer');
-                return new RedirectResponse($referer);
+                return new Response("+0");
 
             }
         }
@@ -77,8 +76,8 @@ class ReportController extends AbstractController
         $this->em->flush();
 
         //Redirection sur la page d'ou l'ont viens
-        $this->addFlash('success', "Merci de votre contribution");
-        $referer = $request->headers->get('referer');
-        return new RedirectResponse($referer);
+        //$this->addFlash('success', "Merci de votre contribution");
+
+        return new Response("+1");
     }
 }

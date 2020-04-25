@@ -30,7 +30,6 @@
     <meta name="google" content="unavailable_after: [date ]">{% endblock %}
 
 {% block style_custom %}
-
     <style>
 
     </style>
@@ -52,6 +51,7 @@
 
         {% for post in posts %}
 
+          {% set comment = post.comments | last %}
 
             <div class="post-container">
                 <div class="content">
@@ -66,11 +66,10 @@
                                              class="number p-date">{{ post.createdAt | date('U') }}</span>
                                     </p>
                                 </div>
-                                <div>ooo</div>
-                            </div>
-
-                            <div class="option">
-                                <i class="fas fa-ellipsis-v"></i>
+                                <div class="option">
+                                    <div class="btn-opt-post">ooo</div>
+                                    <div class="opt-post">a</div>
+                                </div>
                             </div>
                         </div>
                         <div class="l-post">
@@ -95,7 +94,7 @@
                     </div>
 
                     <div class="actions">
-                        {# 
+
                         <div class="icons">
 
                             <div onclick="handleAddPostPinned(event)"
@@ -108,20 +107,16 @@
                             </div>
                         </div>
                         
-                        <div class="icons">
-                            <i class="icon-alarm"></i><span data-createdAt="{{ post.createdAt | date('U') }}"
-                                                            class="number p-date">{{ post.createdAt | date('U') }}</span>
 
-                        </div>
                         <div class="icons">
-                            <div onclick="handleAddPostReport(event)"
+                            <div onclick="handleAddReport(event)"
                                  data-action="{{ path('report.add',{"entity":"post",'id':post.id}) }}"
                                  class="reportForm">
 
                                 <i class="fa fa-flag"></i><span class="number ">Signalez</span>
 
                             </div>
-                        </div> #}
+                        </div>
 
 
 
@@ -129,7 +124,7 @@
 
                 </div>
 
-                {% set comment = post.comments | last %}
+              
 
 
                 <div class="wrapper-comments">
@@ -179,36 +174,41 @@
                                     <div onclick="handleAddLike(event)"
                                          data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
                                          class="likeForm">
+                                    <div class="footer">
+                                        <div class="icons">
+                                            <div onclick="handleAddLike(event)"
+                                                 data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
+                                                 class="likeForm">
 
-                                        <i class="icon-like">
+                                                <i class="icon-like">
 
-                                        </i>
-                                        <span class="number">
+                                                </i>
+                                                <span class="number">
                                             {{ comment.likes|length }}
                                         </span>
-                                        </button>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <p class="icons">
+                                            <i class="icon-alarm"></i><span
+                                                    data-createdAt="{{ comment.createdAt | date('U') }}"
+                                                    class="number p-date">{{ comment.createdAt | date('U') }}</span>
+
+                                        </p>
+                                        <div class="icons">
+                                        <div onclick="handleAddReport(event)" data-action="{{ path('report.add',{"entity":"post",'id':post.id}) }}" class="reportForm">
+
+                                                <i class="fa fa-flag"></i><span class="number ">Signalez</span>
+
+                                        </div>
+                                        </div>
+
+
                                     </div>
-                                </div> #}
-                                {# <p class="icons">
-                                    <i class="icon-alarm"></i><span
-                                            data-createdAt="{{ comment.createdAt | date('U') }}"
-                                            class="number p-date">{{ comment.createdAt | date('U') }}</span>
-
-                                </p> #}
-                                {# <p class="icons">
-                                <form name="report" method="post"
-                                      action="{{ path('report.add',{"entity":"post",'id':post.id}) }}"
-                                      class="reportForm">
-                                    <button type="submit" id="report_submit-comment-post-{{ post.id }}"
-                                            name="report[submit]"
-                                            class="btn btn-pink ">
-                                        <i class="fa fa-flag"></i><span class="number ">Signalez</span>
-                                    </button>
-                                </form>
-                                </p> #}
-
+                                </div>#}
 
                             </div>
+
 
                         </div>
 
@@ -220,7 +220,7 @@
                         <div class="img"
                              style="background:url(https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80)">
                         </div>
-                        <form name="comment" method="post" action="{{ path('comment.add',{'id':post.id}) }}"
+                        <form onsubmit="handleAddComment(event)" name="comment" method="post" action="{{ path('comment.add',{'id':post.id}) }}"
                               class="commentForm">
                             <div class="form-group">
                                 <label class="sr-only required" for="comment_textComment">Commentaire</label>
@@ -242,10 +242,19 @@
                         </form>
                     </div>
 
+
+
+                     
+
                 {% endif %}
 
 
             </div>
+
+           
+
+
+
         {% endfor %}
         {{ knp_pagination_render(posts) }}
 

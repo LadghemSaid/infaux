@@ -82,13 +82,13 @@ class CommentsController extends AbstractController
 
 
 
-            $this->addFlash('success', "Commentaire ajouté avec succés :)");
-            return $this->redirectToRoute('index', array('slug' => $post->getSlug()));
+            //$this->addFlash('success', "Commentaire ajouté avec succés :)");
+            return new Response("+1");
 
 
         }
-        $this->addFlash('error', "Un problème est survenu nous y travaillons ! :)");
-        return $this->redirect($req->headers->get('referer'));
+        //$this->addFlash('error', "Un problème est survenu nous y travaillons ! :)");
+        return new Response("+0");
 
     }
 
