@@ -194,7 +194,7 @@ function getNextComment(event) {
     console.log(parseInt(event.target.dataset.page) + 1);
     var url = $(event.target).attr('href');
     var newUrl = "/comment/post/" + event.target.dataset.post + "?page=" + (parseInt(event.target.dataset.page) + 1);
-    const containerComment = $(event.target).next('.nextComment')[0];
+    const containerComment = $(event.target).next('.comments-container')[0];
 
     $.get(url, function (data, response) {
         if (response == "success") {
@@ -217,3 +217,5 @@ window.handleAddPost = handleAddPost;
 window.handleAddPostPinned = handleAddPostPinned;
 window.handleGetComment = handleGetComment;
 window.getNextComment = getNextComment;
+
+

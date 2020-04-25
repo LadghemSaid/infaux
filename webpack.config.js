@@ -26,6 +26,7 @@ Encore
     .addEntry('app', './assets/js/app.js')
     .addEntry('ajax', './assets/js/ajax.js')
     .addEntry('login', './assets/js/login.js')
+    .addEntry('mercure', './assets/js/mercure.js')
     .addStyleEntry('main', './assets/css/scss/imports.scss')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
