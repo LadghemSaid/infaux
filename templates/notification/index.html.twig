@@ -48,16 +48,19 @@
         </div>
     {% endfor %}
     <div class="container">
-        <ul>
+        <div class="notif-blk">
             {% for notif in notifsSeen %}
-                <li>{{ notif.message }} </li>
+           <img src="https://images.unsplash.com/photo-1528341866330-07e6d1752ec2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2001&q=80"/>
+                   
+                <div> {{ notif.user }} </div>
+                <div class="opa nm">{{ notif.message }} </div>
 
             {% endfor %}
             {% for notif in notifsNotSeen %}
-                <li>{{ notif.message }}   (Non vu) </li>
+                <div>{{ notif.message }}   (Non vu) </div>
 
             {% endfor %}
-        </ul>
+        </div>
 
     </div>
 {% endblock %}

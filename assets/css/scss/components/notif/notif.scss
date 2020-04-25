@@ -1,0 +1,24 @@
+$green: #19c882;
+$grey: #f0f0f0;
+
+.notif-blk {
+    background-color: $grey;
+    padding: 15px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.notif-blk img {
+    height: 46px;
+    border-radius: 46px;
+}
+.notif-blk div {
+    margin: 0px 15px;
+}
+.opa {
+    opacity: 0.7;
+}
+div.nm {
+    margin: 0;
+}
