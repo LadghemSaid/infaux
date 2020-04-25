@@ -79,9 +79,12 @@ $white: rgba(255,255,255,.34);
             flex-direction: row;
             font-size: 15px !important;
             
+            .likeForm{
+              padding-right: 15px;
+            }
 
-            .fa{
-              padding-right: 4px;
+            i{
+              padding-right: 3px;
             }
 
             .comment{
@@ -228,6 +231,7 @@ $white: rgba(255,255,255,.34);
 
         .btn{
           background-color:$green;
+          border: black 0px solid;
         }
       }
     }

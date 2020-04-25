@@ -155,10 +155,23 @@
                                         <p class="username"><strong>{{ comment.user }}</strong><span
                                                     data-createdAt="{{ comment.createdAt | date('U') }}"
                                                     class="number p-date">{{ comment.createdAt | date('U') }}</span></p>
-                                        <div class="option"><i class="fas fa-ellipsis-v"></i></div>
+                                        <div class="option">o</div>
                                     </div>
                                     <p class="text">{{ comment.textComment }} </p>
+                                    <div class="icons">
+                                    <div onclick="handleAddLike(event)"
+                                         data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
+                                         class="likeForm">
 
+                                        <i class="icon-like">
+
+                                        </i>
+                                        <span class="number">
+                                            {{ comment.likes|length }}
+                                        </span>
+                                        </button>
+                                    </div>
+                                </div>
                                 </div>
                             </div>
                             <div class="footer">
