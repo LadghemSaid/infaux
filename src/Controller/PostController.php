@@ -64,8 +64,7 @@ class PostController extends AbstractController
             if($post === $payload){
                 //Ce post est déja présent dans notre liste de postFollowed
                 $this->deleteFollow($entity, $id, $request,$payload);
-                $referer = $request->headers->get('referer');
-                return new RedirectResponse($referer);
+                return new Response("-1");
             }
         }
 
@@ -79,8 +78,7 @@ class PostController extends AbstractController
         $this->em->persist($payload);
         $this->em->flush();
 
-        $referer = $request->headers->get('referer');
-        return new RedirectResponse($referer);
+        return new Response("+1");
 
     }
 

@@ -6,27 +6,21 @@
         <div class="mobile-bottom-nav__item">
             <div class="mobile-bottom-nav__item-content">
                 <a class="{% if current_menu is defined and current_menu == 'home' %}active{% endif %}"
-                   href="{{ path('index') }}"><i class="fas fa-home"></i>
+                   href="{{ path('index') }}"><i class="icon-home"></i>
                     <span class="sr-only">(current)</span>
                 </a>
             </div>
         </div>
         <div class="mobile-bottom-nav__item">
             <div class="mobile-bottom-nav__item-content">
-                <a href=""><i class="fas fa-search"></i></a>
+                <a href=""><i class="icon-search"></i></a>
             </div>
         </div>
         {% if app.user %}
             <div class="mobile-bottom-nav__item">
                 <div class="mobile-bottom-nav__item-content">
-                    <a href="{{ path('notification') }}"><i class="fas fa-bell"></i><span
+                    <a href="{{ path('notification') }}"><i class="icon-bell"></i><span
                                 class="number_notif notif">{{ app.user.notificationNotSeen | length }}</span></a>
-                </div>
-            </div>
-        {% else %}
-            <div class="mobile-bottom-nav__item disabled">
-                <div class="mobile-bottom-nav__item-content">
-                    <a href="{{ path('notification') }}"><i class="fas fa-bell"></i></a>
                 </div>
             </div>
         {% endif %}
@@ -34,7 +28,7 @@
             <div class="mobile-bottom-nav__item-content">
                 <a href="" class="" type="button" class="btn btn-primary" data-toggle="modal"
                    data-target="#collapse-menu">
-                    <i class="fas fa-bars"></i>
+                    <i class="icon-params"></i>
                 </a>
             </div>
         </div>
@@ -187,7 +181,7 @@
         </div>
         <a class="pl-30 pl-20Mobile pt-10Mobile bd-highlight nav-link mk-search-trigger mk-fullscreen-trigger" href="#"
            id="search-button-listener">
-            <div id="search-button"><i class="fa fa-search"></i></div>
+            <div id="search-button"><i class="icon-search"></i></div>
         </a>
     </nav> #}
 </header>
