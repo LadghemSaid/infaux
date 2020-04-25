@@ -1,31 +1,42 @@
-$green: #19c882;
-$grey: #e8e8e8;
+$green: #66BB99;
+$grey: #E6E6E6;
+$black: #464646;
+$radius:15px;
 
 .post-container {
   display: flex;
   flex-direction: column;
-  padding-bottom: 35px;
+  margin-top:93px;
+  color:black;
+  background-color: $grey;
+  border-radius: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
 
   .content {
     display: flex;
     flex-direction: column;
-    background-color: $green;
-    color:white;
-    padding: 15px;
-    border-radius: 10px;
-    border-bottom-right-radius: 0px;
     position: relative;
+    border-radius: 15px;
 
     .header {
       display: flex;
+      flex-direction: column;
+      .top{
+        display: flex;
 
-      .img {
-        width: 50px;
-        object-fit: cover;
-        border-radius: 100px;
-        height: 50px;
-        margin-right: 10px;
+        .img {
+          width: 45px;
+          height: 45px;
+          background-size: cover !important;
+          background-position: center !important;
+          background-repeat: no-repeat !important;
+          border-radius: 100px;
+        }
       }
+    
 
       .text {
         line-height: 150% !important;
@@ -37,19 +48,10 @@ $grey: #e8e8e8;
       display: flex;
       justify-content: space-around;
       max-width: 400px;
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 30px 100%);
-      padding: 5px;
-      padding-left: 35px;
-      background-color: $green;
       position: absolute;
       z-index: 1;
-      color: #202020;
       font-size: smaller;
-      bottom: -35px;
       right: 0;
-      border-bottom-right-radius: 10px;
-
-
 
       .icons {
         i {
@@ -67,24 +69,21 @@ $grey: #e8e8e8;
 
   .comments-container {
     .content {
-      padding: 30px 10px 10px 10px;
       display: flex;
       flex-direction: column;
+      border-radius: 15px;
       background-color: $grey;
-      color: #202020;
-      border-radius: 10px;
-      border-bottom-right-radius: 0px;
-      position: relative;
 
       header {
         display: flex;
 
         .img {
-          width: 80px;
-          object-fit: cover;
+          width: 45px;
+          height: 45px;
+          background-size: cover !important;
+          background-position: center !important;
+          background-repeat: no-repeat !important;
           border-radius: 100px;
-          height: 80px;
-          margin-right: 10px;
         }
 
         .text {
@@ -95,13 +94,8 @@ $grey: #e8e8e8;
       .footer {
         display: flex;
         justify-content: space-around;
-        padding: 5px;
-        padding-left: 35px;
-        background-color: $grey;
         position: absolute;
-        bottom: -35px;
         right: 0;
-        border-bottom-right-radius: 10px;
 
         .icons {
           i {
