@@ -20,8 +20,47 @@ async function handleAddLike(event) {
 }
 
 
-function handleAddCommentReport(event) {
-    console.log('ok')
+async function handleAddReport(event) {
+    console.log("action :: ", event.currentTarget.dataset.action)
+    const button =  event.currentTarget
+    const action = button.dataset.action
+
+
+    try {
+        const response = await axios.post(action);
+        if(response.data === "+1"){
+            Toastify({
+                text: "+1",
+                duration: 3000,
+                destination: "https://github.com/apvarun/toastify-js",
+                newWindow: true,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: 'left', // `left`, `center` or `right`
+                backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                className: "info",
+                onClick: function(){} // Callback after click
+            }).showToast();
+        }else{
+            Toastify({
+                text: "+0",
+                duration: 3000,
+                destination: "https://github.com/apvarun/toastify-js",
+                newWindow: true,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: 'left', // `left`, `center` or `right`
+                backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                className: "info",
+                onClick: function(){} // Callback after click
+            }).showToast();
+        }
+    } catch (error) {
+        console.error(error);
+    }
+
 
 }
 
@@ -98,8 +137,7 @@ function getNextComment(event) {
 
 
 window.handleAddLike = handleAddLike;
-window.handleAddCommentReport = handleAddCommentReport;
-window.handleAddPostReport = handleAddPostReport;
+window.handleAddReport = handleAddReport;
 window.handleAddComment = handleAddComment;
 window.handleAddPost = handleAddPost;
 window.handleAddPostPinned = handleAddPostPinned;
