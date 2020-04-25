@@ -6,8 +6,8 @@ $grey: #f0f0f0;
     padding: 15px;
     border-radius: 20px;
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
 }
 .notif-blk img {
     height: 46px;

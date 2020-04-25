@@ -62,7 +62,7 @@ async function handleAddReport(event) {
             }).showToast();
         }else{
             Toastify({
-                text: "Vous avez déjà signaler cette article",
+                text: "Vous avez déjà signaler cela",
                 duration: 3000,
                 close: true,
                 gravity: "top", // `top` or `bottom`
@@ -78,12 +78,6 @@ async function handleAddReport(event) {
 
 
 }
-
-
-function handleAddPostReport(event) {
-    console.log('ok')
-}
-
 
 function handleAddComment(event) {
     console.log('ok')
@@ -107,8 +101,28 @@ async function handleAddPostPinned(event) {
         const response = await axios.post(action);
         if(response.data === "+1"){
             targetToChange.innerText =  parseInt(targetToChange.innerText) + 1 ;
+            Toastify({
+                text: "Vous suivez ce post",
+                duration: 3000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: 'left', // `left`, `center` or `right`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                className: "info",
+                onClick: function(){} // Callback after click
+            }).showToast();
         }else{
             targetToChange.innerText =  parseInt(targetToChange.innerText) - 1 ;
+            Toastify({
+                text: "Vous ne suivez plus ce post",
+                duration: 3000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: 'left', // `left`, `center` or `right`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                className: "info",
+                onClick: function(){} // Callback after click
+            }).showToast();
         }
     } catch (error) {
         console.error(error);
