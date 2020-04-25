@@ -1,4 +1,5 @@
 const axios = require('axios');
+import Toastify from 'toastify-js'
 
 async function handleAddLike(event) {
     console.log("action :: ", event.currentTarget.dataset.action)
@@ -10,8 +11,28 @@ async function handleAddLike(event) {
         const response = await axios.post(action);
         if(response.data === "+1"){
             targetToChange.innerText =  parseInt(targetToChange.innerText) + 1 ;
+            Toastify({
+                text: "J'aime !",
+                duration: 3000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: 'left', // `left`, `center` or `right`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                className: "success",
+                onClick: function(){} // Callback after click
+            }).showToast();
         }else{
             targetToChange.innerText =  parseInt(targetToChange.innerText) - 1 ;
+            Toastify({
+                text: "Je n'aime pas !",
+                duration: 3000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: 'left', // `left`, `center` or `right`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                className: "error",
+                onClick: function(){} // Callback after click
+            }).showToast();
         }
     } catch (error) {
         console.error(error);
@@ -20,16 +41,43 @@ async function handleAddLike(event) {
 }
 
 
-function handleAddCommentReport(event) {
-    console.log('ok')
+async function handleAddReport(event) {
+    console.log("action :: ", event.currentTarget.dataset.action)
+    const button =  event.currentTarget
+    const action = button.dataset.action
+
+
+    try {
+        const response = await axios.post(action);
+        if(response.data === "+1"){
+            Toastify({
+                text: "Merci de votre signalement",
+                duration: 3000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: 'left', // `left`, `center` or `right`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                className: "info",
+                onClick: function(){} // Callback after click
+            }).showToast();
+        }else{
+            Toastify({
+                text: "Vous avez déjà signaler cela",
+                duration: 3000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: 'left', // `left`, `center` or `right`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                className: "error",
+                onClick: function(){} // Callback after click
+            }).showToast();
+        }
+    } catch (error) {
+        console.error(error);
+    }
+
 
 }
-
-
-function handleAddPostReport(event) {
-    console.log('ok')
-}
-
 
 function handleAddComment(event) {
     console.log('ok')
@@ -53,8 +101,28 @@ async function handleAddPostPinned(event) {
         const response = await axios.post(action);
         if(response.data === "+1"){
             targetToChange.innerText =  parseInt(targetToChange.innerText) + 1 ;
+            Toastify({
+                text: "Vous suivez ce post",
+                duration: 3000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: 'left', // `left`, `center` or `right`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                className: "info",
+                onClick: function(){} // Callback after click
+            }).showToast();
         }else{
             targetToChange.innerText =  parseInt(targetToChange.innerText) - 1 ;
+            Toastify({
+                text: "Vous ne suivez plus ce post",
+                duration: 3000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: 'left', // `left`, `center` or `right`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                className: "info",
+                onClick: function(){} // Callback after click
+            }).showToast();
         }
     } catch (error) {
         console.error(error);
@@ -98,8 +166,7 @@ function getNextComment(event) {
 
 
 window.handleAddLike = handleAddLike;
-window.handleAddCommentReport = handleAddCommentReport;
-window.handleAddPostReport = handleAddPostReport;
+window.handleAddReport = handleAddReport;
 window.handleAddComment = handleAddComment;
 window.handleAddPost = handleAddPost;
 window.handleAddPostPinned = handleAddPostPinned;

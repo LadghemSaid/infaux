@@ -30,7 +30,6 @@
     <meta name="google" content="unavailable_after: [date ]">{% endblock %}
 
 {% block style_custom %}
-
     <style>
 
     </style>
@@ -57,10 +56,7 @@
                 <div class="content">
                     <div class="header">
                         <div class="top">
-                            <div class="img">
-                                <img class="img" src="{{ asset('/img/favicon96.png') }}"/>
-
-                            </div>
+                            <div class="img" style="background:url({{ asset('/img/favicon96.png') }})"></div>
                             <div class="infos">
                                 <div class="left">
                                     <p class="username"><strong>{{ post.user.username }}</strong></p>
@@ -69,28 +65,36 @@
                                              class="number p-date">{{ post.createdAt | date('U') }}</span>
                                     </p>
                                 </div>
+                                <div>ooo</div>
                             </div>
 
                             <div class="option">
                                 <i class="fas fa-ellipsis-v"></i>
                             </div>
                         </div>
-
-
-
                         <div class="l-post">
                             <p class="text">{{ post.text }}</p>
+                        </div>
+
+                        <div class="actions">
+                            <div class="icons">
+                                <div onclick="handleAddLike(event)"
+                                    data-action="{{ path('like.add',{"entity":"post",'id':post.id}) }}" class="likeForm">
+                                    <i class="icon-like"></i>
+                                    <span class="number">{{ post.likes|length }}</span>
+                                </div>
+                                <div class="icons">
+                                    <i class="icon-bubble"></i><span class="number">{{ post.comments | length }}</span>
+                                </div>
+                            </div>
+                            <a data-page="0" data-post="{{ post.id }}" class="btn btn-primaire view-more-button"
+                                onclick="getNextComment(event)"
+                                href="{{ path('comment.paginate',{'post': post.id}) }}">Voir plus</a>
                         </div>
                     </div>
 
                     <div class="actions">
-                        <div class="icons">
-                            <div onclick="handleAddLike(event)"
-                                 data-action="{{ path('like.add',{"entity":"post",'id':post.id}) }}" class="likeForm">
-                                <i class="icon-like"></i>
-                                <span class="number">{{ post.likes|length }}</span>
-                            </div>
-                        </div>
+
                         <div class="icons">
 
                             <div onclick="handleAddPostPinned(event)"
@@ -102,16 +106,10 @@
 
                             </div>
                         </div>
-                        <div class="icons">
-                            <i class="icon-bubble"></i><span class="number">{{ post.comments | length }}</span>
-                        </div>
-                        <div class="icons">
-                            <i class="icon-alarm"></i><span data-createdAt="{{ post.createdAt | date('U') }}"
-                                                            class="number p-date">{{ post.createdAt | date('U') }}</span>
+                        
 
-                        </div>
                         <div class="icons">
-                            <div onclick="handleAddPostReport(event)"
+                            <div onclick="handleAddReport(event)"
                                  data-action="{{ path('report.add',{"entity":"post",'id':post.id}) }}"
                                  class="reportForm">
 
@@ -142,9 +140,7 @@
                         <div class="content">
                             <div class="header">
                                 <div class="top">
-                                    <div class="img">
-                                        <img src="{{ asset('/img/favicon96.png') }}" />
-
+                                    <div class="img" style="background:url({{ asset('/img/favicon96.png') }})">
                                     </div>
                                 </div>
 
@@ -156,44 +152,42 @@
                                                     class="number p-date">{{ comment.createdAt | date('U') }}</span></p>
                                         <div class="option"><i class="fas fa-ellipsis-v"></i></div>
                                     </div>
-                                </div>
-                            </div>
-                            <p class="text">{{ comment.textComment }} </p>
-                            <div class="footer">
-                                <div class="icons">
-                                    <div onclick="handleAddLike(event)"
-                                         data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
-                                         class="likeForm">
+                                    <p class="text">{{ comment.textComment }} </p>
+                                    <div class="footer">
+                                        <div class="icons">
+                                            <div onclick="handleAddLike(event)"
+                                                 data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
+                                                 class="likeForm">
 
-                                        <i class="icon-like">
+                                                <i class="icon-like">
 
-                                        </i>
-                                        <span class="number">
+                                                </i>
+                                                <span class="number">
                                             {{ comment.likes|length }}
                                         </span>
-                                        </button>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <p class="icons">
+                                            <i class="icon-alarm"></i><span
+                                                    data-createdAt="{{ comment.createdAt | date('U') }}"
+                                                    class="number p-date">{{ comment.createdAt | date('U') }}</span>
+
+                                        </p>
+                                        <div class="icons">
+                                        <div onclick="handleAddReport(event)" data-action="{{ path('report.add',{"entity":"post",'id':post.id}) }}" class="reportForm">
+
+                                                <i class="fa fa-flag"></i><span class="number ">Signalez</span>
+
+                                        </div>
+                                        </div>
+
+
                                     </div>
                                 </div>
-                                <p class="icons">
-                                    <i class="icon-alarm"></i><span
-                                            data-createdAt="{{ comment.createdAt | date('U') }}"
-                                            class="number p-date">{{ comment.createdAt | date('U') }}</span>
-
-                                </p>
-                                <p class="icons">
-                                <form name="report" method="post"
-                                      action="{{ path('report.add',{"entity":"post",'id':post.id}) }}"
-                                      class="reportForm">
-                                    <button type="submit" id="report_submit-comment-post-{{ post.id }}"
-                                            name="report[submit]"
-                                            class="btn btn-pink ">
-                                        <i class="fa fa-flag"></i><span class="number ">Signalez</span>
-                                    </button>
-                                </form>
-                                </p>
-
 
                             </div>
+
 
                         </div>
 
