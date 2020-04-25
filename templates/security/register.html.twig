@@ -1,7 +1,7 @@
 {% extends '/base.html.twig' %}
 
 {% block title %}
-    Infaux - Blog
+    Infaux - Inscription
 {% endblock %}
 {% block gtag %}
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -78,9 +78,12 @@
                     </div>
                 </div>
 
-                <div class="wrap-input validate-input">
 
-                    {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'input'}}) }}
+                <div class="wrap-input validate-input">
+					<span class="btn-show-pass">
+						<i class="zmdi zmdi-eye"></i>
+					</span>
+                    {{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'input'}}) }}
                     <span class="focus-input" data-placeholder="Mot de passe"></span>
 
 
@@ -91,8 +94,10 @@
 
 
                 <div class="wrap-input validate-input">
-
-                    {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'input'}}) }}
+					<span class="btn-show-pass">
+						<i class="zmdi zmdi-eye"></i>
+					</span>
+                    {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'input'}}) }}
                     <span class="focus-input" data-placeholder="Mot de passe"></span>
 
 
@@ -100,7 +105,10 @@
                         {{ form_errors(registrationForm.plainPassword) }}
                     </div>
                 </div>
-                {{ form_widget(registrationForm) }}
+				
+				<div class="validate-input">
+                	{{ form_widget(registrationForm.agreeTerms) }}
+				</div>
 
                 <div class="container-login-form-btn">
                     <div class="wrap-login-form-btn">

@@ -48,17 +48,18 @@ textarea {
 
 textarea:focus, input:focus {
   border-color: transparent !important;
+  box-shadow: none;
 }
 
-input:focus::-webkit-input-placeholder { color:transparent; }
-input:focus:-moz-placeholder { color:transparent; }
-input:focus::-moz-placeholder { color:transparent; }
-input:focus:-ms-input-placeholder { color:transparent; }
+input:focus::-webkit-input-placeholder { color:transparent; box-shadow: none; }
+input:focus:-moz-placeholder { color:transparent; box-shadow: none; }
+input:focus::-moz-placeholder { color:transparent; box-shadow: none; }
+input:focus:-ms-input-placeholder { color:transparent; box-shadow: none; }
 
-textarea:focus::-webkit-input-placeholder { color:transparent; }
-textarea:focus:-moz-placeholder { color:transparent; }
-textarea:focus::-moz-placeholder { color:transparent; }
-textarea:focus:-ms-input-placeholder { color:transparent; }
+textarea:focus::-webkit-input-placeholder { color:transparent; box-shadow: none; }
+textarea:focus:-moz-placeholder { color:transparent; box-shadow: none; }
+textarea:focus::-moz-placeholder { color:transparent; box-shadow: none; }
+textarea:focus:-ms-input-placeholder { color:transparent; box-shadow: none; }
 
 input::-webkit-input-placeholder { color: $dark-grey;}
 input:-moz-placeholder { color: $dark-grey;}
@@ -276,8 +277,6 @@ iframe {
 .btn-show-pass.active {
   color: $green;
 }
-
-
 
 /*------------------------------------------------------------------
 [ Button ]*/
