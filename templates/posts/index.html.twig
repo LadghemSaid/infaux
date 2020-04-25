@@ -60,27 +60,50 @@
                             <div class="img" 
                                 style="background:url(https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80)">
                             </div>
-                            <p class="username"><strong>{{ post.user.username }}</strong></p>
+                            <div class="infos">
+                                <div class="left">
+                                    <p class="username"><strong>{{ post.user.username }}</strong></p>
+                                    <p class="date">
+                                       <span data-createdAt="{{ post.createdAt | date('U') }}"
+                                         class="number p-date">{{ post.createdAt | date('U') }}</span>
+                                    </p>
+                                </div>
+                                <div class="option">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </div>
+                            </div>
+                            
                         </div>
                         <div class="l-post">
                             <p class="text">{{ post.text }}</p>
                         </div>
+                        <div class="actions">
+                            <div class="icons">
+                                <form name="like" method="post"
+                                    action="{{ path('like.add',{"entity":"post",'id':post.id}) }}" class="likeForm">
+                                    <button type="submit" id="like_submit-post-{{ post.id }}" name="like[submit]"
+                                            class="btn btn-pink ">
+                                        <i class="fa fa-thumbs-up">                                    </i>
+                                        <span class="number">
+                                                    {{ post.likes|length }}
+                                        </span>
+                                    </button>
+                                </form>
+                                <p class="comment">
+                                    <i class="fa fa-comment"></i><span class="number">{{ post.comments | length }}</span>
+                                </p>
+                            </div>
+                            <a data-page="0" data-post="{{ post.id }}" class="btn btn-primaire view-more-button"
+                                onclick="getNextComment(event)"
+                                href="{{ path('comment.paginate',{'post': post.id}) }}">
+                                Voir plus
+                            </a>
+                        </div>
                     </div>
 
-                    <div class="footer">
+                    {# <div class="footer">
                         <p class="icons">
-                        <form name="like" method="post"
-                              action="{{ path('like.add',{"entity":"post",'id':post.id}) }}" class="likeForm">
-                            <button type="submit" id="like_submit-post-{{ post.id }}" name="like[submit]"
-                                    class="btn btn-pink ">
-                                <i class="fa fa-thumbs-up">
-
-                                </i>
-                                <span class="number">
-                                            {{ post.likes|length }}
-                                </span>
-                            </button>
-                        </form>
+                        
                         </p>
                         <p class="icons">
 
@@ -94,14 +117,6 @@
                         </form>
                         </p>
                         <p class="icons">
-                            <i class="fa fa-comment"></i><span class="number">{{ post.comments | length }}</span>
-                        </p>
-                        <p class="icons">
-                            <i class="fa fa-clock"></i><span data-createdAt="{{ post.createdAt | date('U') }}"
-                                                             class="number p-date">{{ post.createdAt | date('U') }}</span>
-
-                        </p>
-                        <p class="icons">
                         <form name="report" method="post"
                               action="{{ path('report.add',{"entity":"post",'id':post.id}) }}" class="reportForm">
                             <button type="submit" id="report_submit-post-{{ post.id }}" name="report[submit]"
@@ -111,7 +126,7 @@
                         </form>
                         </p>
 
-                    </div>
+                    </div> #}
                 </div>
                 {% if app.user %}
                     <div class="formComment">
@@ -138,40 +153,45 @@
 
 
                 <div class="wrapper-comments">
-                    <a data-page="0" data-post="{{ post.id }}" class="btn btn-primaire view-more-button"
-                       onclick="getNextComment(event)"
-                       href="{{ path('comment.paginate',{'post': post.id}) }}">Voir plus</a>
-
+                    
                     <div class="nextComment">
 
                     </div>
                     <div class="comments-container">
                         <div class="content">
                             <div class="header">
-                               <div class="img" 
-                                    style="background:url(https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80)">
-                                    <p class="username"><strong>{{ comment.user }}</strong></p>
+                                <div class="top">
+                                    <div class="img" 
+                                        style="background:url(https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80)">
+                                    </div>
                                 </div>
-                                     <div class="l-post">
+                                <div class="l-post right">
+                                    <div class="top">
+                                        <p class="username"><strong>{{ comment.user }}</strong><span
+                                            data-createdAt="{{ comment.createdAt | date('U') }}"
+                                            class="number p-date">{{ comment.createdAt | date('U') }}</span></p>
+                                        <div class="option"><i class="fas fa-ellipsis-v"></i></div>
+                                    </div>
                                     <p class="text">{{ comment.textComment }} </p>
+                                    <form name="like" method="post"
+                                        action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
+                                        class="likeForm">
+                                        <button type="submit" id="like_submit-comment-post-{{ post.id }}"
+                                                name="like[submit]" class="btn btn-pink ">
+                                            <i class="fa fa-thumbs-up">
+
+                                            </i>
+                                            <span class="number">
+                                                {{ comment.likes|length }}
+                                            </span>
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
 
-                            <div class="footer">
+                            {# <div class="footer">
                                 <p class="icons">
-                                <form name="like" method="post"
-                                      action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
-                                      class="likeForm">
-                                    <button type="submit" id="like_submit-comment-post-{{ post.id }}"
-                                            name="like[submit]" class="btn btn-pink ">
-                                        <i class="fa fa-thumbs-up">
-
-                                        </i>
-                                        <span class="number">
-                                            {{ comment.likes|length }}
-                                        </span>
-                                    </button>
-                                </form>
+                                
                                 </p>
                                 <p class="icons">
                                     <i class="fa fa-clock"></i><span
@@ -192,7 +212,7 @@
                                 </p>
 
 
-                            </div>
+                            </div> #}
                         </div>
 
                     </div>

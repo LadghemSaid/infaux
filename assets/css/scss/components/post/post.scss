@@ -2,6 +2,7 @@ $green: #66BB99;
 $grey: #E6E6E6;
 $black: #464646;
 $radius:15px;
+$white: rgba(255,255,255,.34);
 
 .post-container {
   display: flex;
@@ -10,7 +11,7 @@ $radius:15px;
   color:black;
   background-color: $grey;
   border-radius: 15px;
-  padding-top: 10px;
+  padding-top: 15px;
   padding-bottom: 10px;
   padding-left: 15px;
   padding-right: 15px;
@@ -35,12 +36,65 @@ $radius:15px;
           background-repeat: no-repeat !important;
           border-radius: 100px;
         }
+
+        .infos {
+          display: flex;
+          flex-direction: row;
+          margin-left: 10px;
+          width: 100%;
+          justify-content: space-between;
+
+          .left{
+            display: flex;
+            flex-direction: column;
+
+            .date{
+                color: rgba($color: #000000, $alpha: .34); 
+            }
+          }
+
+          .option{
+            color:$green;
+          }
+        }
       }
     
 
       .text {
         line-height: 150% !important;
-        font-size: smaller;
+      }
+
+      .actions{
+
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-between;
+        border-bottom: rgba($color: #707070, $alpha: .46) 1px solid;
+        margin-bottom: 20px;
+
+        .icons {
+            display: flex;
+            flex-direction: row;
+            font-size: 15px !important;
+            
+
+            .fa{
+              padding-right: 4px;
+            }
+
+            .comment{
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              padding: .375rem .75rem;    
+              border-radius: .25rem;
+            }
+        }
+      }
+
+      .btn{
+        font-size: 15px;
       }
     }
 
@@ -50,7 +104,6 @@ $radius:15px;
       max-width: 400px;
       position: absolute;
       z-index: 1;
-      font-size: smaller;
       right: 0;
 
       .icons {
@@ -74,8 +127,9 @@ $radius:15px;
       border-radius: 15px;
       background-color: $grey;
 
-      header {
+      .header {
         display: flex;
+        flex-direction: row;
 
         .img {
           width: 45px;
@@ -86,8 +140,31 @@ $radius:15px;
           border-radius: 100px;
         }
 
-        .text {
-      
+        .right {
+          margin-left: 10px;
+          background-color: $white;
+          border-radius: 15px;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          padding-left: 15px;
+          padding-right: 15px;
+
+          .top{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            p{
+              span{
+                padding-left: 10px;
+                color: rgba($color: #000000, $alpha: 0.34);
+              }
+            }
+
+            .option{
+              color:$green;
+            }
+          }
         }
       }
 
