@@ -76,18 +76,7 @@ Encore
         }),
     )
 
-    .addPlugin(
-        new TerserPlugin({
-            terserOptions: {
-                sourceMap: !Encore.isProduction(),
-                cache: !Encore.isProduction(),
-                parallel: true,
-                output: {
-                    // comments: false,
-                },
-            },
-        }),
-    )
+
     .addPlugin(
         new PurgeCssPlugin({
             // folders: ['resources/views/**/*', 'resources/assets/scss/'],
@@ -119,8 +108,9 @@ Encore
     .setPublicPath('/build')
     .setManifestKeyPrefix('build/')
     .addEntry('app', './assets/js/app.js')
+    .addEntry('ajax', './assets/js/ajax.js')
+    .addEntry('login', './assets/js/login.js')
     .addStyleEntry('main', './assets/css/scss/imports.scss')
-
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()
