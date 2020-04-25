@@ -29,12 +29,15 @@
 {% block google %}
     <meta name="google" content="unavailable_after: [date ]">{% endblock %}
 {% block stylesheets %}
+<style>
+.has-val.input + .focus-input::after {
+  top: -15px;
+}
 
-    <link rel="stylesheet" type="text/css"
-          href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
-
-
-
+.has-val.input + .focus-input::before {
+  width: 100%;
+}
+</style>
 {% endblock %}
 
 {% block body %}
