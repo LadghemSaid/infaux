@@ -83,26 +83,20 @@ async function handleAddReport(event) {
 
 }
 
-async function handleAddComment(event) {
-    console.log('ok');
+function handleAddComment(event) {
+
     event.preventDefault();
     const data = $(event.target).serializeArray()[0].value;
-    const dataa = $(event.target).serializeArray();
     const action = $(event.target).attr('action');
-    console.log(action)
+    let target = $(event.target).parent().parent().find('.comments-container');
 
-    try {
-        const response = await axios({
-            method: 'post',
-            url: action,
-            data: {
-                dataa
-            }
-        });
-
-        if (response.data === "+1") {
-
-
+    $.ajax({
+        type: "POST",
+        url: action,
+        data: {request: data},
+        success: function (data, dataType) {
+            //console.log(data);
+            target.append( data)
             Toastify({
                 text: "Commentaire ajouté",
                 duration: 3000,
@@ -114,7 +108,8 @@ async function handleAddComment(event) {
                 onClick: function () {
                 } // Callback after click
             }).showToast();
-        } else {
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
 
             Toastify({
                 text: "Une erreur est survenue",
@@ -128,9 +123,8 @@ async function handleAddComment(event) {
                 } // Callback after click
             }).showToast();
         }
-    } catch (error) {
-        console.error(error);
-    }
+    });
+
 }
 
 
