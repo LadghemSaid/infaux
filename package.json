@@ -14,11 +14,13 @@
         "dev-server": "encore dev-server",
         "dev": "encore dev --config-name dev",
         "watch": "encore dev --watch --config-name prod",
+        "watch-dev": "encore dev --watch --config-name dev",
         "test": "echo 'hello-world'",
         "build": "encore production --config-name prod",
         "build-dev": "encore production --config-name dev"
     },
     "dependencies": {
+        "axios": "^0.19.2",
         "bootstrap": "^4.4.1",
         "event-source-polyfill": "^1.0.12",
         "glob-all": "^3.2.1",

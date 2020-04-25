@@ -18,12 +18,12 @@
                         <ul class="comment__actions">
                             <li class="comment__edit"><a id="{{ comment.id }}" href="#" onclick="edit(event)"
                                                          class="btn btn-primary btn-sm"><i
-                                            class="fa fa-cog"></i></a>
+                                            class="icon-settings"></i></a>
                             </li>
                             <li class="comment__edit--validate"><a id="{{ comment.id }}" href="#"
                                                                    onclick="submitEditComment(event)"
                                                                    class="btn btn-primary btn-sm"><i
-                                            class="fa fa-lg fa-check"></i></a></li>
+                                            class="icon-like"></i></a></li>
                             <li class="comment__delete"><a
                                         href="{{ path('delete.comment',{'comment' : comment.id}) }}"
                                         class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>

@@ -17,7 +17,7 @@
                       action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
                       class="likeForm">
                     <button type="submit" id="like_submit" name="like[submit]" class="btn btn-pink ">
-                        <i class="fa fa-thumbs-up">
+                        <i class="icon-like">
 
                         </i>
                         <span class="number">
@@ -27,7 +27,7 @@
                 </form>
                 </p>
                 <p class="icons">
-                    <i class="fa fa-clock"></i>
+                    <i class="icon-alarm"></i>
                     <span data-createdAt="{{ comment.createdAt | date('U') }}"
                           class="number p-date">{{ comment.createdAt | date('U') }}</span>
                 </p>

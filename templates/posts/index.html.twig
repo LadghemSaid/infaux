@@ -56,7 +56,8 @@
             <div class="post-container">
                 <div class="content">
                     <div class="header">
-                        <img src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"
+                        <img src="{{ asset('/img/favicon96.png') }}"
+
                              alt="" class="img">
                         <div class="l-post">
                             <p class="username"><strong>{{ post.user.username }}</strong></p>
@@ -65,48 +66,39 @@
                     </div>
 
                     <div class="footer">
-                        <p class="icons">
-                        <form name="like" method="post"
-                              action="{{ path('like.add',{"entity":"post",'id':post.id}) }}" class="likeForm">
-                            <button type="submit" id="like_submit-post-{{ post.id }}" name="like[submit]"
-                                    class="btn btn-pink ">
-                                <i class="fa fa-thumbs-up">
+                        <div class="icons">
+                            <div onclick="handleAddLike(event)"
+                                 data-action="{{ path('like.add',{"entity":"post",'id':post.id}) }}" class="likeForm">
+                                <i class="icon-like"></i>
+                                <span class="number">{{ post.likes|length }}</span>
+                            </div>
+                        </div>
+                        <div class="icons">
 
-                                </i>
-                                <span class="number">
-                                            {{ post.likes|length }}
-                                </span>
-                            </button>
-                        </form>
-                        </p>
-                        <p class="icons">
+                            <div onclick="handleAddPostPinned(event)"
+                                 data-action="{{ path('post.addfollow',{"entity":"post",'id':post.id}) }}"
+                                 class="pinnedPost">
 
-                        <form name="report" method="post"
-                              action="{{ path('post.addfollow',{"entity":"post",'id':post.id}) }}" class="reportForm">
-                            <button type="submit" id="report_submit-post-{{ post.id }}" name="report[submit]"
-                                    class="btn btn-pink ">
-                                <i class="fa fa-flag"></i><span
-                                        class="number ">{{ post.followedBy | length }} epingler</span>
-                            </button>
-                        </form>
-                        </p>
-                        <p class="icons">
-                            <i class="fa fa-comment"></i><span class="number">{{ post.comments | length }}</span>
-                        </p>
-                        <p class="icons">
-                            <i class="fa fa-clock"></i><span data-createdAt="{{ post.createdAt | date('U') }}"
+                                <i class="icon-pushpin"></i><span
+                                        class="number ">{{ post.followedBy | length }}</span> Epingler
+
+                            </div>
+                        </div>
+                        <div class="icons">
+                            <i class="icon-bubble"></i><span class="number">{{ post.comments | length }}</span>
+                        </div>
+                        <div class="icons">
+                            <i class="icon-alarm"></i><span data-createdAt="{{ post.createdAt | date('U') }}"
                                                              class="number p-date">{{ post.createdAt | date('U') }}</span>
 
-                        </p>
-                        <p class="icons">
-                        <form name="report" method="post"
-                              action="{{ path('report.add',{"entity":"post",'id':post.id}) }}" class="reportForm">
-                            <button type="submit" id="report_submit-post-{{ post.id }}" name="report[submit]"
-                                    class="btn btn-pink ">
+                        </div>
+                        <div class="icons">
+                        <div onclick="handleAddPostReport(event)" data-action="{{ path('report.add',{"entity":"post",'id':post.id}) }}" class="reportForm">
+
                                 <i class="fa fa-flag"></i><span class="number ">Signalez</span>
-                            </button>
-                        </form>
-                        </p>
+
+                        </div>
+                        </div>
 
                     </div>
                 </div>
@@ -135,6 +127,7 @@
 
 
                 <div class="wrapper-comments">
+
                     <a data-page="0" data-post="{{ post.id }}" class="btn btn-primaire view-more-button"
                        onclick="getNextComment(event)"
                        href="{{ path('comment.paginate',{'post': post.id}) }}">Voir plus</a>
@@ -145,7 +138,7 @@
                     <div class="comments-container">
                         <div class="content">
                             <div class="header">
-                                <img src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"
+                                <img src="{{ asset('/img/favicon96.png') }}"
                                      alt="" class="img">
                                 <div class="l-post">
                                     <p class="username"><strong>{{ comment.user }}</strong></p>
@@ -155,23 +148,20 @@
                             </div>
 
                             <div class="footer">
-                                <p class="icons">
-                                <form name="like" method="post"
-                                      action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
-                                      class="likeForm">
-                                    <button type="submit" id="like_submit-comment-post-{{ post.id }}"
-                                            name="like[submit]" class="btn btn-pink ">
-                                        <i class="fa fa-thumbs-up">
+                                <div class="icons">
+                                <div onclick="handleAddLike(event)" data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}" class="likeForm">
+
+                                        <i class="icon-like">
 
                                         </i>
                                         <span class="number">
                                             {{ comment.likes|length }}
                                         </span>
                                     </button>
-                                </form>
-                                </p>
+                                </div>
+                                </div>
                                 <p class="icons">
-                                    <i class="fa fa-clock"></i><span
+                                    <i class="icon-alarm"></i><span
                                             data-createdAt="{{ comment.createdAt | date('U') }}"
                                             class="number p-date">{{ comment.createdAt | date('U') }}</span>
 
@@ -213,31 +203,9 @@
   {% block javascripts %}
 
       <script src="{{ preload('https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js', { as: 'script' }) }}"></script>
+      {{ encore_entry_script_tags('ajax') }}
+
       <script>
-          //Comment Ajax load
-          function getNextComment(event) {
-              var compteur = 0;
-              event.preventDefault()
-              console.log(parseInt(event.target.dataset.page) + 1)
-              var url = $(event.target).attr('href');
-              var newUrl = "/comment/post/" + event.target.dataset.post + "?page=" + (parseInt(event.target.dataset.page) + 1);
-              const containerComment = $(event.target).next('.nextComment')[0];
-
-              $.get(url, function (data, response) {
-                  if (response == "success") {
-
-                      console.log("External content loaded successfully!");
-                      $(data).prependTo(containerComment).fadeIn("slow");
-                      $(event.target).attr('href', newUrl)
-                      $(event.target).attr('data-page', (parseInt(event.target.dataset.page) + 1))
-                  }
-                  if (response == "error") {
-                      console.log("Error: " + xhr.status + ": " + xhr.statusText);
-                  }
-              });
-          }
-
-
           document.addEventListener("DOMContentLoaded", function (event) {
 
 

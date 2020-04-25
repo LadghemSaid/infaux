@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
@@ -48,9 +49,11 @@ class LikeController extends AbstractController
             if (!$isLiked) {
                 //Enregistrement de l'ip car on est anonyme
                 $like->setIp($request->getClientIps()[0]);
+
             } else {
-                $referer = $request->headers->get('referer');
-                return new RedirectResponse($referer);
+
+
+                return new Response("-1");
             }
         } else {
             $isLiked = $this->likeService->verify($request, $entity, $id, $type = 'user', $user);
@@ -58,8 +61,9 @@ class LikeController extends AbstractController
                 //Enregistrement de l'user car un user est connecté
                 $like->setUser($user);
             } else {
-                $referer = $request->headers->get('referer');
-                return new RedirectResponse($referer);
+
+                return new Response("-1");
+
             }
         }
 
@@ -82,8 +86,8 @@ class LikeController extends AbstractController
 
 
         //Redirection sur la page d'ou l'ont viens
-        $referer = $request->headers->get('referer');
-        return new RedirectResponse($referer);
+        return new Response("+1");
+
 
     }
 
