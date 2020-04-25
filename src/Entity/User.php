@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @Vich\Uploadable
  */
 class User implements UserInterface
 {
@@ -66,23 +67,33 @@ class User implements UserInterface
     private $comments;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
-     * @var string
+     * @ORM\Column(type="string")
+     *
+     * @var string|null
      */
     private $image;
 
     /**
-     * @Vich\UploadableField(mapping="article_images", fileNameProperty="image")
+     * @Vich\UploadableField(mapping="users_images", fileNameProperty="image")
      * @Assert\Image(mimeTypes={"image/png", "image/jpeg", "image/jpg", "image/gif"})
-     * @var File
+     * @var File|null
      */
     private $imageFile;
+
+    /**
+     * @ORM\Column(type="datetime")
+     *
+     * @var \DateTimeInterface|null
+     */
+    private $updatedAt;
 
 
     public function __construct()
     {
         $this->posts = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->updatedAt= new \DateTimeImmutable();
+
     }
 
     public function serialize()
@@ -242,7 +253,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getImage(): string
+    public function getImage(): ?string
     {
         return $this->image;
     }
@@ -250,7 +261,7 @@ class User implements UserInterface
     /**
      * @param string $image
      */
-    public function setImage(string $image): void
+    public function setImage(?string $image): void
     {
         $this->image = $image;
     }
@@ -258,17 +269,21 @@ class User implements UserInterface
     /**
      * @return File
      */
-    public function getImageFile(): File
+    public function getImageFile(): ?File
     {
         return $this->imageFile;
     }
 
     /**
-     * @param File $imageFile
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $imageFile
+     * @throws \Exception
      */
-    public function setImageFile(File $imageFile): void
+    public function setImageFile(?File $imageFile =null): void
     {
         $this->imageFile = $imageFile;
+        if(null !== $imageFile){
+            $this->updatedAt= new \DateTimeImmutable();
+        }
     }
 
     /**

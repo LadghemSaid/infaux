@@ -23,7 +23,7 @@
                     {% if app.user %}
 
                         <li><a class=" {% if current_menu is defined and current_menu == 'account' %}active{% endif %}"
-                               href="{{ path('index') }}">Mon profil</a></li>
+                               href="/compte/{id}">Mon profil</a></li>
                         <li><a class=" {% if current_menu is defined and current_menu == 'logout' %}active{% endif %}"
                                href="{{ path('app_logout') }}">Se déconnecter</a></li>
 

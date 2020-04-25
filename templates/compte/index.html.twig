@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CompteController!{% endblock %}
+{% block title %}Compte{% endblock %}
 
 {% block body %}
 <style>
@@ -10,9 +10,16 @@
 
 <div class="example-wrapper">
 
-    {{ user.email }}
-    {{ user.username }}
+    Email : {{ user.email }}<br>
+    Pseudo : {{ user.username }}<br>
 
+    <img class="d-block w-100 lazyload p-img"
+         src="{{ asset("img/low_res.jpg") }}"
+         data-src="{{ app_path_users_images }}{{ user.image }}"
+         alt="AlternateText"
+         height="290px"/>
+
+    <a href="/compte/{{ user.id }}/edit" class="btn btn-secondary">Editer</a>
 
 </div>
 {% endblock %}
