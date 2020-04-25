@@ -47,13 +47,13 @@ class CommentsController extends AbstractController
      */
     public function add(Request $req, $id, PostRepository $postRepo, Security $security, MessageBusInterface $bus)
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $comment = new Comment();
+        dd($req);
 
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($req);
 
-        if ($form->isSubmitted()) {
 
             $com = $form->getData();
 
@@ -86,9 +86,7 @@ class CommentsController extends AbstractController
             return new Response("+1");
 
 
-        }
-        //$this->addFlash('error', "Un problème est survenu nous y travaillons ! :)");
-        return new Response("+0");
+
 
     }
 

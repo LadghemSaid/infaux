@@ -86,14 +86,22 @@ async function handleAddReport(event) {
 async function handleAddComment(event) {
     console.log('ok');
     event.preventDefault();
-
     const data = $(event.target).serializeArray()[0].value;
+    const dataa = $(event.target).serializeArray();
     const action = $(event.target).attr('action');
+    console.log(action)
 
     try {
-        const response = await axios.post(action);
+        const response = await axios({
+            method: 'post',
+            url: action,
+            data: {
+                dataa
+            }
+        });
+
         if (response.data === "+1") {
-            targetToChange.innerText = parseInt(targetToChange.innerText) + 1;
+
 
             Toastify({
                 text: "Commentaire ajouté",
@@ -107,7 +115,6 @@ async function handleAddComment(event) {
                 } // Callback after click
             }).showToast();
         } else {
-            targetToChange.innerText = parseInt(targetToChange.innerText) - 1;
 
             Toastify({
                 text: "Une erreur est survenue",
