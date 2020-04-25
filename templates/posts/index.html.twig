@@ -51,6 +51,7 @@
 
         {% for post in posts %}
 
+          {% set comment = post.comments | last %}
 
             <div class="post-container">
                 <div class="content">
@@ -65,11 +66,10 @@
                                              class="number p-date">{{ post.createdAt | date('U') }}</span>
                                     </p>
                                 </div>
-                                <div>ooo</div>
-                            </div>
-
-                            <div class="option">
-                                <i class="fas fa-ellipsis-v"></i>
+                                <div class="option">
+                                    <div class="btn-opt-post">ooo</div>
+                                    <div class="opt-post">a</div>
+                                </div>
                             </div>
                         </div>
                         <div class="l-post">
@@ -124,7 +124,7 @@
 
                 </div>
 
-                {% set comment = post.comments | last %}
+              
 
 
                 <div class="wrapper-comments">
@@ -150,9 +150,30 @@
                                         <p class="username"><strong>{{ comment.user }}</strong><span
                                                     data-createdAt="{{ comment.createdAt | date('U') }}"
                                                     class="number p-date">{{ comment.createdAt | date('U') }}</span></p>
-                                        <div class="option"><i class="fas fa-ellipsis-v"></i></div>
+                                        <div class="option">o</div>
                                     </div>
                                     <p class="text">{{ comment.textComment }} </p>
+                                    <div class="icons">
+                                    <div onclick="handleAddLike(event)"
+                                         data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
+                                         class="likeForm">
+
+                                        <i class="icon-like">
+
+                                        </i>
+                                        <span class="number">
+                                            {{ comment.likes|length }}
+                                        </span>
+                                        </button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="footer">
+                                {# <div class="icons">
+                                    <div onclick="handleAddLike(event)"
+                                         data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
+                                         class="likeForm">
                                     <div class="footer">
                                         <div class="icons">
                                             <div onclick="handleAddLike(event)"
@@ -184,7 +205,7 @@
 
 
                                     </div>
-                                </div>
+                                </div>#}
 
                             </div>
 
@@ -221,10 +242,19 @@
                         </form>
                     </div>
 
+
+
+                     
+
                 {% endif %}
 
 
             </div>
+
+           
+
+
+
         {% endfor %}
         {{ knp_pagination_render(posts) }}
 
