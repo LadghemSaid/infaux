@@ -43,7 +43,7 @@
     <div class="login limiter">
         <div class="container-login">
             <div class="wrap-login">
-                <a href="{{ path("index") }}" class="pb-30 d-flex justify-content-end"><i class="fas fa-times"></i></a>
+                <a href="{{ path("index") }}" class="pb-30 d-flex justify-content-end"><i class="icon-close"></i></a>
 
 
                 <span class="login-form-title pb-50">
@@ -81,7 +81,7 @@
 
                 <div class="wrap-input validate-input">
 					<span class="btn-show-pass">
-						<i class="zmdi zmdi-eye"></i>
+						<i class="icon-eye"></i>
 					</span>
                     {{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'input'}}) }}
                     <span class="focus-input" data-placeholder="Mot de passe"></span>
@@ -95,7 +95,7 @@
 
                 <div class="wrap-input validate-input">
 					<span class="btn-show-pass">
-						<i class="zmdi zmdi-eye"></i>
+						<i class="icon-eye"></i>
 					</span>
                     {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'input'}}) }}
                     <span class="focus-input" data-placeholder="Mot de passe"></span>
@@ -137,9 +137,9 @@
 
     <div id="dropDownSelect1"></div>
 
-
-{% endblock %}
 	{% block javascripts %}
+		<script src="{{ preload('https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js', { as: 'script' }) }}"></script>
         {{ encore_entry_script_tags('login') }}
-
     {% endblock %}
+{% endblock %}
+

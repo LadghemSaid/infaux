@@ -306,7 +306,7 @@ iframe {
   z-index: -1;
   width: 300%;
   height: 100%;
-  background: $green;
+  background: $transparent-green;
   top: 0;
   left: -100%;
 
@@ -316,10 +316,18 @@ iframe {
   transition: all 0.4s;
 }
 
+.login-form-bgbtn:hover {
+  background: $green !important;
+}
+
+.login-form-btn:hover {
+  background: $green !important;
+}
+
 .login-form-btn {
   font-family: Poppins-Medium;
   font-size: 15px;
-  color: $white;
+  color: $black;
   line-height: 1.2;
   text-transform: uppercase;
 

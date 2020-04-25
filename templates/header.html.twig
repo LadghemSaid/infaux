@@ -41,7 +41,7 @@
                 <div class="modal-header">
                     <img src="{{ asset("img/logo_infaux.png") }}" alt="Infaux logo"/></a>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i class="fas fa-times"></i>
+                        <i class="icon-close"></i>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -96,7 +96,7 @@
                                 <a href="" class="mt-30 mt-30Mobile">Voir mes postes épinglés</a>
 
 
-                                <a href="" class="mt-30 mt-30Mobile">Déconnexion</a>
+                                <a href="{{ path('app_logout') }}" class="mt-30 mt-30Mobile">Déconnexion</a>
 
                             {% endif %}
                         </div>
@@ -106,82 +106,4 @@
             </div>
         </div>
     </div>
-    {# <div class="collapse menu-collapse" id="nav-collapse">
-        <div class="card card-body collapse-navbar">
-            <a class="" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                <i class="fas fa-times"></i>
-            </a>
-            <div class="container d-flex flex-column align-items-center">
-                <img src="{{ asset("img/logo_infaux.png") }}" alt="Infaux logo"/></a>
-                <div class="user-picture-background mt-40 mt-40Mobile">
-                    <div class="user-picture">
-                        <img src="{{ asset("img/user.svg") }}" alt="user"/></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> #}
-    {# <nav class="d-flex bd-highlight mb-3 align-items-center nav-menu">
-        <a class="logo mr-auto bd-highlight" href="{{ path("index") }}"><img src="{{ asset("img/logo_infaux.png") }}"
-                                                                             alt="Agence Pop Web logo"/></a>
-        <input type="checkbox" id="nav" class="hidden"/>
-        <label for="nav" class="nav-open">
-            <i></i>
-            <i></i>
-            <i></i>
-        </label>
-        <div class="nav-container bd-highlight">
-            <ul>
-                <li>
-                    <a class="nav-link {% if current_menu is defined and current_menu == 'home' %}active{% endif %}"
-                       href="{{ path('index') }}"><i class="fas fa-home"></i> Accueil
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                {% if app.user %}
-                    <li>
-                        <a class="nav-link {% if current_menu is defined and current_menu == 'notifications' %}active{% endif %}"
-                           href="{{ path('notification') }}"><i class="fas fa-bell"></i> Notifications (<span class="number_notif">{{ app.user.notificationNotSeen | length }}</span>)
-                            <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link {% if current_menu is defined and current_menu == 'account' %}active{% endif %}"
-                           href="{{ path('index') }}"><i class="fas fa-user"></i> Mon profil</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {% if current_menu is defined and current_menu == 'search' %}active{% endif %}"
-                           href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-cog"></i> Paramètres
-                            <span class="sr-only">(current)</span>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#"><i class="fas fa-cog"></i> Paramètres du profil</a>
-                            <a class="dropdown-item" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
-                        </div>
-                    </li>
-                    {% if is_granted('ROLE_ADMIN') %}
-
-                        <li><a class="nav-link " href="/admin"><i class="fas fa-user"></i> Admin</a></li>
-
-                    {% endif %}
-
-                {% else %}
-                    <li>
-                        <a class="nav-link {% if current_menu is defined and current_menu == 'login' %}active{% endif %}"
-                           href="{{ path('app_login') }}"><i class="fas fa-user"></i> Connexion</a>
-                    </li>
-                    <li>
-                        <a class="nav-link {% if current_menu is defined and current_menu == 'register' %}active{% endif %}"
-                           href="{{ path('app_register') }}"><i class="fas fa-user"></i> Inscription</a>
-                    </li>
-                {% endif %}
-            </ul>
-        </div>
-        <a class="pl-30 pl-20Mobile pt-10Mobile bd-highlight nav-link mk-search-trigger mk-fullscreen-trigger" href="#"
-           id="search-button-listener">
-            <div id="search-button"><i class="icon-search"></i></div>
-        </a>
-    </nav> #}
 </header>

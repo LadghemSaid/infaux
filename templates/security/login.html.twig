@@ -30,11 +30,6 @@
     <meta name="google" content="unavailable_after: [date ]">{% endblock %}
 {% block stylesheets %}
 
-    <link rel="stylesheet" type="text/css"
-          href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
-
-
-
 {% endblock %}
 
 {% block body %}
@@ -42,7 +37,7 @@
 		<div class="login limiter">
 			<div class="container-login">
 				<div class="wrap-login">
-                <a href="{{ path("index") }}" class="pb-60 d-flex justify-content-end"><i class="fas fa-times"></i></a>
+                <a href="{{ path("index") }}" class="pb-60 d-flex justify-content-end"><i class="icon-close"></i></a>
 					{% if error %}
 						<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 					{% endif %}
@@ -67,7 +62,7 @@
 
 							<div class="wrap-input validate-input" data-validate="Enter password">
 								<span class="btn-show-pass">
-									<i class="zmdi zmdi-eye"></i>
+									<i class="icon-eye"></i>
 								</span>
 								<input class="input" type="password" name="password" id="inputPassword" required>
 								<span class="focus-input" data-placeholder="Mot de passe"></span>
@@ -110,10 +105,9 @@
 				</div>
 			</div>
 		</div>
-
+	{% block javascripts %}
+		<script src="{{ preload('https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js', { as: 'script' }) }}"></script>
+        {{ encore_entry_script_tags('login') }}
+    {% endblock %}
 
 		{% endblock %}
-	{% block javascripts %}
-        {{ encore_entry_script_tags('login') }}
-
-    {% endblock %}
