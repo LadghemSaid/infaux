@@ -1,9 +1,9 @@
 import Toastify from 'toastify-js';
 
 
-    //const _receiver = document.getElementById('mercure-content-receiver');
+//const _receiver = document.getElementById('mercure-content-receiver');
 
-function startServiceWorker(url){
+function startServiceWorker(url) {
     const numberNotifs = $('.number_notif');
 
     navigator.serviceWorker.register('/service-worker.js');
@@ -48,6 +48,7 @@ function startServiceWorker(url){
         }
     })
 }
+
 window.startServiceWorker = startServiceWorker;
 
 
