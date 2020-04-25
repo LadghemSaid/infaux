@@ -4,6 +4,8 @@
     PopWeb - Blog
 {% endblock %}
 {% block gtag %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107718823-2"></script>
     <script>
@@ -51,7 +53,7 @@
 
         {% for post in posts %}
 
-          {% set comment = post.comments | last %}
+            {% set comment = post.comments | last %}
 
             <div class="post-container">
                 <div class="content">
@@ -67,8 +69,10 @@
                                     </p>
                                 </div>
                                 <div class="option">
-                                    <div class="btn-opt-post">ooo</div>
-                                    <div class="opt-post">a</div>
+                                    <div class="btn-opt-post" onclick="dropdown();">ooo</div>
+                                    <div class="opt-post" id="opt-post">a</div>
+                                    {#                                    balise A div qui va en bas quand t'appuies sur 3 petits points => a se display
+                                    #}
                                 </div>
                             </div>
                         </div>
@@ -79,7 +83,8 @@
                         <div class="actions">
                             <div class="icons">
                                 <div onclick="handleAddLike(event)"
-                                    data-action="{{ path('like.add',{"entity":"post",'id':post.id}) }}" class="likeForm">
+                                     data-action="{{ path('like.add',{"entity":"post",'id':post.id}) }}"
+                                     class="likeForm">
                                     <i class="icon-like"></i>
                                     <span class="number">{{ post.likes|length }}</span>
                                 </div>
@@ -88,8 +93,8 @@
                                 </div>
                             </div>
                             <a data-page="0" data-post="{{ post.id }}" class="btn btn-primaire view-more-button"
-                                onclick="getNextComment(event)"
-                                href="{{ path('comment.paginate',{'post': post.id}) }}">Voir plus</a>
+                               onclick="getNextComment(event)"
+                               href="{{ path('comment.paginate',{'post': post.id}) }}">Voir plus</a>
                         </div>
                     </div>
 
@@ -106,7 +111,7 @@
 
                             </div>
                         </div>
-                        
+
 
                         <div class="icons">
                             <div onclick="handleAddReport(event)"
@@ -119,12 +124,9 @@
                         </div>
 
 
-
                     </div>
 
                 </div>
-
-              
 
 
                 <div class="wrapper-comments">
@@ -152,19 +154,19 @@
                                     </div>
                                     <p class="text">{{ comment.textComment }} </p>
                                     <div class="icons">
-                                    <div onclick="handleAddLike(event)"
-                                         data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
-                                         class="likeForm">
+                                        <div onclick="handleAddLike(event)"
+                                             data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
+                                             class="likeForm">
 
-                                        <i class="icon-like">
+                                            <i class="icon-like">
 
-                                        </i>
-                                        <span class="number">
+                                            </i>
+                                            <span class="number">
                                             {{ comment.likes|length }}
                                         </span>
-                                        </button>
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
                                 </div>
                             </div>
                             <div class="footer">
@@ -218,7 +220,8 @@
                         <div class="img"
                              style="background:url(https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80)">
                         </div>
-                        <form onsubmit="handleAddComment(event)" name="comment" method="post" action="{{ path('comment.add',{'id':post.id}) }}"
+                        <form onsubmit="handleAddComment(event)" name="comment" method="post"
+                              action="{{ path('comment.add',{'id':post.id}) }}"
                               class="commentForm">
                             <div class="form-group">
                                 <label class="sr-only required" for="comment_textComment">Commentaire</label>
@@ -242,14 +245,14 @@
 
 
 
-                     
+
 
                 {% endif %}
 
 
             </div>
 
-           
+
 
 
 
@@ -358,6 +361,20 @@
       {% endif %}
 
 
+      <script>
+          function dropdown() {
+              var element = document.getElementById('opt-post');
 
+              var display = element.style.display;
+
+              if (element.style.display === 'none') {
+                  document.getElementById('opt-post').style.display = 'block';
+              }
+              else if(element.style.display === 'block')
+              {
+                  document.getElementById('opt-post').style.display = 'none';
+              }
+          }
+      </script>
 
   {% endblock %}
