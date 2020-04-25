@@ -56,16 +56,34 @@
             <div class="post-container">
                 <div class="content">
                     <div class="header">
-                        <img src="{{ asset('/img/favicon96.png') }}"
+                        <div class="top">
+                            <div class="img">
+                                <img class="img" src="{{ asset('/img/favicon96.png') }}"/>
 
-                             alt="" class="img">
+                            </div>
+                            <div class="infos">
+                                <div class="left">
+                                    <p class="username"><strong>{{ post.user.username }}</strong></p>
+                                    <p class="date">
+                                       <span data-createdAt="{{ post.createdAt | date('U') }}"
+                                             class="number p-date">{{ post.createdAt | date('U') }}</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="option">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </div>
+                        </div>
+
+
+
                         <div class="l-post">
-                            <p class="username"><strong>{{ post.user.username }}</strong></p>
                             <p class="text">{{ post.text }}</p>
                         </div>
                     </div>
 
-                    <div class="footer">
+                    <div class="actions">
                         <div class="icons">
                             <div onclick="handleAddLike(event)"
                                  data-action="{{ path('like.add',{"entity":"post",'id':post.id}) }}" class="likeForm">
@@ -89,40 +107,25 @@
                         </div>
                         <div class="icons">
                             <i class="icon-alarm"></i><span data-createdAt="{{ post.createdAt | date('U') }}"
-                                                             class="number p-date">{{ post.createdAt | date('U') }}</span>
+                                                            class="number p-date">{{ post.createdAt | date('U') }}</span>
 
                         </div>
                         <div class="icons">
-                        <div onclick="handleAddPostReport(event)" data-action="{{ path('report.add',{"entity":"post",'id':post.id}) }}" class="reportForm">
+                            <div onclick="handleAddPostReport(event)"
+                                 data-action="{{ path('report.add',{"entity":"post",'id':post.id}) }}"
+                                 class="reportForm">
 
                                 <i class="fa fa-flag"></i><span class="number ">Signalez</span>
 
-                        </div>
+                            </div>
                         </div>
 
+
+
                     </div>
+
                 </div>
-                {% if app.user %}
-                    <div class="formComment">
-                        <form name="comment" method="post" action="{{ path('comment.add',{'id':post.id}) }}"
-                              class="commentForm">
-                            <div class="form-group">
-                                <label class="sr-only required" for="comment_textComment">Commentaire</label>
-                                <textarea id="comment_textComment" name="comment[textComment]" required="required"
-                                          class="commentForm__textarea form-control"
-                                          placeholder="Votre commentaire ..."></textarea>
-                            </div>
-                            <div class="d-flex justify-content-end">
-                                <div class="form-group">
-                                    <button type="submit" id="comment_submit-post-{{ post.id }}" name="comment[submit]"
-                                            class="btn btn-pink btn">Envoyer
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
 
-                {% endif %}
                 {% set comment = post.comments | last %}
 
 
@@ -138,18 +141,29 @@
                     <div class="comments-container">
                         <div class="content">
                             <div class="header">
-                                <img src="{{ asset('/img/favicon96.png') }}"
-                                     alt="" class="img">
-                                <div class="l-post">
-                                    <p class="username"><strong>{{ comment.user }}</strong></p>
+                                <div class="top">
+                                    <div class="img">
+                                        <img src="{{ asset('/img/favicon96.png') }}" />
 
-                                    <p class="text">{{ comment.textComment }} </p>
+                                    </div>
+                                </div>
+
+
+                                <div class="l-post right">
+                                    <div class="top">
+                                        <p class="username"><strong>{{ comment.user }}</strong><span
+                                                    data-createdAt="{{ comment.createdAt | date('U') }}"
+                                                    class="number p-date">{{ comment.createdAt | date('U') }}</span></p>
+                                        <div class="option"><i class="fas fa-ellipsis-v"></i></div>
+                                    </div>
                                 </div>
                             </div>
-
+                            <p class="text">{{ comment.textComment }} </p>
                             <div class="footer">
                                 <div class="icons">
-                                <div onclick="handleAddLike(event)" data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}" class="likeForm">
+                                    <div onclick="handleAddLike(event)"
+                                         data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
+                                         class="likeForm">
 
                                         <i class="icon-like">
 
@@ -157,8 +171,8 @@
                                         <span class="number">
                                             {{ comment.likes|length }}
                                         </span>
-                                    </button>
-                                </div>
+                                        </button>
+                                    </div>
                                 </div>
                                 <p class="icons">
                                     <i class="icon-alarm"></i><span
@@ -180,10 +194,40 @@
 
 
                             </div>
+
                         </div>
 
                     </div>
                 </div>
+
+                {% if app.user %}
+                    <div class="formComment">
+                        <div class="img"
+                             style="background:url(https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80)">
+                        </div>
+                        <form name="comment" method="post" action="{{ path('comment.add',{'id':post.id}) }}"
+                              class="commentForm">
+                            <div class="form-group">
+                                <label class="sr-only required" for="comment_textComment">Commentaire</label>
+                                {# <textarea id="comment_textComment" name="comment[textComment]" required="required"
+                                          class="commentForm__textarea form-control"
+                                          placeholder="Votre commentaire ..."></textarea>#}
+                                <input type="text" id="comment_textComment" name="comment[textComment]"
+                                       required="required"
+                                       class="commentForm__textarea form-control input-lg"
+                                       placeholder="Votre commentaire ...">
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <div class="form-group">
+                                    <button type="submit" id="comment_submit-post-{{ post.id }}" name="comment[submit]"
+                                            class="btn btn-pink btn">Envoyer
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                {% endif %}
 
 
             </div>
