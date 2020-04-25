@@ -30,7 +30,6 @@
     <meta name="google" content="unavailable_after: [date ]">{% endblock %}
 
 {% block style_custom %}
-
     <style>
 
     </style>
@@ -95,7 +94,7 @@
                     </div>
 
                     <div class="actions">
-                        {# 
+
                         <div class="icons">
 
                             <div onclick="handleAddPostPinned(event)"
@@ -108,11 +107,7 @@
                             </div>
                         </div>
                         
-                        <div class="icons">
-                            <i class="icon-alarm"></i><span data-createdAt="{{ post.createdAt | date('U') }}"
-                                                            class="number p-date">{{ post.createdAt | date('U') }}</span>
 
-                        </div>
                         <div class="icons">
                             <div onclick="handleAddReport(event)"
                                  data-action="{{ path('report.add',{"entity":"post",'id':post.id}) }}"
@@ -121,7 +116,7 @@
                                 <i class="fa fa-flag"></i><span class="number ">Signalez</span>
 
                             </div>
-                        </div> #}
+                        </div>
 
 
 

@@ -19,6 +19,7 @@
     top: 0;
     left: 0;
     right: 0;
+    z-index: 10;
     box-shadow: 0 0px 5px -2px rgb(168, 168, 168);
     img {
         height: 50px;
@@ -30,7 +31,7 @@
 	bottom:0;
 	left:0;
 	right:0;
-	
+    z-index: 10;
 	//give nav it's own compsite layer
 	will-change:transform;
 	transform: translateZ(0);

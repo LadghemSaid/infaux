@@ -10,14 +10,10 @@
     {% block meta_google %}{% endblock %}
     <link type="text/plain" rel="author" href="{{ preload('/humans.txt', { as: 'font', importance: 'low' }) }}"/>
     <link rel="manifest" href="{{ preload('/manifest.webmanifest.json', { as: 'font', importance: 'low' }) }}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
 
 
-    {% block stylesheets %}
-
-    {% endblock %}
-
-    {{ encore_entry_link_tags('main') }}
 
     <link rel="icon" type="image/png" href="{{ preload('/img/favicon.png', { as: 'image' }) }}"/>
     <link rel="apple-touch-icon" sizes="96x96"
@@ -69,6 +65,11 @@
     </script>
     {% block gtag %}{% endblock %}
 
+    {% block stylesheets %}
+
+    {% endblock %}
+
+    {{ encore_entry_link_tags('main') }}
 </head>
 {% include "header.html.twig" %}
 <body>
@@ -93,7 +94,6 @@
 <script src="{{ preload('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js', { as: 'script' }) }}"
         ></script>
 <script src="https://unpkg.com/swup@latest/dist/swup.min.js" ></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 {{ encore_entry_script_tags('app') }}
 
 
