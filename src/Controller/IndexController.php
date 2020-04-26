@@ -46,6 +46,7 @@ class IndexController extends AbstractController
         $response = $this->render('posts/index.html.twig', [
             'current_menu' => 'posts',
             'posts' => $posts,
+            'postsForm' => $postsForm,
             'bearerToken' => $this->getUser() ? $cookieGenerator->generateToken($this->getUser()):''
 
         ]);
