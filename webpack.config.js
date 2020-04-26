@@ -94,7 +94,7 @@ Encore
             swDest: './../service-worker2.js',
             clientsClaim: true,
             skipWaiting: true,
-            exclude: ["https://s-website.ga/.well-known/mercure?topic=%2Fmessage'"],
+            exclude: ["https://s-website.ga/.well-known/.*"],
             runtimeCaching: [{
                 urlPattern: new RegExp(''),
                 handler: 'StaleWhileRevalidate'
