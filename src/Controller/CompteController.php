@@ -27,7 +27,7 @@ class CompteController extends AbstractController
         $user= $this->getDoctrine()->getRepository(User::class)->find($id);
 
         $form= $this->createFormBuilder($user)
-        ->add('imageFile',VichImageType::class, array('attr' =>array('class'=>'form-control')))
+        ->add('imageFile',VichImageType::class)
         ->add('save', SubmitType::class, array(
             'label'=>'Editer',
             'attr'=>array('class'=>'btn btn-primary mt-3')
@@ -40,9 +40,9 @@ class CompteController extends AbstractController
             $file=$image->getImage();
 
 
-            $pathto="/public/uploads/images/users/";
 
-            move_uploaded_file($file,$pathto);
+
+            move_uploaded_file($file,"public/uploads/images/users");
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
 
