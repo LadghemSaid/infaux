@@ -360,9 +360,13 @@
 
 
       <script>
+          $(document).ready(function(){
+              $('#opt-post').hide();
+          });
+
           function dropdown() {
               var element = document.getElementById('opt-post');
-              
+
               if (element.style.display === 'none') {
                   document.getElementById('opt-post').style.display = 'block';
               }
