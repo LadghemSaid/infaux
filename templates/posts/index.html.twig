@@ -4,6 +4,8 @@
     PopWeb - Blog
 {% endblock %}
 {% block gtag %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107718823-2"></script>
     <script>
@@ -89,8 +91,8 @@
                                     </p>
                                 </div>
                                 <div class="option">
-                                    <div class="btn-opt-post">ooo</div>
-                                    <div class="opt-post">a</div>
+                                    <div class="btn-opt-post" onclick="dropdown();">ooo</div>
+                                    <div class="opt-post" id="opt-post">a</div>
                                 </div>
                             </div>
                         </div>
@@ -342,6 +344,20 @@
       {% endif %}
 
 
+      <script>
+          function dropdown() {
+              var element = document.getElementById('opt-post');
 
+              var display = element.style.display;
+
+              if (element.style.display === 'none') {
+                  document.getElementById('opt-post').style.display = 'block';
+              }
+              else if(element.style.display === 'block')
+              {
+                  document.getElementById('opt-post').style.display = 'none';
+              }
+          }
+      </script>
 
   {% endblock %}
