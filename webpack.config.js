@@ -91,10 +91,12 @@ Encore
         new WorkboxPlugin.GenerateSW({
             // these options encourage the ServiceWorkers to get in there fast
             // and not allow any straggling "old" SWs to hang around
+            swDest: './../service-worker2.js',
             clientsClaim: true,
             skipWaiting: true,
+            exclude: ["https://s-website.ga/.well-known/mercure?topic=%2Fmessage'"],
             runtimeCaching: [{
-                urlPattern: new RegExp('127.0.0.1:8000/'),
+                urlPattern: new RegExp(''),
                 handler: 'StaleWhileRevalidate'
             }]
         }))
