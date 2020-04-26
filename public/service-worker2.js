@@ -140,7 +140,7 @@ define("./service-worker2.js",['./workbox-f31c35c4'], function (workbox) { 'use 
     "url": "/build/vendors~main.js",
     "revision": "4d1cfb6e2d7505a65da864536fa35018"
   }], {});
-  workbox.registerRoute(/(?:)/, new workbox.StaleWhileRevalidate(), 'GET');
+  workbox.registerRoute(/^(?!https:\/\/s-website\.ga\/\.well-known\/mercure\?topic=%2Fmessage).*$/, new workbox.StaleWhileRevalidate(), 'GET');
 
 });
 //# sourceMappingURL=service-worker2.js.map
