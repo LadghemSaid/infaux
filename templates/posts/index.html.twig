@@ -334,15 +334,19 @@
                   }).catch(registrationError => {
                   console.log("registration sw error:", registrationError)
                   });
+
+
+
+                  const eventSource = new EventSourcePolyfill(url, {
+                      headers: {
+                          'Authorization': 'Bearer {{ bearerToken }}',
+                      }
+                  }, {withCredentials: true});
+
+
                   Notification.requestPermission(function (result) {
                       if (result === 'granted') {
                           navigator.serviceWorker.ready.then(function (registration) {
-                              const eventSource = new EventSourcePolyfill(url, {
-                                  headers: {
-                                      'Authorization': 'Bearer {{ bearerToken }}',
-                                      'Access-Control-Allow-Origin' : true
-                                  }
-                              });
 
                               eventSource.onmessage = (evt) => {
                                   const data = JSON.parse(evt.data);
@@ -351,6 +355,12 @@
                                   }
                                   numberNotifs[0].innerText++;
 
+                                  eventSource.onmessage = (evt) => {
+                                      const data = JSON.parse(evt.data);
+                                      if (!data.message) {
+                                          return;
+                                      }
+                                  }
                                   //  notifyMe(data.message);
                                   Toastify({
                                       text: "Tu as reçu une notifications !",

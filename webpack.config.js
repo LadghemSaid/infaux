@@ -16,8 +16,6 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 }
 
 
-
-
 Encore
     .addPlugin(new WebpackBar())
     .setOutputPath('public/build/')
@@ -34,7 +32,8 @@ Encore
     .enableBuildNotifications()
     .enableSourceMaps(!Encore.isProduction())
     .enableVersioning(Encore.isProduction())
-    .configureBabel(() => {}, {
+    .configureBabel(() => {
+    }, {
         useBuiltIns: 'usage',
         corejs: 3
     })
@@ -82,9 +81,7 @@ Encore
         new PurgeCssPlugin({
             // folders: ['resources/views/**/*', 'resources/assets/scss/'],
             paths: glob.sync([path.join(__dirname, 'templates/**/*.html.twig')]),
-            whitelistPatterns: [
-
-            ],
+            whitelistPatterns: [],
         }),
     )
     .addPlugin(
@@ -96,6 +93,7 @@ Encore
             skipWaiting: true,
             runtimeCaching: [{
                 urlPattern: new RegExp(/^(?!https:\/\/s-website\.ga\/\.well-known\/mercure\?topic=%2Fmessage).*$/),
+                //urlPattern: new RegExp(/^(http:\/\/localhost:8000\.*$)\.*/),
                 handler: 'StaleWhileRevalidate'
             }]
         }))
@@ -119,7 +117,8 @@ Encore
     .enableBuildNotifications()
     .enableSourceMaps(!Encore.isProduction())
     .enableVersioning(Encore.isProduction())
-    .configureBabel(() => {}, {
+    .configureBabel(() => {
+    }, {
         useBuiltIns: 'usage',
         corejs: 3
     })
