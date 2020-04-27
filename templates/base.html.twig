@@ -22,7 +22,7 @@
 
 
     <link rel="stylesheet" href="{{ asset('/font/icomoon/style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" defer="">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
 
     <script type="text/javascript"
             src="{{ preload(asset('js/tarteaucitron/tarteaucitron.js'), { as: 'script', importance: 'low' }) }}"></script>
@@ -67,11 +67,7 @@
 
     {{ encore_entry_link_tags('main') }}
 </head>
-{% if (app.request.get('_route') == 'app_register') or (app.request.get('_route') == 'app_login') or (app.request.get('_route') == 'tuto.avatar') or (app.request.get('_route') == 'tuto.description') or (app.request.get('_route') == 'tuto.skip') %}
-
-{% else %}
 {% include "header.html.twig" %}
-{% endif %}
 <body>
 <div id="mercure-content-receiver"></div>
 
@@ -81,16 +77,11 @@
     {% endblock %}
 </div>
 
-{% if (app.request.get('_route') == 'app_register') or (app.request.get('_route') == 'app_login') or (app.request.get('_route') == 'tuto.avatar') or (app.request.get('_route') == 'tuto.description') or (app.request.get('_route') == 'tuto.skip') %}
 
-{% else %}
 {% include "footer.html.twig" %}
-{% endif %}
 
 <a aria-label="Button permettant de retourner en haut de la page" id="scrollToTop"></a>
-{% if (app.request.get('_route') == 'app_register') or (app.request.get('_route') == 'app_login') %}
 
-{% else %}
 <script src="{{ preload('https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js', { as: 'script' }) }}"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
 ></script>
@@ -98,7 +89,6 @@
 ></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"
 ></script>
-<script src="https://unpkg.com/swup@latest/dist/swup.min.js" ></script>
 {{ encore_entry_script_tags('app') }}
 
 
