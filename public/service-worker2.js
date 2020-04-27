@@ -114,7 +114,7 @@ define("./service-worker2.js",['./workbox-f31c35c4'], function (workbox) { 'use 
     "revision": "364880e52bb018a209f36e7dc1abb822"
   }, {
     "url": "/build/main.css",
-    "revision": "82d006893f6d9f43efa085a36a6d12c7"
+    "revision": "9cbc230acfd38df046e5e20616705d90"
   }, {
     "url": "/build/mercure.js",
     "revision": "717230e0ca58520a88f9906b6003ccb9"
@@ -135,7 +135,7 @@ define("./service-worker2.js",['./workbox-f31c35c4'], function (workbox) { 'use 
     "revision": "f940d2adb3635c8d9a7be0687f967fc1"
   }, {
     "url": "/build/vendors~main.css",
-    "revision": "07aed0ccb7fd3c1ecad4a8bf86c01a75"
+    "revision": "6888694b3356090069e40d7dc44d52f5"
   }, {
     "url": "/build/vendors~main.js",
     "revision": "4d1cfb6e2d7505a65da864536fa35018"
