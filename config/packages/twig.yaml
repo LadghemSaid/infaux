@@ -8,6 +8,7 @@ twig:
         mercure_publish_url: '%env(MERCURE_PUBLISH_URL)%'
 
         #app_path_articles_images: '%env(string:UPLOAD_PATH_ARTICLES)%'
+        app_path_users_images: '%env(string:UPLOAD_PATH_USERS)%'
         app_path_default_images: '%env(string:UPLOAD_PATH_DEFAULT)%'
 
         site_name: 'Nomdesite'
