@@ -24,7 +24,6 @@ Encore
     .addEntry('app', './assets/js/app.js')
     .addEntry('ajax', './assets/js/ajax.js')
     .addEntry('login', './assets/js/login.js')
-    .addEntry('mercure', './assets/js/mercure.js')
     .addStyleEntry('main', './assets/css/scss/imports.scss')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
@@ -88,7 +87,7 @@ Encore
         new WorkboxPlugin.GenerateSW({
             // these options encourage the ServiceWorkers to get in there fast
             // and not allow any straggling "old" SWs to hang around
-            swDest: './../service-worker2.js',
+            swDest: './../service-worker.js',
             clientsClaim: true,
             skipWaiting: true,
             runtimeCaching: [{

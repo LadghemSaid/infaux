@@ -79,15 +79,9 @@ class IndexController extends AbstractController
             'current_menu' => 'posts',
             'posts' => $posts,
             'postForm' => $postForm->createView(),
-            'bearerToken' => $this->getUser() ? $cookieGenerator->generateToken($this->getUser()):''
 
         ]);
 
-        if ($this->getUser()) {
-            $response->headers->set('set-cookie', $cookieGenerator->generate($this->getUser()));
-            //$response->headers->setCookie($cookieGenerator->generate($this->getUser()));
-            //dd($response->headers->getCookies());
-        }
         return $response;
         //Pour 1 -> ...find($id);   avec une valeur de champ -> ...findOneBy(['title'=>'Post Du vendredi 13']);
 

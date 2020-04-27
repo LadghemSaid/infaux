@@ -1,7 +1,7 @@
 {% extends '/base.html.twig' %}
 
 {% block title %}
-    Infaux - Notification
+    Infaux - Parametres
 {% endblock %}
 {% block gtag %}
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -47,19 +47,55 @@
             {{ message }}
         </div>
     {% endfor %}
-    <div class="container">
-        <div class="notif-blk">
-            {% for notif in notifsSeen %}
-           <img src="https://images.unsplash.com/photo-1528341866330-07e6d1752ec2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2001&q=80"/>
-                   
-                <div> {{ notif.user }} </div>
-                <div class="opa nm">{{ notif.message }} </div>
 
-            {% endfor %}
-            {% for notif in notifsNotSeen %}
-                <div>{{ notif.message }}   (Non vu) </div>
+    <div class="container" style="margin-top: 70px">
 
-            {% endfor %}
+        <h1>Parametres</h1>
+        <div class="card">
+            <h1>Compte</h1>
+            {{ dump(user) }}
+            <div class="group">
+                <p>Avatar actuelle</p>
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+                <img src="" alt="">
+            </div>
+            <div class="group">
+                <p>Pseudo</p>
+                <p>John Doe</p>
+            </div>
+            <div class="group">
+                <p>Email du compte</p>
+                <p>John.Doe@gmail.fr</p>
+            </div>
+            <div class="group">
+                <p>Mot de passe</p>
+                <p>*************</p>
+            </div>
+
+            <a href="{{ path('account.delete') }}">Désactivé le compte</a>
+            <a href="{{ path('app_logout') }}">Se déconnecter</a>
+        </div>
+
+        <div class="card">
+            <h1>Général</h1>
+
+            <div class="group">
+                <p>Voir les posts</p>
+                <p>John Doe</p>
+            </div>
+            <div class="group">
+                <p>Email du compte</p>
+                <p>John.Doe@gmail.fr</p>
+            </div>
+            <div class="group">
+                <p>Mot de passe</p>
+                <p>*************</p>
+            </div>
+
+            <a href="{{ path('account.delete') }}">Désactivé le compte</a>
+            <a href="{{ path('app_logout') }}">Se déconnecter</a>
         </div>
 
     </div>

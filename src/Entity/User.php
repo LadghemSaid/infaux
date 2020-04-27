@@ -5,8 +5,9 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -100,19 +101,24 @@ class User implements UserInterface
     private $notificationNotSeen;
 
 
-    /**
-     * @ORM\Column(type="string")
-     *
-     * @var string|null
-     */
-    private $image;
+
 
     /**
      * @Vich\UploadableField(mapping="users_images", fileNameProperty="image")
      * @Assert\Image(mimeTypes={"image/png", "image/jpeg", "image/jpg", "image/gif"})
-     * @var File|null
+     * @Assert\File(
+     *     maxSize = "1024k",
+     *     mimeTypes = {"image/png", "image/jpeg", "image/jpg"},
+     *     mimeTypesMessage = "Please upload a valid valid IMAGE"
+     * )
      */
     private $imageFile;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string|null
+     */
+    private $image;
 
     /**
      * @ORM\Column(type="datetime")
@@ -144,7 +150,8 @@ class User implements UserInterface
             $this->username,
             $this->password,
             $this->salt,
-            $this->isActive
+            $this->image,
+
         ));
     }
 
@@ -155,9 +162,13 @@ class User implements UserInterface
             $this->username,
             $this->password,
             $this->salt,
-            $this->isActive
+            $this->image,
+
             ) = unserialize($serialized);
     }
+
+
+
 
     public function getId(): ?int
     {
@@ -316,7 +327,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $imageFile
+     * * @param File|UploadedFile|null $imageFile
      * @throws \Exception
      */
     public function setImageFile(?File $imageFile =null): void
