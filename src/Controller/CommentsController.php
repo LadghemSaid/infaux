@@ -45,7 +45,7 @@ class CommentsController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function add(Request $req, $id, PostRepository $postRepo, Security $security, MessageBusInterface $bus)
+    public function add(Request $req, $id, PostRepository $postRepo, Security $security)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $comment = new Comment();
@@ -53,42 +53,37 @@ class CommentsController extends AbstractController
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($req);
 
-        if ($form->isSubmitted()) {
 
-            $com = $form->getData();
+        $com = $form->getData();
+        $post = $postRepo->find($id);
+        $com->setPost($post)
+            ->setCreatedAt(new \DateTime())
+            ->setApproved(true)
+            ->setUser($security->getUser())
+            ->setTextComment($req->request->get('request'));
+        $this->em->persist($com);
+        $this->em->flush();
 
-            $post = $postRepo->find($id);
-            $com->setPost($post)
-                ->setCreatedAt(new \DateTime())
-                ->setApproved(true)
-                ->setUser($security->getUser());
-            $this->em->persist($com);
-            $this->em->flush();
 
+        //Ajout de la notification au group de gens qui suivent le post
+        foreach ($post->getFollowedBy() as $user) {
+            if ($user == $security->getUser()) {
 
-            //Ajout de la notification au group de gens qui suivent le post
-            foreach ($post->getFollowedBy() as $user) {
-                if ($user == $security->getUser()) {
-
-                } else {
-                    $this->notificationService->add($user, $message = "Un commentaire à été ajouter sur un post");
-                }
-
+            } else {
+                $this->notificationService->add($user, $message = "Un commentaire à été ajouter sur un post");
             }
-            //Envoie de la notif a l'auteur du post
-            $this->notificationService->add($post->getUser(), $message = "Un commentaire à été ajouter sur votre post");
-
-
-
-
-
-            $this->addFlash('success', "Commentaire ajouté avec succés :)");
-            return $this->redirectToRoute('index', array('slug' => $post->getSlug()));
-
 
         }
-        $this->addFlash('error', "Un problème est survenu nous y travaillons ! :)");
-        return $this->redirect($req->headers->get('referer'));
+        //Envoie de la notif a l'auteur du post
+        $this->notificationService->add($post->getUser(), $message = "Un commentaire à été ajouter sur votre post");
+
+
+        //$this->addFlash('success', "Commentaire ajouté avec succés :)");
+       return  $response = $this->render('comment/show.html.twig', [
+            'comment' => $com,
+
+        ]);
+
 
     }
 
@@ -135,7 +130,7 @@ class CommentsController extends AbstractController
      * @param $commentsrepo
      * @return Response
      */
-    public function getPaginateComment(Request $request, PaginatorInterface $paginator,CommentRepository $commentsrepo,$post)
+    public function getPaginateComment(Request $request, PaginatorInterface $paginator, CommentRepository $commentsrepo, $post)
     {
 
         $comments = $commentsrepo->findByPostField($post); //On récupère les commentaire du post

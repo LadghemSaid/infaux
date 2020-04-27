@@ -55,8 +55,15 @@ $white: rgba(255,255,255,.34);
           }
 
           .option{
-            color:$green;
+            .btn-opt-post{
+              color: $green;
+            }
+            .opt-post{
+              background-color: red;
+              display: none;
+            }
           }
+          
         }
       }
     
@@ -79,9 +86,12 @@ $white: rgba(255,255,255,.34);
             flex-direction: row;
             font-size: 15px !important;
             
+            .likeForm{
+              padding-right: 15px;
+            }
 
-            .fa{
-              padding-right: 4px;
+            i{
+              padding-right: 3px;
             }
 
             .comment{
@@ -228,6 +238,7 @@ $white: rgba(255,255,255,.34);
 
         .btn{
           background-color:$green;
+          border: black 0px solid;
         }
       }
     }
@@ -238,3 +249,5 @@ $white: rgba(255,255,255,.34);
   display: flex;
   flex-direction: column;
 }
+
+

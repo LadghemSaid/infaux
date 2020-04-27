@@ -3,12 +3,15 @@
 namespace App\Controller;
 
 
+use App\Entity\Post;
 use App\Form\ContactType;
+use App\Form\PostType;
 use App\Mercure\CookieGenerator;
 use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
 use App\Repository\MaillingListRepository;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,10 +22,20 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mercure\Update;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Hashids\Hashids;
 
 class IndexController extends AbstractController
 {
 
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
 
     /**
      * Liste l'ensemble des posts triés par date de publication pour une page donnée.
@@ -31,10 +44,13 @@ class IndexController extends AbstractController
      * @Template("XxxYyyBundle:Front/post:index.html.twig")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index(CookieGenerator $cookieGenerator, PostRepository $postrepo, Request $request, PaginatorInterface $paginator): Response
+    public function index(CookieGenerator $cookieGenerator, PostRepository $postrepo, Request $request, PaginatorInterface $paginator,PostType $postType): Response
     {
 
-        $posts = $postrepo->findAll(); //On récupère les posts
+        $posts = $postrepo->findAllDesc(); //On récupère les posts
+        $post = new Post();
+        $postForm = $this->createForm(PostType::class, $post);
+
 
         $posts = $paginator->paginate(
             $posts, //Donnée a paginé
@@ -43,9 +59,26 @@ class IndexController extends AbstractController
         );
 
 
+        $postForm->handleRequest($request);
+        if ($postForm->isSubmitted() && $postForm->isValid()) {
+
+            $data = $postForm->getData();
+            $post->setFavorite(false)
+                ->setPublished(true)
+                ->setUser($this->getUser());
+            $this->em->persist($post);
+            $this->em->flush();
+
+
+
+         return $this->redirectToRoute('index');
+        }
+
+
         $response = $this->render('posts/index.html.twig', [
             'current_menu' => 'posts',
             'posts' => $posts,
+            'postForm' => $postForm->createView(),
             'bearerToken' => $this->getUser() ? $cookieGenerator->generateToken($this->getUser()):''
 
         ]);
