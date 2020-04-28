@@ -16,8 +16,6 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 }
 
 
-
-
 Encore
     .addPlugin(new WebpackBar())
     .setOutputPath('public/build/')
@@ -26,7 +24,6 @@ Encore
     .addEntry('app', './assets/js/app.js')
     .addEntry('ajax', './assets/js/ajax.js')
     .addEntry('login', './assets/js/login.js')
-    .addEntry('mercure', './assets/js/mercure.js')
     .addStyleEntry('main', './assets/css/scss/imports.scss')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
@@ -34,7 +31,8 @@ Encore
     .enableBuildNotifications()
     .enableSourceMaps(!Encore.isProduction())
     .enableVersioning(Encore.isProduction())
-    .configureBabel(() => {}, {
+    .configureBabel(() => {
+    }, {
         useBuiltIns: 'usage',
         corejs: 3
     })
@@ -82,19 +80,19 @@ Encore
         new PurgeCssPlugin({
             // folders: ['resources/views/**/*', 'resources/assets/scss/'],
             paths: glob.sync([path.join(__dirname, 'templates/**/*.html.twig')]),
-            whitelistPatterns: [
-
-            ],
+            whitelistPatterns: [],
         }),
     )
     .addPlugin(
         new WorkboxPlugin.GenerateSW({
             // these options encourage the ServiceWorkers to get in there fast
             // and not allow any straggling "old" SWs to hang around
+            swDest: './../service-worker.js',
             clientsClaim: true,
             skipWaiting: true,
             runtimeCaching: [{
-                urlPattern: new RegExp('127.0.0.1:8000/'),
+                urlPattern: new RegExp(/^(?!https:\/\/s-website\.ga\/\.well-known\/mercure\?topic=%2Fmessage).*$/),
+                //urlPattern: new RegExp(/^(http:\/\/localhost:8000\.*$)\.*/),
                 handler: 'StaleWhileRevalidate'
             }]
         }))
@@ -118,7 +116,8 @@ Encore
     .enableBuildNotifications()
     .enableSourceMaps(!Encore.isProduction())
     .enableVersioning(Encore.isProduction())
-    .configureBabel(() => {}, {
+    .configureBabel(() => {
+    }, {
         useBuiltIns: 'usage',
         corejs: 3
     })

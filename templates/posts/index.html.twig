@@ -32,6 +32,7 @@
     <meta name="google" content="unavailable_after: [date ]">{% endblock %}
 
 {% block style_custom %}
+
     <style>
 
     </style>
@@ -49,7 +50,14 @@
         </div>
     {% endfor %}
 
-    <div class="container">
+    <div class="container" style="margin-top: 100px;">
+
+        {% if app.user %}
+            {{ form_start(postForm) }}
+            {{ form_row(postForm.text,{'attr':{'class':'formPost'},'label': 'Poster un nouveau post'}) }}
+            {{ form_row(postForm.submit,{'attr':['class','formPost'],'label': 'Poster'}) }}
+            {{ form_end(postForm) }}
+        {% endif %}
 
     <div class="formPost">
         <form name="post" method="post" class="postForm">
@@ -155,6 +163,9 @@
                        onclick="getNextComment(event)"
                        href="{{ path('comment.paginate',{'post': post.id}) }}">Voir plus</a>    
                     <div class="comments-container">
+
+                        {% if comment %}
+
                         <div class="content">
                             <div class="header">
                                 <div class="top">
@@ -229,6 +240,7 @@
 
 
                         </div>
+                        {% endif %}
 
                     </div>
                 </div>
@@ -288,8 +300,8 @@
 
 
   {% block javascripts %}
-
-      <script src="{{ preload('https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js', { as: 'script' }) }}"></script>
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+      <script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js"></script>
       {{ encore_entry_script_tags('ajax') }}
 
       <script>
@@ -328,33 +340,21 @@
 
 
 
-      {% if app.user %}
-          {{ encore_entry_script_tags('mercure') }}
 
-          <script>
-              $(document).ready(function(){
-                  const url = new URL('{{ mercure_publish_url }}');
-                  url.searchParams.append('topic', '/message');
-                  startServiceWorker(url)
-
-              })
-          </script>
-
-
-      {% endif %}
 
 
       <script>
+          $(document).ready(function(){
+              $('.opt-post').hide();
+              //chargement infini : Said
+          });
+
           function dropdown() {
               var element = document.getElementById('opt-post');
 
-              var display = element.style.display;
-
               if (element.style.display === 'none') {
                   document.getElementById('opt-post').style.display = 'block';
-              }
-              else if(element.style.display === 'block')
-              {
+              } else if (element.style.display === 'block') {
                   document.getElementById('opt-post').style.display = 'none';
               }
           }

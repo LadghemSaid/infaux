@@ -8,30 +8,26 @@
     {% block meta_keywords %}{% endblock %}
     {% block meta_robots %}{% endblock %}
     {% block meta_google %}{% endblock %}
-    <link type="text/plain" rel="author" href="{{ preload('/humans.txt', { as: 'font', importance: 'low' }) }}"/>
-    <link rel="manifest" href="{{ preload('/manifest.webmanifest.json', { as: 'font', importance: 'low' }) }}">
+    <link type="text/plain" rel="author" href="/humans.txt"/>
+    <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
 
+    <link rel="icon" type="image/png" href="/img/favicon.png"/>
+    <link rel="apple-touch-icon" sizes="96x96" href="/img/favicon96.png">
 
-
-    <link rel="icon" type="image/png" href="{{ preload('/img/favicon.png', { as: 'image' }) }}"/>
-    <link rel="apple-touch-icon" sizes="96x96"
-          href="/img/favicon96.png">
-
-    <link rel="apple-touch-icon" sizes="192x192"
-          href="/img/favicon192.png">
-    <meta property="og:image" content="{{ preload('/img/icon.png', { as: 'image', importance: 'low' }) }}"/>
+    <link rel="apple-touch-icon" sizes="192x192" href="/img/favicon192.png">
+    <meta property="og:image" content="/img/icon.png"/>
     <meta name="theme-color" content="#00103e">
 
 
     <link rel="stylesheet" href="{{ asset('/font/icomoon-v1.0/style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" defer="">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
 
     <script type="text/javascript"
             src="{{ preload(asset('js/tarteaucitron/tarteaucitron.js'), { as: 'script', importance: 'low' }) }}"></script>
 
-    <script type="text/javascript" defer>
+    <script type="text/javascript">
         tarteaucitron.init({
             "privacyUrl": "", /* Privacy policy url */
 
@@ -87,17 +83,29 @@
 <a aria-label="Button permettant de retourner en haut de la page" id="scrollToTop"></a>
 
 <script src="{{ preload('https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js', { as: 'script' }) }}"></script>
-<script src="{{ preload('https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js', { as: 'script' }) }}"
-        ></script>
-<script src="{{ preload('https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js', { as: 'script' }) }}"
-        ></script>
-<script src="{{ preload('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js', { as: 'script' }) }}"
-        ></script>
-<script src="https://unpkg.com/swup@latest/dist/swup.min.js" ></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"
+></script>
 {{ encore_entry_script_tags('app') }}
 
 
 <script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        $(function () {
+
+            moment.locale('fr');
+            $(".p-date").map((x, i) => {
+                i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
+            });
+        });
+    });
+
+
+
+
     var btn = $('#scrollToTop');
 
     $(window).scroll(function () {
@@ -115,40 +123,79 @@
 
 </script>
 
-<script>
-    //PWA - Service worker et notifcation
-    function notifyMe(msg) {
-        if (!window.Notification) {
-            console.log('Browser does not support notifications.');
-        } else {
-            // check if permission is already granted
-            if (Notification.permission === 'granted') {
-                // show notification here
-                var notify = new Notification('Tu as reçu une notifications !', {
-                    body: msg,
-                    icon: '/img/logo_infaux.png',
-                });
-            } else {
-                // request permission from user
-                Notification.requestPermission().then(function (p) {
-                    if (p === 'granted') {
-                        // show notification here
-                        var notify = new Notification('Tu as reçu une notifications !', {
-                            body: msg,
+
+
+{% if app.user %}
+
+    <script>
+
+        const url = new URL('{{ mercure_publish_url }}');
+        url.searchParams.append('topic', '/message');
+        const numberNotifs = $('.number_notif');
+
+
+        navigator.serviceWorker.register('/service-worker.js', {scope: '/'}).then(function(registration){
+            console.log("sw registred :", registration);
+        }).catch(registrationError => {
+            console.log("registration sw error:", registrationError)
+        });
+
+
+
+        const eventSource = new EventSourcePolyfill(url, {
+            headers: {
+                'Authorization': 'Bearer {{ token_generator.generateToken(app.user) }}',
+            }
+        }, {withCredentials: true});
+
+
+        Notification.requestPermission(function (result) {
+            if (result === 'granted') {
+                navigator.serviceWorker.ready.then(function (registration) {
+
+                    eventSource.onmessage = (evt) => {
+                        const data = JSON.parse(evt.data);
+                        if (!data.message) {
+                            return;
+                        }
+                        numberNotifs[0].innerText++;
+
+                        eventSource.onmessage = (evt) => {
+                            const data = JSON.parse(evt.data);
+                            if (!data.message) {
+                                return;
+                            }
+                        }
+                        //  notifyMe(data.message);
+                        Toastify({
+                            text: "Tu as reçu une notifications !",
+                            duration: 3000,
+                            close: true,
+                            gravity: "top", // `top` or `bottom`
+                            position: 'left', // `left`, `center` or `right`
+                            stopOnFocus: true, // Prevents dismissing of toast on hover
+                            className: "success",
+                            onClick: function () {
+                            } // Callback after click
+                        }).showToast();
+
+                        registration.showNotification('Tu as reçu une notifications !', {
+                            body: data.message,
                             icon: '/img/logo_infaux.png',
                         });
-                    } else {
-                        console.log('User blocked notifications.');
-                    }
-                }).catch(function (err) {
-                    console.error(err);
-                });
+
+                    };
+                })
+
+            } else {
+                console.log("Notification refused")
             }
-        }
-    }
+
+        })
+    </script>
 
 
-</script>
+{% endif %}
 
 
 {% block javascripts %}{% endblock %}

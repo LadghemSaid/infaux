@@ -81,7 +81,7 @@ if (!self.define) {
     });
   };
 }
-define("./service-worker.js",['./workbox-f31c35c4'], function (workbox) { 'use strict';
+define("./service-worker2.js",['./workbox-f31c35c4'], function (workbox) { 'use strict';
 
   /**
   * Welcome to your Workbox-powered service worker!
@@ -116,6 +116,9 @@ define("./service-worker.js",['./workbox-f31c35c4'], function (workbox) { 'use s
     "url": "/build/main.css",
     "revision": "9cbc230acfd38df046e5e20616705d90"
   }, {
+    "url": "/build/mercure.js",
+    "revision": "0f45d046344d79a57217125a2879a3ea"
+  }, {
     "url": "/build/runtime.js",
     "revision": "000c3893cd42406aebf5454f3954e3e5"
   }, {
@@ -140,4 +143,4 @@ define("./service-worker.js",['./workbox-f31c35c4'], function (workbox) { 'use s
   workbox.registerRoute(/^(?!https:\/\/s-website\.ga\/\.well-known\/mercure\?topic=%2Fmessage).*$/, new workbox.StaleWhileRevalidate(), 'GET');
 
 });
-//# sourceMappingURL=service-worker.js.map
+//# sourceMappingURL=service-worker2.js.map

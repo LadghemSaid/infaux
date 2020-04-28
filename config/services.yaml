@@ -5,7 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
 
-    #app.path.article_images: '%env(string:UPLOAD_PATH_ARTICLES)%'
+    app.path.user_images: '%env(string:UPLOAD_PATH_USERS)%'
 
 services:
     # default configuration for services in *this* file
