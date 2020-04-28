@@ -111,10 +111,17 @@ define("./service-worker.js",['./workbox-f31c35c4'], function (workbox) { 'use s
     "revision": "76fbad32d71b9f34786c8792699a5ded"
   }, {
     "url": "/build/login.js",
+<<<<<<< HEAD
+    "revision": "1764faca1da85d346d2b1fbee324cbfd"
+  }, {
+    "url": "/build/main.css",
+    "revision": "debef49b972a620310a30f15707cf630"
+=======
     "revision": "aa8f52265eba7efd2af79c8c6313bfb3"
   }, {
     "url": "/build/main.css",
     "revision": "54aa1cf8b36d3da46b3707854d8be95a"
+>>>>>>> lison-style
   }, {
     "url": "/build/runtime.js",
     "revision": "000c3893cd42406aebf5454f3954e3e5"

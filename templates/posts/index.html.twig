@@ -59,6 +59,28 @@
             {{ form_end(postForm) }}
         {% endif %}
 
+    <div class="formPost">
+        <form name="post" method="post" class="postForm">
+            <div class="img"
+                    style="background:url(https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80)">
+            </div>
+            <div class="form-group">
+                <label class="sr-only required" for="post_textPost">Post</label>
+                <input type="text" id="post_textPost" name="post[textPost]"
+                        required="required"
+                        class="postForm__textarea form-control input-lg"
+                        placeholder="Verifiez votre infos maintenant !">
+            </div> 
+            <div class="d-flex justify-content-end btn-submit">
+                <div class="form-group">
+                    <button type="submit" name="post[submit]"
+                            class="btn btn-pink btn">Envoyer
+                    </button>
+                </div>
+            </div> 
+        </form>
+    </div>
+
         {% for post in posts %}
 
             {% set comment = post.comments | last %}
@@ -139,8 +161,7 @@
 
                     <a data-page="0" data-post="{{ post.id }}" class="btn btn-primaire view-more-button"
                        onclick="getNextComment(event)"
-                       href="{{ path('comment.paginate',{'post': post.id}) }}">Voir plus</a>
-
+                       href="{{ path('comment.paginate',{'post': post.id}) }}">Voir plus</a>    
                     <div class="comments-container">
 
                         {% if comment %}
