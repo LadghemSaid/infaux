@@ -58,9 +58,8 @@
                         {% if app.user %}
                             <h3 class="fc-black">John Doe</h3>
                             <p class="fc-black">112 abonnées</p>
-                            <a href="">
-                                <button type="button" class="btn btn-black btn-lg btn-block mt-20 mt-20Mobile">Voir le
-                                    profil
+                            <a href="{{ path('account.show',{'id':app.user.id}) }}">
+                                <button type="button" class="btn btn-black btn-lg btn-block mt-20 mt-20Mobile">Voir le profil
                                 </button>
                             </a>
                         {% else %}
@@ -91,7 +90,7 @@
                                             class="number_notif">{{ app.user.notificationNotSeen | length }}</span>)</a>
 
 
-                                <a href="" class="mt-30 mt-30Mobile">Paramètres</a>
+                                <a href="{{ path('account.settings') }}" class="mt-30 mt-30Mobile">Paramètres</a>
 
                                 <a href="" class="mt-30 mt-30Mobile">Voir mes postes épinglés</a>
 

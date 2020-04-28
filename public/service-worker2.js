@@ -117,7 +117,7 @@ define("./service-worker2.js",['./workbox-f31c35c4'], function (workbox) { 'use 
     "revision": "9cbc230acfd38df046e5e20616705d90"
   }, {
     "url": "/build/mercure.js",
-    "revision": "717230e0ca58520a88f9906b6003ccb9"
+    "revision": "0f45d046344d79a57217125a2879a3ea"
   }, {
     "url": "/build/runtime.js",
     "revision": "000c3893cd42406aebf5454f3954e3e5"
