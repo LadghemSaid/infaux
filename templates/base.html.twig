@@ -67,7 +67,11 @@
 
     {{ encore_entry_link_tags('main') }}
 </head>
+{% if (app.request.get('_route') == 'app_register') or (app.request.get('_route') == 'app_login') %}
+
+{% else %}
 {% include "header.html.twig" %}
+{% endif %}
 <body>
 <div id="mercure-content-receiver"></div>
 
@@ -77,8 +81,11 @@
     {% endblock %}
 </div>
 
+{% if (app.request.get('_route') == 'app_register') or (app.request.get('_route') == 'app_login') %}
 
+{% else %}
 {% include "footer.html.twig" %}
+{% endif %}
 
 <a aria-label="Button permettant de retourner en haut de la page" id="scrollToTop"></a>
 
