@@ -105,16 +105,16 @@ define("./service-worker.js",['./workbox-f31c35c4'], function (workbox) { 'use s
 
   workbox.precacheAndRoute([{
     "url": "/build/ajax.js",
-    "revision": "2478572ab5f279962473a390eb144ed6"
+    "revision": "58974c0aa4b8cdf82eb0cf7cd9374394"
   }, {
     "url": "/build/app.js",
-    "revision": "d00464dd9e89f3ec9d043c1d3404795e"
+    "revision": "76fbad32d71b9f34786c8792699a5ded"
   }, {
     "url": "/build/login.js",
-    "revision": "364880e52bb018a209f36e7dc1abb822"
+    "revision": "aa8f52265eba7efd2af79c8c6313bfb3"
   }, {
     "url": "/build/main.css",
-    "revision": "9cbc230acfd38df046e5e20616705d90"
+    "revision": "54aa1cf8b36d3da46b3707854d8be95a"
   }, {
     "url": "/build/runtime.js",
     "revision": "000c3893cd42406aebf5454f3954e3e5"
@@ -132,7 +132,7 @@ define("./service-worker.js",['./workbox-f31c35c4'], function (workbox) { 'use s
     "revision": "f940d2adb3635c8d9a7be0687f967fc1"
   }, {
     "url": "/build/vendors~main.css",
-    "revision": "6888694b3356090069e40d7dc44d52f5"
+    "revision": "755a0156599f02315d1d4f0498613260"
   }, {
     "url": "/build/vendors~main.js",
     "revision": "4d1cfb6e2d7505a65da864536fa35018"
