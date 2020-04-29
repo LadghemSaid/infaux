@@ -141,6 +141,14 @@ $white: rgba(255,255,255,.34);
               padding-right: 3px;
             }
 
+            .heart-like{
+              opacity:.20;
+            }
+            .heart-dislike{
+              color:red;
+              opacity:1;
+            }
+
             .comment{
               display: flex;
               align-items: center;
@@ -224,6 +232,24 @@ $white: rgba(255,255,255,.34);
               color:$green;
             }
           }
+
+          .icons {
+            i {
+              
+            }
+  
+            .heart-like{
+              opacity:.20;
+            }
+            .heart-dislike{
+              color:red;
+              opacity:1;
+            }
+  
+            .number {
+  
+            }
+          }
         }
       }
 
@@ -233,15 +259,7 @@ $white: rgba(255,255,255,.34);
         position: absolute;
         right: 0;
 
-        .icons {
-          i {
-
-          }
-
-          .number {
-
-          }
-        }
+        
       }
     }
 

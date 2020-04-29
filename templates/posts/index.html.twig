@@ -128,7 +128,11 @@
                                 <div onclick="handleAddLike(event)"
                                      data-action="{{ path('like.add',{"entity":"post",'id':post.id}) }}"
                                      class="likeForm">
-                                    <i class="icon-like"></i>
+                                            {% if true %}
+                                                <i class="icon-heart heart-like"></i>
+                                            {% else %}
+                                                <i class="icon-heart heart-dilike"></i>
+                                            {% endif %}
                                     <span class="number">{{ post.likes|length }}</span>
                                 </div>
                                 <div class="icons">
@@ -202,9 +206,13 @@
                                              data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
                                              class="likeForm">
 
-                                            <i class="icon-like">
+                                            {% if true %}
+                                                <i class="icon-heart heart-like"></i>
+                                            {% else %}
+                                                <i class="icon-heart heart-dilike"></i>
+                                            {% endif %}
 
-                                            </i>
+
                                             <span class="number">
                                             {{ comment.likes|length }}
                                         </span>
