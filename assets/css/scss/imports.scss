@@ -19,7 +19,7 @@
 // @import 'helpers/utils/positions-display/width';
 // @import 'helpers/utils/positions-display/opacity';
 //@import 'helpers/utils/positions-display/absolute';
-//@import 'helpers/utils/positions-display/flex';
+@import 'helpers/utils/positions-display/flex';
 //@import 'helpers/utils/positions-display/grid';
 
 //@import 'helpers/utils/placeholder/animate';
@@ -51,5 +51,6 @@
 @import 'pages/about/about.scss';
 @import 'pages/contact/contact.scss';
 @import 'pages/login/login.scss';
-
+@import 'pages/tuto/tuto.scss';
+@import 'pages/search/search.scss';
 

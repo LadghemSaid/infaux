@@ -48,17 +48,18 @@ textarea {
 
 textarea:focus, input:focus {
   border-color: transparent !important;
+  box-shadow: none;
 }
 
-input:focus::-webkit-input-placeholder { color:transparent; }
-input:focus:-moz-placeholder { color:transparent; }
-input:focus::-moz-placeholder { color:transparent; }
-input:focus:-ms-input-placeholder { color:transparent; }
+input:focus::-webkit-input-placeholder { color:transparent; box-shadow: none; }
+input:focus:-moz-placeholder { color:transparent; box-shadow: none; }
+input:focus::-moz-placeholder { color:transparent; box-shadow: none; }
+input:focus:-ms-input-placeholder { color:transparent; box-shadow: none; }
 
-textarea:focus::-webkit-input-placeholder { color:transparent; }
-textarea:focus:-moz-placeholder { color:transparent; }
-textarea:focus::-moz-placeholder { color:transparent; }
-textarea:focus:-ms-input-placeholder { color:transparent; }
+textarea:focus::-webkit-input-placeholder { color:transparent; box-shadow: none; }
+textarea:focus:-moz-placeholder { color:transparent; box-shadow: none; }
+textarea:focus::-moz-placeholder { color:transparent; box-shadow: none; }
+textarea:focus:-ms-input-placeholder { color:transparent; box-shadow: none; }
 
 input::-webkit-input-placeholder { color: $dark-grey;}
 input:-moz-placeholder { color: $dark-grey;}
@@ -277,8 +278,6 @@ iframe {
   color: $green;
 }
 
-
-
 /*------------------------------------------------------------------
 [ Button ]*/
 .container-login-form-btn {
@@ -307,7 +306,7 @@ iframe {
   z-index: -1;
   width: 300%;
   height: 100%;
-  background: $green;
+  background: $transparent-green;
   top: 0;
   left: -100%;
 
@@ -317,10 +316,18 @@ iframe {
   transition: all 0.4s;
 }
 
+.login-form-bgbtn:hover {
+  background: $green !important;
+}
+
+.login-form-btn:hover {
+  background: $green !important;
+}
+
 .login-form-btn {
   font-family: Poppins-Medium;
   font-size: 15px;
-  color: $white;
+  color: $black;
   line-height: 1.2;
   text-transform: uppercase;
 

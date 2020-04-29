@@ -111,10 +111,10 @@ define("./service-worker.js",['./workbox-f31c35c4'], function (workbox) { 'use s
     "revision": "d00464dd9e89f3ec9d043c1d3404795e"
   }, {
     "url": "/build/login.js",
-    "revision": "364880e52bb018a209f36e7dc1abb822"
+    "revision": "1764faca1da85d346d2b1fbee324cbfd"
   }, {
     "url": "/build/main.css",
-    "revision": "2064dfbbc90a0407730f6f91c7c9210d"
+    "revision": "1e8ef072869683d66c6b6b2afc585d25"
   }, {
     "url": "/build/runtime.js",
     "revision": "000c3893cd42406aebf5454f3954e3e5"
@@ -132,7 +132,7 @@ define("./service-worker.js",['./workbox-f31c35c4'], function (workbox) { 'use s
     "revision": "f940d2adb3635c8d9a7be0687f967fc1"
   }, {
     "url": "/build/vendors~main.css",
-    "revision": "6888694b3356090069e40d7dc44d52f5"
+    "revision": "755a0156599f02315d1d4f0498613260"
   }, {
     "url": "/build/vendors~main.js",
     "revision": "4d1cfb6e2d7505a65da864536fa35018"

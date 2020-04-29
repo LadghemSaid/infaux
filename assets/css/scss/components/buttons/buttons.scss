@@ -16,6 +16,25 @@
   padding: 8px 18px;
 }
 
+
+.btn-green:hover {
+  background-color: $green !important;
+  border: none;
+  border-radius: 22px;
+  color: $black;
+  font-size: 15px;
+  padding: 8px 18px;
+}
+
+.btn-green {
+  background-color: $transparent-green !important;
+  border: none;
+  border-radius: 22px;
+  color: black;
+  font-size: 15px;
+  padding: 8px 18px;
+}
+
 .btn-circle {
   width: 30px;
   height: 30px;
