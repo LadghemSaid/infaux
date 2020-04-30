@@ -1,0 +1,62 @@
+
+
+.account{
+    margin-top: 100px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    .img_wrap{
+        background: rgb(102,187,153);
+background: linear-gradient(311deg, rgba(102,187,153,0.8186624991793592) 0%, rgba(102,187,153,0.4489146000196954) 62%, rgba(102,187,153,0) 100%);
+       min-height: 120px;
+       min-width: 120px;
+       border-radius: 100px;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       margin-bottom: 20px;
+
+        .img{
+            height: 100px;
+            width: 100px;
+            content: " ";
+            background-size: cover !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+            border-radius: 50px ;
+        }
+    }
+    .name{
+        font-weight: $blackW;
+        color: black;
+        font-size: $Mlarge;
+    }
+    .createdAt{
+        color: rgba($color: $dark-grey, $alpha: .62);
+        font-size: $Msmall;
+    }
+    .description{
+        text-align: center;
+        font-size: $Mlarge;
+        line-height:33px;
+    }
+    .liens{
+        display: flex;
+        color: rgba($color: $dark-grey, $alpha: .62);
+        font-size: $Msmall;
+        justify-content: space-between;
+        width: 59%;
+    }
+    .edit{
+        border: $green 1px solid;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-right: 20px;
+        padding-left: 20px;
+        margin-top: 13px;
+        border-radius: 30px;
+    }
+
+}
