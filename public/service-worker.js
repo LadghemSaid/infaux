@@ -114,7 +114,7 @@ define("./service-worker.js",['./workbox-f31c35c4'], function (workbox) { 'use s
     "revision": "aa8f52265eba7efd2af79c8c6313bfb3"
   }, {
     "url": "/build/main.css",
-    "revision": "debef49b972a620310a30f15707cf630"
+    "revision": "2e1284de181cd07ad8afe3a546d871bf"
   }, {
     "url": "/build/runtime.js",
     "revision": "000c3893cd42406aebf5454f3954e3e5"
