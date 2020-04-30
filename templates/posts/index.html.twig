@@ -94,7 +94,7 @@
                                     </p>
                                 </div>
                                 <div class="option">
-                                    <div class="btn-opt-post" onclick="dropdown();">ooo</div>
+                                    <div class="btn-opt-post" onclick="dropdown();"><i class="icon-dots-horizontal-triple"></i></div>
                                     <div class="opt-post" id="opt-post">a</div>
                                 </div>
                             </div>
@@ -108,11 +108,11 @@
                                 <div onclick="handleAddLike(event)"
                                      data-action="{{ path('like.add',{"entity":"post",'id':post.id}) }}"
                                      class="likeForm">
-                                    {% if true %}
-                                        <i class="icon-heart heart-like"></i>
-                                    {% else %}
-                                        <i class="icon-heart heart-dilike"></i>
-                                    {% endif %}
+                                            {% if true %}
+                                                <i class="icon-heart heart-like"></i>
+                                            {% else %}
+                                                <i class="icon-heart heart-dilike"></i>
+                                            {% endif %}
                                     <span class="number">{{ post.likes|length }}</span>
                                 </div>
                                 <div class="icons">
@@ -184,19 +184,18 @@
                                     </div>
 
 
-                                    <div class="l-post right">
-                                        <div class="top">
-                                            <p class="username"><strong>{{ comment.user }}</strong><span
-                                                        data-createdAt="{{ comment.createdAt | date('U') }}"
-                                                        class="number p-date">{{ comment.createdAt | date('U') }}</span>
-                                            </p>
-                                            <div class="option"><span class="icon-dots-horizontal-triple"></span></div>
-                                        </div>
-                                        <p class="text">{{ comment.textComment }} </p>
-                                        <div class="icons">
-                                            <div onclick="handleAddLike(event)"
-                                                 data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
-                                                 class="likeForm">
+                                <div class="l-post right">
+                                    <div class="top">
+                                        <p class="username"><strong>{{ comment.user }}</strong><span
+                                                    data-createdAt="{{ comment.createdAt | date('U') }}"
+                                                    class="number p-date">{{ comment.createdAt | date('U') }}</span></p>
+                                        <div class="option"><i class="icon-dots-horizontal-triple"></i></div>
+                                    </div>
+                                    <p class="text">{{ comment.textComment }} </p>
+                                    <div class="icons">
+                                        <div onclick="handleAddLike(event)"
+                                             data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
+                                             class="likeForm">
 
                                                 {% if true %}
                                                     <i class="icon-heart heart-like"></i>

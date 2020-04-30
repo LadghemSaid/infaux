@@ -49,17 +49,22 @@
     {% endfor %}
     <div class="container">
         <div class="notif-blk">
-            {% for notif in notifsSeen %}
-           <img src="https://images.unsplash.com/photo-1528341866330-07e6d1752ec2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2001&q=80"/>
-                   
-                <div> {{ notif.user }} </div>
-                <div class="opa nm">{{ notif.message }} </div>
+        <h1> <i class="icon-bell"></i>Notifications</h1>
 
-            {% endfor %}
-            {% for notif in notifsNotSeen %}
-                <div>{{ notif.message }}   (Non vu) </div>
+                {% for notif in notifsSeen %}
+                    <div class="notif">
+                        <img src="https://images.unsplash.com/photo-1528341866330-07e6d1752ec2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2001&q=80"/>
+                        <div>
+                            <div class="user"> {{ notif.user }} </div>
+                            <div class="opa nm">{{ notif.message }} </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% for notif in notifsNotSeen %}
+                    <div>{{ notif.message }}   (Non vu) </div>
 
-            {% endfor %}
+                {% endfor %}
+            
         </div>
 
     </div>
