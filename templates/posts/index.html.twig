@@ -99,7 +99,7 @@
                                     </p>
                                 </div>
                                 <div class="option">
-                                    <div class="btn-opt-post" onclick="dropdown();">ooo</div>
+                                    <div class="btn-opt-post" onclick="dropdown(event);">ooo</div>
                                     <div class="opt-post" id="opt-post">a</div>
                                 </div>
                             </div>
@@ -349,7 +349,7 @@
               //chargement infini : Said
           });
 
-          function dropdown() {
+          function dropdown(event) {
               var element = document.getElementById('opt-post');
 
               if (element.style.display === 'none') {
