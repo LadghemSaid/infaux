@@ -42,7 +42,7 @@ class PostController extends AbstractController
      */
     private $notificationService;
 
-    public function __construct(PostRepository $postRepository, EntityManagerInterface $em,NotificationService $notificationService)
+    public function __construct(PostRepository $postRepository, EntityManagerInterface $em, NotificationService $notificationService)
     {
         $this->postRepository = $postRepository;
         $this->em = $em;
@@ -51,47 +51,50 @@ class PostController extends AbstractController
 
 
     /**
-     * @Route("/addfollow/{entity}/{id}", name="addfollow")
+     * @Route("/addpin/{id}", name="addPin")
      */
-    public function addFollow($entity, $id, Request $request)
+    public function addPin($id, Request $request)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        //Repo vaut soit postRepository soit commentRepository
-        $repo = $this->em->getRepository('App:' . ucfirst($entity));
+        $user = $this->getUser();
         //$payload vaut soit un commentaire soit un post
-        $payload = $repo->find($id);
-        foreach ($this->getUser()->getPostFollowed() as $post) {
-            if($post === $payload){
-                //Ce post est déja présent dans notre liste de postFollowed
-                $this->deleteFollow($entity, $id, $request,$payload);
-                return new Response("-1");
-            }
+        $postCurr = $this->postRepository->find($id);
+        if ($user->getPostFollowed()->contains($postCurr)) {
+            $postCurr->removeFollowedBy($user);
+
+            //Ce post est déja présent dans notre liste de postFollowed
+            $user->removePostFollowed($postCurr);
+            $this->em->persist($postCurr);
+            $this->em->flush();
+
+            return new Response("-1");
+
+        } else {
+            //Ajout de l'user dans le tableau des user du post/comment qui le suivent et recevront ainsi les notification lié a ce post/commentaire
+            $postCurr->addFollowedBy($user);
+
+            //Ajout du post dans l'user
+            $user->addPostFollowed($postCurr);
+            //Notification pour l'auteur du post
+            $this->notificationService->add($postCurr->getUser(), $message = "un utilisateur vient de suivre votre post");
+
+            $this->em->persist($postCurr, $user);
+            $this->em->flush();
+
+            return new Response("+1");
         }
 
-        //Ajout de l'user dans le tableau des user du post/comment qui le suivent et recevront ainsi les notification lié a ce post/commentaire
-        $payload->addFollowedBy($this->getUser());
-
-        //Notification pour l'auteur du post
-        $this->notificationService->add( $payload->getUser(), $message="un utilisateur vient de suivre votre post");
-
-
-        $this->em->persist($payload);
-        $this->em->flush();
-
-        return new Response("+1");
 
     }
 
     /**
-     * @Route("/deletefollow/{entity}/{id}", name="deletefollow")
+     * @Route("/deletepin/{id}", name="deletePin")
      */
-    public function deleteFollow($entity, $id, Request $request, $payload=null)
+    public function deletePin($id, Request $request, $payload = null)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $func = "remove" . ucfirst($entity)."Followed";
-        $this->getUser()->$func($payload);
-        $this->em->persist($payload);
-        $this->em->flush();
+
+
     }
 
 

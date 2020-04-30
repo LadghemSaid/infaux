@@ -105,16 +105,16 @@ define("./service-worker.js",['./workbox-f31c35c4'], function (workbox) { 'use s
 
   workbox.precacheAndRoute([{
     "url": "/build/ajax.js",
-    "revision": "58974c0aa4b8cdf82eb0cf7cd9374394"
+    "revision": "3e68e2010470eada4a8714c6e9383b20"
   }, {
     "url": "/build/app.js",
-    "revision": "76fbad32d71b9f34786c8792699a5ded"
+    "revision": "d00464dd9e89f3ec9d043c1d3404795e"
   }, {
     "url": "/build/login.js",
-    "revision": "aa8f52265eba7efd2af79c8c6313bfb3"
+    "revision": "1764faca1da85d346d2b1fbee324cbfd"
   }, {
     "url": "/build/main.css",
-    "revision": "3be76d492861e572e4a8295188d7ffed"
+    "revision": "5cd243453301b055c8cac4b44431c28b"
   }, {
     "url": "/build/runtime.js",
     "revision": "000c3893cd42406aebf5454f3954e3e5"
