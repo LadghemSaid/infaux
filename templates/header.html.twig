@@ -49,14 +49,14 @@
                         <div class="user-picture-background mt-40 mt-40Mobile mb-10 mb-10Mobile">
                             <div class="user-picture">
                                 {% if app.user %}
-                                    <img src="{{ asset("img/user.svg") }}" alt="user"/></a>
+                                    <img src="/uploads/images/users{{ asset(app.user.image) }}" alt="user"/></a>
                                 {% else %}
                                     <img src="{{ asset("img/user.svg") }}" alt="user"/></a>
                                 {% endif %}
                             </div>
                         </div>
                         {% if app.user %}
-                            <h3 class="fc-black">John Doe</h3>
+                            <h3 class="fc-black">{{ app.user.username }}</h3>
                             <p class="fc-black">112 abonnées</p>
                             <a href="{{ path('account.show',{'id':app.user.id}) }}">
                                 <button type="button" class="btn btn-black btn-lg btn-block mt-20 mt-20Mobile">Voir le profil
