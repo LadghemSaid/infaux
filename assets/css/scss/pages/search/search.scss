@@ -72,11 +72,16 @@
         .single-post {
         background-color: #e6e6e6;
         border-radius: 40px;
-        padding: 10px 20px;
+        padding: 15px 20px;
         color: $dark-grey;
+
+            .title {
+                font-weight: 700;
+            }
 
             .date {
                 color: #4646467e;
+                font-size: small;
             }
         }
 
