@@ -57,7 +57,7 @@
                         </div>
                         {% if app.user %}
                             <h3 class="fc-black">{{ app.user.username }}</h3>
-                            <p class="fc-black">{{ app.user.friends| length }} abonnées</p>
+                            <a href="{{ path('follow.follower') }}"><p class="fc-black">{{ app.user.friends| length }} abonnées</p></a>
                             <a href="{{ path('account.show',{'id':app.user.id}) }}">
                                 <button type="button" class="btn btn-black btn-lg btn-block mt-20 mt-20Mobile">Voir le profil
                                 </button>
