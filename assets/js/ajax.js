@@ -5,12 +5,14 @@ async function handleAddLike(event) {
     console.log("action :: ", event.currentTarget.dataset.action);
     const button = event.currentTarget;
     const action = button.dataset.action;
-    const targetToChange = button.querySelector('.number');
-
+    let targetToChange = button.querySelector('.number');
+    let targetToChangeIcon = button.querySelector('.icon-heart');
     try {
         const response = await axios.post(action);
         if (response.data === "+1") {
             targetToChange.innerText = parseInt(targetToChange.innerText) + 1;
+            $(targetToChangeIcon).removeClass("heart-like");
+            $(targetToChangeIcon).addClass("heart-dilike");
             Toastify({
                 text: "J'aime !",
                 duration: 3000,
@@ -23,6 +25,8 @@ async function handleAddLike(event) {
                 } // Callback after click
             }).showToast();
         } else {
+            $(targetToChangeIcon).removeClass("heart-dilike");
+            $(targetToChangeIcon).addClass("heart-like");
             targetToChange.innerText = parseInt(targetToChange.innerText) - 1;
             Toastify({
                 text: "Je n'aime pas !",
@@ -96,7 +100,7 @@ function handleAddComment(event) {
         data: {request: data},
         success: function (data, dataType) {
             //console.log(data);
-            target.append( data)
+            target.append(data)
             Toastify({
                 text: "Commentaire ajouté",
                 duration: 3000,
@@ -220,28 +224,54 @@ async function handleAddUserFollow(event) {
 }
 
 
-
-
 //Comment Ajax load
 function getNextComment(event) {
-    var compteur = 0;
     event.preventDefault();
-    console.log(parseInt(event.target.dataset.page) + 1);
-    var url = $(event.target).attr('href');
-    var newUrl = "/comment/post/" + event.target.dataset.post + "?page=" + (parseInt(event.target.dataset.page) + 1);
-    const containerComment = $(event.target).next('.comments-container')[0];
 
-    $.get(url, function (data, response) {
-        if (response == "success") {
+    var infiniteScroll = $('.wrapper-comments').infiniteScroll({
+        // options
+        path: "/comment/post/" + event.target.dataset.post + '?page={{#}}',
+        append: $(event.target).closest('.content'),
+        history: false,
+        status: '.page-load-status',
 
-            $(data).prependTo(containerComment).fadeIn("slow");
-            $(event.target).attr('href', newUrl);
-            $(event.target).attr('data-page', (parseInt(event.target.dataset.page) + 1))
-        }
-        if (response == "error") {
-            console.log("Error: " + xhr.status + ": " + xhr.statusText);
-        }
+
+        button: '.view-more-button',
+// load pages on button click
+        scrollThreshold: false,
+// disable loading on scroll
     });
+    infiniteScroll.on('load.infiniteScroll', function () {
+        $(function () {
+            moment.locale('fr');
+            $(".p-date").map((x, i) => {
+                i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
+            });
+        });
+    });
+
+
+    /*
+        console.log(parseInt(event.target.dataset.page) + 1);
+
+        var url = event.target.dataset.href ;
+        var newUrl = "/comment/post/" + event.target.dataset.post + "?page=" + (parseInt(event.target.dataset.page) + 1);
+        const containerComment = $(event.target).closest('.content').next();
+
+        $.get(url, function (data, response) {
+            if (response == "success") {
+
+                $(data).prependTo(containerComment).fadeIn("slow");
+                $(event.target).attr('href', newUrl);
+                $(event.target).attr('data-page', (parseInt(event.target.dataset.page) + 1))
+            }
+            if (response == "error") {
+                console.log("Error: " + xhr.status + ": " + xhr.statusText);
+            }
+        });
+
+
+     */
 }
 
 
@@ -251,6 +281,6 @@ window.handleAddComment = handleAddComment;
 window.handleAddUserFollow = handleAddUserFollow;
 window.handleAddPost = handleAddPost;
 window.handleAddPostPinned = handleAddPostPinned;
-window.getNextComment = getNextComment;
+//window.getNextComment = getNextComment;
 
 

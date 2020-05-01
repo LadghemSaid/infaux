@@ -81,7 +81,7 @@ if (!self.define) {
     });
   };
 }
-define("./service-worker.js",['./workbox-f31c35c4'], function (workbox) { 'use strict';
+define("./service-workerNOP.js",['./workbox-f31c35c4'], function (workbox) { 'use strict';
 
   /**
   * Welcome to your Workbox-powered service worker!
@@ -105,7 +105,7 @@ define("./service-worker.js",['./workbox-f31c35c4'], function (workbox) { 'use s
 
   workbox.precacheAndRoute([{
     "url": "/build/ajax.js",
-    "revision": "3e68e2010470eada4a8714c6e9383b20"
+    "revision": "b66da1695ea5ca4b03d2dbe2c2d36b4a"
   }, {
     "url": "/build/app.js",
     "revision": "d00464dd9e89f3ec9d043c1d3404795e"
@@ -114,13 +114,13 @@ define("./service-worker.js",['./workbox-f31c35c4'], function (workbox) { 'use s
     "revision": "1764faca1da85d346d2b1fbee324cbfd"
   }, {
     "url": "/build/main.css",
-    "revision": "5cd243453301b055c8cac4b44431c28b"
+    "revision": "25f77297944715ee9da42948eb237961"
   }, {
     "url": "/build/runtime.js",
     "revision": "000c3893cd42406aebf5454f3954e3e5"
   }, {
     "url": "/build/vendors~ajax.js",
-    "revision": "1e6ebb5cce99dc158b36d774a8953901"
+    "revision": "4142b17fc830754452d6ceb4387a589b"
   }, {
     "url": "/build/vendors~ajax~login.js",
     "revision": "fedbb7d8547b5ff6cfe7de3108a358cc"
@@ -140,4 +140,4 @@ define("./service-worker.js",['./workbox-f31c35c4'], function (workbox) { 'use s
   workbox.registerRoute(/^(?!https:\/\/s-website\.ga\/\.well-known\/mercure\?topic=%2Fmessage).*$/, new workbox.StaleWhileRevalidate(), 'GET');
 
 });
-//# sourceMappingURL=service-worker.js.map
+//# sourceMappingURL=service-workerNOP.js.map

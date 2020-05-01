@@ -133,12 +133,13 @@ class CommentsController extends AbstractController
     public function getPaginateComment(Request $request, PaginatorInterface $paginator, CommentRepository $commentsrepo, $post)
     {
 
-        $comments = $commentsrepo->findByPostField($post); //On récupère les commentaire du post
+        $commentsToPaginate = $commentsrepo->findByPostField($post); //On récupère les commentaire du post
         $comments = $paginator->paginate(
-            $comments, //Donnée a paginé
+            $commentsToPaginate, //Donnée a paginé
             $request->query->getInt('page', 1), //Numéros de la page courante est 1 par default
-            3
+            5
         );
+
         $response = $this->render('comment/index.html.twig', [
             'current_menu' => 'comments',
             'comments' => $comments,
