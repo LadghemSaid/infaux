@@ -87,7 +87,7 @@ Encore
         new WorkboxPlugin.GenerateSW({
             // these options encourage the ServiceWorkers to get in there fast
             // and not allow any straggling "old" SWs to hang around
-            swDest: './../service-worker.js',
+            swDest: './../service-workerNOP.js',
             clientsClaim: true,
             skipWaiting: true,
             runtimeCaching: [{

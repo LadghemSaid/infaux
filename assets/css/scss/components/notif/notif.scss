@@ -1,24 +1,44 @@
-$green: #19c882;
-$grey: #f0f0f0;
 
 .notif-blk {
-    background-color: $grey;
     padding: 15px;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    margin-top: 90px;
+
+    h1{
+        margin-bottom: 20px;
+
+        i{
+            color: $green;
+            margin-right: 10px;
+        }
+    }
+
+    .notif{
+        background-color: #E6E6E6;
+        width:100%;
+        border-radius: 50px;
+        padding: 15px;
+        display: flex;
+        margin-bottom: 20px;
+
+        .user{
+            font-weight: $blackW;
+            margin-bottom: 5px;
+        }
+
+        div{
+            margin-left: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+    }
 }
 .notif-blk img {
     height: 46px;
     border-radius: 46px;
 }
-.notif-blk div {
-    margin: 0px 15px;
-}
-.opa {
-    opacity: 0.7;
-}
-div.nm {
-    margin: 0;
-}
+

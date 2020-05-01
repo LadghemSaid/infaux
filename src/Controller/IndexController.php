@@ -48,15 +48,16 @@ class IndexController extends AbstractController
     {
 
         $posts = $postrepo->findAllDesc(); //On récupère les posts
+
         $post = new Post();
         $postForm = $this->createForm(PostType::class, $post);
-
 
         $posts = $paginator->paginate(
             $posts, //Donnée a paginé
             $request->query->getInt('page', 1), //Numéros de la page courante est 1 par default
         3
         );
+
 
 
         $postForm->handleRequest($request);

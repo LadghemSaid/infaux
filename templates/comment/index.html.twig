@@ -1,5 +1,6 @@
 
  {% for comment in comments %}
+ <div class="comments-container">
 
      <div class="content slide-up">
          <div class="header">
@@ -8,12 +9,14 @@
                  </div>
              </div>
 
+
              <div class="l-post right">
                  <div class="top">
                      <p class="username"><strong>{{ comment.user }}</strong><span
                                  data-createdAt="{{ comment.createdAt | date('U') }}"
-                                 class="number p-date">{{ comment.createdAt | date('U') }}</span></p>
-                     <div class="option">o</div>
+                                 class="number p-date">{{ comment.createdAt | date('U') }}</span>
+                     </p>
+                     <div class="option"><i class="icon-dots-horizontal-triple"></i></div>
                  </div>
                  <p class="text">{{ comment.textComment }} </p>
                  <div class="icons">
@@ -21,9 +24,26 @@
                           data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
                           class="likeForm">
 
-                         <i class="icon-like">
+                         {% if app.user %}
+                             {% set likedComment = false %}
+                             {% for like in comment.likes %}
+                                 {% if like.user == app.user and like.comment == comment %}
+                                     {% set likedComment = true %}
+                                 {% else %}
+                                     {% set likedComment = false %}
+                                 {% endif %}
+                             {% endfor %}
 
-                         </i>
+                             {% if likedComment %}
+                                 <i class="icon-heart heart-dilike"></i>
+                             {% else %}
+                                 <i class="icon-heart heart-like"></i>
+                             {% endif %}
+
+                         {% else %}
+                             <i class="icon-heart heart-like"></i>
+                         {% endif %}
+
                          <span class="number">
                                             {{ comment.likes|length }}
                                         </span>
@@ -33,8 +53,43 @@
              </div>
          </div>
          <div class="footer">
+             {# <div class="icons">
+                 <div onclick="handleAddLike(event)"
+                      data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
+                      class="likeForm">
+                 <div class="footer">
+                     <div class="icons">
+                         <div onclick="handleAddLike(event)"
+                              data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
+                              class="likeForm">
 
+                             <i class="icon-like">
+
+                             </i>
+                             <span class="number">
+                         {{ comment.likes|length }}
+                     </span>
+                             </button>
+                         </div>
+                     </div>
+                     <p class="icons">
+                         <i class="icon-alarm"></i><span
+                                 data-createdAt="{{ comment.createdAt | date('U') }}"
+                                 class="number p-date">{{ comment.createdAt | date('U') }}</span>
+
+                     </p>
+                     <div class="icons">
+                     <div onclick="handleAddReport(event)" data-action="{{ path('report.add',{"entity":"post",'id':post.id}) }}" class="reportForm">
+
+                             <i class="fa fa-flag"></i><span class="number ">Signalez</span>
+
+                     </div>
+                     </div>
+
+
+                 </div>
+             </div>#}
          </div>
      </div>
-
+ </div>
  {% endfor %}
