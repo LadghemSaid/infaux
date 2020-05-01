@@ -55,9 +55,9 @@
 
         {% if app.user %}
             <div class="formPost">
-                {{ form_start(postForm,{'attr':{'class':'postForm'}})}}
+                {{ form_start(postForm,{'attr':{'class':'postForm'}}) }}
                 <div class="img"
-                    style="background:url(https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80)">
+                     style="background:url(https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80)">
                 </div>
                 <div class="form-group">
                     {{ form_row(postForm.text,{'attr':{'class':'postForm__textarea form-control input-lg','placeholder':'Poster un nouveau post'},'label': ' '}) }}
@@ -72,8 +72,10 @@
                 {{ form_end(postForm) }}
             </div>
         {% endif %}
-
+        {% set userLike = app.user.likes %}
+        {% dump  app.user %}
         {% for post in posts %}
+
 
             {% set comment = post.comments | last %}
 
@@ -172,7 +174,7 @@
                                                 <i class="icon-heart heart-like"></i>
                                             {% else %}
                                                 <i class="icon-heart heart-dilike"></i>
-                                            {% endif %} 
+                                            {% endif %}
                                     <span class="number">{{ post.likes|length }}</span>
                                 </div>
                                 <div class="icons">
@@ -184,24 +186,64 @@
                                href="{{ path('comment.paginate',{'post': post.id}) }}">Voir plus</a>
                         </div>
                     </div>
-                </div>
+
+                    {# <div class="actions">
+
+                        <div class="icons">
+
+                            <div onclick="handleAddPostPinned(event)"
+                                 data-action="{{ path('post.addPin',{'id':post.id}) }}"
+                                 class="pinnedPost">
+
+                                <i class="icon-pushpin"></i><span
+                                        class="number ">{{ post.followedBy | length }}</span> Epingler
+
+                            </div>
+
+                        </div>
+                        <div class="icons">
+
+                            <div data-userId="{{ post.user.id }}" onclick="handleAddUserFollow(event)"
+                                 data-action="{{ path('follow.add',{"id":post.user.id}) }}"
+                                 class="followUser">
+                                <span class="followStatus">Suivre</span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="icons">
+                            <div onclick="handleAddReport(event)"
+                                 data-action="{{ path('report.add',{"entity":"post",'id':post.id}) }}"
+                                 class="reportForm">
+
+                                <i class="fa fa-flag"></i><span class="number ">Signalez</span>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div> #}
 
 
                 <div class="wrapper-comments">
 
                     <a data-page="0" data-post="{{ post.id }}" class="btn btn-primaire view-more-button"
                        onclick="getNextComment(event)"
-                       href="{{ path('comment.paginate',{'post': post.id}) }}">Voir plus</a>    
+                       href="{{ path('comment.paginate',{'post': post.id}) }}">Voir plus</a>
                     <div class="comments-container">
 
                         {% if comment %}
 
-                        <div class="content">
-                            <div class="header">
-                                <div class="top">
-                                    <div class="img" style="background:url({{ asset('/img/favicon96.png') }})">
+                            <div class="content">
+                                <div class="header">
+                                    <div class="top">
+                                        <div class="img" style="background:url({{ asset('/img/favicon96.png') }})">
+                                        </div>
                                     </div>
-                                </div>
 
 
                                 <div class="l-post right">
@@ -246,63 +288,63 @@
                                              data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
                                              class="likeForm">
 
-                                            {% if true %}
-                                                <i class="icon-heart heart-like"></i>
-                                            {% else %}
-                                                <i class="icon-heart heart-dilike"></i>
-                                            {% endif %}
+                                                {% if true %}
+                                                    <i class="icon-heart heart-like"></i>
+                                                {% else %}
+                                                    <i class="icon-heart heart-dilike"></i>
+                                                {% endif %}
 
 
-                                            <span class="number">
-                                            {{ comment.likes|length }}
-                                        </span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="footer">
-                                {# <div class="icons">
-                                    <div onclick="handleAddLike(event)"
-                                         data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
-                                         class="likeForm">
-                                    <div class="footer">
-                                        <div class="icons">
-                                            <div onclick="handleAddLike(event)"
-                                                 data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
-                                                 class="likeForm">
-
-                                                <i class="icon-like">
-
-                                                </i>
                                                 <span class="number">
                                             {{ comment.likes|length }}
                                         </span>
                                                 </button>
                                             </div>
                                         </div>
-                                        <p class="icons">
-                                            <i class="icon-alarm"></i><span
-                                                    data-createdAt="{{ comment.createdAt | date('U') }}"
-                                                    class="number p-date">{{ comment.createdAt | date('U') }}</span>
-
-                                        </p>
-                                        <div class="icons">
-                                        <div onclick="handleAddReport(event)" data-action="{{ path('report.add',{"entity":"post",'id':post.id}) }}" class="reportForm">
-
-                                                <i class="fa fa-flag"></i><span class="number ">Signalez</span>
-
-                                        </div>
-                                        </div>
-
-
                                     </div>
-                                </div>#}
+                                </div>
+                                <div class="footer">
+                                    {# <div class="icons">
+                                        <div onclick="handleAddLike(event)"
+                                             data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
+                                             class="likeForm">
+                                        <div class="footer">
+                                            <div class="icons">
+                                                <div onclick="handleAddLike(event)"
+                                                     data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
+                                                     class="likeForm">
+
+                                                    <i class="icon-like">
+
+                                                    </i>
+                                                    <span class="number">
+                                                {{ comment.likes|length }}
+                                            </span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <p class="icons">
+                                                <i class="icon-alarm"></i><span
+                                                        data-createdAt="{{ comment.createdAt | date('U') }}"
+                                                        class="number p-date">{{ comment.createdAt | date('U') }}</span>
+
+                                            </p>
+                                            <div class="icons">
+                                            <div onclick="handleAddReport(event)" data-action="{{ path('report.add',{"entity":"post",'id':post.id}) }}" class="reportForm">
+
+                                                    <i class="fa fa-flag"></i><span class="number ">Signalez</span>
+
+                                            </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>#}
+
+                                </div>
+
 
                             </div>
-
-
-                        </div>
                         {% endif %}
 
                     </div>
@@ -407,7 +449,7 @@
 
 
       <script>
-          $(document).ready(function(){
+          $(document).ready(function () {
               $('.opt-post').hide();
               //chargement infini : Said
           });

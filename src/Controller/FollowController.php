@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\UserRepository;
 use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,70 +26,48 @@ class FollowController extends AbstractController
      */
     private $notificationService;
 
-    public function __construct(EntityManagerInterface $em,  NotificationService $notificationService)
+    public function __construct(EntityManagerInterface $em, NotificationService $notificationService)
     {
         $this->em = $em;
-        $this->likeService = $likeService;
         $this->notificationService = $notificationService;
     }
 
     /**
-     * @Route("/add/{entity}/{id}", name="add")
+     * @Route("/add/{id}", name="add")
      */
-    public function add($entity, $id, Request $request)
+    public function add($id, Request $request, UserRepository $userRepository)
     {
+
         $user = $this->getUser();
-        $like = new Like();
-        //Si l'user est null alors c'est qu'on est anonyme
-        if (!$user) {
-            $isLiked = $this->likeService->verify($request, $entity, $id, $type = 'ip', $user = null);
-            if (!$isLiked) {
-                //Enregistrement de l'ip car on est anonyme
-                $like->setIp($request->getClientIps()[0]);
+        $friend = $userRepository->find(['id' => $id]);
+        if ($user->getFriends()->contains($friend)) {
+            //Amis déjà présent on le retire
+            $user->removeFriend($friend);
+            $this->em->persist($user);
+            $this->em->flush();
 
-            } else {
+            return new Response("-1");
 
-
-                return new Response("-1");
-            }
         } else {
-            $isLiked = $this->likeService->verify($request, $entity, $id, $type = 'user', $user);
-            if (!$isLiked) {
-                //Enregistrement de l'user car un user est connecté
-                $like->setUser($user);
-            } else {
+            //Ajout de l'amis
 
-                return new Response("-1");
+            $user->addFriend($friend);
 
-            }
+            $this->em->persist($user);
+            $this->em->flush();
+
+            //Notification pour l'user suivis
+            $this->notificationService->add($friend, $message = "{$user->getUsername()} vous suit !");
+
+            return new Response("+1");
+
         }
-
-
-        //Repo vaut soit postRepository soit commentRepository
-        $repo = $this->em->getRepository('App:' . ucfirst($entity));
-        //$payload vaut soit un commentaire soit un post
-        $payload = $repo->find($id);
-        //Creation de l'appel de function custom equivaut soit a setPost ou setComment
-        $func = "set" . ucfirst($entity);
-        // equivaut soit a setPost($posts) ou setComment($comment)
-        $like->$func($payload);
-
-        $this->em->persist($like);
-        $this->em->flush();
-
-
-        //Notification pour l'user auteur du post/comment
-        $this->notificationService->add($payload->getUser(), $message = "Votre {$entity} à été liker ");
-
-
-        //Redirection sur la page d'ou l'ont viens
-        return new Response("+1");
 
 
     }
 
     /**
-     * @Route("/delete/{entity}/{id}", name="delete")
+     * @Route("/delete/{id}", name="delete")
      */
     public function delete($entity, $id, Request $request)
     {

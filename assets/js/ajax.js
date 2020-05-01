@@ -177,14 +177,49 @@ async function handleAddPostPinned(event) {
 }
 
 
-async function handleGetComment(event) {
+async function handleAddUserFollow(event) {
+    console.log("action :: ", event.currentTarget.dataset.action);
+    const button = event.currentTarget;
+    const action = button.dataset.action;
+    const targetToChange = button.querySelector('.followStatus');
+
     try {
-        const response = await axios.get('/user?ID=12345');
-        console.log(response);
+        const response = await axios.post(action);
+        if (response.data === "+1") {
+            targetToChange.innerText = "Suivi";
+            Toastify({
+                text: "Abonnement ajouté",
+                duration: 3000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: 'left', // `left`, `center` or `right`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                className: "info",
+                onClick: function () {
+                } // Callback after click
+            }).showToast();
+        } else {
+            targetToChange.innerText = "Suivre";
+            Toastify({
+                text: "Abonnement supprimer",
+                duration: 3000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: 'left', // `left`, `center` or `right`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                className: "info",
+                onClick: function () {
+                } // Callback after click
+            }).showToast();
+        }
     } catch (error) {
         console.error(error);
     }
+
+
 }
+
+
 
 
 //Comment Ajax load
@@ -213,9 +248,9 @@ function getNextComment(event) {
 window.handleAddLike = handleAddLike;
 window.handleAddReport = handleAddReport;
 window.handleAddComment = handleAddComment;
+window.handleAddUserFollow = handleAddUserFollow;
 window.handleAddPost = handleAddPost;
 window.handleAddPostPinned = handleAddPostPinned;
-window.handleGetComment = handleGetComment;
 window.getNextComment = getNextComment;
 
 
