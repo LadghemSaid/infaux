@@ -258,8 +258,60 @@
                             <div class="content">
                                 <div class="header">
                                     <div class="top">
+                                       <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#profil-{{ post.user.id }}">
                                         <div class="img"
-                                             style="background:url('{{ "/uploads/images/users/" ~ comment.user.image ?? 'adorable.png' }}')">
+                                            style="background:url('/uploads/images/users/{{ post.user.image }}')"></div>
+                                        </button>
+                                        <div class="modal fade" id="profil-{{ post.user.id }}" tabindex="-1" role="dialog"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="wrap">
+                                                            <div class="img"
+                                                                style="background:url('/uploads/images/users/{{ post.user.image }}')"></div>
+                                                        </div>
+                                                        <div class="username">{{ post.user.username }}</div>
+                                                        <div class="description">But I must explain to you how all this mistaken
+                                                            idea of denouncing pleasure and !!
+                                                        </div>
+                                                        {% if app.user %}
+                                                            {% if  app.user == post.user %}
+                                                                <div class="lien_profil"><a
+                                                                            href="{{ path('account.show',{'id': post.user.id} ) }}">Voir mon
+                                                                        profil</a></div>
+                                                            {% else %}
+                                                                <div class="lien_profil"><a
+                                                                            href="{{ path('account.show',{'id': post.user.id} ) }}">Voir le
+                                                                        profil</a></div>
+                                                                <div data-userId="{{ post.user.id }}"
+                                                                    onclick="handleAddUserFollow(event)"
+                                                                    data-action="{{ path('follow.add',{"id":post.user.id}) }}"
+                                                                    class="followUser">
+                                                                    <span class="followStatus">Suivre</span>
+
+                                                                </div>
+                                                            {% endif %}
+                                                        {% else %}
+                                                            <div class="lien_profil"><a
+                                                                        href="{{ path('account.show',{'id': post.user.id} ) }}">Voir le
+                                                                    profil</a></div>
+                                                        {% endif %}
+
+
+
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
