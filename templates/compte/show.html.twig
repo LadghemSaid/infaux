@@ -51,24 +51,29 @@
     <div class="container" style="margin-top: 70px">
         <div class="account">
             <div class="img_wrap">
-                <div class="img" 
-                    style="background:url(https://images.unsplash.com/photo-1586297098710-0382a496c814?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80)">
+                <div class="img"
+                     style="background:url('{{ "/uploads/images/users/" ~ user.image ?? 'adorable.png' }}')">
                 </div>
             </div>
-            <p class="name">John Doe</p>
-            <p class="createdAt">Depuis le 12 mars 2020</p>
+            <p class="name">{{ user.username }}</p>
+            <p class="createdAt">Depuis le {{ user.createdAt|date("m/d/Y", "Europe/Paris") }}</p>
             <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
             <div class="liens">
                 <div>
-                    <span class="subscriberCount">122</span> abonnés
+                    <span class="subscriberCount">{{ user.friendList | length }}</span> abonnés
                 </div>
                 <div>
-                    <span class="subscribeCount">12</span> abonnements
+                    <span class="subscribeCount">{{ user.friends | length }}</span> abonnements
                 </div>
             </div>
-            {% if app.user ==  user %}
-                <div class="edit"><a href="{{ path('account.settings') }}">Editer mon compte</a></div>
+            {% if app.user %}
+                {% if app.user ==  user %}
+                    <div class="edit"><a href="{{ path('account.settings') }}">Editer mon compte</a></div>
+                {% else %}
+                    <div class="follow"><a href="{{ path('follow.add',{'id':user.id}) }}">Suivre</a></div>
+                {% endif %}
             {% endif %}
+
         </div>
 
         <div class="postContainer">

@@ -15,16 +15,20 @@ class UserFormType extends AbstractType
     {
         $builder
             ->add('imageFile',VichImageType::class,[
+                'required' => false,
+                'allow_delete' => false,
+                'download_uri' => false,
+                'image_uri' => false,
+                'asset_helper' => false,
+                'attr' => [
+                    'class' => ''
+                ]
+
+
             //    'data_class'=>null
             ])
-     //       ->add('email')
-      //      ->add('username')
-       //     ->add('password')
-            ->add('save', SubmitType::class, [
-                'label' => 'Editer',
-                'attr' => [
-                    'class' => 'btn btn-primary mt-3'
-                ]
+            ->add('submit', SubmitType::class, [
+
             ])
         ;
     }

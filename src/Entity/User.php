@@ -127,6 +127,13 @@ class User implements UserInterface
      */
     private $updatedAt;
 
+    /**
+     * @ORM\Column(type="datetime")
+     *
+     * @var \DateTimeInterface|null
+     */
+    private $createdAt;
+
 
     public function __construct()
     {
@@ -139,6 +146,7 @@ class User implements UserInterface
         $this->notifications = new ArrayCollection();
         $this->postFollowed = new ArrayCollection();
         $this->updatedAt= new \DateTimeImmutable();
+        $this->createdAt= new \DateTimeImmutable();
 
     }
 
@@ -572,6 +580,22 @@ class User implements UserInterface
     public function setNotificationNotSeen($notificationNotSeen): void
     {
         $this->notificationNotSeen = $notificationNotSeen;
+    }
+
+    /**
+     * @return \DateTimeInterface|null
+     */
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param \DateTimeInterface|null $createdAt
+     */
+    public function setCreatedAt(?\DateTimeInterface $createdAt): void
+    {
+        $this->createdAt = $createdAt;
     }
 
 

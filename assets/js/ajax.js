@@ -150,12 +150,13 @@ async function handleAddPostPinned(event) {
     console.log("action :: ", event.currentTarget.dataset.action);
     const button = event.currentTarget;
     const action = button.dataset.action;
-    const targetToChange = button.querySelector('.number');
+    const targetToChange = button.querySelector('.pinText');
+    console.log(targetToChange)
 
     try {
         const response = await axios.post(action);
         if (response.data === "+1") {
-            targetToChange.innerText = parseInt(targetToChange.innerText) + 1;
+            targetToChange.innerText = "Post epinglé";
             Toastify({
                 text: "Vous suivez ce post",
                 duration: 3000,
@@ -168,7 +169,7 @@ async function handleAddPostPinned(event) {
                 } // Callback after click
             }).showToast();
         } else {
-            targetToChange.innerText = parseInt(targetToChange.innerText) - 1;
+            targetToChange.innerText ="Epingler ce post";
             Toastify({
                 text: "Vous ne suivez plus ce post",
                 duration: 3000,
