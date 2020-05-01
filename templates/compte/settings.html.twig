@@ -55,13 +55,13 @@
             <div class="card mon-compte">
                 <h1>Compte</h1>
                 <div class="group">
-                    <p class="item">Avatar actuelle</p>
+                    <p class="item">Avatar</p>
                     <div class="img"
                          style="background:url('/uploads/images/users/{{ user.image }}')">
 
                     </div>
                     {{ form_start(form) }}
-                    {{ form_row(form.imageFile,{'attr':{'class': ''},'label': 'Changer d\'avatar'}) }}
+                    {{ form_row(form.imageFile,{'attr':{'class': 'button'},'label': 'Changer d\'avatar'}) }}
 
                 </div>
                 <div class="group">
@@ -76,13 +76,86 @@
                     <p class="item">Mot de passe</p>
                     <p>*************</p>
                 </div>
-                {{ form_row(form.email,{'attr':{'class': ''},'label': 'Email du compte'}) }}
-                {{ form_row(form.actualPassword,{'attr':{'class': ''},'label': 'Mot de passe actuelle','value': '**********'}) }}
-                {{ form_row(form.newPassword,{'attr':{'class': ''},'label': 'Nouveau Mot de passe','value': '*******'}) }}
-                {{ form_row(form.submit,{'attr':{'class': 'btn btn-primary mt-3 settings-modify-button'},'label': 'Modifier'}) }}
-                {{ form_end(form) }}
-                <a href="{{ path('account.delete') }}">Désactivé le compte</a>
-                <a href="{{ path('app_logout') }}">Se déconnecter</a>
+<!-- Button  modifier les infos -->
+                <button type="button" class="btn btn-primary modifier" data-toggle="modal" data-target="#modif">
+                    Modifier
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modif" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            {{ form_row(form.email,{'attr':{'class': ''},'label': 'Email du compte'}) }}
+                            {{ form_row(form.actualPassword,{'attr':{'class': ''},'label': 'Mot de passe actuelle','value': '**********'}) }}
+                            {{ form_row(form.newPassword,{'attr':{'class': ''},'label': 'Nouveau Mot de passe','value': '*******'}) }}
+                            
+                        </div>
+                        <div class="modal-footer">
+                            {{ form_row(form.submit,{'attr':{'class': 'btn btn-primary mt-3 settings-modify-button'},'label': 'Modifier'}) }}
+                            {{ form_end(form) }}
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+{# désactiver le compte #}
+                <button type="button" class="btn btn-primary btn_action" data-toggle="modal" data-target="#descativ">
+                    Desactivation du compte
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="descativ" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="exampleModalLabel">Confirmer la desactivation définitive du compte</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <a href="{{ path('account.delete') }}">Désactivé le compte</a>
+                        </div>
+                        <div class="modal-footer" style="display:none;">
+                            
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+{# se déconnecter #}
+
+                <button type="button" class="btn btn-primary btn_action" data-toggle="modal" data-target="#deco">
+                    Se déconnecter
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="deco" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="exampleModalLabel">Voulez vous vraiment vous déconnecter?</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                        </div>
+                        <div class="modal-footer" style="display:none;">
+                            
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
 
             <div class="card general">
