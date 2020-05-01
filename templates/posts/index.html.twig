@@ -60,7 +60,7 @@
                      style="background:url(https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80)">
                 </div>
                 <div class="form-group">
-                    {{ form_row(postForm.text,{'attr':{'class':'postForm__textarea form-control input-lg','placeholder':'Poster un nouveau post'},'label': ' '}) }}
+                    {{ form_row(postForm.text,{'attr':{'class':'postForm__textarea form-control input-lg txta','placeholder':'Poster un nouveau post'},'label': ' '}) }}
                 </div>
                 <div class="d-flex justify-content-end btn-submit">
                     <div class="form-group">
@@ -317,6 +317,7 @@
                                 <div class="header">
                                     <div class="top">
 <<<<<<< HEAD
+<<<<<<< HEAD
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#profil_com">
                                         <div class="img" style="background:url({{ asset('/img/favicon96.png') }})"></div>
                                         </button>
@@ -343,6 +344,62 @@
 =======
                                         <div class="img"
                                              style="background:url('{{ "/uploads/images/users/" ~ comment.user.image ?? 'adorable.png' }}')">
+>>>>>>> master
+=======
+                                       <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#profil-{{ post.user.id }}">
+                                        <div class="img"
+                                            style="background:url('/uploads/images/users/{{ post.user.image }}')"></div>
+                                        </button>
+                                        <div class="modal fade" id="profil-{{ post.user.id }}" tabindex="-1" role="dialog"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="wrap">
+                                                            <div class="img"
+                                                                style="background:url('/uploads/images/users/{{ post.user.image }}')"></div>
+                                                        </div>
+                                                        <div class="username">{{ post.user.username }}</div>
+                                                        <div class="description">But I must explain to you how all this mistaken
+                                                            idea of denouncing pleasure and !!
+                                                        </div>
+                                                        {% if app.user %}
+                                                            {% if  app.user == post.user %}
+                                                                <div class="lien_profil"><a
+                                                                            href="{{ path('account.show',{'id': post.user.id} ) }}">Voir mon
+                                                                        profil</a></div>
+                                                            {% else %}
+                                                                <div class="lien_profil"><a
+                                                                            href="{{ path('account.show',{'id': post.user.id} ) }}">Voir le
+                                                                        profil</a></div>
+                                                                <div data-userId="{{ post.user.id }}"
+                                                                    onclick="handleAddUserFollow(event)"
+                                                                    data-action="{{ path('follow.add',{"id":post.user.id}) }}"
+                                                                    class="followUser">
+                                                                    <span class="followStatus">Suivre</span>
+
+                                                                </div>
+                                                            {% endif %}
+                                                        {% else %}
+                                                            <div class="lien_profil"><a
+                                                                        href="{{ path('account.show',{'id': post.user.id} ) }}">Voir le
+                                                                    profil</a></div>
+                                                        {% endif %}
+
+
+
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
 >>>>>>> master
                                         </div>
                                     </div>
@@ -613,8 +670,71 @@
 
 
       <script>
+// Targets all textareas with class "txta"
+let textareas = document.querySelectorAll('.txta'),
+    hiddenDiv = document.createElement('div'),
+    content = null;
 
+// Adds a class to all textareas
+for (let j of textareas) {
+  j.classList.add('txtstuff');
+}
 
+// Build the hidden div's attributes
+
+// The line below is needed if you move the style lines to CSS
+// hiddenDiv.classList.add('hiddendiv');
+
+// Add the "txta" styles, which are common to both textarea and hiddendiv
+// If you want, you can remove those from CSS and add them via JS
+hiddenDiv.classList.add('txta');
+
+// Add the styles for the hidden div
+// These can be in the CSS, just remove these three lines and uncomment the CSS
+hiddenDiv.style.display = 'none';
+hiddenDiv.style.whiteSpace = 'pre-wrap';
+hiddenDiv.style.wordWrap = 'break-word';
+
+// Loop through all the textareas and add the event listener
+for(let i of textareas) {
+  (function(i) {
+    // Note: Use 'keyup' instead of 'input'
+    // if you want older IE support
+    i.addEventListener('input', function() {
+      
+      // Append hiddendiv to parent of textarea, so the size is correct
+      i.parentNode.appendChild(hiddenDiv);
+      
+      // Remove this if you want the user to be able to resize it in modern browsers
+      i.style.resize = 'none';
+      
+      // This removes scrollbars
+      i.style.overflow = 'hidden';
+
+      // Every input/change, grab the content
+      content = i.value;
+
+      // Add the same content to the hidden div
+      
+      // This is for old IE
+      content = content.replace(/\n/g, '<br>');
+      
+      // The <br ..> part is for old IE
+      // This also fixes the jumpy way the textarea grows if line-height isn't included
+      hiddenDiv.innerHTML = content + '<br style="line-height: 3px;">';
+
+      // Briefly make the hidden div block but invisible
+      // This is in order to read the height
+      hiddenDiv.style.visibility = 'hidden';
+      hiddenDiv.style.display = 'block';
+      i.style.height = hiddenDiv.offsetHeight + 'px';
+
+      // Make the hidden div display:none again
+      hiddenDiv.style.visibility = 'visible';
+      hiddenDiv.style.display = 'none';
+    });
+  })(i);
+}
       </script>
 
   {% endblock %}
