@@ -97,5 +97,16 @@ class PostController extends AbstractController
 
     }
 
+        /**
+     * @Route("/epingle", name="epingle")
+     */
+    public function epingle()
+    {
+        //Cree un formulaire
+        return $this->render('posts/epingle.html.twig', [
+            'controller_name' => 'PostController',
+        ]);
+    }
+
 
 }
