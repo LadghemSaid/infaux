@@ -107,11 +107,10 @@
                                     </div>
                                 </div>
                             </div>
-
-                            {# <div class="img" style="background:url({{ asset('/img/favicon96.png') }})"></div> #}
                             <div class="infos">
                                 <div class="left">
-                                    <p class="username"><strong>{{ post.user.username }}</strong><a data-userId="{{ post.user.id }}" href="" >Follow</a></p>
+                                    <p class="username"><strong>{{ post.user.username }}</strong>
+                                    </p>
                                     <p class="date">
                                        <span data-createdAt="{{ post.createdAt | date('U') }}"
                                              class="number p-date">{{ post.createdAt | date('U') }}</span>
@@ -135,7 +134,7 @@
                                                 <div class="actions">
                                                     <div class="icons first">
                                                         <div onclick="handleAddPostPinned(event)"
-                                                            data-action="{{ path('post.addfollow',{"entity":"post",'id':post.id}) }}"
+                                                            data-action="{{ path('post.addPin',{'id':post.id}) }}"
                                                             class="pinnedPost">
                                                             <i class="icon-pushpin"></i>Epingler ce post
                                                         </div>
@@ -153,11 +152,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    {# <div class="btn-opt-post" onclick="dropdown();"><i class="icon-dots-horizontal-triple"></i></div>
-                                    <div class="opt-post" id="opt-post">a</div> #}
-
-
-
                                 </div>
                             </div>
                         </div>
@@ -188,45 +182,32 @@
                     </div>
 
                     {# <div class="actions">
-
                         <div class="icons">
-
                             <div onclick="handleAddPostPinned(event)"
                                  data-action="{{ path('post.addPin',{'id':post.id}) }}"
                                  class="pinnedPost">
-
                                 <i class="icon-pushpin"></i><span
                                         class="number ">{{ post.followedBy | length }}</span> Epingler
-
                             </div>
-
                         </div>
                         <div class="icons">
-
                             <div data-userId="{{ post.user.id }}" onclick="handleAddUserFollow(event)"
                                  data-action="{{ path('follow.add',{"id":post.user.id}) }}"
                                  class="followUser">
                                 <span class="followStatus">Suivre</span>
-
                             </div>
-
                         </div>
-
-
                         <div class="icons">
                             <div onclick="handleAddReport(event)"
                                  data-action="{{ path('report.add',{"entity":"post",'id':post.id}) }}"
                                  class="reportForm">
 
                                 <i class="fa fa-flag"></i><span class="number ">Signalez</span>
-
                             </div>
                         </div>
+                    </div> #}
 
-
-                    </div>
-
-                </div> #}
+                </div>
 
 
                 <div class="wrapper-comments">
@@ -241,7 +222,29 @@
                             <div class="content">
                                 <div class="header">
                                     <div class="top">
-                                        <div class="img" style="background:url({{ asset('/img/favicon96.png') }})">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#profil_com">
+                                        <div class="img" style="background:url({{ asset('/img/favicon96.png') }})"></div>
+                                        </button>
+                                        <div class="modal fade" id="profil_com" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="wrap">
+                                                        <div class="img" style="background:url({{ asset('/img/favicon96.png') }})"></div>
+                                                    </div>
+                                                    <div class="username">John Doe COm</div>
+                                                    <div class="description">But I must explain to you how all this mistaken idea of denouncing pleasure and</div>
+                                                    <div class="lien_profil"><a href="#">Voir le profil</a></div>
+                                                    <div class="suivre"><a data-userId="{{ post.user.id }}" href="" >Follow</a></div>
+                                                </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
