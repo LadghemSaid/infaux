@@ -56,22 +56,21 @@ class CompteController extends AbstractController
 
             $actualPassword = $form->get("actualPassword")->getData();
             $newPassword = $form->get("newPassword")->getData();
-            $confirmNewPassword = $form->get("confirmNewPassword")->getData();
-            if($actualPassword !== "**********"){
-                dd($this->passwordEncoder->isPasswordValid($user, $actualPassword),$actualPassword);
-                dd();
-                if($this->passwordEncoder->isPasswordValid($user, $actualPassword)){
-                    dd('true');
+            if ($actualPassword !== "**********") {
+
+                if ($this->passwordEncoder->isPasswordValid($user, $actualPassword)) {
+                    //C'est le bon mot de passe on modifie le mot de passe de l'user
+                    $encoded = $encoder->encodePassword($user, $newPassword);
+                    $user->setPassword($encoded);
                 }
 
             }
-            $plainPassword = 'ryanpass';
-            $encoded = $encoder->encodePassword($user, $plainPassword);
-            $user->setPassword($encoded);
+
 
             $this->em->persist($user);
             $this->em->flush();
             $user->setImageFile(null);
+            $this->addFlash('success','Modification enregistrer avec succés');
 
             return $this->redirectToRoute('account.settings');
         }
