@@ -37,18 +37,19 @@
 {% endblock %}
 {% block body %}
 
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-success">
-            {{ message }}
-        </div>
-    {% endfor %}
-    {% for message in app.flashes('error') %}
-        <div class="alert alert-danger">
-            {{ message }}
-        </div>
-    {% endfor %}
 
-    <div class="container">   
+
+    <div class="container">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
         <div class="setting">
             <h1><i class="icon-heart"></i>Parametres</h1>
             <div class="card mon-compte">
@@ -78,7 +79,6 @@
                 {{ form_row(form.email,{'attr':{'class': ''},'label': 'Email du compte'}) }}
                 {{ form_row(form.actualPassword,{'attr':{'class': ''},'label': 'Mot de passe actuelle','value': '**********'}) }}
                 {{ form_row(form.newPassword,{'attr':{'class': ''},'label': 'Nouveau Mot de passe','value': '*******'}) }}
-                {{ form_row(form.confirmNewPassword,{'attr':{'class': ''},'label': 'Confirmation Mot de passe','value': '*******'}) }}
                 {{ form_row(form.submit,{'attr':{'class': 'btn btn-primary mt-3 settings-modify-button'},'label': 'Modifier'}) }}
                 {{ form_end(form) }}
                 <a href="{{ path('account.delete') }}">Désactivé le compte</a>
