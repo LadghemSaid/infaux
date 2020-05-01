@@ -60,10 +60,10 @@
             <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
             <div class="liens">
                 <div>
-                    <span class="subscriberCount">{{ user.friendList | length }}</span> abonnés
+                    <a href="{{ path('follow.follower') }}"><span class="subscriberCount">{{ user.friendList | length }}</span> abonnés</a>
                 </div>
                 <div>
-                    <span class="subscribeCount">{{ user.friends | length }}</span> abonnements
+                    <a href="{{ path('follow.follow') }}"><span class="subscribeCount">{{ user.friends | length }}</span> abonnements</a>
                 </div>
             </div>
             {% if app.user %}
