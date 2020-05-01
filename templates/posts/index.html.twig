@@ -50,7 +50,7 @@
         </div>
     {% endfor %}
 
-    <div class="container" id="postContainer" style="margin-top: 100px;">
+    <div class="container" style="margin-top: 100px;">
 
 
         {% if app.user %}
@@ -60,7 +60,7 @@
                      style="background:url(https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80)">
                 </div>
                 <div class="form-group">
-                    {{ form_row(postForm.text,{'attr':{'class':'postForm__textarea form-control input-lg','placeholder':'Poster un nouveau post'},'label': 'Poster un nouveau post'}) }}
+                    {{ form_row(postForm.text,{'attr':{'class':'postForm__textarea form-control input-lg','placeholder':'Poster un nouveau post'},'label': ' '}) }}
                 </div>
                 <div class="d-flex justify-content-end btn-submit">
                     <div class="form-group">
@@ -76,13 +76,68 @@
 
         {% for post in posts %}
 
-            {% set comments = post.comments | slice(1, 5) %}
 
             <div class="post-container">
                 <div class="content">
                     <div class="header">
                         <div class="top">
-                            <div class="img" style="background:url({{ asset('/img/favicon96.png') }})"></div>
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#profil-{{ post.user.id }}">
+                                <div class="img"
+                                     style="background:url('/uploads/images/users/{{ post.user.image }}')"></div>
+                            </button>
+                            <div class="modal fade" id="profil-{{ post.user.id }}" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="wrap">
+                                                <div class="img"
+                                                     style="background:url('/uploads/images/users/{{ post.user.image }}')"></div>
+                                            </div>
+                                            <div class="username">{{ post.user.username }}</div>
+                                            <div class="description">But I must explain to you how all this mistaken
+                                                idea of denouncing pleasure and
+                                            </div>
+                                            {% if app.user %}
+                                                {% if  app.user == post.user %}
+                                                    <div class="lien_profil"><a
+                                                                href="{{ path('account.show',{'id': post.user.id} ) }}">Voir mon
+                                                            profil</a></div>
+                                                {% else %}
+                                                    <div class="lien_profil"><a
+                                                                href="{{ path('account.show',{'id': post.user.id} ) }}">Voir le
+                                                            profil</a></div>
+                                                    <div data-userId="{{ post.user.id }}"
+                                                         onclick="handleAddUserFollow(event)"
+                                                         data-action="{{ path('follow.add',{"id":post.user.id}) }}"
+                                                         class="followUser">
+                                                        <span class="followStatus">Suivre</span>
+
+                                                    </div>
+                                                {% endif %}
+                                            {% else %}
+                                                <div class="lien_profil"><a
+                                                            href="{{ path('account.show',{'id': post.user.id} ) }}">Voir le
+                                                        profil</a></div>
+                                            {% endif %}
+
+
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {# <div class="img" style="background:url({{ asset('/img/favicon96.png') }})"></div> #}
                             <div class="infos">
                                 <div class="left">
                                     <p class="username"><strong>{{ post.user.username }}</strong>
@@ -93,9 +148,51 @@
                                     </p>
                                 </div>
                                 <div class="option">
-                                    <div class="btn-opt-post" onclick="dropdown();"><i
-                                                class="icon-dots-horizontal-triple"></i></div>
-                                    <div class="opt-post" id="opt-post">a</div>
+
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#modal-post-{{ post.id }}">
+                                        <i class="icon-dots-horizontal-triple"></i>
+                                    </button>
+                                    <div class="modal fade" id="modal-post-{{ post.id }}" tabindex="-1" role="dialog"
+                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+
+                                                    <div class="actions">
+                                                        {% if app.user %}
+                                                            <div class="icons first">
+                                                                <div onclick="handleAddPostPinned(event)"
+                                                                     data-action="{{ path('post.addPin',{'id':post.id}) }}"
+                                                                     class="pinnedPost">
+                                                                    <i class="icon-pushpin"></i><span class="pinText">Epingler ce post</span>
+                                                                </div>
+                                                            </div>
+                                                        {% endif %}
+                                                        <div class="icons">
+                                                            <div onclick="handleAddReport(event)"
+                                                                 data-action="{{ path('report.add',{"entity":"post",'id':post.id}) }}"
+                                                                 class="reportForm">
+
+                                                                <i class="icon-blocked"></i><span class="number ">Signaler ce contenu</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {# <div class="btn-opt-post" onclick="dropdown();"><i class="icon-dots-horizontal-triple"></i></div>
+                                    <div class="opt-post" id="opt-post">a</div> #}
+
+
                                 </div>
                             </div>
                         </div>
@@ -146,61 +243,23 @@
                         </div>
                     </div>
 
-                    <div class="actions">
-
-                        <div class="icons">
-
-                            <div onclick="handleAddPostPinned(event)"
-                                 data-action="{{ path('post.addPin',{'id':post.id}) }}"
-                                 class="pinnedPost">
-
-                                <i class="icon-pushpin"></i><span
-                                        class="number ">{{ post.followedBy | length }}</span> Epingler
-
-                            </div>
-
-                        </div>
-                        <div class="icons">
-
-                            <div data-userId="{{ post.user.id }}" onclick="handleAddUserFollow(event)"
-                                 data-action="{{ path('follow.add',{"id":post.user.id}) }}"
-                                 class="followUser">
-                                <span class="followStatus">Suivre</span>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="icons">
-                            <div onclick="handleAddReport(event)"
-                                 data-action="{{ path('report.add',{"entity":"post",'id':post.id}) }}"
-                                 class="reportForm">
-
-                                <i class="fa fa-flag"></i><span class="number ">Signalez</span>
-
-                            </div>
-                        </div>
-
-
-                    </div>
-
                 </div>
 
 
                 <div class="wrapper-comments">
-                    {% set comments = comments|sort((a, b) => a.createdAt <=> b.createdAt)|column('createdAt') %}
-                    {% dump(comments) %}
 
-                    {% for comment in comments if comments %}
 
-                    <div class="comments-container">
+                    {% set comments = post.comments %}
+                    {% for comment in comments  if comments %}
+
+                        <div class="comments-container">
 
 
                             <div class="content">
                                 <div class="header">
                                     <div class="top">
-                                        <div class="img" style="background:url({{ asset('/img/favicon96.png') }})">
+                                        <div class="img"
+                                             style="background:url('{{ "/uploads/images/users/" ~ comment.user.image ?? 'adorable.png' }}')">
                                         </div>
                                     </div>
 
@@ -211,7 +270,40 @@
                                                         data-createdAt="{{ comment.createdAt | date('U') }}"
                                                         class="number p-date">{{ comment.createdAt | date('U') }}</span>
                                             </p>
-                                            <div class="option"><i class="icon-dots-horizontal-triple"></i></div>
+                                            <div class="option">
+                                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                        data-target="#commentaire">
+                                                    <i class="icon-dots-horizontal-triple"></i>
+                                                </button>
+                                                <div class="modal fade" id="commentaire" tabindex="-1" role="dialog"
+                                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                        aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+
+                                                                <div class="actions">
+                                                                    <div class="icons">
+                                                                        <div onclick="handleAddReport(event)"
+                                                                             data-action="{{ path('report.add',{"entity":"post",'id':post.id}) }}"
+                                                                             class="reportForm">
+
+                                                                            <i class="icon-blocked"></i><span
+                                                                                    class="number ">Signaler ce contenu</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <p class="text">{{ comment.textComment }} </p>
                                         <div class="icons">
@@ -242,7 +334,7 @@
                                                 <span class="number">
                                             {{ comment.likes|length }}
                                         </span>
-                                                </button>
+
                                             </div>
                                         </div>
                                     </div>
@@ -289,7 +381,7 @@
 
 
                             </div>
-                    </div>
+                        </div>
 
                     {% endfor %}
 
@@ -298,7 +390,7 @@
                 {% if app.user %}
                     <div class="formComment">
                         <div class="img"
-                             style="background:url(https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80)">
+                             style="background:url('/uploads/images/users/{{ app.user.image ?? 'default.png' }}')">
                         </div>
                         <form onsubmit="handleAddComment(event)" name="comment" method="post"
                               action="{{ path('comment.add',{'id':post.id}) }}"
@@ -437,20 +529,8 @@
 
 
       <script>
-          $(document).ready(function () {
-              $('.opt-post').hide();
-              //chargement infini : Said
-          });
 
-          function dropdown(event) {
-              var element = document.getElementById('opt-post');
 
-              if (element.style.display === 'none') {
-                  document.getElementById('opt-post').style.display = 'block';
-              } else if (element.style.display === 'block') {
-                  document.getElementById('opt-post').style.display = 'none';
-              }
-          }
       </script>
 
   {% endblock %}

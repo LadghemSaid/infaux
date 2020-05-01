@@ -92,7 +92,9 @@ function handleAddComment(event) {
     event.preventDefault();
     const data = $(event.target).serializeArray()[0].value;
     const action = $(event.target).attr('action');
-    let target = $(event.target).parent().parent().find('.comments-container');
+    let target = $(event.target).parent().parent().find('.comments-container').last();
+
+
 
     $.ajax({
         type: "POST",
@@ -101,6 +103,12 @@ function handleAddComment(event) {
         success: function (data, dataType) {
             //console.log(data);
             target.append(data)
+            $(function () {
+                moment.locale('fr');
+                $(target).find(".p-date").map((x, i) => {
+                    i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
+                });
+            });
             Toastify({
                 text: "Commentaire ajouté",
                 duration: 3000,
@@ -142,12 +150,13 @@ async function handleAddPostPinned(event) {
     console.log("action :: ", event.currentTarget.dataset.action);
     const button = event.currentTarget;
     const action = button.dataset.action;
-    const targetToChange = button.querySelector('.number');
+    const targetToChange = button.querySelector('.pinText');
+    console.log(targetToChange)
 
     try {
         const response = await axios.post(action);
         if (response.data === "+1") {
-            targetToChange.innerText = parseInt(targetToChange.innerText) + 1;
+            targetToChange.innerText = "Post epinglé";
             Toastify({
                 text: "Vous suivez ce post",
                 duration: 3000,
@@ -160,7 +169,7 @@ async function handleAddPostPinned(event) {
                 } // Callback after click
             }).showToast();
         } else {
-            targetToChange.innerText = parseInt(targetToChange.innerText) - 1;
+            targetToChange.innerText ="Epingler ce post";
             Toastify({
                 text: "Vous ne suivez plus ce post",
                 duration: 3000,

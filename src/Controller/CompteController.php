@@ -71,7 +71,7 @@ class CompteController extends AbstractController
     public function show($id)
     {
         $user = $this->getDoctrine()->getRepository(User::class)->find($id);
-        $user = $this->getUser();
+
 
         return $this->render('compte/show.html.twig', [
             'user' => $user,
