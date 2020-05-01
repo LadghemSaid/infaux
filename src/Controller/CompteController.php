@@ -11,6 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -29,17 +30,19 @@ class CompteController extends AbstractController
      * @var EntityManagerInterface
      */
     private $em;
+    private $passwordEncoder;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->em = $em;
+        $this->passwordEncoder = $passwordEncoder;
     }
 
     /**
      * @Route("/settings", name="settings");
      * Method({"GET","POST"})
      */
-    public function settings(Request $request,UserFormType $userFormType)
+    public function settings(Request $request, UserPasswordEncoderInterface $encoder)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
@@ -48,8 +51,23 @@ class CompteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            //Recupere L'email et l'avatar mais pas le nouveau password
             $user = $form->getData();
+
+            $actualPassword = $form->get("actualPassword")->getData();
+            $newPassword = $form->get("newPassword")->getData();
+            $confirmNewPassword = $form->get("confirmNewPassword")->getData();
+            if($actualPassword !== "**********"){
+                dd($this->passwordEncoder->isPasswordValid($user, $actualPassword),$actualPassword);
+                dd();
+                if($this->passwordEncoder->isPasswordValid($user, $actualPassword)){
+                    dd('true');
+                }
+
+            }
+            $plainPassword = 'ryanpass';
+            $encoded = $encoder->encodePassword($user, $plainPassword);
+            $user->setPassword($encoded);
 
             $this->em->persist($user);
             $this->em->flush();

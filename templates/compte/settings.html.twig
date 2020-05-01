@@ -75,6 +75,10 @@
                     <p class="item">Mot de passe</p>
                     <p>*************</p>
                 </div>
+                {{ form_row(form.email,{'attr':{'class': ''},'label': 'Email du compte'}) }}
+                {{ form_row(form.actualPassword,{'attr':{'class': ''},'label': 'Mot de passe actuelle','value': '**********'}) }}
+                {{ form_row(form.newPassword,{'attr':{'class': ''},'label': 'Nouveau Mot de passe','value': '*******'}) }}
+                {{ form_row(form.confirmNewPassword,{'attr':{'class': ''},'label': 'Confirmation Mot de passe','value': '*******'}) }}
                 {{ form_row(form.submit,{'attr':{'class': 'btn btn-primary mt-3 settings-modify-button'},'label': 'Modifier'}) }}
                 {{ form_end(form) }}
                 <a href="{{ path('account.delete') }}">Désactivé le compte</a>
