@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,19 +15,32 @@ class UserFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('imageFile',VichImageType::class,[
-            //    'data_class'=>null
-            ])
-     //       ->add('email')
-      //      ->add('username')
-       //     ->add('password')
-            ->add('save', SubmitType::class, [
-                'label' => 'Editer',
+            ->add('imageFile', VichImageType::class, [
+                'required' => false,
+                'allow_delete' => false,
+                'download_uri' => false,
+                'image_uri' => false,
+                'asset_helper' => false,
                 'attr' => [
-                    'class' => 'btn btn-primary mt-3'
+                    'class' => ''
                 ]
+
+
+                //    'data_class'=>null
             ])
-        ;
+            ->add('email')
+            ->add('actualPassword', PasswordType::class, [
+                "mapped" => false,
+            ])
+            ->add('newPassword', PasswordType::class, [
+                "mapped" => false,
+            ])
+            ->add('confirmNewPassword', PasswordType::class, [
+                "mapped" => false,
+            ])
+            ->add('submit', SubmitType::class, [
+
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

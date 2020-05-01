@@ -53,27 +53,34 @@
             <h1><i class="icon-heart"></i>Parametres</h1>
             <div class="card mon-compte">
                 <h1>Compte</h1>
-                {{ dump(user) }}
                 <div class="group">
                     <p class="item">Avatar actuelle</p>
+                    <div class="img"
+                         style="background:url('/uploads/images/users/{{ user.image }}')">
+
+                    </div>
                     {{ form_start(form) }}
-                    {{ form_widget(form) }}
-                    {{ form_end(form) }}
-                    <img src="" alt="">
+                    {{ form_row(form.imageFile,{'attr':{'class': ''},'label': 'Changer d\'avatar'}) }}
+
                 </div>
                 <div class="group">
                     <p class="item">Pseudo</p>
-                    <p>John Doe</p>
+                    <p>{{ user.username }}</p>
                 </div>
                 <div class="group">
                     <p class="item">Email du compte</p>
-                    <p>John.Doe@gmail.fr</p>
+                    <p>{{ user.email }}</p>
                 </div>
                 <div class="group">
                     <p class="item">Mot de passe</p>
                     <p>*************</p>
                 </div>
-
+                {{ form_row(form.email,{'attr':{'class': ''},'label': 'Email du compte'}) }}
+                {{ form_row(form.actualPassword,{'attr':{'class': ''},'label': 'Mot de passe actuelle','value': '**********'}) }}
+                {{ form_row(form.newPassword,{'attr':{'class': ''},'label': 'Nouveau Mot de passe','value': '*******'}) }}
+                {{ form_row(form.confirmNewPassword,{'attr':{'class': ''},'label': 'Confirmation Mot de passe','value': '*******'}) }}
+                {{ form_row(form.submit,{'attr':{'class': 'btn btn-primary mt-3 settings-modify-button'},'label': 'Modifier'}) }}
+                {{ form_end(form) }}
                 <a href="{{ path('account.delete') }}">Désactivé le compte</a>
                 <a href="{{ path('app_logout') }}">Se déconnecter</a>
             </div>

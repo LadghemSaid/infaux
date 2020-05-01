@@ -3,7 +3,7 @@ App\Entity\User:
     username: 'admin'
     email: 'admin@admin.fr'
     password: <encodePassword(@user_1, 'admin')>
-    image: 'test.png'
+    image: 'test1.png'
     roles: [ROLE_ADMIN]
     comments: '30x @comment_*'
     postFollowed: '2x @post_*'
@@ -12,8 +12,8 @@ App\Entity\User:
     username: 'writer'
     email: 'writer@writer.fr'
     password: <encodePassword(@user_2, 'writer')>
-    image: 'test.png'
-    roles: [ROLE_WRITER]
+    image: 'test2.png'
+    roles: []
     comments: '30x @comment_*'
     postFollowed: '2x @post_*'
 
@@ -21,7 +21,7 @@ App\Entity\User:
     username: 'user'
     email: 'user@user.fr'
     password: <encodePassword(@user_3, 'user')>
-    image: 'test.png'
+    image: 'test3.png'
     roles: []
     comments: '30x @comment_*'
     postFollowed: '2x @post_*'

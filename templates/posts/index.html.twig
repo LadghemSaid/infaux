@@ -1,7 +1,7 @@
 {% extends '/base.html.twig' %}
 
 {% block title %}
-    PopWeb - Blog
+    Infaux
 {% endblock %}
 {% block gtag %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -64,46 +64,75 @@
                 </div>
                 <div class="d-flex justify-content-end btn-submit">
                     <div class="form-group">
-                        <button type="submit" name="post[submit]" class="btn btn-pink btn">
-                            {{ form_row(postForm.submit,{'attr':{'class': 'formPost'},'label': 'Poster'}) }}
-                        </button>
+
+                        {{ form_row(postForm.submit,{'attr':{'class': 'formPost'},'label': 'Poster'}) }}
+
                     </div>
                 </div>
                 {{ form_end(postForm) }}
             </div>
         {% endif %}
-        {% set userLike = app.user.likes %}
-        {% dump  app.user %}
+
+
         {% for post in posts %}
 
-
-            {% set comment = post.comments | last %}
 
             <div class="post-container">
                 <div class="content">
                     <div class="header">
                         <div class="top">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#profil">
-                            <div class="img" style="background:url({{ asset('/img/favicon96.png') }})"></div>
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#profil-{{ post.user.id }}">
+                                <div class="img"
+                                     style="background:url('/uploads/images/users/{{ post.user.image }}')"></div>
                             </button>
-                            <div class="modal fade" id="profil" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="profil-{{ post.user.id }}" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel"></h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="wrap">
-                                            <div class="img" style="background:url({{ asset('/img/favicon96.png') }})"></div>
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
                                         </div>
-                                        <div class="username">John Doe</div>
-                                        <div class="description">But I must explain to you how all this mistaken idea of denouncing pleasure and</div>
-                                        <div class="lien_profil"><a href="#">Voir le profil</a></div>
-                                        <div class="suivre"><a data-userId="{{ post.user.id }}" href="" >Follow</a></div>
-                                    </div>
+                                        <div class="modal-body">
+                                            <div class="wrap">
+                                                <div class="img"
+                                                     style="background:url('/uploads/images/users/{{ post.user.image }}')"></div>
+                                            </div>
+                                            <div class="username">{{ post.user.username }}</div>
+                                            <div class="description">But I must explain to you how all this mistaken
+                                                idea of denouncing pleasure and
+                                            </div>
+                                            {% if app.user %}
+                                                {% if  app.user == post.user %}
+                                                    <div class="lien_profil"><a
+                                                                href="{{ path('account.show',{'id': post.user.id} ) }}">Voir mon
+                                                            profil</a></div>
+                                                {% else %}
+                                                    <div class="lien_profil"><a
+                                                                href="{{ path('account.show',{'id': post.user.id} ) }}">Voir le
+                                                            profil</a></div>
+                                                    <div data-userId="{{ post.user.id }}"
+                                                         onclick="handleAddUserFollow(event)"
+                                                         data-action="{{ path('follow.add',{"id":post.user.id}) }}"
+                                                         class="followUser">
+                                                        <span class="followStatus">Suivre</span>
+
+                                                    </div>
+                                                {% endif %}
+                                            {% else %}
+                                                <div class="lien_profil"><a
+                                                            href="{{ path('account.show',{'id': post.user.id} ) }}">Voir le
+                                                        profil</a></div>
+                                            {% endif %}
+
+
+
+
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -117,12 +146,16 @@
                                     </p>
                                 </div>
                                 <div class="option">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                    <i class="icon-dots-horizontal-triple"></i>
+
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#modal-post-{{ post.id }}">
+                                        <i class="icon-dots-horizontal-triple"></i>
                                     </button>
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="modal-post-{{ post.id }}" tabindex="-1" role="dialog"
+                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
+<<<<<<< HEAD
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalLabel"></h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -143,15 +176,47 @@
                                                         <div onclick="handleAddReport(event)"
                                                             data-action="{{ path('report.add',{"entity":"post",'id':post.id}) }}"
                                                             class="reportForm">
+=======
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
 
-                                                            <i class="icon-blocked"></i><span class="number ">Signaler ce contenu</span>
+                                                    <div class="actions">
+                                                        {% if app.user %}
+                                                            <div class="icons first">
+                                                                <div onclick="handleAddPostPinned(event)"
+                                                                     data-action="{{ path('post.addPin',{'id':post.id}) }}"
+                                                                     class="pinnedPost">
+                                                                    <i class="icon-pushpin"></i><span class="pinText">Epingler ce post</span>
+                                                                </div>
+                                                            </div>
+                                                        {% endif %}
+                                                        <div class="icons">
+                                                            <div onclick="handleAddReport(event)"
+                                                                 data-action="{{ path('report.add',{"entity":"post",'id':post.id}) }}"
+                                                                 class="reportForm">
+>>>>>>> master
+
+                                                                <i class="icon-blocked"></i><span class="number ">Signaler ce contenu</span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            </div>
                                         </div>
                                     </div>
+<<<<<<< HEAD
+=======
+                                    {# <div class="btn-opt-post" onclick="dropdown();"><i class="icon-dots-horizontal-triple"></i></div>
+                                    <div class="opt-post" id="opt-post">a</div> #}
+
+
+>>>>>>> master
                                 </div>
                             </div>
                         </div>
@@ -164,17 +229,33 @@
                                 <div onclick="handleAddLike(event)"
                                      data-action="{{ path('like.add',{"entity":"post",'id':post.id}) }}"
                                      class="likeForm">
-                                            {% if true %}
-                                                <i class="icon-heart heart-like"></i>
+                                    {% if app.user %}
+                                        {% set liked = false %}
+                                        {% for like in post.likes %}
+                                            {% if like.user == app.user and like.post == post %}
+                                                {% set liked = true %}
                                             {% else %}
-                                                <i class="icon-heart heart-dilike"></i>
+                                                {% set liked = false %}
                                             {% endif %}
+                                        {% endfor %}
+
+                                        {% if liked %}
+                                            <i class="icon-heart heart-dilike"></i>
+                                        {% else %}
+                                            <i class="icon-heart heart-like"></i>
+                                        {% endif %}
+
+                                    {% else %}
+                                        <i class="icon-heart heart-like"></i>
+                                    {% endif %}
+
                                     <span class="number">{{ post.likes|length }}</span>
                                 </div>
                                 <div class="icons">
                                     <i class="icon-bubble"></i><span class="number">{{ post.comments | length }}</span>
                                 </div>
                             </div>
+<<<<<<< HEAD
                             <a data-page="0" data-post="{{ post.id }}" class="btn btn-primaire view-more-button"
                                onclick="getNextComment(event)"
                                href="{{ path('comment.paginate',{'post': post.id}) }}">Voir plus</a>
@@ -206,22 +287,36 @@
                             </div>
                         </div>
                     </div> #}
+=======
+                            <div
+                                    class="btn btn-primaire view-more-button"
+                                    onclick="getNextComment(event)"
+                                    data-page="0"
+                                    data-href="{{ path('comment.paginate',{'post': post.id}) }}"
+                                    data-post="{{ post.id }}"
+
+                            >Voir plus
+                            </div>
+                        </div>
+                    </div>
+>>>>>>> master
 
                 </div>
 
 
                 <div class="wrapper-comments">
 
-                    <a data-page="0" data-post="{{ post.id }}" class="btn btn-primaire view-more-button"
-                       onclick="getNextComment(event)"
-                       href="{{ path('comment.paginate',{'post': post.id}) }}">Voir plus</a>
-                    <div class="comments-container">
 
-                        {% if comment %}
+                    {% set comments = post.comments %}
+                    {% for comment in comments  if comments %}
+
+                        <div class="comments-container">
+
 
                             <div class="content">
                                 <div class="header">
                                     <div class="top">
+<<<<<<< HEAD
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#profil_com">
                                         <div class="img" style="background:url({{ asset('/img/favicon96.png') }})"></div>
                                         </button>
@@ -245,63 +340,85 @@
                                                 </div>
                                                 </div>
                                             </div>
+=======
+                                        <div class="img"
+                                             style="background:url('{{ "/uploads/images/users/" ~ comment.user.image ?? 'adorable.png' }}')">
+>>>>>>> master
                                         </div>
                                     </div>
 
 
-                                <div class="l-post right">
-                                    <div class="top">
-                                        <p class="username"><strong>{{ comment.user }}</strong><span
-                                                    data-createdAt="{{ comment.createdAt | date('U') }}"
-                                                    class="number p-date">{{ comment.createdAt | date('U') }}</span></p>
-                                        <div class="option">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#commentaire">
-                                            <i class="icon-dots-horizontal-triple"></i>
-                                            </button>
-                                                <div class="modal fade" id="commentaire" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="l-post right">
+                                        <div class="top">
+                                            <p class="username"><strong>{{ comment.user }}</strong><span
+                                                        data-createdAt="{{ comment.createdAt | date('U') }}"
+                                                        class="number p-date">{{ comment.createdAt | date('U') }}</span>
+                                            </p>
+                                            <div class="option">
+                                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                        data-target="#commentaire">
+                                                    <i class="icon-dots-horizontal-triple"></i>
+                                                </button>
+                                                <div class="modal fade" id="commentaire" tabindex="-1" role="dialog"
+                                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel"></h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            
-                                                            <div class="actions">
-                                                                <div class="icons">
-                                                                    <div onclick="handleAddReport(event)"
-                                                                        data-action="{{ path('report.add',{"entity":"post",'id':post.id}) }}"
-                                                                        class="reportForm">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                        aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
 
-                                                                        <i class="icon-blocked"></i><span class="number ">Signaler ce contenu</span>
+                                                                <div class="actions">
+                                                                    <div class="icons">
+                                                                        <div onclick="handleAddReport(event)"
+                                                                             data-action="{{ path('report.add',{"entity":"post",'id':post.id}) }}"
+                                                                             class="reportForm">
+
+                                                                            <i class="icon-blocked"></i><span
+                                                                                    class="number ">Signaler ce contenu</span>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        </div>
                                                     </div>
                                                 </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <p class="text">{{ comment.textComment }} </p>
-                                    <div class="icons">
-                                        <div onclick="handleAddLike(event)"
-                                             data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
-                                             class="likeForm">
+                                        <p class="text">{{ comment.textComment }} </p>
+                                        <div class="icons">
+                                            <div onclick="handleAddLike(event)"
+                                                 data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
+                                                 class="likeForm">
 
-                                                {% if true %}
-                                                    <i class="icon-heart heart-like"></i>
+                                                {% if app.user %}
+                                                    {% set likedComment = false %}
+                                                    {% for like in comment.likes %}
+                                                        {% if like.user == app.user and like.comment == comment %}
+                                                            {% set likedComment = true %}
+                                                        {% else %}
+                                                            {% set likedComment = false %}
+                                                        {% endif %}
+                                                    {% endfor %}
+
+                                                    {% if likedComment %}
+                                                        <i class="icon-heart heart-dilike"></i>
+                                                    {% else %}
+                                                        <i class="icon-heart heart-like"></i>
+                                                    {% endif %}
+
                                                 {% else %}
-                                                    <i class="icon-heart heart-dilike"></i>
+                                                    <i class="icon-heart heart-like"></i>
                                                 {% endif %}
-
 
                                                 <span class="number">
                                             {{ comment.likes|length }}
                                         </span>
-                                                </button>
+
                                             </div>
                                         </div>
                                     </div>
@@ -348,15 +465,16 @@
 
 
                             </div>
-                        {% endif %}
+                        </div>
 
-                    </div>
+                    {% endfor %}
+
                 </div>
 
                 {% if app.user %}
                     <div class="formComment">
                         <div class="img"
-                             style="background:url(https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80)">
+                             style="background:url('/uploads/images/users/{{ app.user.image ?? 'default.png' }}')">
                         </div>
                         <form onsubmit="handleAddComment(event)" name="comment" method="post"
                               action="{{ path('comment.add',{'id':post.id}) }}"
@@ -391,16 +509,20 @@
             </div>
 
 
-
-
-
         {% endfor %}
         {{ knp_pagination_render(posts) }}
 
     </div>
 
     <div class="page-load-status">
-        <p class="infinite-scroll-request">Chargement...</p>
+        <div class="infinite-scroll-request">
+            <div class="loader-ellips">Chargement
+                <span class="loader-ellips__dot"></span>
+                <span class="loader-ellips__dot"></span>
+                <span class="loader-ellips__dot"></span>
+                <span class="loader-ellips__dot"></span>
+            </div>
+        </div>
         <p class="infinite-scroll-last">Plus aucun post a afficher</p>
         <p class="infinite-scroll-error">No more pages to load</p>
     </div>
@@ -413,11 +535,53 @@
       {{ encore_entry_script_tags('ajax') }}
 
       <script>
+
+
+          function getNextComment(event) {
+              console.log($(event.target).closest('.content').next().find('.comments-container'))
+              console.log("/comment/post/" + event.target.dataset.post + '?page={{ '{{' }}#{{ '}}' }}')
+
+
+              var infiniteScroll = $(event.target).closest('.content').next().infiniteScroll({
+                  // options
+                  path: "/comment/post/" + event.target.dataset.post + '?page={{ '{{' }}#{{ '}}' }}',
+                  append: ".comments-container",
+                  status: '.page-load-status',
+                  button: event.target,
+                  history: false,
+                  scrollThreshold: false,
+                  debug: true
+              });
+              infiniteScroll.on('load.infiniteScroll', function (res) {
+                  $(function () {
+                      moment.locale('fr');
+                      $(res.currentTarget).find(".p-date").map((x, i) => {
+                          i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
+                      });
+                  });
+              });
+
+
+              /*
+              var $viewMoreButton = $(event.target);
+              $viewMoreButton.on( 'click', function() {
+                  // load next page
+                  infiniteScroll.infiniteScroll('loadNextPage');
+                  // enable loading on scroll
+                  infiniteScroll.infiniteScroll( 'option', {
+                      loadOnScroll: true,
+                  });
+                  // hide button
+                  $viewMoreButton.hide();
+              });
+            */
+          }
+
           document.addEventListener("DOMContentLoaded", function (event) {
 
 
               //Post infinite scroll
-              var infiniteScroll = $('.transition-fade .container').infiniteScroll({
+              var infiniteScroll = $('.transition-fade .container ').infiniteScroll({
                   // options
                   path: '.next a',
                   append: '.post-container',
@@ -435,6 +599,7 @@
                   });
               });
 
+
               $(function () {
                   moment.locale('fr');
                   $(".p-date").map((x, i) => {
@@ -447,25 +612,9 @@
       </script>
 
 
-
-
-
-
       <script>
-          $(document).ready(function () {
-              $('.opt-post').hide();
-              //chargement infini : Said
-          });
 
-          function dropdown(event) {
-              var element = document.getElementById('opt-post');
 
-              if (element.style.display === 'none') {
-                  document.getElementById('opt-post').style.display = 'block';
-              } else if (element.style.display === 'block') {
-                  document.getElementById('opt-post').style.display = 'none';
-              }
-          }
       </script>
 
   {% endblock %}
