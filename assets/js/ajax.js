@@ -92,7 +92,9 @@ function handleAddComment(event) {
     event.preventDefault();
     const data = $(event.target).serializeArray()[0].value;
     const action = $(event.target).attr('action');
-    let target = $(event.target).parent().parent().find('.comments-container');
+    let target = $(event.target).parent().parent().find('.comments-container').last();
+
+
 
     $.ajax({
         type: "POST",
@@ -101,6 +103,12 @@ function handleAddComment(event) {
         success: function (data, dataType) {
             //console.log(data);
             target.append(data)
+            $(function () {
+                moment.locale('fr');
+                $(target).find(".p-date").map((x, i) => {
+                    i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
+                });
+            });
             Toastify({
                 text: "Commentaire ajouté",
                 duration: 3000,

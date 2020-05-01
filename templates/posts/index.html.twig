@@ -76,7 +76,6 @@
 
         {% for post in posts %}
 
-            {% set comments = post.comments | slice(1, 5) %}
 
             <div class="post-container">
                 <div class="content">
@@ -189,10 +188,10 @@
 
 
                 <div class="wrapper-comments">
-                    {% set comments = comments|sort((a, b) => a.createdAt <=> b.createdAt)|column('createdAt') %}
-                    {% dump(comments) %}
 
-                    {% for comment in comments if comments %}
+
+                    {% set comments = post.comments %}
+                    {% for comment in comments  if comments %}
 
                     <div class="comments-container">
 
