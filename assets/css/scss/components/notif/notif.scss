@@ -24,6 +24,10 @@
         display: flex;
         margin-bottom: 20px;
 
+        &.not-seen{
+            background-color: #66bb99;
+            color:white;
+        }
         .user{
             font-weight: $blackW;
             margin-bottom: 5px;

@@ -44,7 +44,7 @@ class IndexController extends AbstractController
      * @Template("XxxYyyBundle:Front/post:index.html.twig")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index(CookieGenerator $cookieGenerator, PostRepository $postrepo, Request $request, PaginatorInterface $paginator,PostType $postType): Response
+    public function index(PostRepository $postrepo, Request $request, PaginatorInterface $paginator): Response
     {
 
         $posts = $postrepo->findAllDesc(); //On récupère les posts

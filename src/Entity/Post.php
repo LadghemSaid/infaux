@@ -66,6 +66,11 @@ class Post
      */
     private $followedBy;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $visibility;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -255,6 +260,18 @@ class Post
         if ($this->followedBy->contains($followedBy)) {
             $this->followedBy->removeElement($followedBy);
         }
+
+        return $this;
+    }
+
+    public function getVisibility(): ?string
+    {
+        return $this->visibility;
+    }
+
+    public function setVisibility(string $visibility): self
+    {
+        $this->visibility = $visibility;
 
         return $this;
     }

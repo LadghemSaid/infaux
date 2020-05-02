@@ -1,9 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends '/base.html.twig' %}
 
 {% block title %}
-    PopWeb - {{ post.title }}
+    Infaux
 {% endblock %}
 {% block gtag %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107718823-2"></script>
     <script>
@@ -29,15 +31,13 @@
 {% block google %}
     <meta name="google" content="unavailable_after: [date ]">{% endblock %}
 
+{% block style_custom %}
 
+    <style>
+
+    </style>
+{% endblock %}
 {% block body %}
-    <div class="img-banner">
-        <img src="{{ asset('pho/banner-blog.jpg') }}" alt="Bannière blog" class="banner">
-        <div class="text">
-            <h1>{{ post.title }}</h1>
-        </div>
-    </div>
-
     {% for message in app.flashes('success') %}
         <div class="alert alert-success">
             {{ message }}
@@ -49,40 +49,106 @@
         </div>
     {% endfor %}
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 post-item-show">
-                <div class="title-section">
-                    <h1 class="p-title">{{ post.title }}</h1>
-                    <p class="p-date">Mis en ligne le
-                        : {{ post.updatedAt | date('d/m/Y H:i', timezone='Europe/Paris') }} </p>
-                </div>
-                <div class="image-section">
+    <div class="container" style="margin-top: 100px;">
 
-                </div>
-                <div class="p-text">
-                    <p class="p-description">{{ post.text | raw }}</p>
-                </div>
-            </div>
-        </div>
-
-        {% include '/comment/comment.html.twig' %}
-
+        {% set comments = post.comments | slice(0,-1) | formatComment('DESC')  %}
+        {{ include('posts/only-post.html.twig') }}
     </div>
 
 
 {% endblock %}
-{% block javascripts %}
-    <script>
-
-        $(document).ready(() => {
-
-        });
 
 
-    </script>
+  {% block javascripts %}
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+      {{ encore_entry_script_tags('ajax') }}
 
-{% endblock %}
+      <script>
+
+
+          document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+
+              $(function () {
+                  moment.locale('fr');
+                  $(".p-date").map((x, i) => {
+                      i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
+                  });
+              });
+          });
+
+
+      </script>
+
+
+      <script>
+          // Targets all textareas with class "txta"
+          let textareas = document.querySelectorAll('.txta'),
+              hiddenDiv = document.createElement('div'),
+              content = null;
+
+          // Adds a class to all textareas
+          for (let j of textareas) {
+              j.classList.add('txtstuff');
+          }
+
+          // Build the hidden div's attributes
+
+          // The line below is needed if you move the style lines to CSS
+          // hiddenDiv.classList.add('hiddendiv');
+
+          // Add the "txta" styles, which are common to both textarea and hiddendiv
+          // If you want, you can remove those from CSS and add them via JS
+          hiddenDiv.classList.add('txta');
+
+          // Add the styles for the hidden div
+          // These can be in the CSS, just remove these three lines and uncomment the CSS
+          hiddenDiv.style.display = 'none';
+          hiddenDiv.style.whiteSpace = 'pre-wrap';
+          hiddenDiv.style.wordWrap = 'break-word';
+
+          // Loop through all the textareas and add the event listener
+          for (let i of textareas) {
+              (function (i) {
+                  // Note: Use 'keyup' instead of 'input'
+                  // if you want older IE support
+                  i.addEventListener('input', function () {
+
+                      // Append hiddendiv to parent of textarea, so the size is correct
+                      i.parentNode.appendChild(hiddenDiv);
+
+                      // Remove this if you want the user to be able to resize it in modern browsers
+                      i.style.resize = 'none';
+
+                      // This removes scrollbars
+                      i.style.overflow = 'hidden';
+
+                      // Every input/change, grab the content
+                      content = i.value;
+
+                      // Add the same content to the hidden div
+
+                      // This is for old IE
+                      content = content.replace(/\n/g, '<br>');
+
+                      // The <br ..> part is for old IE
+                      // This also fixes the jumpy way the textarea grows if line-height isn't included
+                      hiddenDiv.innerHTML = content + '<br style="line-height: 3px;">';
+
+                      // Briefly make the hidden div block but invisible
+                      // This is in order to read the height
+                      hiddenDiv.style.visibility = 'hidden';
+                      hiddenDiv.style.display = 'block';
+                      i.style.height = hiddenDiv.offsetHeight + 'px';
+
+                      // Make the hidden div display:none again
+                      hiddenDiv.style.visibility = 'visible';
+                      hiddenDiv.style.display = 'none';
+                  });
+              })(i);
+          }
+      </script>
+
+  {% endblock %}

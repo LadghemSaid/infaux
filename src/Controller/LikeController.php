@@ -29,7 +29,7 @@ class LikeController extends AbstractController
      */
     private $notificationService;
 
-    public function __construct(EntityManagerInterface $em, LikeService $likeService,  NotificationService $notificationService)
+    public function __construct(EntityManagerInterface $em, LikeService $likeService, NotificationService $notificationService)
     {
         $this->em = $em;
         $this->likeService = $likeService;
@@ -80,9 +80,8 @@ class LikeController extends AbstractController
         $this->em->persist($like);
         $this->em->flush();
 
-
-            //Notification pour l'user auteur du post/comment
-            $this->notificationService->add($payload->getUser(), $message = "Votre {$entity} à été liker ");
+        //Notification pour l'user auteur du post/comment
+        $this->notificationService->add($payload->getUser(), $message = "Votre {$entity} à été liker ",$user,$payload);
 
 
         //Redirection sur la page d'ou l'ont viens
