@@ -68,7 +68,9 @@
             </div>
             {% if app.user %}
                 {% if app.user ==  user %}
-                    <div class="edit"><a href="{{ path('account.settings') }}">Editer mon compte</a></div>
+                    <a href="{{ path('account.settings') }}">
+                        <button type="button" class="btn btn-border-green btn-lg btn-block mt-20 mt-20Mobile">Editer mon profil</button>
+                    </a>
                 {% elseif user  in  app.user.friends %}
 
                     <div data-userId="{{ user.id }}"
@@ -82,7 +84,7 @@
                     <div data-userId="{{ user.id }}"
                          onclick="handleAddUserFollow(event)"
                          data-action="{{ path('follow.add',{"id": user.id}) }}"
-                         class="followUser">
+                         class="followUser btn btn-border-green btn-lg mt-20 mt-20Mobile">
                         <span class="followStatus">Suivre</span>
                     </div>
 
@@ -91,18 +93,19 @@
             {% endif %}
 
         </div>
+        <div class="mt-30">
+            {% if app.user ==  user %}
+                <span class="number-posts">{{ app.user.posts|length }} posts</span>
+                <div class="postContainer mt-3">
+                    {% set posts = app.user.posts %}
+                    {% for post in posts %}
+                        {% set comments = post.comments | slice(-5,10) | formatComment('DESC') %}
+                        {{ include('/posts/only-post.html.twig') }}
+                    {% endfor %}
 
-        {% if app.user ==  user %}
-            <span>{{ app.user.posts|length }} posts</span>
-            <div class="postContainer">
-                {% set posts = app.user.posts %}
-                {% for post in posts %}
-                    {% set comments = post.comments | slice(-5,10) | formatComment('DESC') %}
-                    {{ include('/posts/only-post.html.twig') }}
-                {% endfor %}
-
-            </div>
-        {% endif %}
+                </div>
+            {% endif %}
+        </div>
 
 
     </div>
