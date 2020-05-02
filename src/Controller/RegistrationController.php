@@ -29,6 +29,9 @@ class RegistrationController extends AbstractController
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
             $user->setRoles(array('ROLE_ADMIN') );
+            $user->setImage('adorable.png' );
+            $user->setDescription('. . .' );
+            $user->setDisplaySetting('recent' );
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
