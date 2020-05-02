@@ -1,3 +1,6 @@
+
+
+
 .setting {
   margin-top: 90px;
 
@@ -7,6 +10,68 @@
     i {
       margin-right: 5px;
       color: $green;
+    }
+  }
+
+  .fade{
+    background-color:rgba($color: #000000, $alpha: .30);
+  }
+
+  .modifier{
+    margin-bottom: 0px;
+    color: $green;
+    border:none;
+    font-size: $Msmall;
+    padding:10px;
+    background: transparent;
+    padding-left: 0px;
+  }
+
+  .btn_action{
+    background-color: transparent;
+    color:red;
+    border:none;
+    text-align: left;
+    font-size: $Msmall;
+    align-items: flex-start;
+  }
+  
+  .modal-dialog{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  
+    .modal-content{
+      width: 300px;
+      border: none;
+      box-shadow: 5px 5px 15px rgba($color: #000000, $alpha: .20);
+      border-radius: $radius;
+      padding: $padding !important;
+
+      input{
+        border-top:none;
+        border-right:none;
+        border-left:none;
+        border-bottom: 2px $green solid;
+      }
+    }
+
+    .modal-footer{
+      border:none !important;
+      justify-content: flex-start !important;
+
+      button{
+        margin-bottom: 0px;
+        border-radius: $radiusLarge;
+        background-color: $green;
+        border:none;
+        font-size: $Msmall;
+        padding:10px;
+        padding-right:20px !important;
+        padding-left:20px !important;
+      }
+
     }
   }
 
@@ -33,8 +98,20 @@
     margin-bottom: 20px;
 
     .group {
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+      
       color: rgba($color: #000000, $alpha: .32);
+
+      .form-group{
+        border:none;
+        padding: 0px;
+        margin-top: 15px;
+
+        legend{
+          padding:0px !important;
+          margin:0px !important;
+        }
+      }
 
       .item {
         color: black;
