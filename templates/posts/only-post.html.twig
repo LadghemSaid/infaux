@@ -1,6 +1,4 @@
-{% if expanded is defined %}
 
-{% endif %}
 <div class="post-container">
     <div class="content">
         <div class="header">
@@ -100,7 +98,14 @@
                                                     <div onclick="handleAddPostPinned(event)"
                                                          data-action="{{ path('post.addPin',{'id':post.id}) }}"
                                                          class="pinnedPost">
-                                                        <i class="icon-pushpin"></i><span class="pinText">Epingler ce post</span>
+                                                        <i class="icon-pushpin"></i>
+                                                        {% if post in app.user.postFollowed  %}
+                                                        <span class="pinText">Post epinglé</span>
+                                                        {% else %}
+                                                            <span class="pinText">Epingler ce post</span>
+
+                                                        {% endif %}
+
                                                     </div>
                                                 </div>
                                             {% endif %}
@@ -155,11 +160,16 @@
                         <i class="icon-bubble"></i><span class="number">{{ post.comments | length }}</span>
                     </div>
                 </div>
-                <a
-                        class="btn btn-primaire "
-                        href="{{ path('post.show',{'id': post.id}) }}"
-                >Voir plus
-                </a>
+                {% if expanded is defined %}
+
+                    {% else %}
+                        <a
+                                class="btn btn-primaire "
+                                href="{{ path('post.show',{'id': post.id}) }}"
+                        >Voir plus
+                        </a>
+                {% endif %}
+
             </div>
         </div>
 

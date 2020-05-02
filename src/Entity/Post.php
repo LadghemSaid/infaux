@@ -66,10 +66,7 @@ class Post
      */
     private $followedBy;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $visibility;
+
 
     public function __construct()
     {
@@ -264,16 +261,6 @@ class Post
         return $this;
     }
 
-    public function getVisibility(): ?string
-    {
-        return $this->visibility;
-    }
 
-    public function setVisibility(string $visibility): self
-    {
-        $this->visibility = $visibility;
-
-        return $this;
-    }
 
 }

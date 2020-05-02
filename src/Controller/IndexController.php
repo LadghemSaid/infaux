@@ -48,7 +48,7 @@ class IndexController extends AbstractController
     {
 
         $posts = $postrepo->findAllDesc(); //On récupère les posts
-
+        $user =$this->getUser();
         $post = new Post();
         $postForm = $this->createForm(PostType::class, $post);
 
@@ -66,7 +66,8 @@ class IndexController extends AbstractController
             $data = $postForm->getData();
             $post->setFavorite(false)
                 ->setPublished(true)
-                ->setUser($this->getUser());
+                ->setVisibility($user->getDisplayPr)
+                ->setUser($user);
             $this->em->persist($post);
             $this->em->flush();
 
