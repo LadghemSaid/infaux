@@ -52,7 +52,7 @@
     <div class="container" style="margin-top: 100px;">
 
         {% set comments = post.comments | slice(0,-1) | formatComment('DESC')  %}
-        {{ include('posts/only-post.html.twig') }}
+        {% include('posts/only-post.html.twig') with {'expanded': true} %}
     </div>
 
 
