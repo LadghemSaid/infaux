@@ -2,11 +2,14 @@
     <div class="content">
         <div class="header">
             <div class="top">
+
                 <button type="button" class="btn btn-primary" data-toggle="modal"
                         data-target="#profil-{{ post.user.id }}">
                     <div class="img"
                          style="background:url('/uploads/images/users/{{ post.user.image }}')"></div>
                 </button>
+
+
                 <div class="modal fade" id="profil-{{ post.user.id }}" tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -58,7 +61,7 @@
                     </div>
                 </div>
 
-                {# <div class="img" style="background:url({{ asset('/img/favicon96.png') }})"></div> #}
+
                 <div class="infos">
                     <div class="left">
                         <p class="username"><strong>{{ post.user.username }}</strong>
@@ -74,6 +77,7 @@
                                 data-target="#modal-post-{{ post.id }}">
                             <i class="icon-dots-horizontal-triple"></i>
                         </button>
+
                         <div class="modal fade" id="modal-post-{{ post.id }}" tabindex="-1" role="dialog"
                              aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
@@ -110,10 +114,6 @@
                                 </div>
                             </div>
                         </div>
-                        {# <div class="btn-opt-post" onclick="dropdown();"><i class="icon-dots-horizontal-triple"></i></div>
-                        <div class="opt-post" id="opt-post">a</div> #}
-
-
                     </div>
                 </div>
             </div>
@@ -167,12 +167,14 @@
                 <div class="content">
                     <div class="header">
                         <div class="top">
+
                             <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#profil-{{ post.user.id }}">
+                                    data-target="#profil-{{ comment.user.id ?? "999" }}">
                                 <div class="img"
                                      style="background:url('/uploads/images/users/{{ comment.user.image ?? "adorable.png" }}')"></div>
                             </button>
-                            <div class="modal fade" id="profil-{{ post.user.id }}" tabindex="-1" role="dialog"
+
+                            <div class="modal fade" id="profil-{{ comment.user.id ?? "999" }}" tabindex="-1" role="dialog"
                                  aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -224,11 +226,13 @@
                                             class="number p-date">{{ comment.createdAt | date('U') }}</span>
                                 </p>
                                 <div class="option">
+
                                     <button type="button" class="btn btn-primary" data-toggle="modal"
-                                            data-target="#commentaire">
+                                            data-target="#commentaire-{{ comment.id }}">
                                         <i class="icon-dots-horizontal-triple"></i>
                                     </button>
-                                    <div class="modal fade" id="commentaire" tabindex="-1" role="dialog"
+
+                                    <div class="modal fade" id="commentaire-{{ comment.id }}" tabindex="-1" role="dialog"
                                          aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -244,7 +248,7 @@
                                                     <div class="actions">
                                                         <div class="icons">
                                                             <div onclick="handleAddReport(event)"
-                                                                 data-action="{{ path('report.add',{"entity":"post",'id':post.id}) }}"
+                                                                 data-action="{{ path('report.add',{"entity":"comment",'id':comment.id}) }}"
                                                                  class="reportForm">
 
                                                                 <i class="icon-blocked"></i><span

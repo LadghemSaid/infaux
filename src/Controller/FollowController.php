@@ -57,7 +57,7 @@ class FollowController extends AbstractController
             $this->em->flush();
 
             //Notification pour l'user suivis
-            $this->notificationService->add($friend, $message = "{$user->getUsername()} vous suit !");
+            $this->notificationService->add($friend, $message = "{$user->getUsername()} vous suit !",$user,$user);
 
             return new Response("+1");
 
