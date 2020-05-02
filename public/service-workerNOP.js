@@ -105,7 +105,7 @@ define("./service-workerNOP.js",['./workbox-f31c35c4'], function (workbox) { 'us
 
   workbox.precacheAndRoute([{
     "url": "/build/ajax.js",
-    "revision": "5d1c4e6ca7f697c829350b864be5a45a"
+    "revision": "301a5ca4fb508690e0a9f5841fc5b66d"
   }, {
     "url": "/build/app.js",
     "revision": "d00464dd9e89f3ec9d043c1d3404795e"
@@ -114,7 +114,7 @@ define("./service-workerNOP.js",['./workbox-f31c35c4'], function (workbox) { 'us
     "revision": "1764faca1da85d346d2b1fbee324cbfd"
   }, {
     "url": "/build/main.css",
-    "revision": "6f28f2bb101c05ac86c430ea614f29e4"
+    "revision": "99bb11b8416d1dde49c8d3ef547d9bbe"
   }, {
     "url": "/build/runtime.js",
     "revision": "000c3893cd42406aebf5454f3954e3e5"

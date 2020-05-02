@@ -19,8 +19,11 @@
         {% if app.user %}
             <div class="mobile-bottom-nav__item">
                 <div class="mobile-bottom-nav__item-content">
-                    <a href="{{ path('notification') }}"><i class="icon-bell"></i><span
-                                class="number_notif notif">{{ app.user.notificationNotSeen | length }}</span></a>
+                    <a href="{{ path('notification') }}"><i class="icon-bell"></i>
+                        {% if app.user.notificationNotSeen | length >= 1 %}  
+                            <span class="number_notif notif">{{ app.user.notificationNotSeen | length }}</span>
+                        {% endif %}
+                    </a>
                 </div>
             </div>
         {% endif %}
@@ -57,7 +60,7 @@
                         </div>
                         {% if app.user %}
                             <h3 class="fc-black">{{ app.user.username }}</h3>
-                            <p class="fc-black">{{ app.user.friends| length }} abonnées</p>
+                            <a href="{{ path('post.follower') }}"><p class="fc-black">{{ app.user.friendList| length }} abonnées</p></a>
                             <a href="{{ path('account.show',{'id':app.user.id}) }}">
                                 <button type="button" class="btn btn-black btn-lg btn-block mt-20 mt-20Mobile">Voir le profil
                                 </button>
@@ -86,9 +89,10 @@
 
                             {% endif %}
                             {% if app.user %}
-                                <a href="{{ path('notification') }}" class="mt-30 mt-30Mobile">Notifications (<span
-                                            class="number_notif">{{ app.user.notificationNotSeen | length }}</span>)</a>
-
+                                <a href="{{ path('notification') }}" class="mt-30 mt-30Mobile">Notifications 
+                                {% if app.user.notificationNotSeen | length >= 1 %} 
+                                    (<span class="number_notif">{{ app.user.notificationNotSeen | length }}</span>)</a>
+                                {% endif %}
 
                                 <a href="{{ path('account.settings') }}" class="mt-30 mt-30Mobile">Paramètres</a>
 

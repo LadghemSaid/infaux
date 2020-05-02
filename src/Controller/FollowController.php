@@ -37,6 +37,7 @@ class FollowController extends AbstractController
      */
     public function add($id, Request $request, UserRepository $userRepository)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $user = $this->getUser();
         $friend = $userRepository->find(['id' => $id]);
@@ -71,9 +72,32 @@ class FollowController extends AbstractController
      */
     public function delete($entity, $id, Request $request)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
 
         $referer = $request->headers->get('referer');
         return new RedirectResponse($referer);
+    }
+
+        /**
+     * @Route("/follow", name="follow")
+     */
+    public function follow()
+    {
+        //Cree un formulaire
+        return $this->render('follow/follow.html.twig', [
+            'controller_name' => 'FollowhController',
+        ]);
+    }
+
+    /**
+     * @Route("/follower", name="follower")
+     */
+    public function follower()
+    {
+        //Cree un formulaire
+        return $this->render('follow/follower.html.twig', [
+            'controller_name' => 'FollowhController',
+        ]);
     }
 }

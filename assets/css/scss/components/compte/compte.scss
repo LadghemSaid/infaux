@@ -1,4 +1,11 @@
 
+.mt-30 {
+    margin-top: 30px;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
 
 .account{
     margin-top: 100px;
@@ -59,4 +66,13 @@ background: linear-gradient(311deg, rgba(102,187,153,0.8186624991793592) 0%, rgb
         border-radius: 30px;
     }
 
+    a:hover {
+        color: rgba($color: $dark-grey, $alpha: .62);
+    }
+
+}
+
+.number-posts{
+    color: rgba($color: $dark-grey, $alpha: .62);
+    font-size: $Msmall;
 }
