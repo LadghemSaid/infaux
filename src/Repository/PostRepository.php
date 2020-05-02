@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Post;
+use Doctrine\ORM\Query\Expr;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -49,8 +50,10 @@ class PostRepository extends ServiceEntityRepository
     */
     public function findAllDesc()
     {
-        return $this->createQueryBuilder('p')
 
+
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.published = 1' )
             ->orderBy('p.createdAt', 'DESC')
             ->getQuery()
             ->getResult();

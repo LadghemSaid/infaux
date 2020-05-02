@@ -133,7 +133,6 @@
         });
 
 
-
         const eventSource = new EventSourcePolyfill(url, {
             headers: {
                 'Authorization': 'Bearer {{ token_generator.generateToken(app.user) }}',

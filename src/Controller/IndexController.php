@@ -62,12 +62,12 @@ class IndexController extends AbstractController
 
         $postForm->handleRequest($request);
         if ($postForm->isSubmitted() && $postForm->isValid()) {
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
             $data = $postForm->getData();
             $post->setFavorite(false)
                 ->setPublished(true)
-                ->setVisibility($user->getDisplayPr)
-                ->setUser($user);
+                ->setUser($this->getUser());
             $this->em->persist($post);
             $this->em->flush();
 
