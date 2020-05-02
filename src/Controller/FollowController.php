@@ -37,6 +37,7 @@ class FollowController extends AbstractController
      */
     public function add($id, Request $request, UserRepository $userRepository)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $user = $this->getUser();
         $friend = $userRepository->find(['id' => $id]);
@@ -71,6 +72,7 @@ class FollowController extends AbstractController
      */
     public function delete($entity, $id, Request $request)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
 
         $referer = $request->headers->get('referer');

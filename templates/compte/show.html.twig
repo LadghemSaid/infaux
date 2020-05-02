@@ -69,8 +69,24 @@
             {% if app.user %}
                 {% if app.user ==  user %}
                     <div class="edit"><a href="{{ path('account.settings') }}">Editer mon compte</a></div>
+                {% elseif user  in  app.user.friends %}
+
+                    <div data-userId="{{ user.id }}"
+                         onclick="handleAddUserFollow(event)"
+                         data-action="{{ path('follow.add',{"id": user.id}) }}"
+                         class="followUser">
+                        <span class="followStatus">Suivi</span>
+                    </div>
+
                 {% else %}
-                    <div class="follow"><a href="{{ path('follow.add',{'id':user.id}) }}">Suivre</a></div>
+                    <div data-userId="{{ user.id }}"
+                         onclick="handleAddUserFollow(event)"
+                         data-action="{{ path('follow.add',{"id": user.id}) }}"
+                         class="followUser">
+                        <span class="followStatus">Suivre</span>
+                    </div>
+
+
                 {% endif %}
             {% endif %}
 

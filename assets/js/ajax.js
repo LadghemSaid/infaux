@@ -191,10 +191,13 @@ async function handleAddPostPinned(event) {
 
 
 async function handleAddUserFollow(event) {
-    console.log("action :: ", event.currentTarget.dataset.action);
+    event.preventDefault();
+
+    console.log("action :: ",  event.currentTarget.dataset);
     const button = event.currentTarget;
     const action = button.dataset.action;
     const targetToChange = button.querySelector('.followStatus');
+    console.log("targetToChange :: ",  targetToChange);
 
     try {
         const response = await axios.post(action);

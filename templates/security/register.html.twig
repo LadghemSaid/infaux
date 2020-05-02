@@ -54,7 +54,7 @@
 						</span>
 
                 {{ form_start(registrationForm) }}
-
+                {{ form_errors(registrationForm) }}
                 <div class="wrap-input validate-input">
 
                     {{ form_widget(registrationForm.email, {'attr': {'class': 'input'}}) }}
