@@ -122,5 +122,27 @@ class PostController extends AbstractController
 
     }
 
+    /**
+     * @Route("/follow", name="follow")
+     */
+    public function follow()
+    {
+        //Cree un formulaire
+        return $this->render('follow/follow.html.twig', [
+            'controller_name' => 'FollowhController',
+        ]);
+    }
+
+    /**
+     * @Route("/follower", name="follower")
+     */
+    public function follower()
+    {
+        //Cree un formulaire
+        return $this->render('follow/follower.html.twig', [
+            'controller_name' => 'FollowhController',
+        ]);
+    }
+
 
 }
