@@ -552,3 +552,7 @@ $white: rgba(255,255,255,.34);
   animation-name: reveal;
   animation-direction: reverse;
 }
+
+.form-control:focus {
+  box-shadow: none;
+}
