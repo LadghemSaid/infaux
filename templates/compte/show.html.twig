@@ -60,10 +60,10 @@
             <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
             <div class="liens">
                 <div>
-                    <span class="subscriberCount">{{ user.friendList | length }}</span> abonnés
+                    <a href=""><span class="subscriberCount">{{ user.friendList | length }}</span> abonnés</a>
                 </div>
                 <div>
-                    <span class="subscribeCount">{{ user.friends | length }}</span> abonnements
+                    <a href=""><span class="subscribeCount">{{ user.friends | length }}</span> abonnements</a>
                 </div>
             </div>
             {% if app.user %}
@@ -76,15 +76,25 @@
 
         </div>
 
-        <div class="postContainer">
+        {% if app.user ==  user %}
+            <span>{{ app.user.posts|length }} posts</span>
+            <div class="postContainer">
+                {% set posts = app.user.posts %}
+                {% for post in posts %}
+                    {% set comments = post.comments | slice(-5,10) | formatComment('DESC') %}
+                    {{ include('/posts/only-post.html.twig') }}
+                {% endfor %}
 
-        </div>
+            </div>
+        {% endif %}
+
 
     </div>
 {% endblock %}
 
 
   {% block javascripts %}
+      {{ encore_entry_script_tags('ajax') }}
 
 
   {% endblock %}

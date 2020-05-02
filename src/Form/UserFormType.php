@@ -4,9 +4,11 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
@@ -25,23 +27,24 @@ class UserFormType extends AbstractType
                 'download_uri' => false,
                 'image_uri' => false,
                 'asset_helper' => false,
-                'attr' => [
-                    'class' => ''
-                ]
-
-
                 //    'data_class'=>null
             ])
-            ->add('email')
-            ->add('actualPassword', PasswordType::class, [
-                "mapped" => false,
+            ->add('description', TextType::class, [
                 'constraints' => array(
                     new NotBlank([
                         'message' => 'Ce champ ne doit pas etre vide'
-                    ]),
-                    new UserPassword([
-                        'message' => 'Ce mot de passe ne correspond pas avec l\'actuel'
-                    ]),
+                    ])
+                )])
+            ->add('email', EmailType::class, [
+                'constraints' => array(
+                    new NotBlank([
+                        'message' => 'Ce champ ne doit pas etre vide'
+                    ])
+                )])
+            ->add('actualPassword', PasswordType::class, [
+                "mapped" => false,
+                'constraints' => array(
+
                     new Length([
                         'min' => 2,
                         'minMessage' => 'Longueur minimal du mot de passe est de 5 charactere',
@@ -62,9 +65,7 @@ class UserFormType extends AbstractType
 
                 "mapped" => false,
                 'constraints' => array(
-                    new NotBlank([
-                        'message' => 'Ce champ ne doit pas etre vide'
-                    ]),
+
                     new Length([
                         'min' => 5,
                         'minMessage' => 'Longueur minimal du mot de passe est de 5 charactere',
@@ -74,6 +75,14 @@ class UserFormType extends AbstractType
 
                 ),
 
+            ])
+            ->add('displaySetting', TextType::class, [
+            ])
+            ->add('visibility', TextType::class, [
+                'mapped' => false,
+                'attr'=>[
+                    'value'=>'all'
+                ]
             ])
             ->add('submit', SubmitType::class, [
 

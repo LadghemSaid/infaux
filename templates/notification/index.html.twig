@@ -49,22 +49,55 @@
     {% endfor %}
     <div class="container">
         <div class="notif-blk">
-        <h1> <i class="icon-bell"></i>Notifications</h1>
+            <h1><i class="icon-bell"></i>Notifications</h1>
 
-                {% for notif in notifsSeen %}
+            {% for notif in notifsSeen %}
+            {% if notif.byUser is not empty %}
+
+            {% if notif.byPost is not null %}
+            <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
+                {% elseif notif.byComment is not null %}
+                <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}">
+
+                    {% endif %}
                     <div class="notif">
-                        <img src="https://images.unsplash.com/photo-1528341866330-07e6d1752ec2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2001&q=80"/>
+                        <img src="/uploads/images/users{{ user.image }}"/>
                         <div>
-                            <div class="user"> {{ notif.user }} </div>
+                            <div class="user"> {{ notif.byUser }} </div>
                             <div class="opa nm">{{ notif.message }} </div>
                         </div>
                     </div>
-                {% endfor %}
-                {% for notif in notifsNotSeen %}
-                    <div>{{ notif.message }}   (Non vu) </div>
+                </a>
 
-                {% endfor %}
-            
+                {% else %}
+
+                {% if notif.byPost is not null %}
+                <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
+                    {% elseif notif.byComment is not null %}
+                    <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}">
+
+                        {% endif %}
+
+                        <div class="notif">
+                            <img src="{{ asset('uploads/images/users/adorable.png') }}"/>
+                            <div>
+                                <div class="user">Anonyme</div>
+                                <div class="opa nm">{{ notif.message }} </div>
+                            </div>
+                        </div>
+                    </a>
+                    {% endif %}
+                    {% endfor %}
+                    {% for notif in notifsNotSeen %}
+                        <div class="notif">
+                            <img src="https://images.unsplash.com/photo-1528341866330-07e6d1752ec2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2001&q=80"/>
+                            <div>
+                                <div class="user"> {{ notif.byUser ?? notif.byUser }} </div>
+                                <div class="opa nm">{{ notif.message }} </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
         </div>
 
     </div>

@@ -49,7 +49,7 @@
                         <div class="user-picture-background mt-40 mt-20Mobile mb-10 mb-10Mobile">
                             <div class="user-picture">
                                 {% if app.user %}
-                                    <img src='{{ "/uploads/images/users/" ~ user.image ?? 'adorable.png' }}' alt="user"/></a>
+                                    <img src='{{ "/uploads/images/users/" ~ app.user.image ?? 'adorable.png' }}' alt="user"/></a>
                                 {% else %}
                                     <img src="{{ asset("img/user.svg") }}" alt="user"/></a>
                                 {% endif %}
@@ -92,7 +92,7 @@
 
                                 <a href="{{ path('account.settings') }}" class="mt-30 mt-30Mobile">Paramètres</a>
 
-                                <a href="{{ path('post.epingle') }}" class="mt-30 mt-30Mobile">Voir mes postes épinglés</a>
+                                <a href="{{ path('post.pinned') }}" class="mt-30 mt-30Mobile">Voir mes postes épinglés</a>
 
 
                                 <a href="{{ path('app_logout') }}" class="mt-30 mt-30Mobile">Déconnexion</a>
