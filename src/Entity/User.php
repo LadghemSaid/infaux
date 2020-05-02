@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @Vich\Uploadable
  */
-class User implements UserInterface
+class User implements UserInterface,\Serializable
 {
     /**
      * @ORM\Id()
@@ -133,6 +133,16 @@ class User implements UserInterface
      * @var \DateTimeInterface|null
      */
     private $createdAt;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $description;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $displaySetting;
 
 
     public function __construct()
@@ -596,6 +606,30 @@ class User implements UserInterface
     public function setCreatedAt(?\DateTimeInterface $createdAt): void
     {
         $this->createdAt = $createdAt;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getDisplaySetting(): ?string
+    {
+        return $this->displaySetting;
+    }
+
+    public function setDisplaySetting(string $displaySetting): self
+    {
+        $this->displaySetting = $displaySetting;
+
+        return $this;
     }
 
 

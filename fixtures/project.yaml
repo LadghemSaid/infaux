@@ -7,6 +7,8 @@ App\Entity\User:
     roles: [ROLE_ADMIN]
     comments: '30x @comment_*'
     postFollowed: '2x @post_*'
+    description: <fr_FR:text(100)>
+    displaySetting: 'recent'
 
   user_2:
     username: 'writer'
@@ -16,6 +18,9 @@ App\Entity\User:
     roles: []
     comments: '30x @comment_*'
     postFollowed: '2x @post_*'
+    description: <fr_FR:text(100)>
+    displaySetting: 'popular'
+
 
   user_3:
     username: 'user'
@@ -25,6 +30,9 @@ App\Entity\User:
     roles: []
     comments: '30x @comment_*'
     postFollowed: '2x @post_*'
+    description: <fr_FR:text(100)>
+    displaySetting: 'friend'
+
 
 
 App\Entity\Post:
@@ -33,6 +41,7 @@ App\Entity\Post:
     text: <fr_FR:text(200)>
     published: 'true'
     favorite: <boolean(50)>
+    visibility: 'public'
 
 App\Entity\Comment:
   comment_{0..90}:
@@ -48,6 +57,6 @@ App\Entity\Comment:
     createdAt: <dateTime()>
     approved: <boolean(50)>
     user: '@user_*'
-    post  : '@post_*'
+    post: '@post_*'
 
 

@@ -6,12 +6,18 @@ use App\Form\UserFormType;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -47,15 +53,131 @@ class CompteController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
 
-        $form = $this->createForm(UserFormType::class, $user);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            //Recupere L'email et l'avatar mais pas le nouveau password
-            $user = $form->getData();
 
-            $actualPassword = $form->get("actualPassword")->getData();
-            $newPassword = $form->get("newPassword")->getData();
+        $formAvatar = $this->get('form.factory')->createNamedBuilder( 'formAvatar')
+            ->add('imageFile', VichImageType::class, [
+                'required' => false,
+                'allow_delete' => false,
+                'download_uri' => false,
+                'image_uri' => false,
+                'asset_helper' => false,
+                //    'data_class'=>null
+            ])
+            ->add('submit', SubmitType::class, [
+            ])
+            ->getForm();
+
+        $formDescription =  $this->get('form.factory')->createNamedBuilder( 'formDescription')
+            ->add('description', TextType::class, [
+                'attr' => [
+                    'value' => $user->getDescription()
+                ],
+                'constraints' => array(
+                    new NotBlank([
+                        'message' => 'Ce champ ne doit pas etre vide'
+                    ])
+                )])
+            ->add('submit', SubmitType::class, [
+
+            ])
+            ->getForm();
+
+        $formEmail =  $this->get('form.factory')->createNamedBuilder( 'formEmail')
+            ->add('email', EmailType::class, [
+                'attr' => [
+                    'value' => $user->getEmail()
+                ],
+                'required' => false,
+                'constraints' => array(
+                    new NotBlank([
+                        'message' => 'Ce champ ne doit pas etre vide'
+                    ])
+                )])
+            ->add('submit', SubmitType::class, [
+
+            ])
+            ->getForm();
+
+
+        $formMdp = $this->get('form.factory')->createNamedBuilder( 'formMdp')
+            ->add('actualPassword', PasswordType::class, [
+                "mapped" => false,
+                'constraints' => array(
+
+                    new Length([
+                        'min' => 2,
+                        'minMessage' => 'Longueur minimal du mot de passe est de 5 charactere',
+                        'max' => 20,
+                        'maxMessage' => 'Longueur maximal du mot de passe est de 20 charactere',
+                    ]),
+                ),
+
+
+            ])
+            ->add('newPassword', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'Les mots de passe doivent etre identique !',
+                'options' => ['attr' => ['class' => 'password-field']],
+                'required' => false,
+                'first_options' => ['label' => 'Mot de passe'],
+                'second_options' => ['label' => 'Confirmation du mot de passe'],
+
+                "mapped" => false,
+                'constraints' => array(
+
+                    new Length([
+                        'min' => 5,
+                        'minMessage' => 'Longueur minimal du mot de passe est de 5 charactere',
+                        'max' => 20,
+                        'maxMessage' => 'Longueur maximal du mot de passe est de 20 charactere',
+                    ]),
+
+                ),
+
+            ])
+            ->add('submit', SubmitType::class, [
+
+            ])
+            ->getForm();
+
+        $formDisplaySetting = $this->get('form.factory')->createNamedBuilder( 'formDisplaySetting')
+            ->add('displaySetting', ChoiceType::class, [
+                'choices'  => [
+                    'Les plus populaires' => 'recent',
+                    'Les plus recents' => 'popular',
+                    'De mes abonnements' => 'friends',
+                ],
+            ])
+            ->add('submit', SubmitType::class, [
+
+            ])
+            ->getForm();
+
+        $formVisibility = $this->get('form.factory')->createNamedBuilder( 'formVisibility')
+            ->add('visibility', ChoiceType::class, [
+                'mapped' => false,
+                'attr' => [
+                    'value' => 'all'
+                ],
+                'choices'  => [
+                    'Tout le monde' => 'public',
+                    'Seulement mes abonnés' => 'friends'
+                ],
+            ])
+            ->add('submit', SubmitType::class, [
+
+            ])
+            ->getForm();
+
+
+
+
+        $formMdp->handleRequest($request);
+        if ($formMdp->isSubmitted() && $formMdp->isValid()) {
+            dd('ok2');
+            $actualPassword = $formMdp->get("actualPassword")->getData();
+            $newPassword = $formMdp->get("newPassword")->getData();
             if ($actualPassword !== "**********") {
 
                 if ($this->passwordEncoder->isPasswordValid($user, $actualPassword)) {
@@ -65,19 +187,60 @@ class CompteController extends AbstractController
                 }
 
             }
+        }
+        $formEmail->handleRequest($request);
+        if ($formEmail->isSubmitted() && $formEmail->isValid()) {
+            $user->setEmail($formEmail->get('email')->getData());
+            $this->em->persist($user);
+            $this->em->flush();
+            $this->addFlash('success', 'Modification enregistrer avec succés');
+
+            return $this->redirectToRoute('account.settings');
+        }
+
+        $formDescription->handleRequest($request);
+        if ($formDescription->isSubmitted() && $formDescription->isValid()) {
+            $user->setDescription($formDescription->get('description')->getData());
+            $this->em->persist($user);
+            $this->em->flush();
+            $this->addFlash('success', 'Modification enregistrer avec succés');
+
+            return $this->redirectToRoute('account.settings');
+        }
 
 
+        $formDisplaySetting->handleRequest($request);
+        if ($formDisplaySetting->isSubmitted() && $formDisplaySetting->isValid()) {
+            dd('ok4');
+        }
+
+        $formVisibility->handleRequest($request);
+        if ($formVisibility->isSubmitted() && $formVisibility->isValid()) {
+            dd('ok5');
+        }
+
+        $formAvatar->handleRequest($request);
+        if ($formAvatar->isSubmitted() && $formAvatar->isValid()) {
+
+
+            //Recupere L'email et l'avatar mais pas le nouveau password
+            $user->setImageFile($formAvatar->getData('imageFile')['imageFile']);
             $this->em->persist($user);
             $this->em->flush();
             $user->setImageFile(null);
-            $this->addFlash('success','Modification enregistrer avec succés');
+            $this->addFlash('success', 'Modification enregistrer avec succés');
 
             return $this->redirectToRoute('account.settings');
         }
 
         return $this->render('compte/settings.html.twig', [
             'user' => $this->getUser(),
-            'form' => $form->createView()
+            'formAvatar' => $formAvatar->createView(),
+            'formDescription' => $formDescription->createView(),
+            'formEmail' => $formEmail->createView(),
+            'formMdp' => $formMdp->createView(),
+            'formDisplaySetting' => $formDisplaySetting->createView(),
+            'formVisibility' => $formVisibility->createView(),
         ]);
     }
 

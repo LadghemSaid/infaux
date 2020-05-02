@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +32,34 @@ class Notification
      * @ORM\Column(type="boolean")
      */
     private $seen;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     */
+    private $byUser;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Post")
+     */
+    private $byPost;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Comment")
+     */
+    private $byComment;
+
+    public function __construct()
+    {
+
+        $this->createdAt = new \DateTimeImmutable();
+
+    }
+
 
     public function getId(): ?int
     {
@@ -69,6 +98,54 @@ class Notification
     public function setSeen(bool $seen): self
     {
         $this->seen = $seen;
+
+        return $this;
+    }
+
+    public function getByUser(): ?User
+    {
+        return $this->byUser;
+    }
+
+    public function setByUser(?User $byUser): self
+    {
+        $this->byUser = $byUser;
+
+        return $this;
+    }
+
+    public function getByPost(): ?Post
+    {
+        return $this->byPost;
+    }
+
+    public function setByPost(?Post $byPost): self
+    {
+        $this->byPost = $byPost;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getByComment(): ?Comment
+    {
+        return $this->byComment;
+    }
+
+    public function setByComment(?Comment $byComment): self
+    {
+        $this->byComment = $byComment;
 
         return $this;
     }

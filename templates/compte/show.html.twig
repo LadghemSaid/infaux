@@ -60,31 +60,57 @@
             <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
             <div class="liens">
                 <div>
-                    <a href="{{ path('follow.follower') }}"><span class="subscriberCount">{{ user.friendList | length }}</span> abonnés</a>
+                    <a href=""><span class="subscriberCount">{{ user.friendList | length }}</span> abonnés</a>
                 </div>
                 <div>
-                    <a href="{{ path('follow.follow') }}"><span class="subscribeCount">{{ user.friends | length }}</span> abonnements</a>
+                    <a href=""><span class="subscribeCount">{{ user.friends | length }}</span> abonnements</a>
                 </div>
             </div>
             {% if app.user %}
                 {% if app.user ==  user %}
                     <div class="edit"><a href="{{ path('account.settings') }}">Editer mon compte</a></div>
+                {% elseif user  in  app.user.friends %}
+
+                    <div data-userId="{{ user.id }}"
+                         onclick="handleAddUserFollow(event)"
+                         data-action="{{ path('follow.add',{"id": user.id}) }}"
+                         class="followUser">
+                        <span class="followStatus">Suivi</span>
+                    </div>
+
                 {% else %}
-                    <div class="follow"><a href="{{ path('follow.add',{'id':user.id}) }}">Suivre</a></div>
+                    <div data-userId="{{ user.id }}"
+                         onclick="handleAddUserFollow(event)"
+                         data-action="{{ path('follow.add',{"id": user.id}) }}"
+                         class="followUser">
+                        <span class="followStatus">Suivre</span>
+                    </div>
+
+
                 {% endif %}
             {% endif %}
 
         </div>
 
-        <div class="postContainer">
+        {% if app.user ==  user %}
+            <span>{{ app.user.posts|length }} posts</span>
+            <div class="postContainer">
+                {% set posts = app.user.posts %}
+                {% for post in posts %}
+                    {% set comments = post.comments | slice(-5,10) | formatComment('DESC') %}
+                    {{ include('/posts/only-post.html.twig') }}
+                {% endfor %}
 
-        </div>
+            </div>
+        {% endif %}
+
 
     </div>
 {% endblock %}
 
 
   {% block javascripts %}
+      {{ encore_entry_script_tags('ajax') }}
 
 
   {% endblock %}
