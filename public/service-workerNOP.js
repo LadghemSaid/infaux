@@ -114,7 +114,7 @@ define("./service-workerNOP.js",['./workbox-f31c35c4'], function (workbox) { 'us
     "revision": "aa8f52265eba7efd2af79c8c6313bfb3"
   }, {
     "url": "/build/main.css",
-    "revision": "511fe9c7eba385d5f6776ecc6a0b98af"
+    "revision": "b31dd2d718812f23586e4c70fb0c1236"
   }, {
     "url": "/build/runtime.js",
     "revision": "000c3893cd42406aebf5454f3954e3e5"

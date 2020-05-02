@@ -35,6 +35,18 @@
   padding: 8px 18px;
 }
 
+.btn-primary:focus {
+  box-shadow: none;
+}
+
+.btn:focus {
+  box-shadow: none;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus {
+  box-shadow: none;
+}
+
 .btn-circle {
   width: 30px;
   height: 30px;
