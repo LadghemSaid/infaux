@@ -145,9 +145,9 @@
                             {% endfor %}
 
                             {% if liked %}
-                                <i class="icon-heart heart-dilike"></i>
-                            {% else %}
                                 <i class="icon-heart heart-like"></i>
+                            {% else %}
+                                <i class="icon-heart heart-dislike"></i>
                             {% endif %}
 
                         {% else %}
@@ -161,16 +161,71 @@
                     </div>
                 </div>
                 {% if expanded is defined %}
+<<<<<<< HEAD
+=======
 
+>>>>>>> b1856c4bb9a185c78465c2ebc4b019ba9973a8bd
                     {% else %}
                         <a
                                 class="btn btn-primaire "
                                 href="{{ path('post.show',{'id': post.id}) }}"
                         >Voir plus
                         </a>
+<<<<<<< HEAD
+                    {% endif %}
+=======
                 {% endif %}
 
+>>>>>>> b1856c4bb9a185c78465c2ebc4b019ba9973a8bd
             </div>
+            {% if expanded is defined %}
+                <div class="action_onlypost">
+                    <div>
+                        {% if app.user %}
+                            {% set liked = false %}
+                            {% for like in post.likes %}
+                                {% if like.user == app.user and like.post == post %}
+                                    {% set liked = true %}
+                                {% else %}
+                                    {% set liked = false %}
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if liked %}
+                                <i class="icon-heart heart-dislike"></i>
+                            {% else %}
+                                <i class="icon-heart heart-dislike"></i>
+                            {% endif %}
+
+                        {% else %}
+                            <i class="icon-heart heart-like"></i>
+                        {% endif %}
+                        aimer
+                    </div>
+                    <div>
+                        {% if app.user %}
+                            {% set liked = false %}
+                            {% for like in post.likes %}
+                                {% if like.user == app.user and like.post == post %}
+                                    {% set liked = true %}
+                                {% else %}
+                                    {% set liked = false %}
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if liked %}
+                                <i class="icon-bubble bublle-true"></i>
+                            {% else %}
+                                <i class="icon-bubble bubble false"></i>
+                            {% endif %}
+
+                        {% else %}
+                            <i class="icon-bubble heart-like"></i>
+                        {% endif %}
+                        commenter
+                    </div>
+                </div>
+            {% endif %}
         </div>
 
     </div>
@@ -467,7 +522,7 @@
     </div>
 
     {% if app.user %}
-        <div class="formComment">
+        <div class="formComment {% if expanded is defined %} formComment_onepost {% endif %} ">
             <div class="img"
                  style="background:url('/uploads/images/users/{{ app.user.image ?? 'default.png' }}')">
             </div>
