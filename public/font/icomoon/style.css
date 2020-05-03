@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?fc2sr4');
-  src:  url('fonts/icomoon.eot?fc2sr4#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?fc2sr4') format('truetype'),
-    url('fonts/icomoon.woff?fc2sr4') format('woff'),
-    url('fonts/icomoon.svg?fc2sr4#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?he6jgv');
+  src:  url('fonts/icomoon.eot?he6jgv#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?he6jgv') format('truetype'),
+    url('fonts/icomoon.woff?he6jgv') format('woff'),
+    url('fonts/icomoon.svg?he6jgv#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,8 +25,26 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-keyboard_arrow_up:before {
+  content: "\e906";
+}
+.icon-keyboard_arrow_right:before {
+  content: "\e907";
+}
+.icon-keyboard_arrow_left:before {
+  content: "\e908";
+}
+.icon-keyboard_arrow_down:before {
+  content: "\e909";
+}
 .icon-dots-horizontal-triple:before {
   content: "\e902";
+}
+.icon-heart:before {
+  content: "\e904";
+}
+.icon-close:before {
+  content: "\e901";
 }
 .icon-heart-o:before {
   content: "\e903";

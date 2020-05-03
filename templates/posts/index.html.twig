@@ -76,8 +76,9 @@
 
         {% for post in posts %}
 
-            {% set comments = post.comments | slice(-5,10) | formatComment('DESC')  %}
-            {{ include('/posts/only-post.html.twig') }}
+            {% set onlyOneComment = post.comments | commentMostLike   %}
+            {% set comments = post.comments | commentMostLike   %}
+            {{ include('/posts/only-post.html.twig')}}
 
         {% endfor %}
         {{ knp_pagination_render(posts) }}
@@ -107,12 +108,6 @@
       <script>
 
 
-          $(function () {
-              moment.locale('fr');
-              $(".p-date").map((x, i) => {
-                  i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
-              });
-          });
 
           document.addEventListener("DOMContentLoaded", function (event) {
 

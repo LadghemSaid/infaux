@@ -87,13 +87,15 @@ Encore
         new WorkboxPlugin.GenerateSW({
             // these options encourage the ServiceWorkers to get in there fast
             // and not allow any straggling "old" SWs to hang around
-            swDest: './../service-workerNOP.js',
+            swDest: './../service-worker.js',
             clientsClaim: true,
             skipWaiting: true,
+
             runtimeCaching: [{
-                urlPattern: new RegExp(/^(?!https:\/\/s-website\.ga\/\.well-known\/mercure\?topic=%2Fmessage).*$/),
+                //urlPattern: new RegExp(/^(?!https:\/\/s-website\.ga\/\.well-known\/mercure\?topic=%2Fmessage).*$/),
+                urlPattern: '/',
                 //urlPattern: new RegExp(/^(http:\/\/localhost:8000\.*$)\.*/),
-                handler: 'StaleWhileRevalidate'
+                handler: 'StaleWhileRevalidate',
             }]
         }))
 ;
