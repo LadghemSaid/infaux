@@ -35,6 +35,36 @@
   padding: 8px 18px;
 }
 
+.btn-border-green:hover {
+  background-color: $green !important;
+  border: $green solid 1px;
+  border-radius: 22px;
+  color: $black;
+  font-size: 15px;
+  padding: 8px 18px;
+}
+
+.btn-border-green {
+  background-color: transparent !important;
+  border: $green solid 1px;
+  border-radius: 22px;
+  color: black;
+  font-size: 15px;
+  padding: 8px 18px;
+}
+
+.btn-primary:focus {
+  box-shadow: none;
+}
+
+.btn:focus {
+  box-shadow: none;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus {
+  box-shadow: none;
+}
+
 .btn-circle {
   width: 30px;
   height: 30px;

@@ -78,7 +78,7 @@ class PostController extends AbstractController
             //Ajout du post dans l'user
             $user->addPostFollowed($postCurr);
             //Notification pour l'auteur du post
-            $this->notificationService->add($postCurr->getUser(), $message = "un utilisateur vient de suivre votre post");
+            $this->notificationService->add($postCurr->getUser(), $message = "un utilisateur vient de suivre votre post",$postCurr->getUser(),$postCurr);
 
             $this->em->persist($postCurr, $user);
             $this->em->flush();
@@ -95,6 +95,8 @@ class PostController extends AbstractController
     public function pinned()
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+
 
         //Cree un formulaire
         return $this->render('posts/epingle.html.twig', [
@@ -120,6 +122,28 @@ class PostController extends AbstractController
         //Pour 1 -> ...find($id);   avec une valeur de champ -> ...findOneBy(['title'=>'Post Du vendredi 13']);
 
 
+    }
+
+    /**
+     * @Route("/follow", name="follow")
+     */
+    public function follow()
+    {
+        //Cree un formulaire
+        return $this->render('follow/follow.html.twig', [
+            'controller_name' => 'FollowhController',
+        ]);
+    }
+
+    /**
+     * @Route("/follower", name="follower")
+     */
+    public function follower()
+    {
+        //Cree un formulaire
+        return $this->render('follow/follower.html.twig', [
+            'controller_name' => 'FollowhController',
+        ]);
     }
 
 
