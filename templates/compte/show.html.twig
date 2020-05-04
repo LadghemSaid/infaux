@@ -52,12 +52,12 @@
         <div class="account">
             <div class="img_wrap">
                 <div class="img"
-                     style="background:url('{{ "/uploads/images/users/" ~ user.image ?? 'adorable.png' }}')">
+                     style="background:url('{{user.image ?? 'https://api.adorable.io/avatars/285/anonyme@adorable.io.png' }}')">
                 </div>
             </div>
             <p class="name">{{ user.username }}</p>
             <p class="createdAt">Depuis le {{ user.createdAt|date("m/d/Y", "Europe/Paris") }}</p>
-            <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+            <p class="description">{{user.description  }}</p>
             <div class="liens">
                 <div>
                     <a href="{{ path('post.follower') }}"><span class="subscriberCount">{{ user.friendList | length }}</span> abonnés</a>
@@ -99,7 +99,9 @@
                 <div class="postContainer mt-3">
                     {% set posts = app.user.posts %}
                     {% for post in posts %}
-                        {% set comments = post.comments | slice(-5,10) | formatComment('DESC') %}
+                        {% set onlyOneComment = post.comments | commentMostLike   %}
+                        {% set comments = post.comments | commentMostLike   %}
+
                         {{ include('/posts/only-post.html.twig') }}
                     {% endfor %}
 

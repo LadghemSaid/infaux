@@ -1,0 +1,151 @@
+<div class="comments-container">
+    <div class="content">
+        <div class="header">
+            <div class="top">
+
+                <button type="button" class="btn btn-primary" data-toggle="modal"
+                        data-target="#profil-comment-{{ comment.user.id ?? "999" }}">
+                    <div class="img"
+                            {% if comment.user.image  is defined %}
+                         style="background:url('{{ vich_uploader_asset(comment.user, 'imageFile') }}')">
+                        {% else %}
+                            style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}')">
+                        {% endif %}
+                    </div>
+                </button>
+
+                <div class="modal fade" id="profil-comment-{{ comment.user.id ?? "999" }}" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="wrap">
+                                    <div class="img"
+                                            {% if comment.user.image  is defined %}
+                                         style="background:url('{{ vich_uploader_asset(comment.user, 'imageFile') }}')">
+                                        {% else %}
+                                            style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}')">
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+                                <div class="username">{{ comment.user.username ?? "Anonyme" }}</div>
+                                <div class="description">{{ comment.user.description ?? " . . . " }}
+                                </div>
+                                {% if app.user %}
+                                    {% if  app.user == comment.user %}
+                                        <div class="lien_profil"><a
+                                                    href="{{ path('account.show',{'id': comment.user.id} ) }}">Voir mon
+                                                profil</a></div>
+                                    {% else %}
+                                        <div class="lien_profil"><a
+                                                    href="{{ path('account.show',{'id': comment.user.id ?? 999} ) }}">Voir
+                                                le
+                                                profil</a></div>
+                                        <div data-userId="{{ comment.user.id ?? 999 }}"
+                                             onclick="handleAddUserFollow(event)"
+                                             data-action="{{ path('follow.add',{"id":comment.user.id ?? 999}) }}"
+                                             class="followUser">
+                                            <span class="followStatus">Suivre</span>
+
+                                        </div>
+                                    {% endif %}
+                                {% else %}
+                                    <div class="lien_profil"><a
+                                                href="{{ path('account.show',{'id': comment.user.id ?? 999} ) }}">Voir
+                                            le
+                                            profil</a></div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="l-post right">
+                <div class="top">
+                    <p class="username"><strong>{{ comment.user ?? 'Anonyme' }}</strong><span
+                                data-createdAt="{{ comment.createdAt | date('U') }}"
+                                class="number p-date"></span>
+                    </p>
+                    <div class="option">
+
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#commentaire-{{ comment.id }}">
+                            <i class="icon-dots-horizontal-triple"></i>
+                        </button>
+
+                        <div class="modal fade" id="commentaire-{{ comment.id }}" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                        <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <div class="actions">
+                                            <div class="icons">
+                                                <div onclick="handleAddReport(event)"
+                                                     data-action="{{ path('report.add',{"entity":"comment",'id':comment.id}) }}"
+                                                     class="reportForm">
+
+                                                    <i class="icon-blocked"></i><span
+                                                            class="number ">Signaler ce contenu</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text">{{ comment.textComment }} </p>
+                <div class="icons">
+                    <div onclick="handleAddLike(event)"
+                         data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
+                         class="likeForm">
+
+                        {% if app.user %}
+
+
+
+                            {% set likedComment = false %}
+                            {% for like in comment.likes %}
+                                {% if like.user == app.user and like.comment == comment %}
+                                    {% set likedComment = true %}
+                                {% else %}
+                                    {% set likedComment = false %}
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if likedComment %}
+                                <i class="icon-heart heart-like"></i>
+                            {% else %}
+                                <i class="icon-heart heart-dilike"></i>
+                            {% endif %}
+
+                        {% else %}
+                            <i class="icon-heart heart-like"></i>
+                        {% endif %}
+
+                        <span class="number">
+                                            {{ comment.likes|length }}
+                                        </span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

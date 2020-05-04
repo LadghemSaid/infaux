@@ -22,13 +22,13 @@ class Post
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post", orphanRemoval=true , fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post", orphanRemoval=true)
      */
     private $comments;
 
@@ -52,7 +52,7 @@ class Post
 
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="post", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="post")
      */
     private $likes;
 
@@ -62,7 +62,7 @@ class Post
     private $reports;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="postFollowed")
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="postFollowed" )
      */
     private $followedBy;
 

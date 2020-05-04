@@ -41,20 +41,20 @@ class Comment
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Post", inversedBy="comments", fetch="EXTRA_LAZY")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Post", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
     private $post;
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
      * @ORM\JoinColumn(nullable=true)
      */
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="comment", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="comment")
      */
     private $likes;
 

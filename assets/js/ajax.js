@@ -95,7 +95,6 @@ function handleAddComment(event) {
     let target = $(event.target).parent().parent().find('.comments-container').last();
 
 
-
     $.ajax({
         type: "POST",
         url: action,

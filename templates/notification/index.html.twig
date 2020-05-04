@@ -65,7 +65,14 @@
 
                     {% endif %}
                     <div class="notif ">
-                        <img src="/uploads/images/users/{{ notif.byUser.image }}"/>
+
+                        {% if notif.byUser.image  is defined %}
+                            <img src="{{ vich_uploader_asset(notif.byUser, 'imageFile') }}"/>
+                        {% else %}
+                            <img src="{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}"/>
+                        {% endif %}
+
+
                         <div>
                             <div data-createdAt="{{ notif.createdAt |date('U') }}" class="user p-date"></div>
                             <div class="opa nm">
@@ -88,7 +95,10 @@
                         {% endif %}
 
                         <div class="notif">
-                            <img src="{{ asset('uploads/images/users/adorable.png') }}"/>
+
+
+                                <img src="{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}"/>
+
                             <div>
                                 <div data-createdAt="{{ notif.createdAt |date('U') }}" class="user p-date"></div>
                                 <div class="opa nm">

@@ -54,8 +54,7 @@ class CompteController extends AbstractController
         $user = $this->getUser();
 
 
-
-        $formAvatar = $this->get('form.factory')->createNamedBuilder( 'formAvatar')
+        $formAvatar = $this->get('form.factory')->createNamedBuilder('formAvatar')
             ->add('imageFile', VichImageType::class, [
                 'required' => false,
                 'allow_delete' => false,
@@ -68,7 +67,7 @@ class CompteController extends AbstractController
             ])
             ->getForm();
 
-        $formDescription =  $this->get('form.factory')->createNamedBuilder( 'formDescription')
+        $formDescription = $this->get('form.factory')->createNamedBuilder('formDescription')
             ->add('description', TextType::class, [
                 'attr' => [
                     'value' => $user->getDescription()
@@ -83,7 +82,7 @@ class CompteController extends AbstractController
             ])
             ->getForm();
 
-        $formEmail =  $this->get('form.factory')->createNamedBuilder( 'formEmail')
+        $formEmail = $this->get('form.factory')->createNamedBuilder('formEmail')
             ->add('email', EmailType::class, [
                 'attr' => [
                     'value' => $user->getEmail()
@@ -100,7 +99,7 @@ class CompteController extends AbstractController
             ->getForm();
 
 
-        $formMdp = $this->get('form.factory')->createNamedBuilder( 'formMdp')
+        $formMdp = $this->get('form.factory')->createNamedBuilder('formMdp')
             ->add('actualPassword', PasswordType::class, [
                 "mapped" => false,
                 'constraints' => array(
@@ -141,9 +140,9 @@ class CompteController extends AbstractController
             ])
             ->getForm();
 
-        $formDisplaySetting = $this->get('form.factory')->createNamedBuilder( 'formDisplaySetting')
+        $formDisplaySetting = $this->get('form.factory')->createNamedBuilder('formDisplaySetting')
             ->add('displaySetting', ChoiceType::class, [
-                'choices'  => [
+                'choices' => [
                     'Les plus populaires' => 'recent',
                     'Les plus recents' => 'popular',
                     'De mes abonnements' => 'friends',
@@ -154,13 +153,13 @@ class CompteController extends AbstractController
             ])
             ->getForm();
 
-        $formVisibility = $this->get('form.factory')->createNamedBuilder( 'formVisibility')
+        $formVisibility = $this->get('form.factory')->createNamedBuilder('formVisibility')
             ->add('visibility', ChoiceType::class, [
                 'mapped' => false,
                 'attr' => [
                     'value' => 'all'
                 ],
-                'choices'  => [
+                'choices' => [
                     'Tout le monde' => 'public',
                     'Seulement mes abonnés' => 'friends'
                 ],
@@ -169,8 +168,6 @@ class CompteController extends AbstractController
 
             ])
             ->getForm();
-
-
 
 
         $formMdp->handleRequest($request);
@@ -224,6 +221,7 @@ class CompteController extends AbstractController
 
 
             //Recupere L'email et l'avatar mais pas le nouveau password
+            //dd($this->getParameter('app.path.user_images').$formAvatar->getData('imageFile')['imageFile']->getClientOriginalName());
             $user->setImageFile($formAvatar->getData('imageFile')['imageFile']);
             $this->em->persist($user);
             $this->em->flush();

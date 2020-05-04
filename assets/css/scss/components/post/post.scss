@@ -602,9 +602,10 @@ $white: rgba(255,255,255,.34);
 }
 
 .bubble-true{
-  opacity:.20;
+  opacity:1;
+
 }
 .bubble-false{
-  color:red;
-  opacity:1;
+  opacity:.20;
+
 }
