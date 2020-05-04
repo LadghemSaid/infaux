@@ -62,11 +62,11 @@ class CommentsController extends AbstractController
 
 
         //Ajout de la notification au group de gens qui suivent le post
-        foreach ($post->getFollowedBy() as $user) {
-            if ($user == $security->getUser()) {
+        foreach ($post->getFollowedBy() as $userFollorwing) {
+            if ($userFollorwing == $security->getUser()) {
 
             } else {
-                $this->notificationService->add($user, $message = "a commenter sur ce post epinglé",$user,$post);
+                $this->notificationService->add($userFollorwing, $message = "{$user->getUsername()} a commenter sur ce post epinglé",$user,$post);
             }
 
         }

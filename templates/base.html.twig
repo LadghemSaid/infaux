@@ -123,7 +123,7 @@
 
         const url = new URL('{{ mercure_publish_url }}');
         url.searchParams.append('topic', '/message');
-        const numberNotifs = $('.number_notif');
+
 
 
     //    navigator.serviceWorker.register('/service-worker.js', {scope: '/'}).then(function(registration){
@@ -150,7 +150,11 @@
                         if (!data.message) {
                             return;
                         }
-                        numberNotifs[0].innerText++;
+                        if($('.number_notif')){
+                            $('.number_notif')[0].innerText++;
+                        }else{
+                            $('.header-notfication-bell').innerHTML = "<span class='number_notif notif'>1</span>"
+                        }
 
                         eventSource.onmessage = (evt) => {
                             const data = JSON.parse(evt.data);

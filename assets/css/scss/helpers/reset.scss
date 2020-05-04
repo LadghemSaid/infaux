@@ -12,7 +12,9 @@
 }
 
 
-
+html {
+  scroll-behavior: smooth
+}
 
 /* make sure to set some focus styles for accessibility */
 :focus {
@@ -240,7 +242,7 @@ input[type="reset"],
 input[type="submit"] {
   -webkit-appearance: button; /* 2 */
   cursor: pointer; /* 3 */
-  *overflow: visible;  /* 4 */
+  *overflow: visible; /* 4 */
 }
 
 /**
