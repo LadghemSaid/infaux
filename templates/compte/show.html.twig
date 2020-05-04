@@ -52,24 +52,33 @@
         <div class="account">
             <div class="img_wrap">
                 <div class="img"
-                     style="background:url('{{user.image ?? 'https://api.adorable.io/avatars/285/anonyme@adorable.io.png' }}')">
+                        {% if user.image  is defined %}
+                     style="background:url('{{ vich_uploader_asset(user, 'imageFile') }}')">
+                    {% else %}
+                        style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~ "@adorable.io.png") }}')">
+                    {% endif %}
+
                 </div>
             </div>
             <p class="name">{{ user.username }}</p>
             <p class="createdAt">Depuis le {{ user.createdAt|date("m/d/Y", "Europe/Paris") }}</p>
-            <p class="description">{{user.description  }}</p>
+            <p class="description">{{ user.description }}</p>
             <div class="liens">
                 <div>
-                    <a href="{{ path('post.follower') }}"><span class="subscriberCount">{{ user.friendList | length }}</span> abonnés</a>
+                    <a href="{{ path('post.follower',{'id': user.id }) }}"><span
+                                class="subscriberCount">{{ user.friendList | length }}</span> abonnés</a>
                 </div>
                 <div>
-                    <a href="{{ path('post.follow') }}"><span class="subscribeCount">{{ user.friends | length }}</span> abonnements</a>
+                    <a href="{{ path('post.follow',{'id': user.id }) }}"><span
+                                class="subscribeCount">{{ user.friends | length }}</span> abonnements</a>
                 </div>
             </div>
             {% if app.user %}
                 {% if app.user ==  user %}
                     <a href="{{ path('account.settings') }}">
-                        <button type="button" class="btn btn-border-green btn-lg btn-block mt-20 mt-20Mobile">Editer mon profil</button>
+                        <button type="button" class="btn btn-border-green btn-lg btn-block mt-20 mt-20Mobile">Editer mon
+                            profil
+                        </button>
                     </a>
                 {% elseif user  in  app.user.friends %}
 
@@ -99,8 +108,8 @@
                 <div class="postContainer mt-3">
                     {% set posts = app.user.posts %}
                     {% for post in posts %}
-                        {% set onlyOneComment = post.comments | commentMostLike   %}
-                        {% set comments = post.comments | commentMostLike   %}
+                        {% set onlyOneComment = post.comments | commentMostLike %}
+                        {% set comments = post.comments | commentMostLike %}
 
                         {{ include('/posts/only-post.html.twig') }}
                     {% endfor %}

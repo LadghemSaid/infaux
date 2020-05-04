@@ -256,7 +256,7 @@
                     {% if app.user.image  is defined %}
                  style="background:url('{{ vich_uploader_asset(app.user, 'imageFile') }}')">
                 {% else %}
-                    style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}')">
+                    style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~ "@adorable.io.png") }}')">
                 {% endif %}
             </div>
             <form onsubmit="handleAddComment(event)" name="comment" method="post"
