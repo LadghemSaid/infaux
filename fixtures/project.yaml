@@ -9,6 +9,7 @@ App\Entity\User:
     postFollowed: '2x @post_*'
     description: <fr_FR:text(100)>
     displaySetting: 'recent'
+    visibility: 'public'
 
   user_2:
     username: 'writer'
@@ -20,6 +21,7 @@ App\Entity\User:
     postFollowed: '2x @post_*'
     description: <fr_FR:text(100)>
     displaySetting: 'popular'
+    visibility: 'public'
 
 
   user_3:
@@ -32,6 +34,8 @@ App\Entity\User:
     postFollowed: '2x @post_*'
     description: <fr_FR:text(100)>
     displaySetting: 'friend'
+    visibility: 'public'
+
 
 
 
@@ -41,7 +45,6 @@ App\Entity\Post:
     text: <fr_FR:text(200)>
     published: 'true'
     favorite: <boolean(50)>
-    visibility: 'public'
 
 App\Entity\Comment:
   comment_{0..90}:

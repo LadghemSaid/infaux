@@ -48,7 +48,7 @@ class IndexController extends AbstractController
     {
 
         $posts = $postrepo->findAllDesc(); //On récupère les posts
-
+        $user =$this->getUser();
         $post = new Post();
         $postForm = $this->createForm(PostType::class, $post);
 
@@ -62,6 +62,7 @@ class IndexController extends AbstractController
 
         $postForm->handleRequest($request);
         if ($postForm->isSubmitted() && $postForm->isValid()) {
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
             $data = $postForm->getData();
             $post->setFavorite(false)

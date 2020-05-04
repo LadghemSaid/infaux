@@ -144,6 +144,10 @@ class User implements UserInterface,\Serializable
      */
     private $displaySetting;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $visibility;
 
     public function __construct()
     {
@@ -186,6 +190,17 @@ class User implements UserInterface,\Serializable
     }
 
 
+    public function getVisibility(): ?string
+    {
+        return $this->visibility;
+    }
+
+    public function setVisibility(string $visibility): self
+    {
+        $this->visibility = $visibility;
+
+        return $this;
+    }
 
 
     public function getId(): ?int

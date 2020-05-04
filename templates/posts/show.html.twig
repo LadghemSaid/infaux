@@ -71,12 +71,6 @@
 
 
 
-              $(function () {
-                  moment.locale('fr');
-                  $(".p-date").map((x, i) => {
-                      i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
-                  });
-              });
           });
 
 

@@ -1,6 +1,4 @@
-{% if expanded is defined %}
 
-{% endif %}
 <div class="post-container">
     <div class="content">
         <div class="header">
@@ -71,7 +69,7 @@
                         </p>
                         <p class="date">
                                        <span data-createdAt="{{ post.createdAt | date('U') }}"
-                                             class="number p-date">{{ post.createdAt | date('U') }}</span>
+                                             class="number p-date"></span>
                         </p>
                     </div>
                     <div class="option">
@@ -100,7 +98,14 @@
                                                     <div onclick="handleAddPostPinned(event)"
                                                          data-action="{{ path('post.addPin',{'id':post.id}) }}"
                                                          class="pinnedPost">
-                                                        <i class="icon-pushpin"></i><span class="pinText">Epingler ce post</span>
+                                                        <i class="icon-pushpin"></i>
+                                                        {% if post in app.user.postFollowed  %}
+                                                        <span class="pinText">Post epinglé</span>
+                                                        {% else %}
+                                                            <span class="pinText">Epingler ce post</span>
+
+                                                        {% endif %}
+
                                                     </div>
                                                 </div>
                                             {% endif %}
@@ -140,9 +145,9 @@
                             {% endfor %}
 
                             {% if liked %}
-                                <i class="icon-heart heart-dilike"></i>
-                            {% else %}
                                 <i class="icon-heart heart-like"></i>
+                            {% else %}
+                                <i class="icon-heart heart-dislike"></i>
                             {% endif %}
 
                         {% else %}
@@ -155,17 +160,82 @@
                         <i class="icon-bubble"></i><span class="number">{{ post.comments | length }}</span>
                     </div>
                 </div>
-                <a
-                        class="btn btn-primaire "
-                        href="{{ path('post.show',{'id': post.id}) }}"
-                >Voir plus
-                </a>
+                {% if expanded is defined %}
+<<<<<<< HEAD
+=======
+
+>>>>>>> b1856c4bb9a185c78465c2ebc4b019ba9973a8bd
+                    {% else %}
+                        <a
+                                class="btn btn-primaire "
+                                href="{{ path('post.show',{'id': post.id}) }}"
+                        >Voir plus
+                        </a>
+<<<<<<< HEAD
+                    {% endif %}
+=======
+                {% endif %}
+
+>>>>>>> b1856c4bb9a185c78465c2ebc4b019ba9973a8bd
             </div>
+            {% if expanded is defined %}
+                <div class="action_onlypost">
+                    <div>
+                        {% if app.user %}
+                            {% set liked = false %}
+                            {% for like in post.likes %}
+                                {% if like.user == app.user and like.post == post %}
+                                    {% set liked = true %}
+                                {% else %}
+                                    {% set liked = false %}
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if liked %}
+                                <i class="icon-heart heart-dislike"></i>
+                            {% else %}
+                                <i class="icon-heart heart-dislike"></i>
+                            {% endif %}
+
+                        {% else %}
+                            <i class="icon-heart heart-like"></i>
+                        {% endif %}
+                        aimer
+                    </div>
+                    <div>
+                        {% if app.user %}
+                            {% set liked = false %}
+                            {% for like in post.likes %}
+                                {% if like.user == app.user and like.post == post %}
+                                    {% set liked = true %}
+                                {% else %}
+                                    {% set liked = false %}
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if liked %}
+                                <i class="icon-bubble bublle-true"></i>
+                            {% else %}
+                                <i class="icon-bubble bubble false"></i>
+                            {% endif %}
+
+                        {% else %}
+                            <i class="icon-bubble heart-like"></i>
+                        {% endif %}
+                        commenter
+                    </div>
+                </div>
+            {% endif %}
         </div>
 
     </div>
     <div class="wrapper-comments">
-        {% for comment in comments  if comments %}
+
+        {% if comments is empty %}
+            <p>Aucun commentaire soit le premier !</p>
+        {% endif %}
+
+        {% for comment in comments  %}
             <div class="comments-container">
                 <div class="content">
                     <div class="header">
@@ -226,7 +296,7 @@
                             <div class="top">
                                 <p class="username"><strong>{{ comment.user }}</strong><span
                                             data-createdAt="{{ comment.createdAt | date('U') }}"
-                                            class="number p-date">{{ comment.createdAt | date('U') }}</span>
+                                            class="number p-date"></span>
                                 </p>
                                 <div class="option">
 
@@ -304,10 +374,155 @@
 
         {% endfor %}
 
+        {% if onlyOneComment is defined %}
+
+            {% if onlyOneComment is empty %}
+                <p>Aucun commentaire soit le premier !</p>
+                {% else %}
+                    <div class="comments-container">
+                        <div class="content">
+                            <div class="header">
+                                <div class="top">
+
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#profil-{{ onlyOneComment.user.id ?? "999" }}">
+                                        <div class="img"
+                                             style="background:url('/uploads/images/users/{{ comment.user.image ?? "adorable.png" }}')"></div>
+                                    </button>
+
+                                    <div class="modal fade" id="profil-{{ onlyOneComment.user.id ?? "999" }}" tabindex="-1" role="dialog"
+                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="wrap">
+                                                        <div class="img"
+                                                             style="background:url('/uploads/images/users/{{ post.user.image }}')"></div>
+                                                    </div>
+                                                    <div class="username">{{ post.user.username }}</div>
+                                                    <div class="description">{{ post.user.description ?? " . . . " }}
+                                                    </div>
+                                                    {% if app.user %}
+                                                        {% if  app.user == post.user %}
+                                                            <div class="lien_profil"><a
+                                                                        href="{{ path('account.show',{'id': post.user.id} ) }}">Voir mon
+                                                                    profil</a></div>
+                                                        {% else %}
+                                                            <div class="lien_profil"><a
+                                                                        href="{{ path('account.show',{'id': post.user.id} ) }}">Voir le
+                                                                    profil</a></div>
+                                                            <div data-userId="{{ post.user.id }}"
+                                                                 onclick="handleAddUserFollow(event)"
+                                                                 data-action="{{ path('follow.add',{"id":post.user.id}) }}"
+                                                                 class="followUser">
+                                                                <span class="followStatus">Suivre</span>
+
+                                                            </div>
+                                                        {% endif %}
+                                                    {% else %}
+                                                        <div class="lien_profil"><a
+                                                                    href="{{ path('account.show',{'id': post.user.id} ) }}">Voir le
+                                                                profil</a></div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="l-post right">
+                                    <div class="top">
+                                        <p class="username"><strong>{{ onlyOneComment.user }}</strong><span
+                                                    data-createdAt="{{ onlyOneComment.createdAt | date('U') }}"
+                                                    class="number p-date"></span>
+                                        </p>
+                                        <div class="option">
+
+                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#commentaire-{{ onlyOneComment.id }}">
+                                                <i class="icon-dots-horizontal-triple"></i>
+                                            </button>
+
+                                            <div class="modal fade" id="commentaire-{{ onlyOneComment.id }}" tabindex="-1" role="dialog"
+                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+
+                                                            <div class="actions">
+                                                                <div class="icons">
+                                                                    <div onclick="handleAddReport(event)"
+                                                                         data-action="{{ path('report.add',{"entity":"comment",'id':onlyOneComment.id}) }}"
+                                                                         class="reportForm">
+
+                                                                        <i class="icon-blocked"></i><span
+                                                                                class="number ">Signaler ce contenu</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="text">{{ onlyOneComment.textComment }} </p>
+                                    <div class="icons">
+                                        <div onclick="handleAddLike(event)"
+                                             data-action="{{ path('like.add',{"entity":"comment",'id':onlyOneComment.id}) }}"
+                                             class="likeForm">
+
+                                            {% if app.user %}
+                                                {% set likedComment = false %}
+                                                {% for like in onlyOneComment.likes %}
+                                                    {% if like.user == app.user and like.comment == onlyOneComment %}
+                                                        {% set likedComment = true %}
+                                                    {% else %}
+                                                        {% set likedComment = false %}
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                                {% if likedComment %}
+                                                    <i class="icon-heart heart-dilike"></i>
+                                                {% else %}
+                                                    <i class="icon-heart heart-like"></i>
+                                                {% endif %}
+
+                                            {% else %}
+                                                <i class="icon-heart heart-like"></i>
+                                            {% endif %}
+
+                                            <span class="number">
+                                            {{ onlyOneComment.likes|length }}
+                                        </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+            {% endif %}
+
+        {% endif %}
+
     </div>
 
     {% if app.user %}
-        <div class="formComment">
+        <div class="formComment {% if expanded is defined %} formComment_onepost {% endif %} ">
             <div class="img"
                  style="background:url('/uploads/images/users/{{ app.user.image ?? 'default.png' }}')">
             </div>
