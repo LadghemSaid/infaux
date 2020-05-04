@@ -1,10 +1,12 @@
 <header>
     <div class="logo-header d-flex justify-content-center align-items-center">
         <div class="retour">
-            <a href=""><i class="icon-keyboard_arrow_left"></i> Retour</a>
+            {% set referer = app.request.server.get('HTTP_REFERER')|default('/') %}
+            <a href="{{ referer }}"><i class="icon-keyboard_arrow_left"></i> Retour</a>
         </div>
         <div>
-            <a aria-label="Button permettant de retourner en haut de la page" id="scrollToTop"><img src="{{ asset("img/logo_infaux.png") }}" alt="Infaux logo"/></a>
+            <a aria-label="Button permettant de retourner en haut de la page" id="scrollToTop"><img
+                        src="{{ asset("img/logo_infaux.png") }}" alt="Infaux logo"/></a>
         </div>
     </div>
     <nav class="mobile-bottom-nav">
@@ -16,6 +18,7 @@
                 </a>
             </div>
         </div>
+
         <div class="mobile-bottom-nav__item">
             <div class="mobile-bottom-nav__item-content">
                 <a href="{{ path('search') }}"><i class="icon-search"></i></a>
@@ -25,7 +28,7 @@
             <div class="mobile-bottom-nav__item">
                 <div class="mobile-bottom-nav__item-content">
                     <a href="{{ path('notification') }}"><i class="icon-bell"></i>
-                        {% if app.user.notificationNotSeen | length >= 1 %}  
+                        {% if app.user.notificationNotSeen | length >= 1 %}
                             <span class="number_notif notif">{{ app.user.notificationNotSeen | length }}</span>
                         {% endif %}
                     </a>
@@ -57,7 +60,7 @@
                         <div class="user-picture-background mt-40 mt-20Mobile mb-10 mb-10Mobile">
                             <div class="user-picture">
                                 {% if app.user %}
-                                    <img src='{{ "/uploads/images/users/" ~ app.user.image ?? 'adorable.png' }}' alt="user"/></a>
+                                    <img src='{{ vich_uploader_asset(app.user, 'imageFile') }}' alt="user"/>
                                 {% else %}
                                     <img src="{{ asset("img/user.svg") }}" alt="user"/></a>
                                 {% endif %}
@@ -65,9 +68,11 @@
                         </div>
                         {% if app.user %}
                             <h3 class="fc-black">{{ app.user.username }}</h3>
-                            <a href="{{ path('post.follower') }}"><p class="fc-black">{{ app.user.friendList| length }} abonnées</p></a>
+                            <a href="{{ path('post.follower') }}"><p class="fc-black">{{ app.user.friendList| length }}
+                                    abonnées</p></a>
                             <a href="{{ path('account.show',{'id':app.user.id}) }}">
-                                <button type="button" class="btn btn-black btn-lg btn-block mt-20 mt-20Mobile">Voir le profil
+                                <button type="button" class="btn btn-black btn-lg btn-block mt-20 mt-20Mobile">Voir le
+                                    profil
                                 </button>
                             </a>
                         {% else %}
@@ -94,14 +99,15 @@
 
                             {% endif %}
                             {% if app.user %}
-                                <a href="{{ path('notification') }}" class="mt-30 mt-30Mobile">Notifications 
-                                {% if app.user.notificationNotSeen | length >= 1 %} 
+                            <a href="{{ path('notification') }}" class="mt-30 mt-30Mobile">Notifications
+                                {% if app.user.notificationNotSeen | length >= 1 %}
                                     (<span class="number_notif">{{ app.user.notificationNotSeen | length }}</span>)</a>
                                 {% endif %}
 
                                 <a href="{{ path('account.settings') }}" class="mt-30 mt-30Mobile">Paramètres</a>
 
-                                <a href="{{ path('post.pinned') }}" class="mt-30 mt-30Mobile">Voir mes postes épinglés</a>
+                                <a href="{{ path('post.pinned') }}" class="mt-30 mt-30Mobile">Voir mes postes
+                                    épinglés</a>
 
 
                                 <a href="{{ path('app_logout') }}" class="mt-30 mt-30Mobile">Déconnexion</a>

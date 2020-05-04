@@ -91,12 +91,13 @@ Encore
             clientsClaim: true,
             skipWaiting: true,
 
-            runtimeCaching: [{
+
+           // runtimeCaching: [{
                 //urlPattern: new RegExp(/^(?!https:\/\/s-website\.ga\/\.well-known\/mercure\?topic=%2Fmessage).*$/),
-                urlPattern: '/',
+             //   urlPattern: '/',
                 //urlPattern: new RegExp(/^(http:\/\/localhost:8000\.*$)\.*/),
-                handler: 'StaleWhileRevalidate',
-            }]
+              //  handler: 'StaleWhileRevalidate',
+            //}]
         }))
 ;
 const prod = Encore.getWebpackConfig();

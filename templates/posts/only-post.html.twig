@@ -1,4 +1,3 @@
-
 <div class="post-container">
     <div class="content">
         <div class="header">
@@ -7,9 +6,15 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal"
                         data-target="#profil-{{ post.user.id }}">
                     <div class="img"
-                         style="background:url('/uploads/images/users/{{ post.user.image }}')"></div>
-                </button>
+                            {% if post.user.image  is defined %}
+                         style="background:url('{{ vich_uploader_asset(post.user, 'imageFile') }}')">
+                        {% else %}
+                            style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}')">
+                        {% endif %}
 
+
+                    </div>
+                </button>
 
                 <div class="modal fade" id="profil-{{ post.user.id }}" tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -24,7 +29,12 @@
                             <div class="modal-body">
                                 <div class="wrap">
                                     <div class="img"
-                                         style="background:url('/uploads/images/users/{{ post.user.image }}')"></div>
+                                            {% if post.user.image  is defined %}
+                                         style="background:url('{{ vich_uploader_asset(post.user, 'imageFile') }}')">
+                                        {% else %}
+                                            style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}')">
+                                        {% endif %}
+                                     </div>
                                 </div>
                                 <div class="username">{{ post.user.username }}</div>
                                 <div class="description">But I must explain to you how all this mistaken
@@ -54,15 +64,10 @@
                                 {% endif %}
 
 
-
-
-
                             </div>
                         </div>
                     </div>
                 </div>
-
-
                 <div class="infos">
                     <div class="left">
                         <p class="username"><strong>{{ post.user.username }}</strong>
@@ -99,8 +104,8 @@
                                                          data-action="{{ path('post.addPin',{'id':post.id}) }}"
                                                          class="pinnedPost">
                                                         <i class="icon-pushpin"></i>
-                                                        {% if post in app.user.postFollowed  %}
-                                                        <span class="pinText">Post epinglé</span>
+                                                        {% if post in app.user.postFollowed %}
+                                                            <span class="pinText">Post epinglé</span>
                                                         {% else %}
                                                             <span class="pinText">Epingler ce post</span>
 
@@ -161,22 +166,15 @@
                     </div>
                 </div>
                 {% if expanded is defined %}
-<<<<<<< HEAD
-=======
+                {% else %}
+                    <a
+                            class="btn btn-primaire "
+                            href="{{ path('post.show',{'id': post.id}) }}"
+                    >Voir plus
+                    </a>
 
->>>>>>> b1856c4bb9a185c78465c2ebc4b019ba9973a8bd
-                    {% else %}
-                        <a
-                                class="btn btn-primaire "
-                                href="{{ path('post.show',{'id': post.id}) }}"
-                        >Voir plus
-                        </a>
-<<<<<<< HEAD
-                    {% endif %}
-=======
                 {% endif %}
 
->>>>>>> b1856c4bb9a185c78465c2ebc4b019ba9973a8bd
             </div>
             {% if expanded is defined %}
                 <div class="action_onlypost">
@@ -194,33 +192,33 @@
                             {% if liked %}
                                 <i class="icon-heart heart-dislike"></i>
                             {% else %}
-                                <i class="icon-heart heart-dislike"></i>
+                                <i class="icon-heart heart-like"></i>
                             {% endif %}
 
                         {% else %}
-                            <i class="icon-heart heart-like"></i>
+                            <i class="icon-heart heart-dislike"></i>
                         {% endif %}
                         aimer
                     </div>
                     <div>
                         {% if app.user %}
-                            {% set liked = false %}
-                            {% for like in post.likes %}
-                                {% if like.user == app.user and like.post == post %}
-                                    {% set liked = true %}
+                            {% set commented = false %}
+                            {% for comment in post.comments %}
+                                {% if comment.user == app.user and comment.post == post %}
+                                    {% set commented = true %}
                                 {% else %}
-                                    {% set liked = false %}
+                                    {% set commented = false %}
                                 {% endif %}
                             {% endfor %}
 
-                            {% if liked %}
-                                <i class="icon-bubble bublle-true"></i>
+                            {% if commented %}
+                                <i class="icon-bubble bubble-true"></i>
                             {% else %}
-                                <i class="icon-bubble bubble false"></i>
+                                <i class="icon-bubble bubble-false"></i>
                             {% endif %}
 
                         {% else %}
-                            <i class="icon-bubble heart-like"></i>
+                            <i class="icon-bubble bubble-true"></i>
                         {% endif %}
                         commenter
                     </div>
@@ -230,301 +228,36 @@
 
     </div>
     <div class="wrapper-comments">
-
-        {% if comments is empty %}
-            <p>Aucun commentaire soit le premier !</p>
-        {% endif %}
-
-        {% for comment in comments  %}
-            <div class="comments-container">
-                <div class="content">
-                    <div class="header">
-                        <div class="top">
-
-                            <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#profil-{{ comment.user.id ?? "999" }}">
-                                <div class="img"
-                                     style="background:url('/uploads/images/users/{{ comment.user.image ?? "adorable.png" }}')"></div>
-                            </button>
-
-                            <div class="modal fade" id="profil-{{ comment.user.id ?? "999" }}" tabindex="-1" role="dialog"
-                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel"></h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="wrap">
-                                                <div class="img"
-                                                     style="background:url('/uploads/images/users/{{ post.user.image }}')"></div>
-                                            </div>
-                                            <div class="username">{{ post.user.username }}</div>
-                                            <div class="description">{{ post.user.description ?? " . . . " }}
-                                            </div>
-                                            {% if app.user %}
-                                                {% if  app.user == post.user %}
-                                                    <div class="lien_profil"><a
-                                                                href="{{ path('account.show',{'id': post.user.id} ) }}">Voir mon
-                                                            profil</a></div>
-                                                {% else %}
-                                                    <div class="lien_profil"><a
-                                                                href="{{ path('account.show',{'id': post.user.id} ) }}">Voir le
-                                                            profil</a></div>
-                                                    <div data-userId="{{ post.user.id }}"
-                                                         onclick="handleAddUserFollow(event)"
-                                                         data-action="{{ path('follow.add',{"id":post.user.id}) }}"
-                                                         class="followUser">
-                                                        <span class="followStatus">Suivre</span>
-
-                                                    </div>
-                                                {% endif %}
-                                            {% else %}
-                                                <div class="lien_profil"><a
-                                                            href="{{ path('account.show',{'id': post.user.id} ) }}">Voir le
-                                                        profil</a></div>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="l-post right">
-                            <div class="top">
-                                <p class="username"><strong>{{ comment.user }}</strong><span
-                                            data-createdAt="{{ comment.createdAt | date('U') }}"
-                                            class="number p-date"></span>
-                                </p>
-                                <div class="option">
-
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                            data-target="#commentaire-{{ comment.id }}">
-                                        <i class="icon-dots-horizontal-triple"></i>
-                                    </button>
-
-                                    <div class="modal fade" id="commentaire-{{ comment.id }}" tabindex="-1" role="dialog"
-                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel"></h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-
-                                                    <div class="actions">
-                                                        <div class="icons">
-                                                            <div onclick="handleAddReport(event)"
-                                                                 data-action="{{ path('report.add',{"entity":"comment",'id':comment.id}) }}"
-                                                                 class="reportForm">
-
-                                                                <i class="icon-blocked"></i><span
-                                                                        class="number ">Signaler ce contenu</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="text">{{ comment.textComment }} </p>
-                            <div class="icons">
-                                <div onclick="handleAddLike(event)"
-                                     data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
-                                     class="likeForm">
-
-                                    {% if app.user %}
-                                        {% set likedComment = false %}
-                                        {% for like in comment.likes %}
-                                            {% if like.user == app.user and like.comment == comment %}
-                                                {% set likedComment = true %}
-                                            {% else %}
-                                                {% set likedComment = false %}
-                                            {% endif %}
-                                        {% endfor %}
-
-                                        {% if likedComment %}
-                                            <i class="icon-heart heart-dilike"></i>
-                                        {% else %}
-                                            <i class="icon-heart heart-like"></i>
-                                        {% endif %}
-
-                                    {% else %}
-                                        <i class="icon-heart heart-like"></i>
-                                    {% endif %}
-
-                                    <span class="number">
-                                            {{ comment.likes|length }}
-                                        </span>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        {% endfor %}
-
-        {% if onlyOneComment is defined %}
-
-            {% if onlyOneComment is empty %}
+        {% if comments is defined %}
+            {% if comments is empty %}
                 <p>Aucun commentaire soit le premier !</p>
-                {% else %}
-                    <div class="comments-container">
-                        <div class="content">
-                            <div class="header">
-                                <div class="top">
-
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                            data-target="#profil-{{ onlyOneComment.user.id ?? "999" }}">
-                                        <div class="img"
-                                             style="background:url('/uploads/images/users/{{ comment.user.image ?? "adorable.png" }}')"></div>
-                                    </button>
-
-                                    <div class="modal fade" id="profil-{{ onlyOneComment.user.id ?? "999" }}" tabindex="-1" role="dialog"
-                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel"></h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="wrap">
-                                                        <div class="img"
-                                                             style="background:url('/uploads/images/users/{{ post.user.image }}')"></div>
-                                                    </div>
-                                                    <div class="username">{{ post.user.username }}</div>
-                                                    <div class="description">{{ post.user.description ?? " . . . " }}
-                                                    </div>
-                                                    {% if app.user %}
-                                                        {% if  app.user == post.user %}
-                                                            <div class="lien_profil"><a
-                                                                        href="{{ path('account.show',{'id': post.user.id} ) }}">Voir mon
-                                                                    profil</a></div>
-                                                        {% else %}
-                                                            <div class="lien_profil"><a
-                                                                        href="{{ path('account.show',{'id': post.user.id} ) }}">Voir le
-                                                                    profil</a></div>
-                                                            <div data-userId="{{ post.user.id }}"
-                                                                 onclick="handleAddUserFollow(event)"
-                                                                 data-action="{{ path('follow.add',{"id":post.user.id}) }}"
-                                                                 class="followUser">
-                                                                <span class="followStatus">Suivre</span>
-
-                                                            </div>
-                                                        {% endif %}
-                                                    {% else %}
-                                                        <div class="lien_profil"><a
-                                                                    href="{{ path('account.show',{'id': post.user.id} ) }}">Voir le
-                                                                profil</a></div>
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="l-post right">
-                                    <div class="top">
-                                        <p class="username"><strong>{{ onlyOneComment.user }}</strong><span
-                                                    data-createdAt="{{ onlyOneComment.createdAt | date('U') }}"
-                                                    class="number p-date"></span>
-                                        </p>
-                                        <div class="option">
-
-                                            <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                    data-target="#commentaire-{{ onlyOneComment.id }}">
-                                                <i class="icon-dots-horizontal-triple"></i>
-                                            </button>
-
-                                            <div class="modal fade" id="commentaire-{{ onlyOneComment.id }}" tabindex="-1" role="dialog"
-                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel"></h5>
-                                                            <button type="button" class="close" data-dismiss="modal"
-                                                                    aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-
-                                                            <div class="actions">
-                                                                <div class="icons">
-                                                                    <div onclick="handleAddReport(event)"
-                                                                         data-action="{{ path('report.add',{"entity":"comment",'id':onlyOneComment.id}) }}"
-                                                                         class="reportForm">
-
-                                                                        <i class="icon-blocked"></i><span
-                                                                                class="number ">Signaler ce contenu</span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p class="text">{{ onlyOneComment.textComment }} </p>
-                                    <div class="icons">
-                                        <div onclick="handleAddLike(event)"
-                                             data-action="{{ path('like.add',{"entity":"comment",'id':onlyOneComment.id}) }}"
-                                             class="likeForm">
-
-                                            {% if app.user %}
-                                                {% set likedComment = false %}
-                                                {% for like in onlyOneComment.likes %}
-                                                    {% if like.user == app.user and like.comment == onlyOneComment %}
-                                                        {% set likedComment = true %}
-                                                    {% else %}
-                                                        {% set likedComment = false %}
-                                                    {% endif %}
-                                                {% endfor %}
-
-                                                {% if likedComment %}
-                                                    <i class="icon-heart heart-dilike"></i>
-                                                {% else %}
-                                                    <i class="icon-heart heart-like"></i>
-                                                {% endif %}
-
-                                            {% else %}
-                                                <i class="icon-heart heart-like"></i>
-                                            {% endif %}
-
-                                            <span class="number">
-                                            {{ onlyOneComment.likes|length }}
-                                        </span>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
             {% endif %}
 
+            {% for comment in comments %}
+                {% include('/comment/only-comment.html.twig') %}
+            {% endfor %}
+        {% endif %}
+
+        {% if onlyOneComment is defined %}
+            {% if onlyOneComment is empty %}
+                <p>Aucun commentaire soit le premier !</p>
+            {% else %}
+                {% include('/comment/only-comment.html.twig') with {'comment' : onlyOneComment} %}
+            {% endif %}
         {% endif %}
 
     </div>
 
     {% if app.user %}
         <div class="formComment {% if expanded is defined %} formComment_onepost {% endif %} ">
+
+
             <div class="img"
-                 style="background:url('/uploads/images/users/{{ app.user.image ?? 'default.png' }}')">
+                    {% if app.user.image  is defined %}
+                 style="background:url('{{ vich_uploader_asset(app.user, 'imageFile') }}')">
+                {% else %}
+                    style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}')">
+                {% endif %}
             </div>
             <form onsubmit="handleAddComment(event)" name="comment" method="post"
                   action="{{ path('comment.add',{'id':post.id}) }}"

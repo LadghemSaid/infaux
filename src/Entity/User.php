@@ -93,7 +93,7 @@ class User implements UserInterface,\Serializable
     private $notifications;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Post", mappedBy="followedBy" , fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Post", mappedBy="followedBy" )
      */
     private $postFollowed;
 
