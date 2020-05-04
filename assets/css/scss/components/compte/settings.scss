@@ -27,6 +27,16 @@
     padding-left: 0px;
   }
 
+  .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active {
+    margin-bottom: 0px;
+    color: $green;
+    border:none;
+    font-size: $Msmall;
+    padding:10px;
+    background: transparent;
+    padding-left: 0px;
+}
+
   .btn_action{
     background-color: transparent;
     color:red;
@@ -34,6 +44,7 @@
     text-align: left;
     font-size: $Msmall;
     align-items: flex-start;
+    padding: 5px 0;
   }
   
   .modal-dialog{
@@ -54,7 +65,21 @@
         border-right:none;
         border-left:none;
         border-bottom: 2px $green solid;
+        width: 100%;
       }
+
+      textarea{
+        border-top:none;
+        border-right:none;
+        border-left:none;
+        border-bottom: 2px $green solid;
+        width: 100%;
+      }
+
+      input#file-upload-button {
+        background-color: red;
+      }
+
     }
 
     .modal-footer{
@@ -98,8 +123,7 @@
     margin-bottom: 20px;
 
     .group {
-      margin-bottom: 15px;
-      
+      padding: 15px 0;
       color: rgba($color: #000000, $alpha: .32);
 
       .form-group{
@@ -107,9 +131,17 @@
         padding: 0px;
         margin-top: 15px;
 
-        legend{
-          padding:0px !important;
-          margin:0px !important;
+        &:first-of-type {
+          padding-top: 5px;
+          padding-bottom: 15px;
+        }
+
+        legend.col-form-label {
+          margin-bottom: 1rem;
+        }
+
+        .vich-image {
+          margin-top: 1rem;
         }
       }
 
@@ -144,3 +176,5 @@
   }
 
 }
+
+

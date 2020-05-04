@@ -1,7 +1,7 @@
 {% extends '/base.html.twig' %}
 
 {% block title %}
-    Infaux - Parametres
+    Infaux - Paramètres
 {% endblock %}
 {% block gtag %}
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -51,25 +51,47 @@
             </div>
         {% endfor %}
         <div class="setting">
-            <h1><i class="icon-heart"></i>Parametres</h1>
+            <h1><i class="icon-cog"></i>Paramètres</h1>
             <div class="card mon-compte">
-                <h1>Compte</h1>
+                <h1>Mon compte</h1>
                 <div class="group">
                     <p class="item">Avatar</p>
                     <div class="img"
                          style="background:url('/uploads/images/users/{{ user.image }}')">
-
                     </div>
-                    {{ form_start(formAvatar) }}
-                    {{ form_row(formAvatar.imageFile,{'attr':{'class': ''},'label': 'Changer d\'avatar'}) }}
-                    {{ form_row(formAvatar.submit,{'attr':{'class': 'btn btn-primary mt-3 settings-modify-button'},'label': 'Modifier'}) }}
-                    {{ form_end(formAvatar) }}
+
+                    <!-- Button  modifier la description -->
+                        <button type="button" class="btn btn-primary modifier" data-toggle="modal" data-target="#avatar">
+                            Modifier
+                        </button>
+
+                        <!-- Modal --> 
+                        <div class="modal fade" id="avatar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h3>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    {{ form_start(formAvatar) }}
+                                    {{ form_row(formAvatar.imageFile,{'attr':{'class': ''},'label': 'Changer d\'avatar'}) }}                                
+                                </div>
+                                <div class="modal-footer">
+                                    {{ form_row(formAvatar.submit,{'attr':{'class': 'btn btn-primary mt-3 settings-modify-button'},'label': 'Modifier'}) }}
+                                    {{ form_end(formAvatar) }}  
+                                </div>
+                                </div>
+                            </div>
+                        </div>
 
 
                 </div>
                 <div class="group">
                     <p class="item">Description</p>
-                    <p>{{ user.description }}</p>
+                    <p class="mb-0">{{ user.description }}</p>
                     <!-- Button  modifier la description -->
                         <button type="button" class="btn btn-primary modifier" data-toggle="modal" data-target="#description">
                             Modifier
@@ -80,7 +102,7 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h5>
+                                    <h3 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h3>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                     </button>
@@ -88,8 +110,6 @@
                                 <div class="modal-body">
                                     {{ form_start(formDescription) }}
                                     {{ form_row(formDescription.description,{'attr':{'class': ''},'label': 'Description'}) }}
-                                    
-                                    
                                 </div>
                                 <div class="modal-footer">
                                     {{ form_row(formDescription.submit,{'attr':{'class': 'btn btn-primary mt-3 settings-modify-button'},'label': 'Modifier'}) }}
@@ -102,11 +122,11 @@
                 </div>
                 <div class="group">
                     <p class="item">Pseudo</p>
-                    <p>{{ user.username }}</p>
+                    <p class="mb-0">{{ user.username }}</p>
                 </div>
                 <div class="group">
                     <p class="item">Email du compte</p>
-                    <p>{{ user.email }}</p>
+                    <p class="mb-0">{{ user.email }}</p>
                     <!-- Button  modifier la email -->
                         <button type="button" class="btn btn-primary modifier" data-toggle="modal" data-target="#email">
                             Modifier
@@ -117,7 +137,7 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h5>
+                                    <h3 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h3>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                     </button>
@@ -138,7 +158,7 @@
                 </div>
                 <div class="group">
                     <p class="item">Mot de passe</p>
-                    <p>*************</p>
+                    <p class="mb-0">*************</p>
                     <!-- Button  modifier la email -->
                         <button type="button" class="btn btn-primary modifier" data-toggle="modal" data-target="#mdp">
                             Modifier
@@ -149,7 +169,7 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h5>
+                                    <h3 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h3>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                     </button>
