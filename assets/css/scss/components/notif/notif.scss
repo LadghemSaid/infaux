@@ -11,15 +11,31 @@
         }
     }
 
+    a:hover {
+        color: black;
+    }
+
+    a:active {
+        color: black;
+    }
+
     .notif{
-        background-color: #e6e6e6;
+        background-color: $fade-white-3;
         border-radius: 40px;
         min-height: 60px;
         padding: 10px 20px;
 
+        &:hover {
+            background-color: $light-grey;
+        }
+
         &.not-seen{
-            background-color: #66bb99;
+            background-color: $green;
             color:white;
+
+            &:hover {
+                background-color: $dark-green;
+            }
         }
         .user{
             font-weight: $blackW;

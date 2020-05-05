@@ -41,7 +41,7 @@ gtag('config', 'UA-107718823-2');
 {% block body %}
 
 	<div class="follow container mt-100">
-		<h1>Abonnées de {{ user.username }}</h1>
+		<h1 class="text-center">Abonnées de {{ user.username }}</h1>
 
 		<div class="d-flex justify-content-between nav-followers">
 			<a class="nav-item nav-link active" href="{{ path('post.follower',{'id':user.id}) }}"><p class="title">{{ user.friendList| length }} Abonnés</p></a>
