@@ -78,13 +78,12 @@
 
 
                         <div>
-                            <div data-createdAt="{{ notif.createdAt |date('U') }}" class="user p-date"></div>
                             <div class="opa nm">
-                                <p class="mb-0">
+                                <p>
                                     {{ notif.message }}
                                 </p>
-
                             </div>
+                            <div data-createdAt="{{ notif.createdAt |date('U') }}" class="user p-date mb-0"></div>
                         </div>
                     </div>
                 </a>
@@ -105,13 +104,12 @@
                             </div>
 
                             <div>
-                                <div data-createdAt="{{ notif.createdAt |date('U') }}" class="user p-date"></div>
                                 <div class="opa nm">
-                                    <p class="mb-0">
+                                    <p>
                                         {{ notif.message }}
                                     </p>
-
                                 </div>
+                                <div data-createdAt="{{ notif.createdAt |date('U') }}" class="user p-date mb-0"></div>
                             </div>
                         </div>
                     </a>
@@ -131,14 +129,12 @@
                                     <img src="/uploads/images/users/{{ notif.byUser.image }}"/>
                                 </div>
                                 <div>
-                                    <div data-createdAt="{{ notif.createdAt |date('U') }}" class="user p-date"></div>
                                     <div class="opa nm">
-                                        <p class="mb-0">
-
+                                        <p>
                                             {{ notif.message }}
                                         </p>
-
                                     </div>
+                                    <div data-createdAt="{{ notif.createdAt |date('U') }}" class="user p-date mb-0"></div>
                                 </div>
                             </div>
                         </a>
@@ -157,15 +153,12 @@
                                         <img src="{{ asset('uploads/images/users/adorable.png') }}"/>
                                     </div>
                                     <div>
-                                        <div data-createdAt="{{ notif.createdAt |date('U') }}"
-                                             class="user p-date"></div>
                                         <div class="opa nm">
-                                            <p class="mb-0">
-
+                                            <p>
                                                 {{ notif.message }}
                                             </p>
-
                                         </div>
+                                        <div data-createdAt="{{ notif.createdAt |date('U') }}" class="user p-date mb-0"></div>
                                     </div>
                                 </div>
                             </a>

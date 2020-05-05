@@ -37,8 +37,8 @@
                 background-color: $dark-green;
             }
         }
-        .user{
-            font-weight: $blackW;
+
+        .opa p {
             margin-bottom: 5px;
         }
 
@@ -53,6 +53,11 @@
                 border-radius: 100%;
                 object-fit: cover;
             }
+        }
+
+        .p-date {
+            color: #4646467e;
+            font-size: small;
         }
     }
 }
