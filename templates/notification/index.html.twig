@@ -47,8 +47,8 @@
             {{ message }}
         </div>
     {% endfor %}
-    <div class="container">
-        <div class="notif-blk">
+    <div class="container notif-blk mt-100">
+        <div class="">
             <h1><i class="icon-bell"></i>Notifications</h1>
 
             {% if notifsSeen is empty and notifsNotSeen is empty %}
@@ -64,19 +64,23 @@
                 <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
 
                     {% endif %}
-                    <div class="notif ">
+                    <div class="notif d-flex align-items-center mt-10 mb-10 mt-10Mobile mb-10Mobile">
 
                         {% if notif.byUser.image  is defined %}
-                            <img src="{{ vich_uploader_asset(notif.byUser, 'imageFile') }}"/>
+                            <div class="compte-picture">
+                                <img src="{{ vich_uploader_asset(notif.byUser, 'imageFile') }}"/>
+                            </div>
                         {% else %}
-                            <img src="{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}"/>
+                            <div class="compte-picture">
+                                <img src="{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}"/>
+                            </div>
                         {% endif %}
 
 
                         <div>
                             <div data-createdAt="{{ notif.createdAt |date('U') }}" class="user p-date"></div>
                             <div class="opa nm">
-                                <p>
+                                <p class="mb-0">
                                     {{ notif.message }}
                                 </p>
 
@@ -94,15 +98,16 @@
 
                         {% endif %}
 
-                        <div class="notif">
+                        <div class="notif d-flex align-items-center mt-10 mb-10 mt-10Mobile mb-10Mobile">
 
-
+                            <div class="compte-picture">
                             <img src="{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}"/>
+                            </div>
 
                             <div>
                                 <div data-createdAt="{{ notif.createdAt |date('U') }}" class="user p-date"></div>
                                 <div class="opa nm">
-                                    <p>
+                                    <p class="mb-0">
                                         {{ notif.message }}
                                     </p>
 
@@ -121,12 +126,14 @@
                         <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
 
                             {% endif %}
-                            <div class="notif  not-seen">
-                                <img src="/uploads/images/users/{{ notif.byUser.image }}"/>
+                            <div class="notif d-flex align-items-center mt-10 mb-10 mt-10Mobile mb-10Mobile not-seen">
+                                <div class="compte-picture">
+                                    <img src="/uploads/images/users/{{ notif.byUser.image }}"/>
+                                </div>
                                 <div>
                                     <div data-createdAt="{{ notif.createdAt |date('U') }}" class="user p-date"></div>
                                     <div class="opa nm">
-                                        <p>
+                                        <p class="mb-0">
 
                                             {{ notif.message }}
                                         </p>
@@ -145,13 +152,15 @@
 
                                 {% endif %}
 
-                                <div class="notif  not-seen">
-                                    <img src="{{ asset('uploads/images/users/adorable.png') }}"/>
+                                <div class="notif d-flex align-items-center mt-10 mb-10 mt-10Mobile mb-10Mobile not-seen">
+                                    <div class="compte-picture">
+                                        <img src="{{ asset('uploads/images/users/adorable.png') }}"/>
+                                    </div>
                                     <div>
                                         <div data-createdAt="{{ notif.createdAt |date('U') }}"
                                              class="user p-date"></div>
                                         <div class="opa nm">
-                                            <p>
+                                            <p class="mb-0">
 
                                                 {{ notif.message }}
                                             </p>

@@ -181,6 +181,8 @@ span.notif {
     padding: 3px 6px;
     bottom: 5px;
     z-index: -1;
+    min-width: 25px;
+    min-height: 25px;
 }
 
 .disabled {
