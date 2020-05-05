@@ -12,6 +12,10 @@
     display: none;
 }
 
+[type=button], [type=submit], button {
+    -webkit-appearance: none;
+}
+
 .logo-header {
     background-color: $fade-white;
     padding: 10px 15px;
