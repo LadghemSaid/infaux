@@ -53,6 +53,7 @@ class Notification
      */
     private $byComment;
 
+
     public function __construct()
     {
 
@@ -149,4 +150,6 @@ class Notification
 
         return $this;
     }
+
+
 }
