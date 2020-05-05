@@ -60,7 +60,15 @@
       border-radius: $radius;
       padding: $padding !important;
 
-      input{
+      input {
+        border-top:none;
+        border-right:none;
+        border-left:none;
+        border-bottom: 2px $green solid;
+        width: 100%;
+      }
+
+      select {
         border-top:none;
         border-right:none;
         border-left:none;
@@ -126,15 +134,15 @@
       padding: 15px 0;
       color: rgba($color: #000000, $alpha: .32);
 
+      &:first-of-type {
+        padding-top: 5px;
+        padding-bottom: 15px;
+      }
+
       .form-group{
         border:none;
         padding: 0px;
         margin-top: 15px;
-
-        &:first-of-type {
-          padding-top: 5px;
-          padding-bottom: 15px;
-        }
 
         legend.col-form-label {
           margin-bottom: 1rem;
@@ -162,16 +170,32 @@
     border-radius: 15px;
     padding: 15px;
     border: 0px black solid;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 
     .group {
-      margin-bottom: 10px;
+      padding: 15px 0;
       color: rgba($color: #000000, $alpha: .32);
+
+      &:first-of-type {
+        padding-top: 5px;
+        padding-bottom: 15px;
+      }
+
+      .form-group{
+        border:none;
+        padding: 0px;
+        margin-top: 15px;
+      }
 
       .item {
         color: black;
         font-weight: $regular;
       }
+    }
+
+    a {
+      color: red;
+      margin-bottom: 10px;
     }
   }
 
