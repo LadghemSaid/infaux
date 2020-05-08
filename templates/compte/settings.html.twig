@@ -1,78 +1,96 @@
 {% extends '/base.html.twig' %}
 
 {% block title %}
-    Infaux - Parametres
+	Infaux - Parametres
 {% endblock %}
 {% block gtag %}
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107718823-2"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107718823-2"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
 
-        function gtag() {
-            dataLayer.push(arguments);
-        }
+function gtag() {
+dataLayer.push(arguments);
+}
 
-        gtag('js', new Date());
+gtag('js', new Date());
 
-        gtag('config', 'UA-107718823-2');
-    </script>
+gtag('config', 'UA-107718823-2');
+	</script>
 {% endblock %}
 {% block meta_description %}
-    <meta name="description"
-          content="Agence web à Lens. Conception et développement de sites sur mesure. Communication digitale, référencement SEO Google."/>{% endblock %}
+	<meta name="description" content="Agence web à Lens. Conception et développement de sites sur mesure. Communication digitale, référencement SEO Google."/>
+{% endblock %}
 {% block meta_keywords %}
-    <meta name="keywords"
-          content="Agence web de communication web marketing, stratégie digitale à Lens, France, creation site internet, agence de développement web, Création site internet, Lens, Lille, France, creation site internet, 59, 62, Nord Pas de Calais, Nord, Haut de France, création site internet vitrine, community management entreprise, community management personnel, création boutique en ligne, site internet, site web, création site internet boutique en ligne, Création site web, 75, Paris, Création site web e commerce, agence de référencement, agence seo, seo, référencement naturel, web marketing, agence web, agence de communication, vidéo promotionnelle, vidéo commercial, création site catalogue, création site internet responsive, généré du trafic sur mon site internet, première page google, référencement google, création de site internet france, conseil et webdesign, référencement internet, agence web, site internet responsive, site responsive, création et optimisation de site web, web design et développement de site internet, communication digitale, webmarketing, création site internet boutique en ligne, boutique en ligne, créer boutique en ligne, refonte boutique en ligne, refonte site internet e-commerce, responsive web design, refonte site internet responsive, site adaptable, site internet, site web, création site internet, création site web, responsive, création site internet e-commerce"/>{% endblock %}
+	<meta name="keywords" content="Agence web de communication web marketing, stratégie digitale à Lens, France, creation site internet, agence de développement web, Création site internet, Lens, Lille, France, creation site internet, 59, 62, Nord Pas de Calais, Nord, Haut de France, création site internet vitrine, community management entreprise, community management personnel, création boutique en ligne, site internet, site web, création site internet boutique en ligne, Création site web, 75, Paris, Création site web e commerce, agence de référencement, agence seo, seo, référencement naturel, web marketing, agence web, agence de communication, vidéo promotionnelle, vidéo commercial, création site catalogue, création site internet responsive, généré du trafic sur mon site internet, première page google, référencement google, création de site internet france, conseil et webdesign, référencement internet, agence web, site internet responsive, site responsive, création et optimisation de site web, web design et développement de site internet, communication digitale, webmarketing, création site internet boutique en ligne, boutique en ligne, créer boutique en ligne, refonte boutique en ligne, refonte site internet e-commerce, responsive web design, refonte site internet responsive, site adaptable, site internet, site web, création site internet, création site web, responsive, création site internet e-commerce"/>
+{% endblock %}
 {% block meta_robots %}
-    <meta name="robots" content="unavailable_after: [date ]">{% endblock %}
+	<meta name="robots" content="unavailable_after: [date ]">
+{% endblock %}
 {% block google %}
-    <meta name="google" content="unavailable_after: [date ]">{% endblock %}
+	<meta name="google" content="unavailable_after: [date ]">
+{% endblock %}
 
 {% block style_custom %}
 
-    <style>
-
-    </style>
+	<style></style>
 {% endblock %}
 {% block body %}
 
 
+<div class="container">
+	{% for message in app.flashes('success') %}
+		<div class="alert alert-success">
+			{{ message }}
+		</div>
+	{% endfor %}
+	{% for message in app.flashes('error') %}
+		<div class="alert alert-danger">
+			{{ message }}
+		</div>
+	{% endfor %}
+	<div class="setting">
+		<h1>
+			<i class="icon-heart"></i>Parametres</h1>
+		<div class="card mon-compte">
+			<h1>Compte</h1>
+			<div class="group">
+				<p class="item">Avatar</p>
+				<div class="img" style="background:url('{{ vich_uploader_asset(user, 'imageFile') }}')"></div>
+				<!-- Button  modifier la description -->
+				<button type="button" class="btn modifier" data-toggle="modal" data-target="#avatar">
+					Modifier
+				</button>
 
-    <div class="container">
-        {% for message in app.flashes('success') %}
-            <div class="alert alert-success">
-                {{ message }}
-            </div>
-        {% endfor %}
-        {% for message in app.flashes('error') %}
-            <div class="alert alert-danger">
-                {{ message }}
-            </div>
-        {% endfor %}
-        <div class="setting">
-            <h1><i class="icon-heart"></i>Parametres</h1>
-            <div class="card mon-compte">
-                <h1>Compte</h1>
-                <div class="group">
-                    <p class="item">Avatar</p>
-                    <div class="img"
-                         style="background:url('{{ vich_uploader_asset(user, 'imageFile') }}')">
+				<!-- Modal -->
+				<div class="modal fade" id="avatar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h3 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h3>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								{{ form_start(formAvatar) }}
+								<div class="img" style="background:url('{{ vich_uploader_asset(user, 'imageFile') }}')"></div>
 
-
-                    </div>
-                    {{ form_start(formAvatar) }}
-                    {{ form_row(formAvatar.imageFile,{'attr':{'class': ''},'label': 'Changer d\'avatar'}) }}
-                    {{ form_row(formAvatar.submit,{'attr':{'class': 'btn btn-primary mt-3 settings-modify-button'},'label': 'Modifier'}) }}
-                    {{ form_end(formAvatar) }}
-
-
+								{{ form_row(formAvatar.imageFile,{'attr':{'class': ''},'label': 'Changer d\'avatar'}) }}
+                                </div>
+                                <div class="modal-footer">
+                                    {{ form_row(formAvatar.submit,{'attr':{'class': 'btn mt-3 settings-modify-button'},'label': 'Modifier'}) }}
+                                    {{ form_end(formAvatar) }}
+                                </div>
+                                </div>
+                            </div>
+                        </div>
                 </div>
                 <div class="group">
                     <p class="item">Description</p>
-                    <p>{{ user.description }}</p>
+                    <p class="mb-0">{{ user.description }}</p>
                     <!-- Button  modifier la description -->
-                        <button type="button" class="btn btn-primary modifier" data-toggle="modal" data-target="#description">
+                        <button type="button" class="btn modifier" data-toggle="modal" data-target="#description">
                             Modifier
                         </button>
 
@@ -81,7 +99,7 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h5>
+                                    <h3 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h3>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                     </button>
@@ -89,11 +107,9 @@
                                 <div class="modal-body">
                                     {{ form_start(formDescription) }}
                                     {{ form_row(formDescription.description,{'attr':{'class': ''},'label': 'Description'}) }}
-                                    
-                                    
                                 </div>
                                 <div class="modal-footer">
-                                    {{ form_row(formDescription.submit,{'attr':{'class': 'btn btn-primary mt-3 settings-modify-button'},'label': 'Modifier'}) }}
+                                    {{ form_row(formDescription.submit,{'attr':{'class': 'btn mt-3 settings-modify-button'},'label': 'Modifier'}) }}
                                     {{ form_end(formDescription) }}
                                 </div>
                                 </div>
@@ -103,13 +119,13 @@
                 </div>
                 <div class="group">
                     <p class="item">Pseudo</p>
-                    <p>{{ user.username }}</p>
+                    <p class="mb-10">{{ user.username }}</p>
                 </div>
                 <div class="group">
                     <p class="item">Email du compte</p>
-                    <p>{{ user.email }}</p>
+                    <p class="mb-0">{{ user.email }}</p>
                     <!-- Button  modifier la email -->
-                        <button type="button" class="btn btn-primary modifier" data-toggle="modal" data-target="#email">
+                        <button type="button" class="btn modifier" data-toggle="modal" data-target="#email">
                             Modifier
                         </button>
 
@@ -118,7 +134,7 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h5>
+                                    <h3 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h3>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                     </button>
@@ -129,7 +145,7 @@
                         
                                 </div>
                                 <div class="modal-footer">
-                                    {{ form_row(formEmail.submit,{'attr':{'class': 'btn btn-primary mt-3 settings-modify-button'},'label': 'Modifier'}) }}
+                                    {{ form_row(formEmail.submit,{'attr':{'class': 'btn mt-3 settings-modify-button'},'label': 'Modifier'}) }}
                                     {{ form_end(formEmail) }}
                                 </div>
                                 </div>
@@ -139,9 +155,9 @@
                 </div>
                 <div class="group">
                     <p class="item">Mot de passe</p>
-                    <p>*************</p>
+                    <p class="mb-0">*************</p>
                     <!-- Button  modifier la email -->
-                        <button type="button" class="btn btn-primary modifier" data-toggle="modal" data-target="#mdp">
+                        <button type="button" class="btn modifier" data-toggle="modal" data-target="#mdp">
                             Modifier
                         </button>
 
@@ -150,7 +166,7 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h5>
+                                    <h3 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h3>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                     </button>
@@ -162,7 +178,7 @@
                                 
                                 </div>
                                 <div class="modal-footer">
-                                    {{ form_row(formMdp.submit,{'attr':{'class': 'btn btn-primary mt-3 settings-modify-button'},'label': 'Modifier'}) }}
+                                    {{ form_row(formMdp.submit,{'attr':{'class': 'btn mt-3 settings-modify-button'},'label': 'Modifier'}) }}
                                     {{ form_end(formMdp) }}
                                 </div>
                                 </div>
@@ -172,7 +188,7 @@
 
 
 {# désactiver le compte #}
-                <button type="button" class="btn btn-primary btn_action" data-toggle="modal" data-target="#descativ">
+                <button type="button" class="btn btn_action pl-0" data-toggle="modal" data-target="#descativ">
                     Desactivation du compte
                 </button>
 
@@ -198,7 +214,7 @@
 
 {# se déconnecter #}
 
-                <button type="button" class="btn btn-primary btn_action" data-toggle="modal" data-target="#deco">
+                <button type="button" class="btn btn_action" data-toggle="modal" data-target="#deco">
                     Se déconnecter
                 </button>
 
@@ -230,11 +246,33 @@
 
                 <div class="group">
                     <p class="item">Voir les posts</p>
-                    <p>Les plus populaires</p>
-                    {{ form_start(formDisplaySetting) }}
-                    {{ form_row(formDisplaySetting.displaySetting,{'attr':{'class': ''},'label': 'Voir les posts'}) }}
-                    {{ form_row(formDisplaySetting.submit,{'attr':{'class': 'btn btn-primary mt-3 settings-modify-button'},'label': 'Modifier'}) }}
-                    {{ form_end(formDisplaySetting) }}
+                    <p class="mb-0">Les plus populaires</p>
+                    <!-- Button  modifier la email -->
+                        <button type="button" class="btn modifier" data-toggle="modal" data-target="#voir-les-posts">
+                            Modifier
+                        </button>
+
+                        <!-- Modal --> 
+                        <div class="modal fade" id="voir-les-posts" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h3>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    {{ form_start(formDisplaySetting) }}
+                                    {{ form_row(formDisplaySetting.displaySetting,{'attr':{'class': ''},'label': 'Voir les posts'}) }}
+                                </div>
+                                <div class="modal-footer">
+                                    {{ form_row(formDisplaySetting.submit,{'attr':{'class': 'btn mt-3 settings-modify-button'},'label': 'Modifier'}) }}
+                                    {{ form_end(formDisplaySetting) }}
+                                </div>
+                                </div>
+                            </div>
+                        </div>
                 </div>
                 <div class="group">
                     <p class="item">Mode nuit</p>
@@ -242,11 +280,33 @@
                 </div>
                 <div class="group">
                     <p class="item">Qui peut voir mes posts</p>
-                    <p>Tout le monde</p>
-                    {{ form_start(formVisibility) }}
-                    {{ form_row(formVisibility.visibility,{'attr':{'class': ''},'label': 'Qui peut voir mes posts'}) }}
-                    {{ form_row(formVisibility.submit,{'attr':{'class': 'btn btn-primary mt-3 settings-modify-button'},'label': 'Modifier'}) }}
-                    {{ form_end(formVisibility) }}
+                    <p class="mb-0">Tout le monde</p>
+                    <!-- Button  modifier la email -->
+                        <button type="button" class="btn modifier" data-toggle="modal" data-target="#voir-les-posts">
+                            Modifier
+                        </button>
+
+                        <!-- Modal --> 
+                        <div class="modal fade" id="voir-les-posts" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h3>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    {{ form_start(formVisibility) }}
+                                    {{ form_row(formVisibility.visibility,{'attr':{'class': ''},'label': 'Qui peut voir mes posts'}) }}
+                                </div>
+                                <div class="modal-footer">
+                                    {{ form_row(formVisibility.submit,{'attr':{'class': 'btn mt-3 settings-modify-button'},'label': 'Modifier'}) }}
+                                    {{ form_end(formVisibility) }}
+                                </div>
+                                </div>
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>
