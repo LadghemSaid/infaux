@@ -170,7 +170,7 @@ class Post
      */
     public function __toString()
     {
-        return $this->title;
+        return $this->text;
     }
 
     /**

@@ -1,36 +1,33 @@
 easy_admin:
   entities:
-    Posts:
-      class: App\Entity\Posts
+    Post:
+      class: App\Entity\Post
       show:
         fields:
           - {property: 'user' }
-          - {property: 'title' }
           - {property: 'text' }
-          - {property: 'slug' }
           - {property: 'published' }
-          - {property: 'favorite' }
           - {property: 'createdAt' }
-          - { property: comments, label: 'Commentaire', type: embedded_list }
+          - { property: comments, label: 'Commentaire', type: embedded_list,type_options: { entity: Comment } }
 
       list:
         batch_actions: ['delete']
 
         fields:
-          - 'title'
-          - 'slug'
           - 'published'
-          - 'favorite'
+          - 'user'
+          - 'text'
+          - 'createdAt'
+          - 'reports'
+          - 'comments'
+          - 'likes'
       form:
         fields:
           - {property: 'user' }
-          - {property: 'title' }
           - {property: 'text' }
-          - {property: 'slug' }
           - {property: 'published' }
-          - {property: 'favorite' }
           - {property: 'createdAt' }
-          - { property: comments, label: 'Commentaire', type: embedded_list }
+          - { property: comments, label: 'Commentaire', type: embedded_list, type_options: { entity: Comment } }
         actions:
           - {name: 'edit', icon: 'pencil', label: false, css_class: 'btn btn-secondary'}
           - {name: 'delete', icon: 'trash', label: false, css_class: 'btn btn-danger'}

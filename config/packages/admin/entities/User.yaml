@@ -8,9 +8,12 @@ easy_admin:
           - {property: 'username' }
           - {property: 'email' }
           - {property: 'roles' }
+          - { property: 'imageFile', label: 'UserImage',type: 'vich_image' }
           - { property: posts, label: 'Post', type: embedded_list }
           - { property: comments, label: 'Commentaires', type: embedded_list }
-          - { property: 'imageFile', label: 'UserImage',type: 'vich_image' }
+          - { property: friends, label: 'Abonnement', type: embedded_list }
+          - { property: friendList, label: 'Abonné', type: embedded_list }
+          - { property: postFollowed, label: 'Post epinglé', type: embedded_list }
 
       list:
         batch_actions: ['delete']

@@ -13,7 +13,7 @@ easy_admin:
         icon: 'newspaper-o'
         children:
           - {entity: 'Post', icon: 'scroll', label: 'Post'}
-          - {entity: 'Comment', icon: 'comment', label: 'Commentaires modération'}
+          - {entity: 'Comment', icon: 'comment', label: 'Commentaires', template_options : { entity: Comment }}
 
       - label: 'Gestion'
         icon: 'cog'
