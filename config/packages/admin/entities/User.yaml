@@ -8,12 +8,12 @@ easy_admin:
           - {property: 'username' }
           - {property: 'email' }
           - {property: 'roles' }
-          - { property: 'imageFile', label: 'UserImage',type: 'vich_image' }
-          - { property: posts, label: 'Post', type: embedded_list }
-          - { property: comments, label: 'Commentaires', type: embedded_list }
+          - { property: 'imageFile', label: 'Avatar', type: 'avatar', is_image_url: 'true' }
+          - { property: posts, label: 'Post', type: embedded_list , template_options: { entity: Post }}
+          - { property: comments, label: 'Commentaires', type: embedded_list, template_options: { entity: Comment  } }
           - { property: friends, label: 'Abonnement', type: embedded_list }
           - { property: friendList, label: 'Abonné', type: embedded_list }
-          - { property: postFollowed, label: 'Post epinglé', type: embedded_list }
+          - { property: postFollowed, label: 'Post epinglé', type: embedded_list, template_options: { entity: Post } }
 
       list:
         batch_actions: ['delete']
@@ -27,5 +27,5 @@ easy_admin:
       form:
         fields:
           - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN': 'ROLE_SUPER_ADMIN', 'ROLE_WRITER': 'ROLE_WRITER' } } }
-          - { property: comments, label: 'Commentaires', type: embedded_list }
-          - { property: posts, label: 'Post', type: embedded_list }
+          - { property: comments, label: 'Commentaires', type: embedded_list, type_options : { entity: Comment } }
+          - { property: posts, label: 'Post', type: embedded_list, type_options: { entity: Post } }

@@ -1,6 +1,6 @@
 easy_admin:
   entities:
-    Post:
+    PostToValidate:
       class: App\Entity\Post
       show:
         fields:
@@ -8,10 +8,11 @@ easy_admin:
           - {property: 'text' }
           - {property: 'published' }
           - {property: 'createdAt' }
-          - { property: comments, label: 'Commentaire', type: embedded_list,type_options: { entity: Comment } }
+          - { property: comments, label: 'Commentaire', type: embedded_list, template_options: { entity: Comment } }
 
       list:
         batch_actions: ['delete']
+        dql_filter: 'entity.published = 0'
 
         fields:
           - 'published'
@@ -27,7 +28,45 @@ easy_admin:
           - {property: 'text' }
           - {property: 'published' }
           - {property: 'createdAt' }
-          - { property: comments, label: 'Commentaire', type: embedded_list, type_options: { entity: Comment } }
+          - { property: comments, label: 'Commentaire', type: embedded_list, type_options: { entity: Comment  } }
+          - { property: CommentToValidate, label: 'Commentaire a validé', type: embedded_list, type_options: {  entity: CommentToValidate ,ext_filters: { 'entity.post': 'form:parent.data.id' } } }
+        actions:
+          - {name: 'edit', icon: 'pencil', label: false, css_class: 'btn btn-secondary'}
+          - {name: 'delete', icon: 'trash', label: false, css_class: 'btn btn-danger'}
+          - {name: 'voir', icon: 'eye', label: false, css_class: 'btn btn-success' }
+
+
+
+    Post:
+      class: App\Entity\Post
+      show:
+        fields:
+          - {property: 'user' }
+          - {property: 'text' }
+          - {property: 'published' }
+          - {property: 'createdAt' }
+          - { property: comments, label: 'Commentaire', type: embedded_list, template_options: { entity: Comment } }
+
+      list:
+        batch_actions: ['delete']
+        dql_filter: 'entity.published = 1'
+
+        fields:
+          - 'published'
+          - 'user'
+          - 'text'
+          - 'createdAt'
+          - 'reports'
+          - 'comments'
+          - 'likes'
+      form:
+        fields:
+          - {property: 'user' }
+          - {property: 'text' }
+          - {property: 'published' }
+          - {property: 'createdAt' }
+          - { property: comments, label: 'Commentaire', type: embedded_list, type_options : { entity: Comment  } }
+          - { property: CommentToValidate, label: 'Commentaire a validé', type: embedded_list, type_options : {  entity: CommentToValidate ,ext_filters: { 'entity.post': 'form:parent.data.id' } } }
         actions:
           - {name: 'edit', icon: 'pencil', label: false, css_class: 'btn btn-secondary'}
           - {name: 'delete', icon: 'trash', label: false, css_class: 'btn btn-danger'}

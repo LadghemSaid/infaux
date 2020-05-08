@@ -78,18 +78,6 @@
 							<input
 							type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-							{#
-														                    Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-														                    See https://symfony.com/doc/current/security/remember_me.html
-														
-														                    <div class="checkbox mb-3">
-														                        <label>
-														                            <input type="checkbox" name="_remember_me"> Remember me
-														                        </label>
-														                    </div>
-														                #}
-
-
 							<div class="container-login-form-btn">
 								<div class="wrap-login-form-btn">
 									<div class="login-form-bgbtn"></div>
@@ -113,9 +101,9 @@
 				</div>
 			</div>
 		</div>
-	{% block javascripts %}
-		<script src="{{ preload('https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js', { as: 'script' }) }}"></script>
-        {{ encore_entry_script_tags('login') }}
-    {% endblock %}
 
 		{% endblock %}
+
+	{% block javascripts %}
+		{{ encore_entry_script_tags('login') }}
+	{% endblock %}

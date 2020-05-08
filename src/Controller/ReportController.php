@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
+use App\Entity\Post;
 use App\Entity\Report;
 use App\Repository\ReportRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -46,9 +48,9 @@ class ReportController extends AbstractController
 
             //Si l'user est null alors c'est qu'on est anonyme
             $report->setIp($request->getClientIps()[0]);
-        }else{
-            $test = $reportRepository->findOneBy(['user' => $user,$entity => $id]);
-            if($test) {
+        } else {
+            $test = $reportRepository->findOneBy(['user' => $user, $entity => $id]);
+            if ($test) {
                 //Si on entre ici c'est que le post/comment est deja reporté et qu'on le supprime(ou ne fait rien)
 
                 //$this->addFlash('error', "Vous ne pouvez pas signalez deux fois le meme contenu");
@@ -58,7 +60,6 @@ class ReportController extends AbstractController
 
             }
         }
-
 
 
         //Repo vaut soit postRepository soit commentRepository
@@ -74,6 +75,20 @@ class ReportController extends AbstractController
 
         $this->em->persist($report);
         $this->em->flush();
+
+        //Modification du nombre de report pour le post ou comment
+        if ($payload instanceof Post && count( $payload->getReports()) > 2) {
+            $payload->setPublished(false);
+            $this->em->persist($payload);
+            $this->em->flush();
+        } else if ($payload instanceof Comment && $payload->getReport() > 2) {
+            //modification du status approved si commentaire et published si post
+            $payload->setApproved(false);
+            $this->em->persist($payload);
+            $this->em->flush();
+        }
+
+
 
         //Redirection sur la page d'ou l'ont viens
         //$this->addFlash('success', "Merci de votre contribution");

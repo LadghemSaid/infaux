@@ -12,8 +12,10 @@ easy_admin:
       - label: 'Contenu'
         icon: 'newspaper-o'
         children:
-          - {entity: 'Post', icon: 'scroll', label: 'Post'}
-          - {entity: 'Comment', icon: 'comment', label: 'Commentaires', template_options : { entity: Comment }}
+          - {entity: 'Post', icon: 'scroll', label: 'Post', type_options: { entity: Post }}
+          - {entity: 'PostToValidate', icon: 'scroll', label: 'Post à validé', type_options: { entity: PostToValidate }}
+          - {entity: 'Comment', icon: 'comment', label: 'Commentaires', type_options: { entity: Comment }}
+          - {entity: 'CommentToValidate', icon: 'comment', label: 'Commentaires à validé', type_options: { entity: CommentToValidate }}
 
       - label: 'Gestion'
         icon: 'cog'

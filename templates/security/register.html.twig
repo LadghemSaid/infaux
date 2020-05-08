@@ -53,8 +53,22 @@
 							<img src="{{ asset("img/logo_infaux.png") }}" alt="Infaux logo"/></a>
 						</span>
 
+                {# For convenience sake of this snippet, store the errors in a variable #}
+                {% set formErrors = registrationForm.vars.errors.form.getErrors(true) %}
+
+                {# If there are errors in the form, display them in this unorganized list #}
+                {% if formErrors|length %}
+                    <ul class="error-registration-ul">
+                        {% for error in formErrors %}
+                            <li class="alert alert-danger">{{ error.message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+
+
                 {{ form_start(registrationForm) }}
-                {{ form_errors(registrationForm) }}
+
                 <div class="wrap-input validate-input">
 
                     {{ form_widget(registrationForm.email, {'attr': {'class': 'input'}}) }}
@@ -140,9 +154,10 @@
 
     <div id="dropDownSelect1"></div>
 
-	{% block javascripts %}
-		<script src="{{ preload('https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js', { as: 'script' }) }}"></script>
-        {{ encore_entry_script_tags('login') }}
-    {% endblock %}
+
 {% endblock %}
 
+
+	{% block javascripts %}
+        {{ encore_entry_script_tags('login') }}
+    {% endblock %}
