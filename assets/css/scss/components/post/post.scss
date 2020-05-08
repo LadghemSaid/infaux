@@ -494,7 +494,7 @@ $white: rgba(255,255,255,.34);
           border-radius: 73px;
           height: 46px!important;
           border:0px black solid;
-          font-size: $small;
+          font-size: $MmediumS;
           padding: 15px !important;
         }
 
@@ -502,6 +502,8 @@ $white: rgba(255,255,255,.34);
           background-color:$green;
           border: black 0px solid;
           border-radius: 50px;
+          font-size: $Msmall;
+          padding:5px 15px 5px 15px;
         }
       }
     }
