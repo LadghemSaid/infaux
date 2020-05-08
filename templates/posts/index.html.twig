@@ -65,18 +65,19 @@
 
                 </div>
                 <div class="form-group">
-                    {{ form_row(postForm.text,{'attr':{'class':'postForm__textarea form-control input-lg txta','placeholder':'Poster un nouveau post'},'label': ' '}) }}
+                    {{ form_row(postForm.text,{'attr':{'class':'postForm__textarea form-control input-lg txta','placeholder':'Poster un nouveau post', 'onfocus':'affiche()', 'onblur':'afficheplus()'},'label': ' '}) }}
                 </div>
                 <div class="d-flex justify-content-end btn-submit">
                     <div class="form-group">
 
-                        {{ form_row(postForm.submit,{'attr':{'class': 'formPost'},'label': 'Poster'}) }}
+                        {{ form_row(postForm.submit,{'attr':{'class': 'formPost', 'disabled':'true'},'label': 'Poster'}) }}
 
                     </div>
                 </div>
                 {{ form_end(postForm) }}
             </div>
         {% endif %}
+
 
 
         {% for post in posts %}
@@ -112,6 +113,21 @@
 
       <script>
 
+            //fonction d'affichage du bouton submit (form post)
+            function affiche(){
+                console.log('ok');
+				document.getElementById('post_submit').style.opacity=1;
+				document.getElementById('post_submit').disabled="";
+			}
+			function afficheplus(){
+					const str = document.getElementById('post_text').value;
+					console.log(str.length);
+					if (str.length==0) {
+						document.getElementById('post_submit').style.opacity=0;
+						document.getElementById('post_submit').disabled="true";
+					}
+			}
+
 
 
           document.addEventListener("DOMContentLoaded", function (event) {
@@ -139,7 +155,6 @@
 
 
           });
-
 
       </script>
 
