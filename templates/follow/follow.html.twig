@@ -55,7 +55,7 @@ gtag('config', 'UA-107718823-2');
 		{% for friend in user.friends %}
 		<div class="single-compte d-flex align-items-center mt-10 mb-10 mt-10Mobile mb-10Mobile">
 			<div class="compte-picture">
-				<button type="button" class="btn btn-primary" data-toggle="modal"
+				<button type="button" class="btn" data-toggle="modal"
 						data-target="#profil-{{ friend.id }}">
 					<img src="{{ vich_uploader_asset(friend, 'imageFile') }}" alt="user">
 				</button>

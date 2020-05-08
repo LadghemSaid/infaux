@@ -32,6 +32,11 @@
         a {
             display: flex;
             align-items: center;
+            color: $green;
+
+            &:hover {
+                color: $dark-green;
+            }
         }
 
         i {
