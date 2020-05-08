@@ -28,32 +28,11 @@ class CommentRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->andWhere('c.post = :val')
             ->setParameter('val', $value)
-            ->orderBy('c.created_at' ,'ASC')
+            ->orderBy('c.created_at', 'DESC')
             ->getQuery()
             ->getResult();
     }
 
-    public function findProjectComment($id, $order)
-    {
-        return $this->createQueryBuilder('comment')
-            ->andWhere('comment.project = :val')
-            ->andWhere('comment.approved = 1')
-            ->setParameter('val', $id)
-            ->orderBy('comment.created_at' ,$order)
-            ->getQuery()
-            ->getResult();
-    }
-
-    public function findJobComment($id, $order)
-    {
-        return $this->createQueryBuilder('comment')
-            ->andWhere('comment.job = :val')
-            ->andWhere('comment.approved = 1')
-            ->setParameter('val', $id)
-            ->orderBy('comment.created_at' ,$order)
-            ->getQuery()
-            ->getResult();
-    }
 
     public function findPostsComment($id, $order)
     {
@@ -61,10 +40,13 @@ class CommentRepository extends ServiceEntityRepository
             ->andWhere('posts.posts = :val')
             ->andWhere('posts.approved = 1')
             ->setParameter('val', $id)
-            ->orderBy('posts.created_at' ,$order)
+            ->orderBy('posts.created_at', $order)
             ->getQuery()
             ->getResult();
     }
+
+
+
 
 
     /*

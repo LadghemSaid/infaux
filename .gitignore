@@ -21,8 +21,12 @@
 
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
-/public/build/
-/public/uploads/
+public/build/
+public/service-worker.js
+public/service-worker.js.map
+public/service-workerNOP.js
+public/service-workerNOP.js.map
+public/uploads/
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###

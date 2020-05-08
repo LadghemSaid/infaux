@@ -23,6 +23,7 @@ class NotificationController extends AbstractController
      */
     public function index()
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $notifs = $this->getUser()->getNotifications();
 

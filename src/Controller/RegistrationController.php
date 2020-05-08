@@ -29,6 +29,11 @@ class RegistrationController extends AbstractController
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
             $user->setRoles(array('ROLE_ADMIN') );
+           // $user->setImage($this->getParameter('app.path.user_images').'adorable.png' );
+            $user->setImage('https://api.adorable.io/avatars/60/'.$user->getEmail().'.png' );
+            $user->setDescription('. . .' );
+            $user->setDisplaySetting('recent' );
+            $user->setVisibility('public' );
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();

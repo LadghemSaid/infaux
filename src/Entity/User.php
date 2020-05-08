@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @Vich\Uploadable
  */
-class User implements UserInterface
+class User implements UserInterface,\Serializable
 {
     /**
      * @ORM\Id()
@@ -93,7 +93,7 @@ class User implements UserInterface
     private $notifications;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Post", mappedBy="followedBy" , fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Post", mappedBy="followedBy" )
      */
     private $postFollowed;
 
@@ -134,6 +134,20 @@ class User implements UserInterface
      */
     private $createdAt;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $description;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $displaySetting;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $visibility;
 
     public function __construct()
     {
@@ -176,6 +190,17 @@ class User implements UserInterface
     }
 
 
+    public function getVisibility(): ?string
+    {
+        return $this->visibility;
+    }
+
+    public function setVisibility(string $visibility): self
+    {
+        $this->visibility = $visibility;
+
+        return $this;
+    }
 
 
     public function getId(): ?int
@@ -596,6 +621,30 @@ class User implements UserInterface
     public function setCreatedAt(?\DateTimeInterface $createdAt): void
     {
         $this->createdAt = $createdAt;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getDisplaySetting(): ?string
+    {
+        return $this->displaySetting;
+    }
+
+    public function setDisplaySetting(string $displaySetting): self
+    {
+        $this->displaySetting = $displaySetting;
+
+        return $this;
     }
 
 

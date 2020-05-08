@@ -37,30 +37,68 @@
 {% endblock %}
 {% block body %}
 
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-success">
-            {{ message }}
-        </div>
-    {% endfor %}
-    {% for message in app.flashes('error') %}
-        <div class="alert alert-danger">
-            {{ message }}
-        </div>
-    {% endfor %}
 
-    <div class="container">   
+
+    <div class="container">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
         <div class="setting">
             <h1><i class="icon-heart"></i>Parametres</h1>
             <div class="card mon-compte">
                 <h1>Compte</h1>
                 <div class="group">
-                    <p class="item">Avatar actuelle</p>
+                    <p class="item">Avatar</p>
                     <div class="img"
-                         style="background:url('/uploads/images/users/{{ user.image }}')">
+                         style="background:url('{{ vich_uploader_asset(user, 'imageFile') }}')">
+
 
                     </div>
-                    {{ form_start(form) }}
-                    {{ form_row(form.imageFile,{'attr':{'class': ''},'label': 'Changer d\'avatar'}) }}
+                    {{ form_start(formAvatar) }}
+                    {{ form_row(formAvatar.imageFile,{'attr':{'class': ''},'label': 'Changer d\'avatar'}) }}
+                    {{ form_row(formAvatar.submit,{'attr':{'class': 'btn btn-primary mt-3 settings-modify-button'},'label': 'Modifier'}) }}
+                    {{ form_end(formAvatar) }}
+
+
+                </div>
+                <div class="group">
+                    <p class="item">Description</p>
+                    <p>{{ user.description }}</p>
+                    <!-- Button  modifier la description -->
+                        <button type="button" class="btn btn-primary modifier" data-toggle="modal" data-target="#description">
+                            Modifier
+                        </button>
+
+                        <!-- Modal --> 
+                        <div class="modal fade" id="description" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    {{ form_start(formDescription) }}
+                                    {{ form_row(formDescription.description,{'attr':{'class': ''},'label': 'Description'}) }}
+                                    
+                                    
+                                </div>
+                                <div class="modal-footer">
+                                    {{ form_row(formDescription.submit,{'attr':{'class': 'btn btn-primary mt-3 settings-modify-button'},'label': 'Modifier'}) }}
+                                    {{ form_end(formDescription) }}
+                                </div>
+                                </div>
+                            </div>
+                        </div>
 
                 </div>
                 <div class="group">
@@ -70,16 +108,122 @@
                 <div class="group">
                     <p class="item">Email du compte</p>
                     <p>{{ user.email }}</p>
+                    <!-- Button  modifier la email -->
+                        <button type="button" class="btn btn-primary modifier" data-toggle="modal" data-target="#email">
+                            Modifier
+                        </button>
+
+                        <!-- Modal --> 
+                        <div class="modal fade" id="email" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    {{ form_start(formEmail) }}
+                                    {{ form_row(formEmail.email,{'label': 'Email du compte'}) }}
+                        
+                                </div>
+                                <div class="modal-footer">
+                                    {{ form_row(formEmail.submit,{'attr':{'class': 'btn btn-primary mt-3 settings-modify-button'},'label': 'Modifier'}) }}
+                                    {{ form_end(formEmail) }}
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+
                 </div>
                 <div class="group">
                     <p class="item">Mot de passe</p>
                     <p>*************</p>
+                    <!-- Button  modifier la email -->
+                        <button type="button" class="btn btn-primary modifier" data-toggle="modal" data-target="#mdp">
+                            Modifier
+                        </button>
+
+                        <!-- Modal --> 
+                        <div class="modal fade" id="mdp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    {{ form_start(formMdp) }}
+                                    {{ form_row(formMdp.actualPassword,{'attr':{'class': ''},'label': 'Mot de passe actuel','value': '**********'}) }}
+                                    {{ form_row(formMdp.newPassword,{'attr':{'class': ''},'label': 'Nouveau Mot de passe','value': '*******'}) }}
+                                
+                                </div>
+                                <div class="modal-footer">
+                                    {{ form_row(formMdp.submit,{'attr':{'class': 'btn btn-primary mt-3 settings-modify-button'},'label': 'Modifier'}) }}
+                                    {{ form_end(formMdp) }}
+                                </div>
+                                </div>
+                            </div>
+                        </div>
                 </div>
-                {{ form_row(form.submit,{'attr':{'class': 'btn btn-primary mt-3 settings-modify-button'},'label': 'Modifier'}) }}
-                {{ form_end(form) }}
-                <a href="{{ path('account.delete') }}">Désactivé le compte</a>
-                <a href="{{ path('app_logout') }}">Se déconnecter</a>
+
+
+{# désactiver le compte #}
+                <button type="button" class="btn btn-primary btn_action" data-toggle="modal" data-target="#descativ">
+                    Desactivation du compte
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="descativ" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="exampleModalLabel">Confirmer la desactivation définitive du compte</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <a href="{{ path('account.delete') }}">Désactivé le compte</a>
+                        </div>
+                        <div class="modal-footer" style="display:none;">
+                            
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+{# se déconnecter #}
+
+                <button type="button" class="btn btn-primary btn_action" data-toggle="modal" data-target="#deco">
+                    Se déconnecter
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="deco" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="exampleModalLabel">Voulez vous vraiment vous déconnecter?</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                        </div>
+                        <div class="modal-footer" style="display:none;">
+                            
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
+
 
             <div class="card general">
                 <h1>Général</h1>
@@ -87,6 +231,10 @@
                 <div class="group">
                     <p class="item">Voir les posts</p>
                     <p>Les plus populaires</p>
+                    {{ form_start(formDisplaySetting) }}
+                    {{ form_row(formDisplaySetting.displaySetting,{'attr':{'class': ''},'label': 'Voir les posts'}) }}
+                    {{ form_row(formDisplaySetting.submit,{'attr':{'class': 'btn btn-primary mt-3 settings-modify-button'},'label': 'Modifier'}) }}
+                    {{ form_end(formDisplaySetting) }}
                 </div>
                 <div class="group">
                     <p class="item">Mode nuit</p>
@@ -95,6 +243,10 @@
                 <div class="group">
                     <p class="item">Qui peut voir mes posts</p>
                     <p>Tout le monde</p>
+                    {{ form_start(formVisibility) }}
+                    {{ form_row(formVisibility.visibility,{'attr':{'class': ''},'label': 'Qui peut voir mes posts'}) }}
+                    {{ form_row(formVisibility.submit,{'attr':{'class': 'btn btn-primary mt-3 settings-modify-button'},'label': 'Modifier'}) }}
+                    {{ form_end(formVisibility) }}
                 </div>
             </div>
         </div>

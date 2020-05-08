@@ -52,39 +52,79 @@
         <div class="account">
             <div class="img_wrap">
                 <div class="img"
-                     style="background:url('{{ "/uploads/images/users/" ~ user.image ?? 'adorable.png' }}')">
+                        {% if user.image  is defined %}
+                     style="background:url('{{ vich_uploader_asset(user, 'imageFile') }}')">
+                    {% else %}
+                        style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~ "@adorable.io.png") }}')">
+                    {% endif %}
+
                 </div>
             </div>
             <p class="name">{{ user.username }}</p>
             <p class="createdAt">Depuis le {{ user.createdAt|date("m/d/Y", "Europe/Paris") }}</p>
-            <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+            <p class="description">{{ user.description }}</p>
             <div class="liens">
                 <div>
-                    <span class="subscriberCount">{{ user.friendList | length }}</span> abonnés
+                    <a href="{{ path('post.follower',{'id': user.id }) }}"><span
+                                class="subscriberCount">{{ user.friendList | length }}</span> abonnés</a>
                 </div>
                 <div>
-                    <span class="subscribeCount">{{ user.friends | length }}</span> abonnements
+                    <a href="{{ path('post.follow',{'id': user.id }) }}"><span
+                                class="subscribeCount">{{ user.friends | length }}</span> abonnements</a>
                 </div>
             </div>
             {% if app.user %}
                 {% if app.user ==  user %}
-                    <div class="edit"><a href="{{ path('account.settings') }}">Editer mon compte</a></div>
+                    <a href="{{ path('account.settings') }}">
+                        <button type="button" class="btn btn-border-green btn-lg btn-block mt-20 mt-20Mobile">Editer mon
+                            profil
+                        </button>
+                    </a>
+                {% elseif user  in  app.user.friends %}
+
+                    <div data-userId="{{ user.id }}"
+                         onclick="handleAddUserFollow(event)"
+                         data-action="{{ path('follow.add',{"id": user.id}) }}"
+                         class="followUser">
+                        <span class="followStatus">Suivi</span>
+                    </div>
+
                 {% else %}
-                    <div class="follow"><a href="{{ path('follow.add',{'id':user.id}) }}">Suivre</a></div>
+                    <div data-userId="{{ user.id }}"
+                         onclick="handleAddUserFollow(event)"
+                         data-action="{{ path('follow.add',{"id": user.id}) }}"
+                         class="followUser btn btn-border-green btn-lg mt-20 mt-20Mobile">
+                        <span class="followStatus">Suivre</span>
+                    </div>
+
+
                 {% endif %}
             {% endif %}
 
         </div>
+        <div class="mt-30">
+            {% if app.user ==  user %}
+                <span class="number-posts">{{ app.user.posts|length }} posts</span>
+                <div class="postContainer mt-3">
+                    {% set posts = app.user.posts %}
+                    {% for post in posts %}
+                        {% set onlyOneComment = post.comments | commentMostLike %}
+                        {% set comments = post.comments | commentMostLike %}
 
-        <div class="postContainer">
+                        {{ include('/posts/only-post.html.twig') }}
+                    {% endfor %}
 
+                </div>
+            {% endif %}
         </div>
+
 
     </div>
 {% endblock %}
 
 
   {% block javascripts %}
+      {{ encore_entry_script_tags('ajax') }}
 
 
   {% endblock %}

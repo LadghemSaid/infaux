@@ -49,22 +49,120 @@
     {% endfor %}
     <div class="container">
         <div class="notif-blk">
-        <h1> <i class="icon-bell"></i>Notifications</h1>
+            <h1><i class="icon-bell"></i>Notifications</h1>
 
-                {% for notif in notifsSeen %}
-                    <div class="notif">
-                        <img src="https://images.unsplash.com/photo-1528341866330-07e6d1752ec2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2001&q=80"/>
+            {% if notifsSeen is empty and notifsNotSeen is empty %}
+                <p>Vous n'avez aucune notifications</p>
+            {% endif %}
+
+            {% for notif in notifsSeen %}
+            {% if notif.byUser is not empty %}
+
+            {% if notif.byPost is not null %}
+            <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
+                {% elseif notif.byComment is not null %}
+                <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
+
+                    {% endif %}
+                    <div class="notif ">
+
+                        {% if notif.byUser.image  is defined %}
+                            <img src="{{ vich_uploader_asset(notif.byUser, 'imageFile') }}"/>
+                        {% else %}
+                            <img src="{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}"/>
+                        {% endif %}
+
+
                         <div>
-                            <div class="user"> {{ notif.user }} </div>
-                            <div class="opa nm">{{ notif.message }} </div>
+                            <div data-createdAt="{{ notif.createdAt |date('U') }}" class="user p-date"></div>
+                            <div class="opa nm">
+                                <p>
+                                    {{ notif.message }}
+                                </p>
+
+                            </div>
                         </div>
                     </div>
-                {% endfor %}
-                {% for notif in notifsNotSeen %}
-                    <div>{{ notif.message }}   (Non vu) </div>
+                </a>
 
-                {% endfor %}
-            
+                {% else %}
+
+                {% if notif.byPost is not null %}
+                <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
+                    {% elseif notif.byComment is not null %}
+                    <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
+
+                        {% endif %}
+
+                        <div class="notif">
+
+
+                            <img src="{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}"/>
+
+                            <div>
+                                <div data-createdAt="{{ notif.createdAt |date('U') }}" class="user p-date"></div>
+                                <div class="opa nm">
+                                    <p>
+                                        {{ notif.message }}
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    {% endif %}
+                    {% endfor %}
+                    {% for notif in notifsNotSeen %}
+                    {% if notif.byUser is not empty %}
+
+                    {% if notif.byPost is not null %}
+                    <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
+                        {% elseif notif.byComment is not null %}
+                        <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
+
+                            {% endif %}
+                            <div class="notif  not-seen">
+                                <img src="/uploads/images/users/{{ notif.byUser.image }}"/>
+                                <div>
+                                    <div data-createdAt="{{ notif.createdAt |date('U') }}" class="user p-date"></div>
+                                    <div class="opa nm">
+                                        <p>
+
+                                            {{ notif.message }}
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+
+                        {% else %}
+
+                        {% if notif.byPost is not null %}
+                        <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
+                            {% elseif notif.byComment is not null %}
+                            <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}">
+
+                                {% endif %}
+
+                                <div class="notif  not-seen">
+                                    <img src="{{ asset('uploads/images/users/adorable.png') }}"/>
+                                    <div>
+                                        <div data-createdAt="{{ notif.createdAt |date('U') }}"
+                                             class="user p-date"></div>
+                                        <div class="opa nm">
+                                            <p>
+
+                                                {{ notif.message }}
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            {% endif %}
+                            {% endfor %}
+
         </div>
 
     </div>
@@ -72,6 +170,13 @@
 
 
   {% block javascripts %}
-
+      <script>
+          $(function () {
+              moment.locale('fr');
+              $(".p-date").map((x, i) => {
+                  i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
+              });
+          });
+      </script>
 
   {% endblock %}

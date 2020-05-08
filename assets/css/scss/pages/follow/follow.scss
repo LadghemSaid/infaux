@@ -1,0 +1,53 @@
+.follow {
+    margin-top: 90px;
+    margin-bottom: 45px;
+    .users {
+        .single-compte {
+        background-color: #e6e6e6;
+        border-radius: 40px;
+        height: 60px;
+        padding: 10px 20px;
+        }
+
+        .compte-picture {
+            height: 40px;
+            width: 40px;
+            margin-right: 20px;
+            border-radius: 100%;
+            img {
+                width: 100%;
+                height: 100%;
+                border-radius: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+
+    .nav-followers{
+        margin-bottom: 20px;
+    }
+
+    a.nav-item.nav-link {
+        width: 50%;
+        text-align: center;
+    }
+    
+    a.active {
+        color: $green;
+        border-bottom: 1px solid $green;
+    }
+
+    a.active:hover {
+        color: $green;
+        border-bottom: 1px solid $green;
+    }
+
+    a:hover {
+        color: black;
+    }
+
+    p.title {
+        font-weight: 500;
+    }
+}
+

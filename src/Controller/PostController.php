@@ -5,13 +5,16 @@ namespace App\Controller;
 use App\Entity\Notification;
 use App\Entity\Post;
 use App\Entity\Comment;
+use App\Entity\User;
 use App\Form\CommentType;
+use App\Form\PostType;
 use App\Mercure\CookieGenerator;
 use App\Repository\PostRepository;
 use App\Repository\CommentRepository;
 use App\Repository\UserRepository;
 use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,12 +44,17 @@ class PostController extends AbstractController
      * @var NotificationService
      */
     private $notificationService;
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
 
-    public function __construct(PostRepository $postRepository, EntityManagerInterface $em, NotificationService $notificationService)
+    public function __construct(PostRepository $postRepository,UserRepository $userRepository, EntityManagerInterface $em, NotificationService $notificationService)
     {
         $this->postRepository = $postRepository;
         $this->em = $em;
         $this->notificationService = $notificationService;
+        $this->userRepository = $userRepository;
     }
 
 
@@ -76,7 +84,7 @@ class PostController extends AbstractController
             //Ajout du post dans l'user
             $user->addPostFollowed($postCurr);
             //Notification pour l'auteur du post
-            $this->notificationService->add($postCurr->getUser(), $message = "un utilisateur vient de suivre votre post");
+            $this->notificationService->add($postCurr->getUser(), $message = "{$postCurr->getUser()} vient d'epingler votre post",$postCurr->getUser(),$postCurr);
 
             $this->em->persist($postCurr, $user);
             $this->em->flush();
@@ -88,23 +96,63 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/deletepin/{id}", name="deletePin")
+     * @Route("/pinned", name="pinned")
      */
-    public function deletePin($id, Request $request, $payload = null)
+    public function pinned()
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
 
-    }
 
-        /**
-     * @Route("/epingle", name="epingle")
-     */
-    public function epingle()
-    {
         //Cree un formulaire
         return $this->render('posts/epingle.html.twig', [
             'controller_name' => 'PostController',
+        ]);
+    }
+
+    /**
+     * @Route("/show/{id}", name="show")
+     */
+    public function show(PostRepository $postrepo, Request $request,$id, PaginatorInterface $paginator): Response
+    {
+
+        $postDisplay = $postrepo->find(['id'=>$id]); //On récupère les posts
+
+        $response = $this->render('posts/show.html.twig', [
+            'current_menu' => 'posts',
+            'post' => $postDisplay,
+
+        ]);
+
+        return $response;
+        //Pour 1 -> ...find($id);   avec une valeur de champ -> ...findOneBy(['title'=>'Post Du vendredi 13']);
+
+
+    }
+
+    /**
+     * @Route("/follow/{id}", name="follow")
+     */
+    public function follow($id)
+    {
+
+        $user = $this->userRepository->find(['id'=>$id]);
+
+        return $this->render('follow/follow.html.twig', [
+            'user'=> $user
+        ]);
+    }
+
+    /**
+     * @Route("/follower/{id}", name="follower")
+     */
+    public function follower($id)
+    {
+        $user = $this->userRepository->find(['id'=>$id]);
+
+        return $this->render('follow/follower.html.twig', [
+            'user'=> $user
+
         ]);
     }
 
