@@ -1,12 +1,21 @@
 .follow {
     margin-top: 90px;
     margin-bottom: 45px;
+
+    h1{
+        margin-bottom: 20px;
+    }
+
     .users {
         .single-compte {
-        background-color: #e6e6e6;
+        background-color: $grey;
         border-radius: 40px;
         height: 60px;
         padding: 10px 20px;
+
+            &:hover {
+                background-color: $light-grey;
+            }
         }
 
         .compte-picture {
@@ -20,6 +29,12 @@
                 border-radius: 100%;
                 object-fit: cover;
             }
+        }
+
+        .btn {
+            width: 100%;
+            height: 100%;
+            padding: 0;
         }
     }
 
