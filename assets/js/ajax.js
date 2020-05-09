@@ -92,7 +92,7 @@ function handleAddComment(event) {
     event.preventDefault();
     const data = $(event.target).serializeArray()[0].value;
     const action = event.target.dataset.action;
-    let target = $(event.target).parent().parent().find('.comments-container').last();
+    let target = $(event.target).parent('.formComment').prev('.wrapper-comments');
 
 
     $.ajax({

@@ -229,7 +229,7 @@
     </div>
     <div class="wrapper-comments">
         {% if comments is defined %}
-            {% if comments is empty %}
+            {% if comments is empty and onlyOneComment is not defined %}
                 <p>Aucun commentaire soit le premier !</p>
             {% endif %}
 
