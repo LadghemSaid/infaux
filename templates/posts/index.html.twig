@@ -54,17 +54,18 @@
 
 
         {% if app.user %}
-            <div class="formPost input-submit-post">
+            <div class="formPost input-submit-post" >
                 <form onsubmit="handleAddPost(event)" name="post" data-action="{{ path('post.add') }}"
-                      class="postForm">
-                    <div class="img"
-                            {% if app.user.image  is defined %}
-                         style="background:url('{{ vich_uploader_asset(app.user, 'imageFile') }}')">
-                        {% else %}
-                            style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}')">
-                        {% endif %}
-
-                    </div>
+                      class="postForm" id="postForm">
+                        <div class="div_img">
+                            <div class="img"
+                                    {% if app.user.image  is defined %}
+                                style="background:url('{{ vich_uploader_asset(app.user, 'imageFile') }}')">
+                                {% else %}
+                                    style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}')">
+                                {% endif %}
+                            </div>
+                        </div>
                     <div class="form-group">
                         <div class="form-group"><label for="post_text" class="required"> </label>
                             <textarea
@@ -75,8 +76,7 @@
                     </div>
                     <div class="d-flex justify-content-end btn-submit">
                         <div class="form-group">
-
-                            <div class="form-group">
+                            <div class="form-group formBtn">
                                 <button type="submit" id="post_submit" name="post[submit]" class="formPost btn"
                                         disabled="" style="opacity: 0;">Poster
                                 </button>
@@ -121,8 +121,8 @@
 
         {% for post in posts %}
 
-            {% set onlyOneComment = post.comments | commentMostLike %}
-            {% set comments = post.comments | commentMostLike %}
+            {% set onlyOneComment = post.id | commentMostLike(1) %}
+            {% set comments = post.id | commentMostLike(1) %}
 
             {{ include('/posts/only-post.html.twig') }}
 
@@ -157,6 +157,8 @@
           function affiche() {
               document.getElementById('post_submit').style.opacity = 1;
               document.getElementById('post_submit').disabled = "";
+              $('#postForm').addClass('selected');
+              //document.getElementById('postForm').style.align-item= 'red';
           }
 
           function afficheplus() {
@@ -165,6 +167,8 @@
               if (str.length == 0) {
                   document.getElementById('post_submit').style.opacity = 0;
                   document.getElementById('post_submit').disabled = "true";
+                    $('#postForm').removeClass('selected');
+
               }
           }
 

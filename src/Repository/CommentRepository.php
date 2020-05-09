@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Comment;
+use App\Entity\Like;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr;
 
 /**
  * @method Comment|null find($id, $lockMode = null, $lockVersion = null)
@@ -60,4 +62,22 @@ class CommentRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findBycommentMostLike($post,$limit)
+    {
+        /*
+        return $this->createQueryBuilder('comment')
+            ->andWhere('comment.post = :val')
+            ->andWhere('comment.approved = 1')
+            ->setParameter('val', $post)
+            ->innerJoin(Like::class, 'l', Expr\Join::WITH , 'l.comment_id = comment.id ')
+            ->setMaxResults('1')
+            ->getQuery()
+            ->getResult();
+
+        */
+        $dql = 'SELECT  FROM AppBundle\Entity\Category cat ORDER BY cat.name DESC';
+        $query = $this->getEntityManager()->createQuery($dql);
+        var_dump($query->getSQL());die;
+        return $query->execute();
+    }
 }
