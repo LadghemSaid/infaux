@@ -43,17 +43,21 @@ class AppRuntime implements RuntimeExtensionInterface
 
 
 
-    public function commentMostLikeFunction($postId,$limit)
+    public function commentMostLikeFunction($comments)
     {
-        $comment = $this->commentRepository->findBycommentMostLike($postId,$limit);
+        $cmt = 0;
+        $last = null;
 
-        dd($comment);
-        if(count($comment) > 0){
-            return $comment[0];
-        }else{
-            return $comment;
+        foreach ($comments as $comment) {
+            if (count($comment->getLikes()) >= $cmt) {
+                $cmt = count($comment->getLikes());
+                $last = $comment;
+            } else {
 
+            }
         }
+
+        return $last;
     }
 
 }
