@@ -39,40 +39,9 @@ class AppRuntime implements RuntimeExtensionInterface
     }
 
 
-    public function formatCommentFunction($arrayComment, $order)
-    {
-        if ($order == 'DESC') {
-            usort($arrayComment, function ($item1, $item2) {
-                if ($item1->getCreatedAt() == $item2->getCreatedAt()) return 0;
-                return $item1->getCreatedAt() < $item2->getCreatedAt() ? -1 : 1;
-            });
-        } else {
-            usort($arrayComment, function ($item1, $item2) {
-                if ($item1->getCreatedAt() == $item2->getCreatedAt()) return 0;
-                return $item1->getCreatedAt() > $item2->getCreatedAt() ? -1 : 1;
-            });
-        }
-
-        foreach ($arrayComment as $comment) {
-            if ($comment->getApproved() != true) {
-                array_unshift($arrayComment, $comment);
-            }
-        }
 
 
-        return $arrayComment;
 
-    }
-
-    public function castToArrayFunction($stdClassObject)
-    {
-        $response = array();
-        foreach ($stdClassObject as $key => $value) {
-            $response[] = array($key, $value);
-        }
-        return $response;
-
-    }
 
     public function commentMostLikeFunction($comments)
     {
@@ -89,7 +58,6 @@ class AppRuntime implements RuntimeExtensionInterface
         }
 
         return $last;
-
     }
 
 }

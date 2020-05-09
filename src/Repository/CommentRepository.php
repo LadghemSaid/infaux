@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Comment;
+use App\Entity\Like;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr;
 
 /**
  * @method Comment|null find($id, $lockMode = null, $lockVersion = null)
@@ -46,9 +48,6 @@ class CommentRepository extends ServiceEntityRepository
     }
 
 
-
-
-
     /*
     public function findOneBySomeField($value): ?Comment
     {
@@ -60,4 +59,6 @@ class CommentRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
 }
