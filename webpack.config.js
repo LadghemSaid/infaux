@@ -21,6 +21,7 @@ Encore
     .setOutputPath('public/build/')
     .setPublicPath('/build')
     .setManifestKeyPrefix('build/')
+    .addEntry('eventSource', './assets/js/eventSource.js')
     .addEntry('app', './assets/js/app.js')
     .addEntry('ajax', './assets/js/ajax.js')
     .addEntry('login', './assets/js/login.js')
@@ -99,6 +100,7 @@ Encore
               //  handler: 'StaleWhileRevalidate',
             //}]
         }))
+    .enableVueLoader()
 ;
 const prod = Encore.getWebpackConfig();
 prod.name = 'prod';
@@ -109,7 +111,9 @@ Encore
     .setOutputPath('public/build/')
     .setPublicPath('/build')
     .setManifestKeyPrefix('build/')
+    .addEntry('eventSource', './assets/js/eventSource.js')
     .addEntry('app', './assets/js/app.js')
+
     .addEntry('ajax', './assets/js/ajax.js')
     .addEntry('login', './assets/js/login.js')
     .addStyleEntry('main', './assets/css/scss/imports.scss')
@@ -125,6 +129,7 @@ Encore
         corejs: 3
     })
     .enableSassLoader()
+    .enableVueLoader()
 ;
 const dev = Encore.getWebpackConfig();
 dev.name = 'dev';

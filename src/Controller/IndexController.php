@@ -73,6 +73,19 @@ class IndexController extends AbstractController
 
     }
 
+    /**
+     * Liste l'ensemble des posts triés par date de publication pour une page donnée.
+     *
+     * @Route("/chat", name="index.chat")
+     */
+    public function indexChat()
+    {
+        return $this->render('chat/index/index.html.twig', [
+            'current_menu' => 'chat',
+
+        ]);
+    }
+
 
     # get success response from recaptcha and return it to controller
     function captchaverify($recaptcha)
