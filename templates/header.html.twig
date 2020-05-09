@@ -29,7 +29,7 @@
         {% if app.user %}
             <div class="mobile-bottom-nav__item">
                 <div class="mobile-bottom-nav__item-content">
-                    <a href="{{ path('notification') }}"><i class="icon-bell"></i>
+                    <a href="{{ path('notification') }}" class="header-notfication-bell"><i class="icon-bell"></i>
                         {% if app.user.notificationNotSeen | length >= 1 %}
                             <span class="number_notif notif">{{ app.user.notificationNotSeen | length }}</span>
                         {% endif %}

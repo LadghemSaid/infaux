@@ -148,10 +148,10 @@
                         if (!data.message) {
                             return;
                         }
-                        if($('.number_notif')){
+                        if($('.number_notif').length > 0){
                             $('.number_notif')[0].innerText++;
                         }else{
-                            $('.header-notfication-bell').innerHTML = "<span class='number_notif notif'>1</span>"
+                            $('.header-notfication-bell').html("<i class='icon-bell'></i><span class='number_notif notif'>1</span>")
                         }
 
                         eventSource.onmessage = (evt) => {

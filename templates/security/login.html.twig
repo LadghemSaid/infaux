@@ -46,9 +46,7 @@
 			<div class="container-login">
 				<div class="wrap-login">
                 <a href="{{ path("index") }}" class="pb-60 d-flex justify-content-end"><i class="icon-close"></i></a>
-					{% if error %}
-						<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-					{% endif %}
+
 
 					{% if app.user %}
 						<div class="mb-3 pb-60">
@@ -56,13 +54,15 @@
 							{{ app.user.username }},
 							<a href="{{ path('app_logout') }}">Déconnexion</a>
 						</div>
-
 					{% else %}
+
 						<form method="post" class="login-form validate-form">
 							<span class="login-form-title pb-50 pb-50Mobile">
 								<img src="{{ asset("img/logo_infaux.png") }}" alt="Infaux logo"/></a>
 							</span>
-
+							{% if error %}
+								<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+							{% endif %}
 							<div class="wrap-input validate-input" data-validate="Valid email is: a@b.c">
 								<input class="input" type="email" value="{{ last_username }}" name="email" id="inputEmail" required autofocus>
 								<span class="focus-input" data-placeholder="Email"></span>
@@ -77,18 +77,6 @@
 							</div>
 							<input
 							type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-							{#
-														                    Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-														                    See https://symfony.com/doc/current/security/remember_me.html
-														
-														                    <div class="checkbox mb-3">
-														                        <label>
-														                            <input type="checkbox" name="_remember_me"> Remember me
-														                        </label>
-														                    </div>
-														                #}
-
 
 							<div class="container-login-form-btn">
 								<div class="wrap-login-form-btn">
@@ -113,9 +101,9 @@
 				</div>
 			</div>
 		</div>
-	{% block javascripts %}
-		<script src="{{ preload('https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js', { as: 'script' }) }}"></script>
-        {{ encore_entry_script_tags('login') }}
-    {% endblock %}
 
 		{% endblock %}
+
+	{% block javascripts %}
+		{{ encore_entry_script_tags('login') }}
+	{% endblock %}

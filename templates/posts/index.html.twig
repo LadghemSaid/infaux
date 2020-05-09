@@ -54,37 +54,77 @@
 
 
         {% if app.user %}
-            <div class="formPost">
-                {{ form_start(postForm,{'attr':{'class':'postForm'}}) }}
-                <div class="img"
-                        {% if app.user.image  is defined %}
-                     style="background:url('{{ vich_uploader_asset(app.user, 'imageFile') }}')">
-                    {% else %}
-                        style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}')">
-                    {% endif %}
-
-                </div>
-                <div class="form-group">
-                    {{ form_row(postForm.text,{'attr':{'class':'postForm__textarea form-control input-lg txta','placeholder':'Poster un nouveau post', 'onfocus':'affiche()', 'onblur':'afficheplus()'},'label': ' '}) }}
-                </div>
-                <div class="d-flex justify-content-end btn-submit">
-                    <div class="form-group">
-
-                        {{ form_row(postForm.submit,{'attr':{'class': 'formPost', 'disabled':'true'},'label': 'Poster'}) }}
+            <div class="formPost input-submit-post">
+                <form onsubmit="handleAddPost(event)" name="post" data-action="{{ path('post.add') }}"
+                      class="postForm">
+                    <div class="img"
+                            {% if app.user.image  is defined %}
+                         style="background:url('{{ vich_uploader_asset(app.user, 'imageFile') }}')">
+                        {% else %}
+                            style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}')">
+                        {% endif %}
 
                     </div>
-                </div>
-                {{ form_end(postForm) }}
+                    <div class="form-group">
+                        <div class="form-group"><label for="post_text" class="required"> </label>
+                            <textarea
+                                    id="post_text" name="post[text]" required="required"
+                                    class="postForm__textarea form-control input-lg txta txtstuff"
+                                    placeholder="Poster un nouveau post" onfocus="affiche()"
+                                    onblur="afficheplus()"></textarea></div>
+                    </div>
+                    <div class="d-flex justify-content-end btn-submit">
+                        <div class="form-group">
+
+                            <div class="form-group">
+                                <button type="submit" id="post_submit" name="post[submit]" class="formPost btn"
+                                        disabled="" style="opacity: 0;">Poster
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <input type="hidden" id="post__token" name="post[_token]"
+                           value="vOiGqd8IwjvzoMt_Rwkxd8pbQLVFo6BEIE8w7zAAxLo"></form>
+                <input type="hidden" id="post__token" name="post_token" value="{{ csrf_token('add_post') }}"></form>
             </div>
+
+
+            {#
+             <div class="formPost">
+                 {{ form_start(postForm,{'attr':{'class':'postForm'}}) }}
+                 <div class="img"
+                         {% if app.user.image  is defined %}
+                      style="background:url('{{ vich_uploader_asset(app.user, 'imageFile') }}')">
+                     {% else %}
+                         style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}')">
+                     {% endif %}
+
+                 </div>
+                 <div class="form-group">
+                     {{ form_row(postForm.text,{'attr':{'class':'postForm__textarea form-control input-lg txta','placeholder':'Poster un nouveau post', 'onfocus':'affiche()', 'onblur':'afficheplus()'},'label': ' '}) }}
+                 </div>
+                 <div class="d-flex justify-content-end btn-submit">
+                     <div class="form-group">
+
+                         {{ form_row(postForm.submit,{'attr':{'class': 'formPost', 'disabled':'true'},'label': 'Poster'}) }}
+
+                     </div>
+                 </div>
+                 {{ form_end(postForm) }}
+             </div>
+             #}
+
         {% endif %}
 
 
 
         {% for post in posts %}
 
-            {% set onlyOneComment = post.comments | commentMostLike   %}
+            {% set onlyOneComment = post.comments | commentMostLike %}
+            {% set comments = post.comments | commentMostLike %}
 
-            {{ include('/posts/only-post.html.twig')}}
+            {{ include('/posts/only-post.html.twig') }}
 
         {% endfor %}
         {{ knp_pagination_render(posts) }}
@@ -113,20 +153,20 @@
 
       <script>
 
-            //fonction d'affichage du bouton submit (form post)
-            function affiche(){
-				document.getElementById('post_submit').style.opacity=1;
-				document.getElementById('post_submit').disabled="";
-			}
-			function afficheplus(){
-					const str = document.getElementById('post_text').value;
-					console.log(str.length);
-					if (str.length==0) {
-						document.getElementById('post_submit').style.opacity=0;
-						document.getElementById('post_submit').disabled="true";
-					}
-			}
+          //fonction d'affichage du bouton submit (form post)
+          function affiche() {
+              document.getElementById('post_submit').style.opacity = 1;
+              document.getElementById('post_submit').disabled = "";
+          }
 
+          function afficheplus() {
+              const str = document.getElementById('post_text').value;
+              console.log(str.length);
+              if (str.length == 0) {
+                  document.getElementById('post_submit').style.opacity = 0;
+                  document.getElementById('post_submit').disabled = "true";
+              }
+          }
 
 
           document.addEventListener("DOMContentLoaded", function (event) {
@@ -152,78 +192,77 @@
               });
 
 
-
           });
 
       </script>
 
 
       <script>
-// Targets all textareas with class "txta"
-let textareas = document.querySelectorAll('.txta'),
-    hiddenDiv = document.createElement('div'),
-    content = null;
+          // Targets all textareas with class "txta"
+          let textareas = document.querySelectorAll('.txta'),
+              hiddenDiv = document.createElement('div'),
+              content = null;
 
-// Adds a class to all textareas
-for (let j of textareas) {
-  j.classList.add('txtstuff');
-}
+          // Adds a class to all textareas
+          for (let j of textareas) {
+              j.classList.add('txtstuff');
+          }
 
-// Build the hidden div's attributes
+          // Build the hidden div's attributes
 
-// The line below is needed if you move the style lines to CSS
-// hiddenDiv.classList.add('hiddendiv');
+          // The line below is needed if you move the style lines to CSS
+          // hiddenDiv.classList.add('hiddendiv');
 
-// Add the "txta" styles, which are common to both textarea and hiddendiv
-// If you want, you can remove those from CSS and add them via JS
-hiddenDiv.classList.add('txta');
+          // Add the "txta" styles, which are common to both textarea and hiddendiv
+          // If you want, you can remove those from CSS and add them via JS
+          hiddenDiv.classList.add('txta');
 
-// Add the styles for the hidden div
-// These can be in the CSS, just remove these three lines and uncomment the CSS
-hiddenDiv.style.display = 'none';
-hiddenDiv.style.whiteSpace = 'pre-wrap';
-hiddenDiv.style.wordWrap = 'break-word';
+          // Add the styles for the hidden div
+          // These can be in the CSS, just remove these three lines and uncomment the CSS
+          hiddenDiv.style.display = 'none';
+          hiddenDiv.style.whiteSpace = 'pre-wrap';
+          hiddenDiv.style.wordWrap = 'break-word';
 
-// Loop through all the textareas and add the event listener
-for(let i of textareas) {
-  (function(i) {
-    // Note: Use 'keyup' instead of 'input'
-    // if you want older IE support
-    i.addEventListener('input', function() {
-      
-      // Append hiddendiv to parent of textarea, so the size is correct
-      i.parentNode.appendChild(hiddenDiv);
-      
-      // Remove this if you want the user to be able to resize it in modern browsers
-      i.style.resize = 'none';
-      
-      // This removes scrollbars
-      i.style.overflow = 'hidden';
+          // Loop through all the textareas and add the event listener
+          for (let i of textareas) {
+              (function (i) {
+                  // Note: Use 'keyup' instead of 'input'
+                  // if you want older IE support
+                  i.addEventListener('input', function () {
 
-      // Every input/change, grab the content
-      content = i.value;
+                      // Append hiddendiv to parent of textarea, so the size is correct
+                      i.parentNode.appendChild(hiddenDiv);
 
-      // Add the same content to the hidden div
-      
-      // This is for old IE
-      content = content.replace(/\n/g, '<br>');
-      
-      // The <br ..> part is for old IE
-      // This also fixes the jumpy way the textarea grows if line-height isn't included
-      hiddenDiv.innerHTML = content + '<br style="line-height: 3px;">';
+                      // Remove this if you want the user to be able to resize it in modern browsers
+                      i.style.resize = 'none';
 
-      // Briefly make the hidden div block but invisible
-      // This is in order to read the height
-      hiddenDiv.style.visibility = 'hidden';
-      hiddenDiv.style.display = 'block';
-      i.style.height = hiddenDiv.offsetHeight + 'px';
+                      // This removes scrollbars
+                      i.style.overflow = 'hidden';
 
-      // Make the hidden div display:none again
-      hiddenDiv.style.visibility = 'visible';
-      hiddenDiv.style.display = 'none';
-    });
-  })(i);
-}
+                      // Every input/change, grab the content
+                      content = i.value;
+
+                      // Add the same content to the hidden div
+
+                      // This is for old IE
+                      content = content.replace(/\n/g, '<br>');
+
+                      // The <br ..> part is for old IE
+                      // This also fixes the jumpy way the textarea grows if line-height isn't included
+                      hiddenDiv.innerHTML = content + '<br style="line-height: 3px;">';
+
+                      // Briefly make the hidden div block but invisible
+                      // This is in order to read the height
+                      hiddenDiv.style.visibility = 'hidden';
+                      hiddenDiv.style.display = 'block';
+                      i.style.height = hiddenDiv.offsetHeight + 'px';
+
+                      // Make the hidden div display:none again
+                      hiddenDiv.style.visibility = 'visible';
+                      hiddenDiv.style.display = 'none';
+                  });
+              })(i);
+          }
       </script>
 
   {% endblock %}

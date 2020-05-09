@@ -116,6 +116,21 @@
 
                 </div>
             {% endif %}
+
+            {% if  user in  app.user.friends %}
+                <span class="number-posts">{{user.posts|length }} posts</span>
+                <div class="postContainer mt-3">
+                    {% set posts = user.posts %}
+                    {% for post in posts %}
+                        {% set onlyOneComment = post.comments | commentMostLike %}
+                        {% set comments = post.comments | commentMostLike %}
+
+                        {{ include('/posts/only-post.html.twig') }}
+                    {% endfor %}
+
+                </div>
+            {% endif %}
+
         </div>
 
 

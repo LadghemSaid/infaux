@@ -229,7 +229,7 @@
     </div>
     <div class="wrapper-comments">
         {% if comments is defined %}
-            {% if comments is empty %}
+            {% if comments is empty and onlyOneComment is not defined %}
                 <p>Aucun commentaire soit le premier !</p>
             {% endif %}
 
@@ -259,8 +259,8 @@
                     style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~ "@adorable.io.png") }}')">
                 {% endif %}
             </div>
-            <form onsubmit="handleAddComment(event)" name="comment" method="post"
-                  action="{{ path('comment.add',{'id':post.id}) }}"
+            <form onsubmit="handleAddComment(event)" name="comment"
+                  data-action="{{ path('comment.add',{'id':post.id}) }}"
                   class="commentForm">
                 <div class="form-group">
                     {# <label class="sr-only required" for="comment_textComment">Commentaire</label> #}
