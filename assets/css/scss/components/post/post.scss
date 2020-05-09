@@ -6,9 +6,9 @@ $white: rgba(255,255,255,.34);
 
 .formPost{
   margin-top:93px;
-  margin-bottom: 35px;
+  margin-bottom: 50px;
 
-  .postForm{
+  #postForm{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -17,15 +17,20 @@ $white: rgba(255,255,255,.34);
     padding:9px;
     width: 100%;
 
-    .img{
-      height: 45px;
-      min-width: 45px;
-      max-width: 45px;
-      content:" ";
-      border-radius: 100px;
-      background-size: cover !important;
-      background-position: center !important;
+    .div_img{
+      .img{
+        height: 45px;
+        min-width: 45px;
+        max-width: 45px;
+        content:" ";
+        border-radius: 100px;
+        background-size: cover !important;
+        background-position: center !important;
+      }
+    
     }
+
+  
 
     .form-group{
       width:100%;
@@ -54,14 +59,38 @@ $white: rgba(255,255,255,.34);
         height: 28px;
       }
     }
-
     button{
       margin:0 !important;
       opacity: 0;
+          background-color:$green;
+          border: black 0px solid;
+          border-radius: 50px;
+          font-size: $Msmall;
+          padding:5px 15px 5px 15px;
+
     }
   }
+
+
+  .selected{
+    animation: selected 0.1s ease;
+    border-radius:24px !important;
+    align-items: flex-start !important; 
+
+  }
+
 }
 
+        @keyframes selected{
+          from{
+            border-radius: 50px;
+            align-items: center; 
+          }
+          to{
+            border-radius: 24px;
+            align-items: flex-start !important; 
+          }
+        }
 
 .post-container {
   font-family: 'Poppins', sans-serif;
