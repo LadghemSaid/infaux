@@ -121,8 +121,8 @@
 
         {% for post in posts %}
 
-            {% set onlyOneComment = post.id | commentMostLike(1) %}
-            {% set comments = post.id | commentMostLike(1) %}
+            {% set onlyOneComment = post.comments | commentMostLike %}
+            {% set comments = post.comments | commentMostLike %}
 
             {{ include('/posts/only-post.html.twig') }}
 

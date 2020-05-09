@@ -48,9 +48,6 @@ class CommentRepository extends ServiceEntityRepository
     }
 
 
-
-
-
     /*
     public function findOneBySomeField($value): ?Comment
     {
@@ -62,22 +59,6 @@ class CommentRepository extends ServiceEntityRepository
         ;
     }
     */
-    public function findBycommentMostLike($post,$limit)
-    {
-        /*
-        return $this->createQueryBuilder('comment')
-            ->andWhere('comment.post = :val')
-            ->andWhere('comment.approved = 1')
-            ->setParameter('val', $post)
-            ->innerJoin(Like::class, 'l', Expr\Join::WITH , 'l.comment_id = comment.id ')
-            ->setMaxResults('1')
-            ->getQuery()
-            ->getResult();
 
-        */
-        $dql = 'SELECT  FROM AppBundle\Entity\Category cat ORDER BY cat.name DESC';
-        $query = $this->getEntityManager()->createQuery($dql);
-        var_dump($query->getSQL());die;
-        return $query->execute();
-    }
+
 }
