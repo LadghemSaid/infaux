@@ -39,57 +39,21 @@ class AppRuntime implements RuntimeExtensionInterface
     }
 
 
-    public function formatCommentFunction($arrayComment, $order)
+
+
+
+
+    public function commentMostLikeFunction($postId,$limit)
     {
-        if ($order == 'DESC') {
-            usort($arrayComment, function ($item1, $item2) {
-                if ($item1->getCreatedAt() == $item2->getCreatedAt()) return 0;
-                return $item1->getCreatedAt() < $item2->getCreatedAt() ? -1 : 1;
-            });
-        } else {
-            usort($arrayComment, function ($item1, $item2) {
-                if ($item1->getCreatedAt() == $item2->getCreatedAt()) return 0;
-                return $item1->getCreatedAt() > $item2->getCreatedAt() ? -1 : 1;
-            });
+        $comment = $this->commentRepository->findBycommentMostLike($postId,$limit);
+
+        dd($comment);
+        if(count($comment) > 0){
+            return $comment[0];
+        }else{
+            return $comment;
+
         }
-
-        foreach ($arrayComment as $comment) {
-            if ($comment->getApproved() != true) {
-                array_unshift($arrayComment, $comment);
-            }
-        }
-
-
-        return $arrayComment;
-
-    }
-
-    public function castToArrayFunction($stdClassObject)
-    {
-        $response = array();
-        foreach ($stdClassObject as $key => $value) {
-            $response[] = array($key, $value);
-        }
-        return $response;
-
-    }
-
-    public function commentMostLikeFunction($comments)
-    {
-        $cmt = 0;
-        $last = null;
-
-        foreach ($comments as $comment) {
-            if (count($comment->getLikes()) >= $cmt) {
-                $cmt = count($comment->getLikes());
-                $last = $comment;
-            } else {
-
-            }
-        }
-
-        return $last;
-
     }
 
 }
