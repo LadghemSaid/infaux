@@ -1,5 +1,42 @@
 easy_admin:
   entities:
+    CommentToValidate:
+      class: App\Entity\Comment
+      show:
+        fields:
+          - {property: 'approved' }
+          - {property: 'textComment' }
+          - {property: 'username' }
+          - {property: 'user' }
+          - {property: 'email' }
+          - {property: 'createdAt' }
+          - {property: 'post', template_options: { entity: Post } }
+          - {property: 'reports' }
+      list:
+        batch_actions: ['delete']
+        dql_filter: 'entity.approved = 0 '
+        actions: ['-new']
+        fields:
+          - 'approved'
+          - 'created_at'
+          - 'textComment'
+          - 'user'
+          - 'post'
+          - 'reports'
+          - 'likes'
+      form:
+        fields:
+          - {property: 'approved' }
+          - {property: 'textComment' }
+          - {property: 'user' }
+          - {property: post, label: 'Post' , type_options: { entity: Post }}
+
+
+        actions:
+          - {name: 'edit', icon: 'pencil', label: false, css_class: 'btn btn-secondary'}
+          - {name: 'delete', icon: 'trash', label: false, css_class: 'btn btn-danger'}
+
+
     Comment:
       class: App\Entity\Comment
       show:
@@ -10,32 +47,29 @@ easy_admin:
           - {property: 'user' }
           - {property: 'email' }
           - {property: 'createdAt' }
-          - {property: 'posts' }
+          - {property: 'post', template_options: { entity: Post } }
           - {property: 'reports' }
       list:
         batch_actions: ['delete']
-        dql_filter: 'entity.reports > 2 '
+        dql_filter: 'entity.approved = 1 '
         actions: ['-new']
         fields:
-          -  'approved'
-          -  'created_at'
-          -  'textComment'
-          -  'username'
-          -  'user'
-          -  'email'
-          -  'posts'
-          -  'reports'
+          - 'approved'
+          - 'created_at'
+          - 'textComment'
+          - 'user'
+          - 'post'
+          - 'reports'
+          - 'likes'
       form:
         fields:
           - {property: 'approved' }
           - {property: 'textComment' }
           - {property: 'user' }
-          - {property: 'username' }
-          - {property: 'email' }
-          - {property: 'reports' }
-          - { property: posts, label: 'Post', type: embedded_list }
+          - {property: post, label: 'Post' }
 
 
         actions:
           - {name: 'edit', icon: 'pencil', label: false, css_class: 'btn btn-secondary'}
           - {name: 'delete', icon: 'trash', label: false, css_class: 'btn btn-danger'}
+

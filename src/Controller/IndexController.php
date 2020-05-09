@@ -49,8 +49,6 @@ class IndexController extends AbstractController
 
         $posts = $postrepo->findAllDesc(); //On récupère les posts
         $user =$this->getUser();
-        $post = new Post();
-        $postForm = $this->createForm(PostType::class, $post);
 
         $posts = $paginator->paginate(
             $posts, //Donnée a paginé
@@ -60,27 +58,12 @@ class IndexController extends AbstractController
 
 
 
-        $postForm->handleRequest($request);
-        if ($postForm->isSubmitted() && $postForm->isValid()) {
-            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-            $data = $postForm->getData();
-            $post->setFavorite(false)
-                ->setPublished(true)
-                ->setUser($this->getUser());
-            $this->em->persist($post);
-            $this->em->flush();
-
-
-
-         return $this->redirectToRoute('index');
-        }
 
 
         $response = $this->render('posts/index.html.twig', [
             'current_menu' => 'posts',
             'posts' => $posts,
-            'postForm' => $postForm->createView(),
 
         ]);
 

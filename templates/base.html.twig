@@ -78,8 +78,6 @@
 </div>
 
 
-{% include "footer.html.twig" %}
-
 {# <a aria-label="Button permettant de retourner en haut de la page" id="scrollToTop">Up !</a> #}
 
 <script src="{{ preload('https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js', { as: 'script' }) }}"></script>
@@ -123,7 +121,7 @@
 
         const url = new URL('{{ mercure_publish_url }}');
         url.searchParams.append('topic', '/message');
-        const numberNotifs = $('.number_notif');
+
 
 
     //    navigator.serviceWorker.register('/service-worker.js', {scope: '/'}).then(function(registration){
@@ -150,7 +148,11 @@
                         if (!data.message) {
                             return;
                         }
-                        numberNotifs[0].innerText++;
+                        if($('.number_notif').length > 0){
+                            $('.number_notif')[0].innerText++;
+                        }else{
+                            $('.header-notfication-bell').html("<i class='icon-bell'></i><span class='number_notif notif'>1</span>")
+                        }
 
                         eventSource.onmessage = (evt) => {
                             const data = JSON.parse(evt.data);

@@ -229,7 +229,7 @@
     </div>
     <div class="wrapper-comments">
         {% if comments is defined %}
-            {% if comments is empty %}
+            {% if comments is empty and onlyOneComment is not defined %}
                 <p>Aucun commentaire soit le premier !</p>
             {% endif %}
 
@@ -256,25 +256,24 @@
                     {% if app.user.image  is defined %}
                  style="background:url('{{ vich_uploader_asset(app.user, 'imageFile') }}')">
                 {% else %}
-                    style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}')">
+                    style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~ "@adorable.io.png") }}')">
                 {% endif %}
             </div>
-            <form onsubmit="handleAddComment(event)" name="comment" method="post"
-                  action="{{ path('comment.add',{'id':post.id}) }}"
+            <form onsubmit="handleAddComment(event)" name="comment"
+                  data-action="{{ path('comment.add',{'id':post.id}) }}"
                   class="commentForm">
                 <div class="form-group">
-                    <label class="sr-only required" for="comment_textComment">Commentaire</label>
-                    {# <textarea id="comment_textComment" name="comment[textComment]" required="required"
-                              class="commentForm__textarea form-control"
-                              placeholder="Votre commentaire ..."></textarea>#}
+                    {# <label class="sr-only required" for="comment_textComment">Commentaire</label> #}
                     <input type="text" id="comment_textComment" name="comment[textComment]"
                            required="required"
                            class="commentForm__textarea form-control input-lg"
-                           placeholder="Votre commentaire ...">
+                           placeholder="Votre commentaire ..."
+                           onclick="affiche_comment()"
+                            onblur="afficheplus_comment()">
                 </div>
                 <div class="d-flex justify-content-end">
                     <div class="form-group">
-                        <button type="submit" id="comment_submit-post-{{ post.id }}" name="comment[submit]"
+                        <button type="submit" id="comment_submit-post-{{ post.id }} comment_submit" name="comment[submit]"
                                 class="btn btn-pink btn">Envoyer
                         </button>
                     </div>
@@ -290,3 +289,27 @@
 
 
 </div>
+
+
+<script>
+
+    //fonction d'affichage du bouton submit (form comment)
+    function affiche_comment(){
+        //document.getElementById('comment_submit').style.opacity=1;
+        document.getElementById('comment_submit').disabled="";
+        console.log('ok comment');
+    }
+    function afficheplus_comment(){
+            const str = document.getElementById('comment_textComment').value;
+            console.log(str.length);
+            if (str.length==0) {
+                //document.getElementById('comment_submit').style.opacity=0;
+                //document.getElementById('comment_submit').disabled="true";
+            }
+    }
+
+
+
+
+</script>
+

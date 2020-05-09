@@ -19,7 +19,8 @@ $white: rgba(255,255,255,.34);
 
     .img{
       height: 45px;
-      width: 45px;
+      min-width: 45px;
+      max-width: 45px;
       content:" ";
       border-radius: 100px;
       background-size: cover !important;
@@ -54,8 +55,9 @@ $white: rgba(255,255,255,.34);
       }
     }
 
-    .btn-submit{
-      display: none !important;
+    button{
+      margin:0 !important;
+      opacity: 0;
     }
   }
 }
@@ -82,7 +84,6 @@ $white: rgba(255,255,255,.34);
     display: flex;
     flex-direction: column;
     position: relative;
-    border-radius: 15px;
 
     .header {
       display: flex;
@@ -92,18 +93,23 @@ $white: rgba(255,255,255,.34);
         display: flex;
 
         .img {
-          width: 45px;
+          min-width: 45px;
+          max-width: 45px;
           height: 45px;
           background-size: cover !important;
           background-position: center !important;
           background-repeat: no-repeat !important;
           border-radius: 100px;
+          margin:0 !important;
+          padding: 0 !important;
         }
         button{
           color:$green;
           background-color:transparent;
           border:0px solid black;
           font-size: 1.5em;
+          margin:0 !important;
+          padding:0 !important;
         }
 
         .modal.fade .modal-dialog {
@@ -114,7 +120,6 @@ $white: rgba(255,255,255,.34);
           width: 100%;
           position: absolute !important;
           margin-left: 0;
-          border-top-left-radius: 15px !important;
 
           .modal-header{
             padding:0;
@@ -123,8 +128,6 @@ $white: rgba(255,255,255,.34);
           .modal-content{
             box-shadow: -5px -5px 15px rgba($color: #000000, $alpha: .20);
             padding: 15px;
-            border-top-right-radius: 40px;
-            border-top-left-radius: 40px;
             border:0px solid black;
             padding-bottom: 30px;
 
@@ -151,8 +154,9 @@ $white: rgba(255,255,255,.34);
                 margin-bottom: 20px;
         
                 .img{
-                    height: 50px;
-                    width: 50px;
+                    height: 45px;
+                    min-width: 45px;
+                    max-width: 45px;
                     content: " ";
                     background-size: cover !important;
                     background-position: center !important;
@@ -211,12 +215,9 @@ $white: rgba(255,255,255,.34);
               width: 100%;
               position: absolute !important;
               margin-left: 0;
-              border-top-left-radius: 15px !important;
 
               .modal-content{
                 padding: 15px;
-                border-top-right-radius: 40px;
-                border-top-left-radius: 40px;
                 border:0px solid black;
 
                 .modal-body{
@@ -348,7 +349,8 @@ $white: rgba(255,255,255,.34);
         justify-content: flex-start;
 
         .img {
-          width: 45px;
+          min-width: 45px;
+          max-width: 45px;
           height: 45px;
           background-size: cover !important;
           background-position: center !important;
@@ -394,12 +396,9 @@ $white: rgba(255,255,255,.34);
                 width: 100%;
                 position: absolute !important;
                 margin-left: 0;
-                border-top-left-radius: 15px !important;
   
                 .modal-content{
                   padding: 15px;
-                  border-top-right-radius: 40px;
-                  border-top-left-radius: 40px;
                   border:0px solid black;
   
                   .modal-body{
@@ -468,7 +467,8 @@ $white: rgba(255,255,255,.34);
     flex-direction: row;
 
     .img {
-      width: 55px;
+      min-width: 45px;
+      max-width: 45px;
       height: 45px;
       background-size: cover !important;
       background-position: center !important;
@@ -494,7 +494,7 @@ $white: rgba(255,255,255,.34);
           border-radius: 73px;
           height: 46px!important;
           border:0px black solid;
-          font-size: $small;
+          font-size: $MmediumS;
           padding: 15px !important;
         }
 
@@ -502,6 +502,8 @@ $white: rgba(255,255,255,.34);
           background-color:$green;
           border: black 0px solid;
           border-radius: 50px;
+          font-size: $Msmall;
+          padding:5px 15px 5px 15px;
         }
       }
     }
@@ -578,11 +580,9 @@ $white: rgba(255,255,255,.34);
     left: 0;
     margin-left: 15px;
     margin-right: 15px;
-    width:92vw;
+    width:92.5vw;
     padding:15px;
     border-radius: $radius;
-    // box-shadow: 0px -5px 15px rgba($color: #000000, $alpha: .10);
-    // border-top: 1px solid rgba($color: #000000, $alpha: .40);
   }
 }
 

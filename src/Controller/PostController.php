@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Notification;
 use App\Entity\Post;
 use App\Entity\Comment;
+use App\Entity\User;
 use App\Form\CommentType;
 use App\Form\PostType;
 use App\Mercure\CookieGenerator;
@@ -22,6 +23,7 @@ use Symfony\Component\Mercure\Update;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * Class PostController
@@ -43,12 +45,17 @@ class PostController extends AbstractController
      * @var NotificationService
      */
     private $notificationService;
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
 
-    public function __construct(PostRepository $postRepository, EntityManagerInterface $em, NotificationService $notificationService)
+    public function __construct(PostRepository $postRepository, UserRepository $userRepository, EntityManagerInterface $em, NotificationService $notificationService)
     {
         $this->postRepository = $postRepository;
         $this->em = $em;
         $this->notificationService = $notificationService;
+        $this->userRepository = $userRepository;
     }
 
 
@@ -78,7 +85,7 @@ class PostController extends AbstractController
             //Ajout du post dans l'user
             $user->addPostFollowed($postCurr);
             //Notification pour l'auteur du post
-            $this->notificationService->add($postCurr->getUser(), $message = "vient d'epingler votre post",$postCurr->getUser(),$postCurr);
+            $this->notificationService->add($postCurr->getUser(), $message = "{$postCurr->getUser()} vient d'epingler votre post", $postCurr->getUser(), $postCurr);
 
             $this->em->persist($postCurr, $user);
             $this->em->flush();
@@ -97,7 +104,6 @@ class PostController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
 
-
         //Cree un formulaire
         return $this->render('posts/epingle.html.twig', [
             'controller_name' => 'PostController',
@@ -107,10 +113,10 @@ class PostController extends AbstractController
     /**
      * @Route("/show/{id}", name="show")
      */
-    public function show(PostRepository $postrepo, Request $request,$id, PaginatorInterface $paginator): Response
+    public function show(PostRepository $postrepo, Request $request, $id, PaginatorInterface $paginator): Response
     {
 
-        $postDisplay = $postrepo->find(['id'=>$id]); //On récupère les posts
+        $postDisplay = $postrepo->find(['id' => $id]); //On récupère les posts
 
         $response = $this->render('posts/show.html.twig', [
             'current_menu' => 'posts',
@@ -125,26 +131,66 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/follow", name="follow")
+     * @Route("/follow/{id}", name="follow")
      */
-    public function follow()
+    public function follow($id)
     {
-        //Cree un formulaire
+
+        $user = $this->userRepository->find(['id' => $id]);
+
         return $this->render('follow/follow.html.twig', [
-            'controller_name' => 'FollowhController',
+            'user' => $user
         ]);
     }
 
     /**
-     * @Route("/follower", name="follower")
+     * @Route("/follower/{id}", name="follower")
      */
-    public function follower()
+    public function follower($id)
     {
-        //Cree un formulaire
+        $user = $this->userRepository->find(['id' => $id]);
+
         return $this->render('follow/follower.html.twig', [
-            'controller_name' => 'FollowhController',
+            'user' => $user
+
         ]);
     }
 
+
+    /**
+     * @Route("/add", name="add", methods={"POST"})
+     * @param Request $req
+     * @param Security $security
+     * @return Response
+     * @throws \Exception
+     */
+    public function add(Request $req, PostRepository $postRepo, Security $security)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $user = $this->getUser();
+        $post = new Post();
+
+
+        $post->setFavorite(false)
+            ->setPublished(true)
+            ->setText($req->request->get('request'))
+            ->setUser($user);
+
+        $user->addPostFollowed($post);
+
+        $this->em->persist($post);
+        $this->em->persist($user);
+        $this->em->flush();
+
+
+        //$this->addFlash('success', "Commentaire ajouté avec succés :)");
+        return  $response = $this->render('posts/only-post.html.twig', [
+            'post' => $post,
+
+        ]);
+
+
+    }
 
 }

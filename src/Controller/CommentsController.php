@@ -47,6 +47,9 @@ class CommentsController extends AbstractController
      */
     public function add(Request $req, $id, PostRepository $postRepo, Security $security)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+
         $comment = new Comment();
         $user =$this->getUser();
 
@@ -62,11 +65,11 @@ class CommentsController extends AbstractController
 
 
         //Ajout de la notification au group de gens qui suivent le post
-        foreach ($post->getFollowedBy() as $user) {
-            if ($user == $security->getUser()) {
+        foreach ($post->getFollowedBy() as $userFollorwing) {
+            if ($userFollorwing == $security->getUser()) {
 
             } else {
-                $this->notificationService->add($user, $message = "a commenter sur ce post epinglé",$user,$post);
+                $this->notificationService->add($userFollorwing, $message = "{$user->getUsername()} a commenter sur ce post epinglé",$user,$post);
             }
 
         }
@@ -75,7 +78,7 @@ class CommentsController extends AbstractController
 
 
         //$this->addFlash('success', "Commentaire ajouté avec succés :)");
-       return  $response = $this->render('comment/show.html.twig', [
+       return  $response = $this->render('comment/only-comment.html.twig', [
             'comment' => $comment,
 
         ]);
@@ -117,31 +120,6 @@ class CommentsController extends AbstractController
 
         }
         return new Response;
-    }
-
-    /**
-     * @Route("/post/{post}", name="paginate")
-     * @param Request $request
-     * @param PaginatorInterface $paginator
-     * @param $commentsrepo
-     * @return Response
-     */
-    public function getPaginateComment(Request $request, PaginatorInterface $paginator, CommentRepository $commentsrepo, $post)
-    {
-
-        $commentsToPaginate = $commentsrepo->findByPostField($post); //On récupère les commentaire du post
-        $comments = $paginator->paginate(
-            $commentsToPaginate, //Donnée a paginé
-            $request->query->getInt('page', 1), //Numéros de la page courante est 1 par default
-            5
-        );
-
-        $response = $this->render('comment/index.html.twig', [
-            'current_menu' => 'comments',
-            'comments' => $comments,
-        ]);
-        return $response;
-
     }
 
 }

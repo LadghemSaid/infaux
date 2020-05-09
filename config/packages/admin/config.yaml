@@ -1,13 +1,12 @@
 easy_admin:
-  site_name: "<a href='%kernel.project_dir%'><em style='font-size:2em'>PopWeb</em></a> Administration"
+  site_name: "<a href='%kernel.project_dir%'><em style='font-size:2em'>Infaux</em></a> Administration"
   design:
     templates:
       show: '@EasyAdminExtension/default/show_vertical.html.twig'
   list:
+    collapse_actions: true
     actions:
-
-
       # the 'title' content is displayed when the cursor is over the icon
-      - { name: 'edit', icon: 'pencil', label: false, title: 'Edition' }
-      - { name: 'delete', icon: 'trash', label: false, title: 'Suppression' }
-      - {name: 'voir', icon: 'eye', label: false, css_class: 'btn btn-success' ,}
+      - { name: 'edit', icon: 'pencil', label: false, title: 'Edition',css_class: 'btn btn-secondary'  }
+      - { name: 'delete', icon: 'trash', label: false, title: 'Suppression',css_class: 'btn btn-danger'  }
+      - {name: 'voir', icon: 'eye', label: false, css_class: 'btn btn-success' }
