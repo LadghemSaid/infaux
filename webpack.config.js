@@ -25,6 +25,7 @@ Encore
     .addEntry('app', './assets/js/app.js')
     .addEntry('ajax', './assets/js/ajax.js')
     .addEntry('login', './assets/js/login.js')
+
     .addStyleEntry('main', './assets/css/scss/imports.scss')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
@@ -53,6 +54,11 @@ Encore
             'sass-loader',
         ],
     })
+    .addPlugin(
+        new MiniCssExtractPlugin({
+            filename: Encore.isProduction() ? '[name].[contenthash].css' : '[name].css',
+        }),
+    )
 
     .addPlugin(
         new OptimizeCssAssetsPlugin({
@@ -70,20 +76,18 @@ Encore
             canPrint: true,
         }),
     )
-    .addPlugin(
-        new MiniCssExtractPlugin({
-            filename: Encore.isProduction() ? '[name].[contenthash].css' : '[name].css',
-        }),
-    )
 
 
-    .addPlugin(
-        new PurgeCssPlugin({
-            // folders: ['resources/views/**/*', 'resources/assets/scss/'],
-            paths: glob.sync([path.join(__dirname, 'templates/**/*.html.twig')]),
-            whitelistPatterns: [],
-        }),
-    )
+
+    // .addPlugin(
+    //     new PurgeCssPlugin({
+    //         // folders: ['resources/views/**/*', 'resources/assets/scss/'],
+    //         paths: glob.sync([path.join(__dirname, 'templates/**/*.html.twig')]),
+    //         whitelistPatterns: [],
+    //     }),
+    // )
+
+
     .addPlugin(
         new WorkboxPlugin.GenerateSW({
             // these options encourage the ServiceWorkers to get in there fast

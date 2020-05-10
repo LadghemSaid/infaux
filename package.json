@@ -28,6 +28,7 @@
         "purgecss-webpack-plugin": "^2.1.2",
         "swup": "^2.0.9",
         "toastify-js": "^1.7.0",
+        "turbolinks": "^5.2.0",
         "vue": "^2.6.11",
         "vue-loader": "^15.9.2",
         "vue-router": "^3.1.6",

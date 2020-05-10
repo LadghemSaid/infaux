@@ -7,35 +7,38 @@ import Blank from "./components/Right/Blank";
 import Right from "./components/Right/Right";
 
 
+if ($("#app").length) {
+
+    Vue.use(VueRouter)
+
+    const routes = [
+        {
+            name: 'blank',
+            path: '/',
+            component: Blank
+        },
+        {
+            name: 'conversation',
+            path: '/conversation/:id',
+            component: Right
+        }
+    ];
+
+    const router = new VueRouter({
+        mode: "abstract",
+        routes
+    })
 
 
-Vue.use(VueRouter)
+    store.commit("SET_MERCURETOKEN", document.querySelector('#app').dataset.token);
+    store.commit("SET_USERNAME", document.querySelector('#app').dataset.username);
 
-const routes = [
-    {
-        name: 'blank',
-        path: '/',
-        component: Blank
-    },
-    {
-        name: 'conversation',
-        path: '/conversation/:id',
-        component: Right
-    }
-];
 
-const router = new VueRouter({
-    mode: "abstract",
-    routes
-})
+    new Vue({
+        store,
+        router,
+        render: h => h(App)
+    }).$mount('#app')
 
-store.commit("SET_USERNAME", document.querySelector('#app').dataset.username);
-store.commit("SET_MERCURETOKEN", document.querySelector('#app').dataset.token);
-
-new Vue({
-    store,
-    router,
-    render: h => h(App)
-}).$mount('#app')
-
-router.replace('/')
+    router.replace('/')
+}
