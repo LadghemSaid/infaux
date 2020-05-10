@@ -19,9 +19,9 @@ $white: rgba(255,255,255,.34);
 
     .div_img{
       .img{
-        height: 45px;
-        min-width: 45px;
-        max-width: 45px;
+        height: 40px;
+        min-width: 40px;
+        max-width: 40px;
         content:" ";
         border-radius: 100px;
         background-size: cover !important;
@@ -93,10 +93,10 @@ $white: rgba(255,255,255,.34);
         }
 
 .post-container {
+  color:$dark-grey;
   font-family: 'Poppins', sans-serif;
   display: flex;
   flex-direction: column;
-  color:black;
   background-color: $grey;
   border-radius: 24px;
   padding-top: 15px;
@@ -120,11 +120,13 @@ $white: rgba(255,255,255,.34);
    
       .top{
         display: flex;
+        height: 40px;
+        margin-bottom: 13px;
 
         .img {
-          min-width: 45px;
-          max-width: 45px;
-          height: 45px;
+          min-width: 40px;
+          max-width: 40px;
+          height: 40px;
           background-size: cover !important;
           background-position: center !important;
           background-repeat: no-repeat !important;
@@ -183,9 +185,9 @@ $white: rgba(255,255,255,.34);
                 margin-bottom: 20px;
         
                 .img{
-                    height: 45px;
-                    min-width: 45px;
-                    max-width: 45px;
+                    height: 40px;
+                    min-width: 40px;
+                    max-width: 40px;
                     content: " ";
                     background-size: cover !important;
                     background-position: center !important;
@@ -223,6 +225,7 @@ $white: rgba(255,255,255,.34);
 
             .date{
                 color: rgba($color: #000000, $alpha: .34); 
+                font-size: $Mtiny;
             }
           }
 
@@ -282,6 +285,8 @@ $white: rgba(255,255,255,.34);
 
       .text {
         line-height: 150% !important;
+        font-size: $MmediumS;
+        font-style: $light;
       }
 
       .actions{
@@ -292,6 +297,7 @@ $white: rgba(255,255,255,.34);
         justify-content: space-between;
         border-bottom: rgba($color: #707070, $alpha: .46) 1px solid;
         margin-bottom: 20px;
+        padding-bottom: 10px;
 
         .icons {
             display: flex;
@@ -379,9 +385,9 @@ $white: rgba(255,255,255,.34);
         justify-content: flex-start;
 
         .img {
-          min-width: 45px;
-          max-width: 45px;
-          height: 45px;
+          min-width: 40px;
+          max-width: 40px;
+          height: 40px;
           background-size: cover !important;
           background-position: center !important;
           background-repeat: no-repeat !important;
@@ -496,9 +502,9 @@ $white: rgba(255,255,255,.34);
     flex-direction: row;
 
     .img {
-      min-width: 45px;
-      max-width: 45px;
-      height: 45px;
+      min-width: 40px;
+      max-width: 40px;
+      height: 40px;
       background-size: cover !important;
       background-position: center !important;
       background-repeat: no-repeat !important;

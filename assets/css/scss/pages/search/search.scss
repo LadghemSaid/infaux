@@ -6,6 +6,11 @@
         margin-right: 10px;
     }
 
+    h3{
+        font-size: $Mlarge;
+        font-weight: bold;
+    }
+
     .input-group-text {
         background-color: transparent;
         border: none;
@@ -52,7 +57,7 @@
         background-color: #e6e6e6;
         border-radius: 40px;
         height: 60px;
-        padding: 10px 20px;
+        padding: 10px 11px;
         }
 
         .compte-picture {
@@ -73,7 +78,7 @@
     .post {
         .single-post {
         background-color: #e6e6e6;
-        border-radius: 40px;
+        border-radius: $radius;
         padding: 15px 20px;
         color: $dark-grey;
 
