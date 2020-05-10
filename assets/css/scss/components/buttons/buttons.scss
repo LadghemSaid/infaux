@@ -1,7 +1,9 @@
+$radiusBtn: 22px;
+
 .btn-black {
   background-color: transparent;
   border: black solid 1px;
-  border-radius: 22px;
+  border-radius: $radiusBtn;
   color: black;
   font-size: 15px;
   padding: 8px 18px;
@@ -10,7 +12,7 @@
 .btn-black:hover {
   background-color: black;
   border: black solid 1px;
-  border-radius: 22px;
+  border-radius: $radiusBtn;
   color: white;
   font-size: 15px;
   padding: 8px 18px;
@@ -20,7 +22,7 @@
 .btn-green:hover {
   background-color: $green !important;
   border: none;
-  border-radius: 22px;
+  border-radius: $radiusBtn;
   color: $black;
   font-size: 15px;
   padding: 8px 18px;
@@ -38,7 +40,7 @@
 .btn-border-green:hover {
   background-color: $green !important;
   border: $green solid 1px;
-  border-radius: 22px;
+  border-radius: $radiusBtn;
   color: $black;
   font-size: 15px;
   padding: 8px 18px;
@@ -47,7 +49,7 @@
 .btn-border-green {
   background-color: transparent !important;
   border: $green solid 1px;
-  border-radius: 22px;
+  border-radius: $radiusBtn;
   color: black;
   font-size: 15px;
   padding: 8px 18px;

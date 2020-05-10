@@ -133,7 +133,7 @@ iframe {
 .wrap-login {
   width: 390px;
   background: $fade-white-3;
-  border-radius: 24px;
+  border-radius: $radius;
   overflow: hidden;
   padding: 33px 55px 33px 55px;
 
@@ -301,7 +301,7 @@ iframe {
   display: block;
   position: relative;
   z-index: 1;
-  border-radius: 25px;
+  border-radius: $radius;
   overflow: hidden;
   margin: 0 auto;
 }
