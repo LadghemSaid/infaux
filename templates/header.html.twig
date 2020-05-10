@@ -29,7 +29,7 @@
         {% if app.user %}
             <div class="mobile-bottom-nav__item">
                 <div class="mobile-bottom-nav__item-content">
-                    <a href="{{ path('notification') }}" class="header-notfication-bell"><i class="icon-bell"></i>
+                    <a href="{{ path('notification.index') }}" class="header-notfication-bell"><i class="icon-bell"></i>
                         {% if app.user.notificationNotSeen | length >= 1 %}
                             <span class="number_notif notif">{{ app.user.notificationNotSeen | length }}</span>
                         {% endif %}
@@ -101,7 +101,7 @@
 
                             {% endif %}
                             {% if app.user %}
-                            <a id="header-notfication-bell" href="{{ path('notification') }}" class="mt-30 mt-30Mobile">Notifications
+                            <a id="header-notfication-bell" href="{{ path('notification.index') }}" class="mt-30 mt-30Mobile">Notifications
                                 {% if app.user.notificationNotSeen | length >= 1 %}
                                     (<span class="number_notif">{{ app.user.notificationNotSeen | length }}</span>)</a>
                                 {% endif %}

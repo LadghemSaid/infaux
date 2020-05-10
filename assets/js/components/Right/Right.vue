@@ -45,16 +45,9 @@
                     this.scrollDown();
                     if (this.eventSource === null) {
                         let url = new URL(this.HUBURL);
-                        console.log("l48:",url)
                         url.searchParams.append('topic', `/conversations/${this.$route.params.id}`)
 
-                        /*
-                        this.eventSource = new EventSource(url, {
-                            withCredentials: true
-                        })
-                        */
-                        const newUrl = "https://s-website.ga/.well-known/mercure?topic=/conversations/1"
-                        const eventSource = new EventSourcePolyfill(newUrl, {
+                        const eventSource = new EventSourcePolyfill(url, {
                             headers: {
                                 'Authorization': `Bearer ${this.MERCURETOKEN}`,
                             }
@@ -65,7 +58,7 @@
                             vm.addMessage(JSON.parse(event.data))
                         }
                         eventSource.onerror = function (event) {
-                            console.log('message recu');
+                            console.log('message erreur');
                         }
                     }
 

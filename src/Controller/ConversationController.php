@@ -34,7 +34,7 @@ class ConversationController extends AbstractController
 
     public function __construct(UserRepository $userRepository,
                                 EntityManagerInterface $entityManager,
-ConversationRepository $conversationRepository)
+                                ConversationRepository $conversationRepository)
     {
         $this->userRepository = $userRepository;
         $this->entityManager = $entityManager;
@@ -42,17 +42,18 @@ ConversationRepository $conversationRepository)
     }
 
     /**
-     * @Route("/", name="newConversations", methods={"POST"})
+     * @Route("/add/{username}", name="newConversations", methods={"POST"})
      * @param Request $request
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Exception
      */
-    public function index(Request $request)
+    public function add(Request $request, $username)
     {
         //$otherUser = $request->get('otherUser', 0);
 
-        $otherUser =     $request->query->get('id',0);
-        $otherUser = $this->userRepository->find($otherUser);
+        // $otherUser =     $request->query->get('id',0);
+        $otherUser = $this->userRepository->findBy(['username' => $username])[0];
+
 
         if (is_null($otherUser)) {
             throw new \Exception("The user was not found");
@@ -101,9 +102,7 @@ ConversationRepository $conversationRepository)
         }
 
 
-        return $this->json([
-            'id' => $conversation->getId()
-        ], Response::HTTP_CREATED, [], []);
+        return $this->redirectToRoute('index.chat');
     }
 
 
@@ -112,9 +111,10 @@ ConversationRepository $conversationRepository)
      * @param Request $request
      * @return JsonResponse
      */
-    public function getConvs(Request $request) {
+    public function getConvs(Request $request)
+    {
         $conversations = $this->conversationRepository->findConversationsByUser($this->getUser()->getId());
-        
+
         $hubUrl = $this->getParameter('mercure.default_hub');
 
         $request->headers->set('Content-Type', 'ok mdr');
@@ -124,26 +124,17 @@ ConversationRepository $conversationRepository)
         return $this->json($conversations);
     }
 
-    /**
-     * @Route("/add", name="add", methods={"POST"})
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function add(Request $request) {
-
-        dd();
-        $this->redirectToRoute('conversations.newConversations',['']);
-    }
 
     /**
-     * @Route("/delete", name="delete", methods={"POST"})
+     * @Route("/delete/{username}", name="delete", methods={"POST"})
      * @param Request $request
-     * @return JsonResponse
+     * @return Response
      */
-    public function delete(Request $request) {
+    public function delete(Request $request, $username)
+    {
 
-        $otherUser =     $request->query->get('id',0);
-        $otherUser = $this->userRepository->find($otherUser);
+        //$otherUser =     $request->query->get('username',0);
+        $otherUser = $this->userRepository->findBy(['username' => $username])[0];
         $user = $this->getUser();
 
         $conversation = $this->conversationRepository->findConversationsByUser(
@@ -151,11 +142,12 @@ ConversationRepository $conversationRepository)
 
         );
 
-        foreach ($conversation as $conv){
-            if($conv['username'] === $user->getUsername()){
-                $convToDelete = $this->conversationRepository->findBy(['id'=>$conv['conversationId']]);
+        foreach ($conversation as $conv) {
+            if ($conv['username'] === $user->getUsername()) {
+                $convToDelete = $this->conversationRepository->findBy(['id' => $conv['conversationId']]);
                 $this->entityManager->remove($convToDelete[0]);
                 $this->entityManager->flush();
+                return new Response("-1");
             }
         }
 

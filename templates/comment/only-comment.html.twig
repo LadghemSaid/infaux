@@ -55,6 +55,9 @@
                                             <span class="followStatus">Suivre</span>
 
                                         </div>
+                                        <form method="post" action="{{ path('conversations.newConversations',{'username': (comment.user.username) ?? 'anonyme' }) }}">
+                                            <button class="btn btn-black" type="submit">Envoyer un message privé</button>
+                                        </form>
                                     {% endif %}
                                 {% else %}
                                     <div class="lien_profil"><a

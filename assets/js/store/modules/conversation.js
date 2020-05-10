@@ -20,6 +20,10 @@ export default {
         SET_CONVERSATIONS: (state, payload) => {
             state.conversations = payload
         },
+        DELETE_CONVERSATION: (state, payload) => {
+            var index = state.conversations.findIndex(c => c.conversationId === payload.conversationId);
+            state.conversations.splice(index, 1);
+        },
         SET_MESSAGES: (state, {conversationId, payload}) => {
             Vue.set(
                 state.conversations.find(i => i.conversationId === conversationId),

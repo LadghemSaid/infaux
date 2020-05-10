@@ -26,13 +26,13 @@ class Conversation
     private $participants;
 
     /**
-     * @ORM\OneToOne(targetEntity="Message"  ,cascade={"remove"})
-     * @ORM\JoinColumn(name="last_message_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Message", mappedBy="id", cascade={"remove"} )
+     * @ORM\JoinColumn(name="last_message_id", referencedColumnName="id", nullable=true, onDelete="delete")
      */
     private $lastMessage;
 
     /**
-     * @ORM\OneToMany(targetEntity="Message", mappedBy="conversation",cascade={"remove"} )
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="conversation",cascade={"remove"})
      */
     private $messages;
 

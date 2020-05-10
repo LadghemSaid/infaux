@@ -32,7 +32,7 @@ class Message
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Conversation", inversedBy="messages" ,cascade={"remove"} )
+     * @ORM\ManyToOne(targetEntity="Conversation", inversedBy="messages", cascade={"remove"} )
      */
     private $conversation;
 

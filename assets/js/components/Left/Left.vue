@@ -39,30 +39,22 @@
                     let url = new URL(this.HUBURL);
                     url.searchParams.append('topic', `/conversations/${this.USERNAME}`)
 
-                    /*
-                    const eventSource = new EventSource(url, {
-                        withCredentials: true
-                    })
+                 //  console.log(this.HUBURL)
+                 //  console.log(this.USERNAME)
+                 //  console.log(this.MERCURETOKEN)
 
-*/
-                    console.log(this.HUBURL)
-                    console.log(this.USERNAME)
-                    console.log(this.MERCURETOKEN)
-                    const newUrl = "https://s-website.ga/.well-known/mercure?topic=/conversations/"+this.USERNAME;
-
-                    const eventSource = new EventSourcePolyfill(newUrl, {
+                    const eventSource = new EventSourcePolyfill(url, {
                         headers: {
                             'Authorization': `Bearer ${this.MERCURETOKEN}`,
                         }
                     }, {withCredentials: false});
-                    console.log(eventSource);
 
                     eventSource.onmessage = function (event) {
                         console.log('message recu');
                         vm.updateConversations(JSON.parse(event.data))
                     }
                     eventSource.onerror = function (event) {
-                        console.log('message recu');
+                        console.log('message erreur');
                     }
 
                 })

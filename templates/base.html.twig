@@ -117,13 +117,13 @@
     <script>
 
 
-/*
+
         navigator.serviceWorker.register('/sw.js', {scope: '/'}).then(function (registration) {
             console.log("sw registred :", registration);
         }).catch(registrationError => {
             console.log("registration sw error:", registrationError)
         });
-*/
+
 
 
         const url = new URL('{{ mercure_publish_url }}');
@@ -183,7 +183,9 @@
 {% endif %}
 
 
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+
+{% endblock %}
 
 </body>
 </html>

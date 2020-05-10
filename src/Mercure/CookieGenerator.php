@@ -36,7 +36,12 @@ class CookieGenerator
         $username =$user->getUsername();
 
         $token = (new Builder())
-            ->withClaim('mercure', ['subscribe' => [sprintf("/%s", $username)]])
+            ->withClaim('mercure', [
+                'subscribe' => [
+                    sprintf("/%s", $username),
+                    "/user/{$user->getId()}"
+
+                ]])
 
             // ->withClaim('mercure', ['subscribe' => ["/user/{$user->getId()}"]])
             ->getToken(new Sha256(), new Key($this->secret));
