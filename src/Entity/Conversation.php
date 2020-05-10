@@ -27,7 +27,7 @@ class Conversation
 
     /**
      * @ORM\OneToOne(targetEntity="Message", mappedBy="id", cascade={"remove"} )
-     * @ORM\JoinColumn(name="last_message_id", referencedColumnName="id", nullable=true, onDelete="delete")
+     * @ORM\JoinColumn(name="last_message_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     private $lastMessage;
 
