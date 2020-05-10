@@ -87,7 +87,6 @@
 ></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"
 ></script>
-{{ encore_entry_script_tags('eventSource') }}
 
 
 <script>
@@ -102,8 +101,6 @@
     });
 
 
-
-
     var btn = $('#scrollToTop');
 
     btn.on('click', function (e) {
@@ -114,30 +111,29 @@
 </script>
 
 
-
 {% if app.user %}
+    {{ encore_entry_script_tags('eventSource') }}
 
     <script>
 
-        const url = new URL('{{ mercure_publish_url }}');
-        url.searchParams.append('topic', '/message');
 
-
-
-    //    navigator.serviceWorker.register('/service-worker.js', {scope: '/'}).then(function(registration){
-        navigator.serviceWorker.register('/sw.js', {scope: '/'}).then(function(registration){
+/*
+        navigator.serviceWorker.register('/sw.js', {scope: '/'}).then(function (registration) {
             console.log("sw registred :", registration);
         }).catch(registrationError => {
             console.log("registration sw error:", registrationError)
         });
+*/
 
+
+        const url = new URL('{{ mercure_publish_url }}');
+        url.searchParams.append('topic', '/message');
 
         const eventSource = new EventSourcePolyfill(url, {
             headers: {
                 'Authorization': 'Bearer {{ token_generator.generateToken(app.user) }}',
             }
         }, {withCredentials: true});
-
 
         Notification.requestPermission(function (result) {
             if (result === 'granted') {
@@ -148,18 +144,13 @@
                         if (!data.message) {
                             return;
                         }
-                        if($('.number_notif').length > 0){
+                        if ($('.number_notif').length > 0) {
                             $('.number_notif')[0].innerText++;
-                        }else{
+                        } else {
                             $('.header-notfication-bell').html("<i class='icon-bell'></i><span class='number_notif notif'>1</span>")
                         }
 
-                        eventSource.onmessage = (evt) => {
-                            const data = JSON.parse(evt.data);
-                            if (!data.message) {
-                                return;
-                            }
-                        }
+
                         //  notifyMe(data.message);
                         Toastify({
                             text: "Tu as reçu une notifications !",

@@ -6,6 +6,9 @@ import App from "./components/App.vue";
 import Blank from "./components/Right/Blank";
 import Right from "./components/Right/Right";
 
+
+
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -27,6 +30,7 @@ const router = new VueRouter({
 })
 
 store.commit("SET_USERNAME", document.querySelector('#app').dataset.username);
+store.commit("SET_MERCURETOKEN", document.querySelector('#app').dataset.token);
 
 new Vue({
     store,

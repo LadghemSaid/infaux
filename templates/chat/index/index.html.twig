@@ -1,11 +1,27 @@
-{% extends 'base.html.twig' %}
+{% extends '/base.html.twig' %}
 
-{% block title %}Hello IndexController!{% endblock %}
+{% block title %}Chat{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
 {% block body %}
-    <div id="app" data-username="{{ app.user.username }}"></div>
+    <div class="container" style="margin-top: 100px">
+        <div id="app" data-token="{{ token_generator.generateToken(app.user) }}"  data-username="{{ app.user.username }}" ></div>
+
+        <form method="post" action="{{ path('conversations.newConversations',{'id': 22}) }}">
+            <button type="submit">Crée une conversation avec user</button>
+        </form>
+        <form method="post" action="{{ path('conversations.delete',{'id': 22}) }}">
+            <button type="submit">Supprimer la conversation avec user</button>
+        </form>
+    </div>
+
 {% endblock %}
 
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
+
+
 {% endblock %}

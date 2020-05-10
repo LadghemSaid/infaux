@@ -44,6 +44,7 @@ export default {
     },
     actions: {
         GET_CONVERSATIONS: ({commit}) => {
+
             return fetch(`/conversations`)
                 .then(result => {
                     const hubUrl = result.headers.get('Link').match(/<([^>]+)>;\s+rel=(?:mercure|"[^"]*mercure[^"]*")/)[1]

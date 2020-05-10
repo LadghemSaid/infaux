@@ -49,7 +49,9 @@ ConversationRepository $conversationRepository)
      */
     public function index(Request $request)
     {
-        $otherUser = $request->get('otherUser', 0);
+        //$otherUser = $request->get('otherUser', 0);
+
+        $otherUser =     $request->query->get('id',0);
         $otherUser = $this->userRepository->find($otherUser);
 
         if (is_null($otherUser)) {
@@ -57,9 +59,11 @@ ConversationRepository $conversationRepository)
         }
 
         // cannot create a conversation with myself
+
         if ($otherUser->getId() === $this->getUser()->getId()) {
             throw new \Exception("That's deep but you cannot create a conversation with yourself");
         }
+
 
         // Check if conversation already exists
         $conversation = $this->conversationRepository->findConversationByParticipants(
@@ -113,8 +117,48 @@ ConversationRepository $conversationRepository)
         
         $hubUrl = $this->getParameter('mercure.default_hub');
 
+        $request->headers->set('Content-Type', 'ok mdr');
+
         $this->addLink($request, new Link('mercure', $hubUrl));
+
         return $this->json($conversations);
+    }
+
+    /**
+     * @Route("/add", name="add", methods={"POST"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function add(Request $request) {
+
+        dd();
+        $this->redirectToRoute('conversations.newConversations',['']);
+    }
+
+    /**
+     * @Route("/delete", name="delete", methods={"POST"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function delete(Request $request) {
+
+        $otherUser =     $request->query->get('id',0);
+        $otherUser = $this->userRepository->find($otherUser);
+        $user = $this->getUser();
+
+        $conversation = $this->conversationRepository->findConversationsByUser(
+            $otherUser->getId()
+
+        );
+
+        foreach ($conversation as $conv){
+            if($conv['username'] === $user->getUsername()){
+                $convToDelete = $this->conversationRepository->findBy(['id'=>$conv['conversationId']]);
+                $this->entityManager->remove($convToDelete[0]);
+                $this->entityManager->flush();
+            }
+        }
+
     }
 
 }

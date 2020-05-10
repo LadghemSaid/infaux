@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Index;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\MessageRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\MessageRepository" )
  * @ORM\Table(indexes={@Index(name="created_at_index", columns={"created_at"})})
  * @ORM\HasLifecycleCallbacks()
  */
@@ -27,12 +27,12 @@ class Message
     private $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="messages" )
      */
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Conversation", inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity="Conversation", inversedBy="messages" ,cascade={"remove"} )
      */
     private $conversation;
 

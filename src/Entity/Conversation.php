@@ -21,18 +21,18 @@ class Conversation
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Participant", mappedBy="conversation")
+     * @ORM\OneToMany(targetEntity="Participant", mappedBy="conversation" ,cascade={"remove"})
      */
     private $participants;
 
     /**
-     * @ORM\OneToOne(targetEntity="Message")
+     * @ORM\OneToOne(targetEntity="Message"  ,cascade={"remove"})
      * @ORM\JoinColumn(name="last_message_id", referencedColumnName="id")
      */
     private $lastMessage;
 
     /**
-     * @ORM\OneToMany(targetEntity="Message", mappedBy="conversation")
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="conversation",cascade={"remove"} )
      */
     private $messages;
 

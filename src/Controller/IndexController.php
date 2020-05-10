@@ -80,6 +80,8 @@ class IndexController extends AbstractController
      */
     public function indexChat()
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         return $this->render('chat/index/index.html.twig', [
             'current_menu' => 'chat',
 

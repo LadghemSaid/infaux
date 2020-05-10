@@ -21,10 +21,11 @@
     import {mapGetters} from 'vuex';
     import Conversation from "./Conversation";
 
+
     export default {
         components: {Conversation},
         computed: {
-          ...mapGetters(["CONVERSATIONS", "HUBURL", "USERNAME"])
+          ...mapGetters(["CONVERSATIONS", "HUBURL", "USERNAME","MERCURETOKEN"])
         },
         methods: {
             updateConversations(data) {
@@ -37,13 +38,33 @@
                 .then(() => {
                     let url = new URL(this.HUBURL);
                     url.searchParams.append('topic', `/conversations/${this.USERNAME}`)
+
+                    /*
                     const eventSource = new EventSource(url, {
                         withCredentials: true
                     })
 
+*/
+                    console.log(this.HUBURL)
+                    console.log(this.USERNAME)
+                    console.log(this.MERCURETOKEN)
+                    const newUrl = "https://s-website.ga/.well-known/mercure?topic=/conversations/"+this.USERNAME;
+
+                    const eventSource = new EventSourcePolyfill(newUrl, {
+                        headers: {
+                            'Authorization': `Bearer ${this.MERCURETOKEN}`,
+                        }
+                    }, {withCredentials: false});
+                    console.log(eventSource);
+
                     eventSource.onmessage = function (event) {
+                        console.log('message recu');
                         vm.updateConversations(JSON.parse(event.data))
                     }
+                    eventSource.onerror = function (event) {
+                        console.log('message recu');
+                    }
+
                 })
         }
     }

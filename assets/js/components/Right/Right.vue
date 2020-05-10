@@ -15,13 +15,14 @@
     import Message from "./Message";
     import Input from "./Input";
 
+
     export default {
         data: () => ({
             eventSource: null
         }),
         components: {Message, Input},
         computed: {
-            ...mapGetters(["HUBURL"]),
+            ...mapGetters(["HUBURL","MERCURETOKEN"]),
             MESSAGES() {
                 return this.$store.getters.MESSAGES(this.$route.params.id);
             }
@@ -44,13 +45,27 @@
                     this.scrollDown();
                     if (this.eventSource === null) {
                         let url = new URL(this.HUBURL);
+                        console.log("l48:",url)
                         url.searchParams.append('topic', `/conversations/${this.$route.params.id}`)
+
+                        /*
                         this.eventSource = new EventSource(url, {
                             withCredentials: true
                         })
+                        */
+                        const newUrl = "https://s-website.ga/.well-known/mercure?topic=/conversations/1"
+                        const eventSource = new EventSourcePolyfill(newUrl, {
+                            headers: {
+                                'Authorization': `Bearer ${this.MERCURETOKEN}`,
+                            }
+                        }, {withCredentials: false});
 
-                        this.eventSource.onmessage = function (event) {
+                        eventSource.onmessage = function (event) {
+                            console.log('test');
                             vm.addMessage(JSON.parse(event.data))
+                        }
+                        eventSource.onerror = function (event) {
+                            console.log('message recu');
                         }
                     }
 
