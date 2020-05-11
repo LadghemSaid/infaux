@@ -106,6 +106,18 @@
                                                             class="number ">Signaler ce contenu</span>
                                                 </div>
                                             </div>
+
+                                            {% if  app.user == comment.user %}
+                                                <div class="icons">
+                                                    <div onclick="handleDeleteComment(event)"
+                                                         data-action="{{ path('comment.delete',{'comment': comment.id} ) }}"
+                                                         class="deleteForm">
+
+                                                        <i class="icon-blocked"></i><span class="number ">Suprimer</span>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+
                                         </div>
                                     </div>
                                 </div>

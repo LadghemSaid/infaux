@@ -44,6 +44,7 @@
                                         <div class="lien_profil"><a
                                                     href="{{ path('account.show',{'id': post.user.id} ) }}">Voir mon
                                                 profil</a></div>
+
                                     {% else %}
                                         <div class="lien_profil"><a
                                                     href="{{ path('account.show',{'id': post.user.id} ) }}">Voir le
@@ -115,6 +116,17 @@
 
                                                     </div>
                                                 </div>
+
+                                            {% if  app.user == post.user %}
+                                                <div class="icons">
+                                                    <div onclick="handleDeletePost(event)"
+                                                         data-action="{{ path('post.delete',{'post': post.id} ) }}"
+                                                         class="deleteForm">
+
+                                                        <i class="icon-blocked"></i><span class="number ">Suprimer</span>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
                                             {% endif %}
                                             <div class="icons">
                                                 <div onclick="handleAddReport(event)"

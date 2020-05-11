@@ -193,4 +193,24 @@ class PostController extends AbstractController
 
     }
 
+
+
+    /**
+     * @Route("/delete/{post}", name="delete", methods={"GET"})
+     */
+    public function delete(Post $post, Security $security, Request $req)
+    {
+        if ($security->getUser() === $post->getUser()) {
+
+            $this->em->remove($post);
+            $this->em->flush();
+
+            return new Response("-1");
+        } else {
+            return new Response("-0");
+
+        }
+
+    }
+
 }

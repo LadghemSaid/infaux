@@ -39,7 +39,9 @@ class Notification
     private $byUser;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Post")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Post" )
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+
      */
     private $byPost;
 
@@ -50,6 +52,7 @@ class Notification
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Comment")
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $byComment;
 
