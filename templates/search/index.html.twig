@@ -40,6 +40,21 @@ gtag('config', 'UA-107718823-2');
 
 {% block body %}
 
+<div class="search container mt-100">
+
+<h1>Votre recherche</h1>
+	<div class="form-group">
+		{% form_theme searchForm 'bootstrap_4_layout.html.twig' %}
+		{{ form_start(searchForm) }}
+		{{ form_row(searchForm.text, {'label': "", 'attr' : {'placeholder' : 'mot clé...'}}) }}
+		<button class="btn btn-primary">rechercher</button>
+		{{ form_end(searchForm) }}
+	</div>
+</div>
+
+
+
+{#	CODE POPWEB#}
 	<div class="search container mt-100">
 		<h1 class="title">
 			<i class="icon-search"></i>
@@ -50,7 +65,7 @@ gtag('config', 'UA-107718823-2');
 					<i class="icon-search"></i>
 				</span>
 			</div>
-			<input class="form-control" placeholder="Rechercher..."></input>
+			<input class="form-control" placeholder="Rechercher..."/>
 	</div>
 	<div class="d-flex justify-content-end">
 		<a href="" class="btn-search">Rechercher</a>
