@@ -47,19 +47,43 @@ class IndexController extends AbstractController
     public function index(PostRepository $postrepo, Request $request, PaginatorInterface $paginator): Response
     {
 
-        $posts = $postrepo->findAllDesc(); //On récupère les posts
-        $user =$this->getUser();
+        $user = $this->getUser();
+
+        switch ($user ? $user->getDisplaySetting() : '') {
+
+            case 'popular':
+                $posts = $postrepo->findAllByLikes(); //On récupère les posts dans l'ordre des likes
+
+                break;
+
+            case 'recent':
+                $posts = $postrepo->findAllDesc(); //On récupère les posts dans l'ordre de creation
+
+                break;
+
+
+            case 'friends':
+                $friends = $user->getFriends();
+                $posts = [];
+                foreach ($friends as $friend) {
+                    foreach ($friend->getPosts() as $post){
+
+                        array_push($posts,$post );
+                    }
+                }
+                break;
+
+            default:
+                $posts = $postrepo->findAllDesc(); //On récupère les posts dans l'ordre de creation
+
+                break;
+        }
 
         $posts = $paginator->paginate(
             $posts, //Donnée a paginé
             $request->query->getInt('page', 1), //Numéros de la page courante est 1 par default
-        3
+            3
         );
-
-
-
-
-
 
         $response = $this->render('posts/index.html.twig', [
             'current_menu' => 'posts',
@@ -147,7 +171,6 @@ class IndexController extends AbstractController
             'hostname' => $hostname
         ]);
     }
-
 
 
 }

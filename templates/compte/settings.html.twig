@@ -246,7 +246,20 @@ gtag('config', 'UA-107718823-2');
 
                 <div class="group">
                     <p class="item">Voir les posts</p>
-                    <p class="mb-0">Les plus populaires</p>
+                    {% if user.displaySetting == "recent" %}
+                        <p class="mb-0">Les plus recents</p>
+
+                    {% elseif  user.displaySetting == "popular" %}
+                        <p class="mb-0">Les plus populaires</p>
+
+                    {% elseif  user.displaySetting == "friends" %}
+                        <p class="mb-0">De mes abonnements</p>
+
+
+                    {% else %}
+                        <p class="mb-0">Error</p>
+                    {% endif %}
+
                     <!-- Button  modifier la email -->
                         <button type="button" class="btn modifier" data-toggle="modal" data-target="#voir-les-posts">
                             Modifier

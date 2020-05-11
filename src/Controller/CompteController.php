@@ -143,8 +143,8 @@ class CompteController extends AbstractController
         $formDisplaySetting = $this->get('form.factory')->createNamedBuilder('formDisplaySetting')
             ->add('displaySetting', ChoiceType::class, [
                 'choices' => [
-                    'Les plus populaires' => 'recent',
-                    'Les plus recents' => 'popular',
+                    'Les plus populaires' => 'popular',
+                    'Les plus recents' => 'recent',
                     'De mes abonnements' => 'friends',
                 ],
             ])
@@ -172,7 +172,6 @@ class CompteController extends AbstractController
 
         $formMdp->handleRequest($request);
         if ($formMdp->isSubmitted() && $formMdp->isValid()) {
-            dd('ok2');
             $actualPassword = $formMdp->get("actualPassword")->getData();
             $newPassword = $formMdp->get("newPassword")->getData();
             if ($actualPassword !== "**********") {
@@ -208,7 +207,12 @@ class CompteController extends AbstractController
 
         $formDisplaySetting->handleRequest($request);
         if ($formDisplaySetting->isSubmitted() && $formDisplaySetting->isValid()) {
-            dd('ok4');
+            $user->setDisplaySetting($formDisplaySetting->get('displaySetting')->getData());
+            $this->em->persist($user);
+            $this->em->flush();
+            $this->addFlash('success', 'Modification enregistrer avec succés');
+
+            return $this->redirectToRoute('account.settings');
         }
 
         $formVisibility->handleRequest($request);

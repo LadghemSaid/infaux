@@ -6,6 +6,7 @@ use App\Entity\Post;
 use Doctrine\ORM\Query\Expr;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * @method Post|null find($id, $lockMode = null, $lockVersion = null)
@@ -53,9 +54,26 @@ class PostRepository extends ServiceEntityRepository
 
 
         return $this->createQueryBuilder('p')
-            ->andWhere('p.published = 1' )
+            ->andWhere('p.published = 1')
             ->orderBy('p.createdAt', 'DESC')
             ->getQuery()
             ->getResult();
     }
+
+    public function findAllByLikes()
+    {
+
+        // SELECT *,COUNT(p.id) compteur FROM `post` p INNER JOIN liketable l ON p.id = l.post_id GROUP BY l.post_id
+        $qb = $this->createQueryBuilder('p');
+        $qb->select('p')
+            ->innerJoin(' App\Entity\Like', 'l', Join::WITH, $qb->expr()->eq('p.id', 'l.post'))
+            ->where('p.published = 1')
+            ->groupBy('l.post')
+            ->orderBy('COUNT(p.id)', 'DESC');
+
+        return $qb->getQuery()->getResult();;
+
+    }
+
+
 }

@@ -49,7 +49,7 @@ class AppRuntime implements RuntimeExtensionInterface
         $last = null;
 
         foreach ($comments as $comment) {
-            if (count($comment->getLikes()) >= $cmt) {
+            if (count($comment->getLikes()) >= $cmt &&  $comment->getApproved() === true) {
                 $cmt = count($comment->getLikes());
                 $last = $comment;
             } else {

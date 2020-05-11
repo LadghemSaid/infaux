@@ -37,8 +37,7 @@
                                      </div>
                                 </div>
                                 <div class="username">{{ post.user.username }}</div>
-                                <div class="description">But I must explain to you how all this mistaken
-                                    idea of denouncing pleasure and
+                                <div class="description">{{post.user.description}}
                                 </div>
                                 {% if app.user %}
                                     {% if  app.user == post.user %}
@@ -155,7 +154,7 @@
                             {% if liked %}
                                 <i class="icon-heart heart-like"></i>
                             {% else %}
-                                <i class="icon-heart heart-dislike"></i>
+                                <i class="icon-heart heart-dilike"></i>
                             {% endif %}
 
                         {% else %}
@@ -165,11 +164,36 @@
                         <span class="number">{{ post.likes|length }}</span>
                     </div>
                     <div class="icons">
-                        <i class="icon-bubble"></i><span class="number">{{ comments | length }}</span>
+                        {% if app.user %}
+                            {% set commented = false %}
+                            {% for comment in post.comments %}
+                                {% if comment.user == app.user and comment.post == post %}
+                                    {% set commented = true %}
+                                {% else %}
+                                    {% set commented = false %}
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if commented %}
+                                <i class="icon-bubble bubble-true"></i>
+                            {% else %}
+                                <i class="icon-bubble "></i>
+                            {% endif %}
+
+                        {% else %}
+                            <i class="icon-bubble bubble-true"></i>
+                        {% endif %}
+
+
+
+
+
+
+                        <span class="number">{{ post.id | getComment('DESC') | length }}</span>
                     </div>
                 </div>
-                {% if expanded is defined %}
-                {% else %}
+                {% if expanded is not defined %}
+
                     <a
                             class="btn btn-primaire "
                             href="{{ path('post.show',{'id': post.id}) }}"
@@ -195,11 +219,11 @@
                             {% if liked %}
                                 <i class="icon-heart heart-like"></i>
                             {% else %}
-                                <i class="icon-heart heart-dislike"></i>
+                                <i class="icon-heart heart-dilike"></i>
                             {% endif %}
 
                         {% else %}
-                            <i class="icon-heart heart-dislike"></i>
+                            <i class="icon-heart heart-dilike"></i>
                         {% endif %}
                         aimer
                     </div>
