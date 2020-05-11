@@ -400,7 +400,7 @@ async function handleAddUserFollow(event) {
     try {
         const response = await axios.post(action);
         if (response.data === "+1") {
-            targetToChange.innerText = "Suivi";
+            targetToChange.innerText = "Ne plus suivre";
             Toastify({
                 text: "Abonnement ajouté",
                 duration: 3000,

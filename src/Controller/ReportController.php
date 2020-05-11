@@ -74,20 +74,18 @@ class ReportController extends AbstractController
         $report->setUser($user);
 
         $this->em->persist($report);
-        $this->em->flush();
 
         //Modification du nombre de report pour le post ou comment
-        if ($payload instanceof Post && count( $payload->getReports()) > 2) {
+        if ($payload instanceof Post && count($payload->getReports()) > 2) {
             $payload->setPublished(false);
             $this->em->persist($payload);
-            $this->em->flush();
-        } else if ($payload instanceof Comment && $payload->getReport() > 2) {
+        } else if ($payload instanceof Comment && count($payload->getReports()) > 2) {
             //modification du status approved si commentaire et published si post
             $payload->setApproved(false);
             $this->em->persist($payload);
-            $this->em->flush();
-        }
 
+        }
+        $this->em->flush();
 
 
         //Redirection sur la page d'ou l'ont viens

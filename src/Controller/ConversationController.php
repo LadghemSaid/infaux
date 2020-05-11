@@ -42,7 +42,7 @@ class ConversationController extends AbstractController
     }
 
     /**
-     * @Route("/add/{username}", name="newConversations", methods={"POST"})
+     * @Route("/add/{username}", name="newConversations")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Exception
@@ -73,6 +73,8 @@ class ConversationController extends AbstractController
         );
 
         if (count($conversation)) {
+            return $this->redirectToRoute('index.chat');
+
             throw new \Exception("The conversation already exists");
         }
 

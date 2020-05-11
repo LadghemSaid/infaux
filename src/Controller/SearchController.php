@@ -8,7 +8,9 @@ use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 /**
  * @Route("/search", name="search.")
  */
@@ -27,19 +29,39 @@ class SearchController extends AbstractController
     /**
      * @Route("/query", name="query")
      */
-    public function searchAction(Request $request,PostRepository $postRepository, UserRepository $userRepository){
+    public function searchAction(Request $request, PostRepository $postRepository, UserRepository $userRepository)
+    {
 
 
         $searchTerm = $request->query->get('q');
-        $resultsUsers = $userRepository->findBy(['username'=> $searchTerm],null,5);
-        $resultsPosts= $postRepository->findBy(['text'=> $searchTerm],null,5);
+        $resultsUsers = $userRepository->findUsersByString($searchTerm);
+        $resultsPosts = $postRepository->findPostsByString($searchTerm);
 
 
-        //$results = $query->getResult();
+        if (count($resultsPosts) > 0) {
+            $renderResultsPosts=[];
+            foreach ($resultsPosts as $post){
+                array_push($renderResultsPosts, $this->renderView('posts/only-post.html.twig', [
+                    'post' => $post,
+                ]));
+            }
+
+
+        }else{
+            $renderResultsPosts = [];
+        }
+        if (count($resultsUsers) > 0) {
+            $renderResultsUsers = $this->renderView('search/only-user.html.twig', [
+                'users' => $resultsUsers,
+            ]);
+        }else{
+            $renderResultsUsers=[];
+        }
+
 
         $content = [
-            'users' => $resultsUsers,
-            'posts' => $resultsPosts,
+            'users' => $renderResultsUsers,
+            'posts' => $renderResultsPosts,
             'val' => $searchTerm
         ];
 

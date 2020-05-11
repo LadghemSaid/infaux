@@ -75,5 +75,18 @@ class PostRepository extends ServiceEntityRepository
 
     }
 
+    public function findPostsByString($str)
+    {
+
+        return $this->createQueryBuilder('p')
+            ->where("SOUNDEX(p.text) LIKE SOUNDEX(:val)")
+            //->where('p.text like :val')
+            ->setParameter('val',  '%'.$str.'%')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+
+    }
+
 
 }
