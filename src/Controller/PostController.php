@@ -193,4 +193,24 @@ class PostController extends AbstractController
 
     }
 
+    /**
+     * @Route("/delete/{post}", name="delete", methods={"GET"})
+     */
+    public function delete(Post $post, Security $security, Request $req)
+    {
+//        var_dump('on est là');die;
+        //   $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        if ($security->getUser() === $post->getUser()) {
+            $referer = explode('/', $req->headers->get('referer'));
+            //dd($jobRepo->find($id));
+
+
+        }
+
+        return $this->redirect($req->headers->get('referer'));
+
+        //dd($comment);
+
+    }
+
 }

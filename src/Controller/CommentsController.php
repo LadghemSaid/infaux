@@ -91,6 +91,7 @@ class CommentsController extends AbstractController
      */
     public function delete(Comment $comment, Security $security, Request $req)
     {
+        var_dump('on est là');die;
         //   $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         if ($security->getUser() === $comment->getUser()) {
             $referer = explode('/', $req->headers->get('referer'));

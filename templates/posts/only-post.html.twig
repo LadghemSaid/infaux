@@ -34,7 +34,7 @@
                                         {% else %}
                                             style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}')">
                                         {% endif %}
-                                     </div>
+                                    </div>
                                 </div>
                                 <div class="username">{{ post.user.username }}</div>
                                 <div class="description">But I must explain to you how all this mistaken
@@ -122,6 +122,17 @@
                                                     <i class="icon-blocked"></i><span class="number ">Signaler ce contenu</span>
                                                 </div>
                                             </div>
+{{ post.show }}
+
+                                                <div class="icons">
+                                                    <div onclick="handleDeletePost(event)"
+                                                         data-action="{{ path('post.delete', {'post':"post.id"}) }}#}"
+                                                         class="reportForm">
+
+                                                        <i class="icon-blocked"></i><span class="number ">Delete le
+                                                        post</span>
+                                                    </div>
+                                                </div>
                                         </div>
                                     </div>
                                 </div>
@@ -269,11 +280,12 @@
                            class="commentForm__textarea form-control input-lg"
                            placeholder="Votre commentaire ..."
                            onclick="affiche_comment()"
-                            onblur="afficheplus_comment()">
+                           onblur="afficheplus_comment()">
                 </div>
                 <div class="d-flex justify-content-end">
                     <div class="form-group">
-                        <button type="submit" id="comment_submit-post-{{ post.id }} comment_submit" name="comment[submit]"
+                        <button type="submit" id="comment_submit-post-{{ post.id }} comment_submit"
+                                name="comment[submit]"
                                 class="btn btn-pink btn">Envoyer
                         </button>
                     </div>
@@ -294,21 +306,20 @@
 <script>
 
     //fonction d'affichage du bouton submit (form comment)
-    function affiche_comment(){
+    function affiche_comment() {
         //document.getElementById('comment_submit').style.opacity=1;
-        document.getElementById('comment_submit').disabled="";
+        document.getElementById('comment_submit').disabled = "";
         console.log('ok comment');
     }
-    function afficheplus_comment(){
-            const str = document.getElementById('comment_textComment').value;
-            console.log(str.length);
-            if (str.length==0) {
-                //document.getElementById('comment_submit').style.opacity=0;
-                //document.getElementById('comment_submit').disabled="true";
-            }
+
+    function afficheplus_comment() {
+        const str = document.getElementById('comment_textComment').value;
+        console.log(str.length);
+        if (str.length == 0) {
+            //document.getElementById('comment_submit').style.opacity=0;
+            //document.getElementById('comment_submit').disabled="true";
+        }
     }
-
-
 
 
 </script>
