@@ -19,8 +19,13 @@ class CookieGenerator
 
     public function generate(User $user)
     {
+
+        $username =$user->getUsername();
+
         $token = (new Builder())
-            ->withClaim('mercure', ['subscribe' => ["/user/{$user->getId()}"]])
+            //->withClaim('mercure', ['subscribe' => ["/user/{$user->getId()}"]])
+            ->withClaim('mercure', ['subscribe' => [sprintf("/%s", $username)]])
+
             ->getToken(new Sha256(), new Key($this->secret));
 
         return "mercureAuthorization={$token}; Path=/.well-known/mercure; HttpOnly; ";
@@ -28,8 +33,17 @@ class CookieGenerator
     }
     public function generateToken(User $user)
     {
+        $username =$user->getUsername();
+
         $token = (new Builder())
-            ->withClaim('mercure', ['subscribe' => ["/user/{$user->getId()}"]])
+            ->withClaim('mercure', [
+                'subscribe' => [
+                    sprintf("/%s", $username),
+                    "/user/{$user->getId()}"
+
+                ]])
+
+            // ->withClaim('mercure', ['subscribe' => ["/user/{$user->getId()}"]])
             ->getToken(new Sha256(), new Key($this->secret));
 
         return $token;

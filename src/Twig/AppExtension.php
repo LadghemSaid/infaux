@@ -11,8 +11,8 @@ class AppExtension extends AbstractExtension
     {
         return [
             // the logic of this filter is now implemented in a different class
-            new TwigFilter('formatComment', [AppRuntime::class, 'formatCommentFunction']),
-            new TwigFilter('cast_to_array', [AppRuntime::class, 'castToArrayFunction']),
+            new TwigFilter('getComment', [AppRuntime::class, 'getCommentFunction']),
+            new TwigFilter('commentMostLike', [AppRuntime::class, 'commentMostLikeFunction']),
         ];
     }
 

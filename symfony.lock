@@ -250,7 +250,7 @@
         "version": "v2.1.3"
     },
     "php": {
-        "version": "7.4"
+        "version": "7.3"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.0.0"
@@ -728,7 +728,7 @@
         },
         "files": [
             "./assets/css/app.css",
-            "./assets/js/app.js",
+            "./assets/js/eventSource.js",
             "./config/packages/assets.yaml",
             "./config/packages/prod/webpack_encore.yaml",
             "./config/packages/webpack_encore.yaml",

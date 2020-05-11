@@ -33,7 +33,7 @@ class NotificationService
         $this->mercureService = $mercureService;
     }
 
-    public function add($user, $message = 'message par default', $byUser, $entity)
+    public function add($user, $message = 'message par default', $byUser = null, $entity)
     {
 
 

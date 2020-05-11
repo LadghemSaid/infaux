@@ -51,7 +51,8 @@
 
     <div class="container" style="margin-top: 100px;">
 
-        {% set comments = post.comments | slice(0,-1) | formatComment('DESC')  %}
+        {% set comments =  post.id | getComment('ASC') %}
+
         {% include('posts/only-post.html.twig') with {'expanded': true} %}
     </div>
 
@@ -64,19 +65,20 @@
       {{ encore_entry_script_tags('ajax') }}
 
       <script>
+          if (window.location.hash && $(window.location.hash).length) {
+              target = $(window.location.hash)
+              $('html, body').animate({
+                  scrollTop: target.offset().top -100
+              }, 1000,'swing', function() {
+              })
+              $(window.location.hash).find('.l-post.right')[0].style.backgroundColor = "rgba(102,187,153,0.21)";
+          } else {
 
+          }
 
           document.addEventListener("DOMContentLoaded", function (event) {
 
 
-
-
-              $(function () {
-                  moment.locale('fr');
-                  $(".p-date").map((x, i) => {
-                      i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
-                  });
-              });
           });
 
 

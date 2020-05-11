@@ -35,13 +35,13 @@
                              {% endfor %}
 
                              {% if likedComment %}
-                                 <i class="icon-heart heart-dilike"></i>
-                             {% else %}
                                  <i class="icon-heart heart-like"></i>
+                             {% else %}
+                                 <i class="icon-heart heart-dilike"></i>
                              {% endif %}
 
                          {% else %}
-                             <i class="icon-heart heart-like"></i>
+                             <i class="icon-heart heart-dilike"></i>
                          {% endif %}
 
                          <span class="number">

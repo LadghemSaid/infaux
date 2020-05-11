@@ -91,9 +91,8 @@ function handleAddComment(event) {
 
     event.preventDefault();
     const data = $(event.target).serializeArray()[0].value;
-    const action = $(event.target).attr('action');
-    let target = $(event.target).parent().parent().find('.comments-container').last();
-
+    const action = event.target.dataset.action;
+    let target = $(event.target).parent('.formComment').prev('.wrapper-comments');
 
 
     $.ajax({
@@ -141,7 +140,55 @@ function handleAddComment(event) {
 
 
 function handleAddPost(event) {
-    console.log('ok')
+    {
+
+        event.preventDefault();
+        const data = $(event.target).serializeArray()[0].value;
+        const action = event.target.dataset.action;
+        let target = $('.formPost.input-submit-post');
+
+
+        $.ajax({
+            type: "POST",
+            url: action,
+            data: {request: data},
+            success: function (data, dataType) {
+                target.after(data)
+                $(function () {
+                    moment.locale('fr');
+                    $(target).find(".p-date").map((x, i) => {
+                        i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
+                    });
+                });
+                Toastify({
+                    text: "Post ajouté",
+                    duration: 3000,
+                    close: true,
+                    gravity: "top", // `top` or `bottom`
+                    position: 'left', // `left`, `center` or `right`
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    className: "info",
+                    onClick: function () {
+                    } // Callback after click
+                }).showToast();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                Toastify({
+                    text: "Une erreur est survenue",
+                    duration: 3000,
+                    close: true,
+                    gravity: "top", // `top` or `bottom`
+                    position: 'left', // `left`, `center` or `right`
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    className: "info",
+                    onClick: function () {
+                    } // Callback after click
+                }).showToast();
+            }
+        });
+
+    }
 
 }
 

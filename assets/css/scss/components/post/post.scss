@@ -6,9 +6,9 @@ $white: rgba(255,255,255,.34);
 
 .formPost{
   margin-top:93px;
-  margin-bottom: 35px;
+  margin-bottom: 50px;
 
-  .postForm{
+  #postForm{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -17,14 +17,20 @@ $white: rgba(255,255,255,.34);
     padding:9px;
     width: 100%;
 
-    .img{
-      height: 45px;
-      width: 45px;
-      content:" ";
-      border-radius: 100px;
-      background-size: cover !important;
-      background-position: center !important;
+    .div_img{
+      .img{
+        height: 40px;
+        min-width: 40px;
+        max-width: 40px;
+        content:" ";
+        border-radius: 100px;
+        background-size: cover !important;
+        background-position: center !important;
+      }
+    
     }
+
+  
 
     .form-group{
       width:100%;
@@ -53,19 +59,44 @@ $white: rgba(255,255,255,.34);
         height: 28px;
       }
     }
+    button{
+      margin:0 !important;
+      opacity: 0;
+          background-color:$green;
+          border: black 0px solid;
+          border-radius: 50px;
+          font-size: $Msmall;
+          padding:5px 15px 5px 15px;
 
-    .btn-submit{
-      display: none !important;
     }
   }
+
+
+  .selected{
+    animation: selected 0.1s ease;
+    border-radius:24px !important;
+    align-items: flex-start !important; 
+
+  }
+
 }
 
+        @keyframes selected{
+          from{
+            border-radius: 50px;
+            align-items: center; 
+          }
+          to{
+            border-radius: 24px;
+            align-items: flex-start !important; 
+          }
+        }
 
 .post-container {
+  color:$dark-grey;
   font-family: 'Poppins', sans-serif;
   display: flex;
   flex-direction: column;
-  color:black;
   background-color: $grey;
   border-radius: 24px;
   padding-top: 15px;
@@ -82,27 +113,34 @@ $white: rgba(255,255,255,.34);
     display: flex;
     flex-direction: column;
     position: relative;
-    border-radius: 15px;
 
     .header {
       display: flex;
       flex-direction: column;
+   
       .top{
         display: flex;
+        height: 40px;
+        margin-bottom: 13px;
 
         .img {
-          width: 45px;
-          height: 45px;
+          min-width: 40px;
+          max-width: 40px;
+          height: 40px;
           background-size: cover !important;
           background-position: center !important;
           background-repeat: no-repeat !important;
           border-radius: 100px;
+          margin:0 !important;
+          padding: 0 !important;
         }
         button{
           color:$green;
           background-color:transparent;
           border:0px solid black;
           font-size: 1.5em;
+          margin:0 !important;
+          padding:0 !important;
         }
 
         .modal.fade .modal-dialog {
@@ -113,7 +151,6 @@ $white: rgba(255,255,255,.34);
           width: 100%;
           position: absolute !important;
           margin-left: 0;
-          border-top-left-radius: 15px !important;
 
           .modal-header{
             padding:0;
@@ -122,8 +159,6 @@ $white: rgba(255,255,255,.34);
           .modal-content{
             box-shadow: -5px -5px 15px rgba($color: #000000, $alpha: .20);
             padding: 15px;
-            border-top-right-radius: 40px;
-            border-top-left-radius: 40px;
             border:0px solid black;
             padding-bottom: 30px;
 
@@ -150,8 +185,9 @@ $white: rgba(255,255,255,.34);
                 margin-bottom: 20px;
         
                 .img{
-                    height: 50px;
-                    width: 50px;
+                    height: 40px;
+                    min-width: 40px;
+                    max-width: 40px;
                     content: " ";
                     background-size: cover !important;
                     background-position: center !important;
@@ -189,6 +225,7 @@ $white: rgba(255,255,255,.34);
 
             .date{
                 color: rgba($color: #000000, $alpha: .34); 
+                font-size: $Mtiny;
             }
           }
 
@@ -210,12 +247,9 @@ $white: rgba(255,255,255,.34);
               width: 100%;
               position: absolute !important;
               margin-left: 0;
-              border-top-left-radius: 15px !important;
 
               .modal-content{
                 padding: 15px;
-                border-top-right-radius: 40px;
-                border-top-left-radius: 40px;
                 border:0px solid black;
 
                 .modal-body{
@@ -234,7 +268,6 @@ $white: rgba(255,255,255,.34);
                       div{
                         font-size: $Mlarge !important;
                         i{
-                          color:$green;
                           margin-right: 20px;
                         }
                       }
@@ -252,6 +285,8 @@ $white: rgba(255,255,255,.34);
 
       .text {
         line-height: 150% !important;
+        font-size: $MmediumS;
+        font-style: $light;
       }
 
       .actions{
@@ -262,6 +297,7 @@ $white: rgba(255,255,255,.34);
         justify-content: space-between;
         border-bottom: rgba($color: #707070, $alpha: .46) 1px solid;
         margin-bottom: 20px;
+        padding-bottom: 10px;
 
         .icons {
             display: flex;
@@ -276,13 +312,6 @@ $white: rgba(255,255,255,.34);
               padding-right: 3px;
             }
 
-            .heart-like{
-              opacity:.20;
-            }
-            .heart-dislike{
-              color:red;
-              opacity:1;
-            }
 
             .comment{
               display: flex;
@@ -292,6 +321,26 @@ $white: rgba(255,255,255,.34);
               border-radius: .25rem;
             }
         }
+      }
+
+      .action_onlypost{
+        display: flex;
+        padding-bottom:20px;
+        margin-bottom:20px;
+        border-bottom: 1px solid hsla(0,0%,43.9%,.46);
+        align-items: center;
+        justify-content: space-around;
+
+        div{
+            border: $green 1px solid;
+            border-radius: 50px;
+            padding:5px 15px 5px 15px;
+
+          i{
+            margin-right: 10px;
+          }
+        }
+       
       }
 
       .btn{
@@ -332,10 +381,13 @@ $white: rgba(255,255,255,.34);
         display: flex;
         flex-direction: row;
          margin-bottom: 10px;
+        align-items: flex-start;
+        justify-content: flex-start;
 
         .img {
-          width: 45px;
-          height: 45px;
+          min-width: 40px;
+          max-width: 40px;
+          height: 40px;
           background-size: cover !important;
           background-position: center !important;
           background-repeat: no-repeat !important;
@@ -380,12 +432,9 @@ $white: rgba(255,255,255,.34);
                 width: 100%;
                 position: absolute !important;
                 margin-left: 0;
-                border-top-left-radius: 15px !important;
   
                 .modal-content{
                   padding: 15px;
-                  border-top-right-radius: 40px;
-                  border-top-left-radius: 40px;
                   border:0px solid black;
   
                   .modal-body{
@@ -404,7 +453,6 @@ $white: rgba(255,255,255,.34);
                         div{
                           font-size: $Mlarge !important;
                           i{
-                            color:$green;
                             margin-right: 20px;
                           }
                         }
@@ -422,13 +470,7 @@ $white: rgba(255,255,255,.34);
               
             }
   
-            .heart-like{
-              opacity:.20;
-            }
-            .heart-dislike{
-              color:red;
-              opacity:1;
-            }
+            
   
             .number {
   
@@ -460,8 +502,9 @@ $white: rgba(255,255,255,.34);
     flex-direction: row;
 
     .img {
-      width: 55px;
-      height: 45px;
+      min-width: 40px;
+      max-width: 40px;
+      height: 40px;
       background-size: cover !important;
       background-position: center !important;
       background-repeat: no-repeat !important;
@@ -486,7 +529,7 @@ $white: rgba(255,255,255,.34);
           border-radius: 73px;
           height: 46px!important;
           border:0px black solid;
-          font-size: $small;
+          font-size: $MmediumS;
           padding: 15px !important;
         }
 
@@ -494,6 +537,8 @@ $white: rgba(255,255,255,.34);
           background-color:$green;
           border: black 0px solid;
           border-radius: 50px;
+          font-size: $Msmall;
+          padding:5px 15px 5px 15px;
         }
       }
     }
@@ -563,21 +608,40 @@ $white: rgba(255,255,255,.34);
 
 .post-container{
 
-  .formComment{
+  .formComment_onepost{
     position: fixed;
     bottom:50px !important;
     background-color: $grey;
     left: 0;
     margin-left: 15px;
     margin-right: 15px;
-    width:92vw;
+    width:92.5vw;
     padding:15px;
     border-radius: $radius;
-    // box-shadow: 0px -5px 15px rgba($color: #000000, $alpha: .10);
-    // border-top: 1px solid rgba($color: #000000, $alpha: .40);
   }
 }
 
 .form-control:focus {
   box-shadow: none;
+}
+
+
+
+
+.heart-dislike{
+  opacity:.20;
+}
+.heart-like{
+  color:$green;
+  opacity:1;
+}
+
+.bubble-true{
+  color:$green;
+  opacity:1;
+
+}
+.bubble-false{
+  opacity:.20;
+
 }

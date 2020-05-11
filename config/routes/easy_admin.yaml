@@ -1,6 +1,7 @@
 easy_admin_bundle:
-    #resource: '../../src/Controller/AdminController.php'
+    #resource: 'App\Controller\AdminController.php'
     #Tres important de remplacer le controller pour ajouter les fonctionnalité de l'extension pack d'easy admin
-    resource: '@EasyAdminExtensionBundle/Controller/EasyAdminController.php'
+    #resource: '@EasyAdminExtensionBundle/Controller/EasyAdminController.php'
+    resource: 'App\Controller\AdminController'
     prefix: /admin
     type: annotation

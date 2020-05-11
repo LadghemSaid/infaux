@@ -41,25 +41,82 @@ gtag('config', 'UA-107718823-2');
 {% block body %}
 
 	<div class="follow container mt-100">
+		<h1>Abonnements de {{ user.username }}</h1>
         <div class="d-flex justify-content-between nav-followers">
-			<a class="nav-item nav-link" href="{{ path('follow.follower') }}"><p class="title">100 Abonnés</p></a>
-			<a class="nav-item nav-link active" href="{{ path('follow.follow') }}"><p class="title">200 Abonnements</p></a>
+			<a class="nav-item nav-link" href="{{ path('post.follower',{'id':user.id}) }}"><p class="title">{{ user.friendList| length }} Abonnés</p></a>
+			<a class="nav-item nav-link active" href="{{ path('post.follow',{'id':user.id}) }}"><p class="title">{{ user.friends| length }} Abonnements</p></a>
 		</div>
+
 
 	<div class="users">
+		{% if user.friends is empty %}
+			<h3>Vous n'avez aucun abonnements</h3>
+		{% endif %}
+		{% for friend in user.friends %}
 		<div class="single-compte d-flex align-items-center mt-10 mb-10 mt-10Mobile mb-10Mobile">
 			<div class="compte-picture">
-				<img src="https://iicpartners.com/static/img/defaults/user-default-image.png" alt="user">
+				<button type="button" class="btn" data-toggle="modal"
+						data-target="#profil-{{ friend.id }}">
+					<img src="{{ vich_uploader_asset(friend, 'imageFile') }}" alt="user">
+				</button>
+
 			</div>
-			<p class="mb-0">John Doe</p>
+			<p class="mb-0">{{ friend.username }}</p>
 		</div>
 
-		<div class="single-compte d-flex align-items-center mt-10 mb-10 mt-10Mobile mb-10Mobile">
-			<div class="compte-picture">
-				<img src="https://iicpartners.com/static/img/defaults/user-default-image.png" alt="user">
+
+
+			<div class="modal fade" id="profil-{{ friend.id }}" tabindex="-1" role="dialog"
+				 aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel"></h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="wrap">
+								<div class="img" 
+										{% if friend.image  is defined %}
+									 style="background:url('{{ vich_uploader_asset(friend, 'imageFile') }}')">
+									{% else %}
+										style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}')">
+									{% endif %}
+								</div>
+							</div>
+							<div class="username">{{ friend.username }}</div>
+							<div class="description">{{ friend.description }}
+							</div>
+							{% if app.user %}
+
+									<div class="lien_profil"><a
+												href="{{ path('account.show',{'id': friend.id} ) }}">Voir le
+											profil</a></div>
+									<div data-userId="{{friend.id }}"
+										 onclick="handleAddUserFollow(event)"
+										 data-action="{{ path('follow.add',{"id":friend.id}) }}"
+										 class="followUser">
+										<span class="followStatus">Suivre</span>
+
+									</div>
+
+							{% else %}
+								<div class="lien_profil"><a
+											href="{{ path('account.show',{'id': friend.id} ) }}">Voir le
+										profil</a></div>
+							{% endif %}
+
+
+						</div>
+					</div>
+				</div>
 			</div>
-			<p class="mb-0">John Doe</p>
-		</div>
+
+		{% endfor %}
+
+
 	</div>
 
 </div>

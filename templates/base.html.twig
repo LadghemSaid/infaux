@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>{% block title %}Infaux{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="turbolinks-cache-control" content="no-cache">
     {% block meta_description %}{% endblock %}
     {% block meta_keywords %}{% endblock %}
     {% block meta_robots %}{% endblock %}
@@ -22,8 +23,7 @@
 
 
     <link rel="stylesheet" href="{{ asset('/font/icomoon/style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/>
     <script type="text/javascript"
             src="{{ preload(asset('js/tarteaucitron/tarteaucitron.js'), { as: 'script', importance: 'low' }) }}"></script>
 
@@ -66,34 +66,37 @@
     {% endblock %}
 
     {{ encore_entry_link_tags('main') }}
+
 </head>
 
 <body>
-{% include "header.html.twig" %}
 
-<div class="transition-fade" id="swup">
+    {% include "header.html.twig" %}
+
+<div class="infinite-scroll-wrapper">
     {% block body %}
-
     {% endblock %}
 </div>
 
 
-{% include "footer.html.twig" %}
+
 
 {# <a aria-label="Button permettant de retourner en haut de la page" id="scrollToTop">Up !</a> #}
 
-<script src="{{ preload('https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js', { as: 'script' }) }}"></script>
+<script src="{{ preload('https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js', { as: 'script' }) }}"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
 ></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
 ></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"
 ></script>
-{{ encore_entry_script_tags('app') }}
+
 
 
 <script>
     document.addEventListener("DOMContentLoaded", function (event) {
+
+
         $(function () {
 
             moment.locale('fr');
@@ -102,8 +105,6 @@
             });
         });
     });
-
-
 
 
     var btn = $('#scrollToTop');
@@ -116,30 +117,27 @@
 </script>
 
 
-
 {% if app.user %}
+    {{ encore_entry_script_tags('eventSource') }}
 
     <script>
 
-        const url = new URL('{{ mercure_publish_url }}');
-        url.searchParams.append('topic', '/message');
-        const numberNotifs = $('.number_notif');
 
-
-        navigator.serviceWorker.register('/service-worker.js', {scope: '/'}).then(function(registration){
+        navigator.serviceWorker.register('/sw.js', {scope: '/'}).then(function (registration) {
             console.log("sw registred :", registration);
         }).catch(registrationError => {
             console.log("registration sw error:", registrationError)
         });
 
 
+        const url = new URL('{{ mercure_publish_url }}');
+        url.searchParams.append('topic', '/message');
 
         const eventSource = new EventSourcePolyfill(url, {
             headers: {
                 'Authorization': 'Bearer {{ token_generator.generateToken(app.user) }}',
             }
         }, {withCredentials: true});
-
 
         Notification.requestPermission(function (result) {
             if (result === 'granted') {
@@ -150,14 +148,13 @@
                         if (!data.message) {
                             return;
                         }
-                        numberNotifs[0].innerText++;
-
-                        eventSource.onmessage = (evt) => {
-                            const data = JSON.parse(evt.data);
-                            if (!data.message) {
-                                return;
-                            }
+                        if ($('.number_notif').length > 0) {
+                            $('.number_notif')[0].innerText++;
+                        } else {
+                            $('.header-notfication-bell').html("<i class='icon-bell'></i><span class='number_notif notif'>1</span>")
                         }
+
+
                         //  notifyMe(data.message);
                         Toastify({
                             text: "Tu as reçu une notifications !",
@@ -190,7 +187,9 @@
 {% endif %}
 
 
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+
+{% endblock %}
 
 </body>
 </html>

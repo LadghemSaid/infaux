@@ -93,7 +93,7 @@ class User implements UserInterface,\Serializable
     private $notifications;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Post", mappedBy="followedBy" , fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Post", mappedBy="followedBy" )
      */
     private $postFollowed;
 
@@ -144,6 +144,21 @@ class User implements UserInterface,\Serializable
      */
     private $displaySetting;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $visibility;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Participant", mappedBy="user")
+     */
+    private $participants;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="user")
+     */
+    private $messages;
 
     public function __construct()
     {
@@ -157,6 +172,8 @@ class User implements UserInterface,\Serializable
         $this->postFollowed = new ArrayCollection();
         $this->updatedAt= new \DateTimeImmutable();
         $this->createdAt= new \DateTimeImmutable();
+        $this->participants = new ArrayCollection();
+        $this->messages = new ArrayCollection();
 
     }
 
@@ -185,7 +202,80 @@ class User implements UserInterface,\Serializable
             ) = unserialize($serialized);
     }
 
+    /**
+     * @return Collection|Participant[]
+     */
+    public function getParticipants(): Collection
+    {
+        return $this->participants;
+    }
 
+    public function addParticipant(Participant $participant): self
+    {
+        if (!$this->participants->contains($participant)) {
+            $this->participants[] = $participant;
+            $participant->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipant(Participant $participant): self
+    {
+        if ($this->participants->contains($participant)) {
+            $this->participants->removeElement($participant);
+            // set the owning side to null (unless already changed)
+            if ($participant->getUser() === $this) {
+                $participant->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): self
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages[] = $message;
+            $message->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        if ($this->messages->contains($message)) {
+            $this->messages->removeElement($message);
+            // set the owning side to null (unless already changed)
+            if ($message->getUser() === $this) {
+                $message->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+    public function getVisibility(): ?string
+    {
+        return $this->visibility;
+    }
+
+    public function setVisibility(string $visibility): self
+    {
+        $this->visibility = $visibility;
+
+        return $this;
+    }
 
 
     public function getId(): ?int

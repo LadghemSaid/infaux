@@ -20,55 +20,105 @@
 {% endblock %}
 {% block meta_description %}
     <meta name="description"
-          content="Agence web à Lens. Conception et développement de sites sur mesure. Communication digitale, référencement SEO Google."/>{% endblock %}
+          content="Agence web à Lens. Conception et développement de sites sur mesure. Communication digitale, référencement SEO Google."/>
+{% endblock %}
 {% block meta_keywords %}
     <meta name="keywords"
-          content="Agence web de communication web marketing, stratégie digitale à Lens, France, creation site internet, agence de développement web, Création site internet, Lens, Lille, France, creation site internet, 59, 62, Nord Pas de Calais, Nord, Haut de France, création site internet vitrine, community management entreprise, community management personnel, création boutique en ligne, site internet, site web, création site internet boutique en ligne, Création site web, 75, Paris, Création site web e commerce, agence de référencement, agence seo, seo, référencement naturel, web marketing, agence web, agence de communication, vidéo promotionnelle, vidéo commercial, création site catalogue, création site internet responsive, généré du trafic sur mon site internet, première page google, référencement google, création de site internet france, conseil et webdesign, référencement internet, agence web, site internet responsive, site responsive, création et optimisation de site web, web design et développement de site internet, communication digitale, webmarketing, création site internet boutique en ligne, boutique en ligne, créer boutique en ligne, refonte boutique en ligne, refonte site internet e-commerce, responsive web design, refonte site internet responsive, site adaptable, site internet, site web, création site internet, création site web, responsive, création site internet e-commerce"/>{% endblock %}
+          content="Agence web de communication web marketing, stratégie digitale à Lens, France, creation site internet, agence de développement web, Création site internet, Lens, Lille, France, creation site internet, 59, 62, Nord Pas de Calais, Nord, Haut de France, création site internet vitrine, community management entreprise, community management personnel, création boutique en ligne, site internet, site web, création site internet boutique en ligne, Création site web, 75, Paris, Création site web e commerce, agence de référencement, agence seo, seo, référencement naturel, web marketing, agence web, agence de communication, vidéo promotionnelle, vidéo commercial, création site catalogue, création site internet responsive, généré du trafic sur mon site internet, première page google, référencement google, création de site internet france, conseil et webdesign, référencement internet, agence web, site internet responsive, site responsive, création et optimisation de site web, web design et développement de site internet, communication digitale, webmarketing, création site internet boutique en ligne, boutique en ligne, créer boutique en ligne, refonte boutique en ligne, refonte site internet e-commerce, responsive web design, refonte site internet responsive, site adaptable, site internet, site web, création site internet, création site web, responsive, création site internet e-commerce"/>
+{% endblock %}
 {% block meta_robots %}
-    <meta name="robots" content="unavailable_after: [date ]">{% endblock %}
+    <meta name="robots" content="unavailable_after: [date ]">
+{% endblock %}
 {% block google %}
-    <meta name="google" content="unavailable_after: [date ]">{% endblock %}
+    <meta name="google" content="unavailable_after: [date ]">
+{% endblock %}
 
 {% block style_custom %}
 
-    <style>
-
-    </style>
+    <style></style>
 {% endblock %}
 {% block body %}
 
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-success">
-            {{ message }}
-        </div>
-    {% endfor %}
-    {% for message in app.flashes('error') %}
-        <div class="alert alert-danger">
-            {{ message }}
-        </div>
-    {% endfor %}
+
     <div class="container">
         <div class="notif-blk">
-            <h1><i class="icon-bell"></i>Notifications</h1>
+            <h1>
+                <i class="icon-bell"></i>Notifications</h1>
+            <p onclick="handleDeleteAllNotification(event)" data-action="{{ path('notification.deleteAll') }}"
+               class="btn btn-black">Tous supprimer</p>
 
-                    {% if notifsSeen is empty and notifsNotSeen is empty %}
-                    <p>Vous n'avez aucune notifications</p>
+            {% if notifsSeen is empty and notifsNotSeen is empty %}
+                <p>Vous n'avez aucune notifications</p>
+            {% endif %}
+
+            {% for notif in notifsSeen %}
+            {% if notif.byUser is not empty %}
+
+            {% if notif.byPost is not null %}
+            <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
+                {% elseif notif.byComment is not null %}
+                <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
+
                     {% endif %}
+                    <div class="notif d-flex align-items-center mt-10 mb-10 mt-10Mobile mb-10Mobile">
+                        <div class="compte-picture">
+                            {% if notif.byUser.image  is defined %}
+                                <img src="{{ vich_uploader_asset(notif.byUser, 'imageFile') }}"/>
+                            {% else %}
+                                <img src="{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}"/>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <div class="opa nm">
+                                <p>{{ notif.message }}</p>
+                            </div>
+                            <div data-createdat="{{ notif.createdAt |date('U') }}" class="user p-date"></div>
 
-                    {% for notif in notifsSeen %}
+                        </div>
+                    </div>
+                </a>
+                <p onclick="handleDeleteNotification(event)"
+                   data-action="{{ path('notification.delete',{'notification':notif.id}) }}" class="btn btn-black">X</p>
+
+
+                {% else %}
+
+                {% if notif.byPost is not null %}
+                <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
+                    {% elseif notif.byComment is not null %}
+                    <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
+                        {% endif %}
+                        <div class="notif d-flex align-items-center mt-10 mb-10 mt-10Mobile mb-10Mobile">
+                            <div class="compte-picture">
+                                <img src="{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}"/>
+                            </div>
+                            <div>
+                                <div class="opa nm">
+                                    <p>{{ notif.message }}</p>
+                                </div>
+                                <div data-createdat="{{ notif.createdAt |date('U') }}" class="user p-date"></div>
+                            </div>
+                        </div>
+                    </a>
+                    {% endif %}
+                    {% endfor %}
+                    {% for notif in notifsNotSeen %}
                     {% if notif.byUser is not empty %}
 
                     {% if notif.byPost is not null %}
                     <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
                         {% elseif notif.byComment is not null %}
-                        <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}">
-
+                        <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
                             {% endif %}
-                            <div class="notif ">
-                                <img src="/uploads/images/users/{{ notif.byUser.image }}"/>
+                            <div class="notif not-seen d-flex align-items-center mt-10 mb-10 mt-10Mobile mb-10Mobile">
+                                <div class="compte-picture">
+                                    <img src="/uploads/images/users/{{ notif.byUser.image }}"/>
+                                </div>
                                 <div>
-                                    <div class="user"> {{ notif.byUser }} </div>
-                                    <div class="opa nm">{{ notif.message }} </div>
+                                    <div class="opa nm">
+                                        <p>{{ notif.message }}</p>
+                                    </div>
+                                    <div data-createdat="{{ notif.createdAt |date('U') }}" class="user p-date"></div>
                                 </div>
                             </div>
                         </a>
@@ -82,53 +132,21 @@
 
                                 {% endif %}
 
-                                <div class="notif" >
-                                    <img src="{{ asset('uploads/images/users/adorable.png') }}"/>
+                                <div class="notif not-seen d-flex align-items-center mt-10 mb-10 mt-10Mobile mb-10Mobile">
+                                    <div class="compte-picture">
+                                        <img src="{{ asset('uploads/images/users/adorable.png') }}"/>
+                                    </div>
                                     <div>
-                                        <div class="user">Anonyme</div>
-                                        <div class="opa nm">{{ notif.message }} </div>
+                                        <div class="opa nm">
+                                            <p>{{ notif.message }}</p>
+                                        </div>
+                                        <div data-createdat="{{ notif.createdAt |date('U') }}"
+                                             class="user p-date"></div>
                                     </div>
                                 </div>
                             </a>
                             {% endif %}
-                    {% endfor %}
-                    {% for notif in notifsNotSeen %}
-                            {% if notif.byUser is not empty %}
-
-                            {% if notif.byPost is not null %}
-                            <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
-                                {% elseif notif.byComment is not null %}
-                                <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}">
-
-                                    {% endif %}
-                                    <div class="notif  not-seen">
-                                        <img src="/uploads/images/users/{{ notif.byUser.image }}"/>
-                                        <div>
-                                            <div class="user"> {{ notif.byUser }} </div>
-                                            <div class="opa nm">{{ notif.message }} </div>
-                                        </div>
-                                    </div>
-                                </a>
-
-                                {% else %}
-
-                                {% if notif.byPost is not null %}
-                                <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
-                                    {% elseif notif.byComment is not null %}
-                                    <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}">
-
-                                        {% endif %}
-
-                                        <div class="notif  not-seen">
-                                            <img src="{{ asset('uploads/images/users/adorable.png') }}"/>
-                                            <div>
-                                                <div class="user">Anonyme</div>
-                                                <div class="opa nm">{{ notif.message }} </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    {% endif %}
-                    {% endfor %}
+                            {% endfor %}
 
         </div>
 
@@ -136,7 +154,95 @@
 {% endblock %}
 
 
-  {% block javascripts %}
+{% block javascripts %}
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script>
+
+        function handleDeleteNotification(event) {
+            console.log(event.target.dataset.action)
+           let action =  event.target.dataset.action
+
+            $.ajax({
+                type: "GET",
+                url: action,
+                success: function (data, dataType) {
+                    $(event.target).prev('a')[0].remove()
+                    Toastify({
+                        text: "Notification supprimé",
+                        duration: 3000,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: 'left', // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        className: "info",
+                        onClick: function () {
+                        } // Callback after click
+                    }).showToast();
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                    Toastify({
+                        text: "Une erreur est survenue",
+                        duration: 3000,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: 'left', // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        className: "info",
+                        onClick: function () {
+                        } // Callback after click
+                    }).showToast();
+                }
+            });
 
 
-  {% endblock %}
+        }
+
+        function handleDeleteAllNotification(event) {
+            {
+
+                event.preventDefault();
+                console.log(event.target.dataset.action)
+                let action =  event.target.dataset.action
+                console.log(event.target)
+
+                $.ajax({
+                    type: "GET",
+                    url: action,
+                    success: function (data, dataType) {
+                        console.log(event.target)
+                        Toastify({
+                            text: "Notifications supprimé",
+                            duration: 3000,
+                            close: true,
+                            gravity: "top", // `top` or `bottom`
+                            position: 'left', // `left`, `center` or `right`
+                            stopOnFocus: true, // Prevents dismissing of toast on hover
+                            className: "info",
+                            onClick: function () {
+                            } // Callback after click
+                        }).showToast();
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                        Toastify({
+                            text: "Une erreur est survenue",
+                            duration: 3000,
+                            close: true,
+                            gravity: "top", // `top` or `bottom`
+                            position: 'left', // `left`, `center` or `right`
+                            stopOnFocus: true, // Prevents dismissing of toast on hover
+                            className: "info",
+                            onClick: function () {
+                            } // Callback after click
+                        }).showToast();
+                    }
+                });
+
+
+            }
+
+        }
+    </script>
+
+{% endblock %}

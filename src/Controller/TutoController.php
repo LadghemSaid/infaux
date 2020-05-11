@@ -53,6 +53,7 @@ class TutoController extends AbstractController
 
 
             //Recupere L'email et l'avatar mais pas le nouveau password
+
             $user->setImageFile($formAvatar->getData('imageFile')['imageFile']);
             $this->em->persist($user);
             $this->em->flush();

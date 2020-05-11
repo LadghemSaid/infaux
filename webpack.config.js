@@ -21,9 +21,11 @@ Encore
     .setOutputPath('public/build/')
     .setPublicPath('/build')
     .setManifestKeyPrefix('build/')
+    .addEntry('eventSource', './assets/js/eventSource.js')
     .addEntry('app', './assets/js/app.js')
     .addEntry('ajax', './assets/js/ajax.js')
     .addEntry('login', './assets/js/login.js')
+
     .addStyleEntry('main', './assets/css/scss/imports.scss')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
@@ -52,6 +54,11 @@ Encore
             'sass-loader',
         ],
     })
+    .addPlugin(
+        new MiniCssExtractPlugin({
+            filename: Encore.isProduction() ? '[name].[contenthash].css' : '[name].css',
+        }),
+    )
 
     .addPlugin(
         new OptimizeCssAssetsPlugin({
@@ -69,33 +76,35 @@ Encore
             canPrint: true,
         }),
     )
-    .addPlugin(
-        new MiniCssExtractPlugin({
-            filename: Encore.isProduction() ? '[name].[contenthash].css' : '[name].css',
-        }),
-    )
 
 
-    .addPlugin(
-        new PurgeCssPlugin({
-            // folders: ['resources/views/**/*', 'resources/assets/scss/'],
-            paths: glob.sync([path.join(__dirname, 'templates/**/*.html.twig')]),
-            whitelistPatterns: [],
-        }),
-    )
+
+    // .addPlugin(
+    //     new PurgeCssPlugin({
+    //         // folders: ['resources/views/**/*', 'resources/assets/scss/'],
+    //         paths: glob.sync([path.join(__dirname, 'templates/**/*.html.twig')]),
+    //         whitelistPatterns: [],
+    //     }),
+    // )
+
+
     .addPlugin(
         new WorkboxPlugin.GenerateSW({
             // these options encourage the ServiceWorkers to get in there fast
             // and not allow any straggling "old" SWs to hang around
-            swDest: './../service-workerNOP.js',
+            swDest: './../service-worker.js',
             clientsClaim: true,
             skipWaiting: true,
-            runtimeCaching: [{
-                urlPattern: new RegExp(/^(?!https:\/\/s-website\.ga\/\.well-known\/mercure\?topic=%2Fmessage).*$/),
+
+
+           // runtimeCaching: [{
+                //urlPattern: new RegExp(/^(?!https:\/\/s-website\.ga\/\.well-known\/mercure\?topic=%2Fmessage).*$/),
+             //   urlPattern: '/',
                 //urlPattern: new RegExp(/^(http:\/\/localhost:8000\.*$)\.*/),
-                handler: 'StaleWhileRevalidate'
-            }]
+              //  handler: 'StaleWhileRevalidate',
+            //}]
         }))
+    .enableVueLoader()
 ;
 const prod = Encore.getWebpackConfig();
 prod.name = 'prod';
@@ -106,7 +115,9 @@ Encore
     .setOutputPath('public/build/')
     .setPublicPath('/build')
     .setManifestKeyPrefix('build/')
+    .addEntry('eventSource', './assets/js/eventSource.js')
     .addEntry('app', './assets/js/app.js')
+
     .addEntry('ajax', './assets/js/ajax.js')
     .addEntry('login', './assets/js/login.js')
     .addStyleEntry('main', './assets/css/scss/imports.scss')
@@ -122,6 +133,7 @@ Encore
         corejs: 3
     })
     .enableSassLoader()
+    .enableVueLoader()
 ;
 const dev = Encore.getWebpackConfig();
 dev.name = 'dev';

@@ -22,13 +22,13 @@ class Post
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post", orphanRemoval=true , fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post", orphanRemoval=true)
      */
     private $comments;
 
@@ -52,7 +52,7 @@ class Post
 
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="post", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="post")
      */
     private $likes;
 
@@ -62,14 +62,11 @@ class Post
     private $reports;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="postFollowed")
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="postFollowed" )
      */
     private $followedBy;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $visibility;
+
 
     public function __construct()
     {
@@ -173,7 +170,7 @@ class Post
      */
     public function __toString()
     {
-        return $this->title;
+        return $this->text;
     }
 
     /**
@@ -264,16 +261,6 @@ class Post
         return $this;
     }
 
-    public function getVisibility(): ?string
-    {
-        return $this->visibility;
-    }
 
-    public function setVisibility(string $visibility): self
-    {
-        $this->visibility = $visibility;
-
-        return $this;
-    }
 
 }

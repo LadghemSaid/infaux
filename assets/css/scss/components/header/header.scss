@@ -1,189 +1,193 @@
-// swup
-.transition-fade {
-    transition: 0.4s;
-    opacity: 1;
-  }
-  
-  html.is-animating .transition-fade {
-    opacity: 0;
-  }
+
+
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 .logo-header {
-    background-color: $fade-white;
-    padding: 10px 15px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 10;
-    box-shadow: 0 0px 5px -2px rgb(168, 168, 168);
-    img {
-        height: 50px;
+  background-color: $fade-white;
+  padding: 10px 15px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  box-shadow: 0 0px 5px -2px rgb(168, 168, 168);
+
+  img {
+    height: 50px;
+  }
+
+  .retour {
+    position: absolute;
+    left: 15px;
+
+    a {
+      display: flex;
+      align-items: center;
+      color: $green;
+
+      &:hover {
+        color: $dark-green;
+      }
     }
 
-    .retour {
-        position: absolute;
-        left: 15px;
-
-        a {
-            display: flex;
-            align-items: center;
-        }
-
-        i {
-            font-size: 30px;
-        }
+    i {
+      font-size: 30px;
     }
+  }
 }
 
 .mobile-bottom-nav {
-	position:fixed;
-	bottom:0;
-	left:0;
-	right:0;
-    z-index: 10;
-	//give nav it's own compsite layer
-	will-change:transform;
-	transform: translateZ(0);
-	
-	display:flex;	
-	
-	height:50px;
-	
-	box-shadow: 0 0px 5px -2px rgb(168, 168, 168);
-	background-color: $fade-white;
-	
-	&__item{
-		flex-grow:1;
-		text-align:center;
-		font-size:30px;
-		
-		display:flex;
-		flex-direction:column;
-        justify-content:center;
-        
-	}
-	&__item-content{ 
-		display:flex;
-        flex-direction:column;
-    }
-    
-    a {
-        color: $green !important;
-    }
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  //give nav it's own compsite layer
+  will-change: transform;
+  transform: translateZ(0);
+
+  display: flex;
+
+  height: 50px;
+
+  box-shadow: 0 0px 5px -2px rgb(168, 168, 168);
+  background-color: $fade-white;
+
+  &__item {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 30px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+  }
+
+  &__item-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  a {
+    color: $green !important;
+  }
 }
 
-.modal.fade{
-    opacity:1;
-  }
-  .modal.fade .modal-dialog {
-     -webkit-transform: translate(0);
-     -moz-transform: translate(0);
-     transform: translate(0);
-  }
+.modal.fade {
+  opacity: 1;
+}
+
+.modal.fade .modal-dialog {
+  -webkit-transform: translate(0);
+  -moz-transform: translate(0);
+  transform: translate(0);
+}
 
 .collapse-navbar {
-    background-color: $green;
-    border-radius: 0;
-    width: 90%;
-    height: 100vh;
-    margin-left: auto;
-    border: 0;
-    img {
-        height: 50px;
-        width: auto;
-    }
+  background-color: $green;
+  border-radius: 0;
+  width: 90%;
+  height: 100vh;
+  margin-left: auto;
+  border: 0;
+
+  img {
+    height: 50px;
+    width: auto;
+  }
 }
 
 .menu-collapse {
-    background-color: rgba(0, 0, 0, 0.466);
+  background-color: rgba(0, 0, 0, 0.466);
 }
 
 .modal-header {
-    border: 0;
+  border: 0;
 }
 
 .user-picture-background {
-    width: 100px;
-    height: 100px;
+  width: 100px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.527);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 200%);
+  border-radius: 100%;
+
+  .user-picture {
+    width: 80%;
+    height: 80%;
     background: rgba(255, 255, 255, 0.527);
-    background: linear-gradient(135deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 200%);
     border-radius: 100%;
-    .user-picture {
-        width: 80%;
-        height: 80%;
-        background: rgba(255, 255, 255, 0.527);
-        border-radius: 100%;
-        margin: 10px;
-        img {
-            width: 100%;
-            height: 100%;
-            border-radius: 100%;
-        }
+    margin: 10px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 100%;
     }
+  }
 }
 
 .custom-switch {
-    padding-left: 3.25rem !important;
+  padding-left: 3.25rem !important;
 }
 
 .custom-control-label::before {
-    position: absolute;
-    top: .25rem;
-    left: -1.5rem;
-    display: block;
-    width: 1rem;
-    height: 16px;
-    pointer-events: none;
-    content: "";
-    background-color: transparent;
-    border: black solid 1px;
+  position: absolute;
+  top: .25rem;
+  left: -1.5rem;
+  display: block;
+  width: 1rem;
+  height: 16px;
+  pointer-events: none;
+  content: "";
+  background-color: transparent;
+  border: black solid 1px;
 }
 
 label::before {
-    left: -3.25rem !important;
-    width: 25px !important;
-    pointer-events: all;
-    border-radius: 22px !important;
+  left: -3.25rem !important;
+  width: 25px !important;
+  pointer-events: all;
+  border-radius: 22px !important;
 }
 
 .custom-switch .custom-control-label::after {
-    top: 6px;
-    left: calc(-3.25rem + 3px);
-    width: 10px;
-    height: 10px;
-    background-color: black;
-    border-radius: 100%;
+  top: 6px;
+  left: calc(-3.25rem + 3px);
+  width: 10px;
+  height: 10px;
+  background-color: black;
+  border-radius: 100%;
 }
 
-.custom-control-input:checked~.custom-control-label::before {
-    color: #fff;
-    border-color: black;
-    background-color: black;
+.custom-control-input:checked ~ .custom-control-label::before {
+  color: #fff;
+  border-color: black;
+  background-color: black;
 }
 
-.custom-control-input:focus~.custom-control-label::before {
-    box-shadow: none !important;
+.custom-control-input:focus ~ .custom-control-label::before {
+  box-shadow: none !important;
 }
 
 span.notif {
-    position: absolute;
-    font-size: 15px;
-    background-color: #B55F5F;
-    color: #000000;
-    border-radius: 100%;
-    text-align: center;
-    padding: 3px 6px;
-    bottom: 5px;
-    z-index: -1;
+  position: absolute;
+  font-size: 15px;
+  background-color: #B55F5F;
+  color: #000000;
+  border-radius: 100%;
+  text-align: center;
+  padding: 3px 6px;
+  bottom: 5px;
+  z-index: -1;
 }
 
 .disabled {
-    pointer-events: none;
-    cursor: default;
-    opacity: 0.3;
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.3;
 }

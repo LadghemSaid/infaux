@@ -47,39 +47,47 @@ class IndexController extends AbstractController
     public function index(PostRepository $postrepo, Request $request, PaginatorInterface $paginator): Response
     {
 
-        $posts = $postrepo->findAllDesc(); //On récupère les posts
+        $user = $this->getUser();
 
-        $post = new Post();
-        $postForm = $this->createForm(PostType::class, $post);
+        switch ($user ? $user->getDisplaySetting() : '') {
+
+            case 'popular':
+                $posts = $postrepo->findAllByLikes(); //On récupère les posts dans l'ordre des likes
+
+                break;
+
+            case 'recent':
+                $posts = $postrepo->findAllDesc(); //On récupère les posts dans l'ordre de creation
+
+                break;
+
+
+            case 'friends':
+                $friends = $user->getFriends();
+                $posts = [];
+                foreach ($friends as $friend) {
+                    foreach ($friend->getPosts() as $post){
+
+                        array_push($posts,$post );
+                    }
+                }
+                break;
+
+            default:
+                $posts = $postrepo->findAllDesc(); //On récupère les posts dans l'ordre de creation
+
+                break;
+        }
 
         $posts = $paginator->paginate(
             $posts, //Donnée a paginé
             $request->query->getInt('page', 1), //Numéros de la page courante est 1 par default
-        3
+            3
         );
-
-
-
-        $postForm->handleRequest($request);
-        if ($postForm->isSubmitted() && $postForm->isValid()) {
-
-            $data = $postForm->getData();
-            $post->setFavorite(false)
-                ->setPublished(true)
-                ->setUser($this->getUser());
-            $this->em->persist($post);
-            $this->em->flush();
-
-
-
-         return $this->redirectToRoute('index');
-        }
-
 
         $response = $this->render('posts/index.html.twig', [
             'current_menu' => 'posts',
             'posts' => $posts,
-            'postForm' => $postForm->createView(),
 
         ]);
 
@@ -87,6 +95,21 @@ class IndexController extends AbstractController
         //Pour 1 -> ...find($id);   avec une valeur de champ -> ...findOneBy(['title'=>'Post Du vendredi 13']);
 
 
+    }
+
+    /**
+     * Liste l'ensemble des posts triés par date de publication pour une page donnée.
+     *
+     * @Route("/chat", name="index.chat")
+     */
+    public function indexChat()
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        return $this->render('chat/index/index.html.twig', [
+            'current_menu' => 'chat',
+
+        ]);
     }
 
 
@@ -148,7 +171,6 @@ class IndexController extends AbstractController
             'hostname' => $hostname
         ]);
     }
-
 
 
 }

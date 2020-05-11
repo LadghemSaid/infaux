@@ -48,39 +48,38 @@ class CommentsController extends AbstractController
     public function add(Request $req, $id, PostRepository $postRepo, Security $security)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+
         $comment = new Comment();
+        $user =$this->getUser();
 
-        $form = $this->createForm(CommentType::class, $comment);
-        $form->handleRequest($req);
-
-
-        $com = $form->getData();
         $post = $postRepo->find($id);
-        $com->setPost($post)
+        $comment->setPost($post)
             ->setCreatedAt(new \DateTime())
             ->setApproved(true)
-            ->setUser($security->getUser())
+            ->setUser($user)
             ->setTextComment($req->request->get('request'));
-        $this->em->persist($com);
+
+        $this->em->persist($comment);
         $this->em->flush();
 
 
         //Ajout de la notification au group de gens qui suivent le post
-        foreach ($post->getFollowedBy() as $user) {
-            if ($user == $security->getUser()) {
+        foreach ($post->getFollowedBy() as $userFollorwing) {
+            if ($userFollorwing == $security->getUser()) {
 
             } else {
-                $this->notificationService->add($user, $message = "Un commentaire à été ajouter sur un post");
+                $this->notificationService->add($userFollorwing, $message = "{$user->getUsername()} a commenter sur ce post epinglé",$user,$post);
             }
 
         }
         //Envoie de la notif a l'auteur du post
-        $this->notificationService->add($post->getUser(), $message = "Un commentaire à été ajouter sur votre post");
+        $this->notificationService->add($post->getUser(), $message = "Un commentaire à été ajouter sur votre post",$user,$post);
 
 
         //$this->addFlash('success', "Commentaire ajouté avec succés :)");
-       return  $response = $this->render('comment/show.html.twig', [
-            'comment' => $com,
+       return  $response = $this->render('comment/only-comment.html.twig', [
+            'comment' => $comment,
 
         ]);
 
@@ -121,31 +120,6 @@ class CommentsController extends AbstractController
 
         }
         return new Response;
-    }
-
-    /**
-     * @Route("/post/{post}", name="paginate")
-     * @param Request $request
-     * @param PaginatorInterface $paginator
-     * @param $commentsrepo
-     * @return Response
-     */
-    public function getPaginateComment(Request $request, PaginatorInterface $paginator, CommentRepository $commentsrepo, $post)
-    {
-
-        $commentsToPaginate = $commentsrepo->findByPostField($post); //On récupère les commentaire du post
-        $comments = $paginator->paginate(
-            $commentsToPaginate, //Donnée a paginé
-            $request->query->getInt('page', 1), //Numéros de la page courante est 1 par default
-            5
-        );
-
-        $response = $this->render('comment/index.html.twig', [
-            'current_menu' => 'comments',
-            'comments' => $comments,
-        ]);
-        return $response;
-
     }
 
 }
