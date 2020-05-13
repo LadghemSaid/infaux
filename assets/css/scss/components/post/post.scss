@@ -147,6 +147,15 @@ $white: rgba(255,255,255,.34);
           padding:0 !important;
         }
 
+        button.message {
+          color: $dark-grey;
+          background-color: transparent;
+          border: none;
+          font-size: initial;
+          margin: 0!important;
+          padding: 0!important;
+      }
+
         .modal.fade .modal-dialog {
           -webkit-transform: translate(10px);
           -moz-transform: translate(10px);
@@ -180,23 +189,25 @@ $white: rgba(255,255,255,.34);
               .wrap{
                 background: rgb(102,187,153);
                 background: linear-gradient(311deg, rgba(102,187,153,0.8186624991793592) 0%, rgba(102,187,153,0.4489146000196954) 62%, rgba(102,187,153,0) 100%);
-                min-height: 75px;  
-                min-width: 75px;
-                border-radius: 100px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+                height: 100px;  
+                width: 100px;
+                border-radius: 100%;
                 margin-bottom: 20px;
+
+                .user-picture {
+                  width: 80%;
+                  height: 80%;
+                  background: hsla(0,0%,100%,.527);
+                  border-radius: 100%;
+                  margin: 10px;
+                }
         
                 .img{
-                    height: 40px;
-                    min-width: 40px;
-                    max-width: 40px;
-                    content: " ";
-                    background-size: cover !important;
+                    min-width: 100%;
+                    min-height: 100%;
+                    border-radius: 100%;
                     background-position: center !important;
                     background-repeat: no-repeat !important;
-                    border-radius: 50px ;
                 }
               }
               .username{
