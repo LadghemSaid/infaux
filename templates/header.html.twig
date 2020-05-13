@@ -1,6 +1,6 @@
 <header class="header-tapbar">
     <div class="logo-header d-flex justify-content-center align-items-center">
-        {% if app.request.get('_route') != 'index' and app.request.get('_route') != 'search' and app.request.get('_route') != 'notification'  and app.request.get('_route') != 'index.chat' %}
+        {% if app.request.get('_route') != 'index' and app.request.get('_route') != 'search' and app.request.get('_route') != 'notification.index' and app.request.get('_route') != 'index.chat' %}
         <div class="retour">
             {% set referer = app.request.server.get('HTTP_REFERER')|default('/') %}
             <a href="{{ referer }}"><i class="icon-keyboard_arrow_left"></i></a>
