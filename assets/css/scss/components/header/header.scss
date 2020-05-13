@@ -14,6 +14,7 @@
   right: 0;
   z-index: 10;
   box-shadow: 0 0px 5px -2px rgb(168, 168, 168);
+  height: 50px;
 
   img {
     height: 50px;
@@ -22,10 +23,10 @@
   .retour {
     position: absolute;
     left: 15px;
+    width: 30px;
+    text-align: center;
 
     a {
-      display: flex;
-      align-items: center;
       color: $green;
 
       &:hover {
@@ -35,6 +36,25 @@
 
     i {
       font-size: 30px;
+    }
+  }
+
+  .chat-i {
+    position: absolute;
+    right: 15px;
+    width: 30px;
+    text-align: center;
+
+    a {
+      color: $green;
+
+      &:hover {
+        color: $dark-green;
+      }
+    }
+
+    i {
+      font-size: 20px;
     }
   }
 }
