@@ -202,6 +202,7 @@ $white: rgba(255,255,255,.34);
               }
               .username{
                 font-weight: $blackW;
+                text-transform: capitalize;
               }
 
               .description{
@@ -228,9 +229,15 @@ $white: rgba(255,255,255,.34);
             display: flex;
             flex-direction: column;
 
+            .username {
+              margin-bottom: 5px;
+              text-transform: capitalize;
+            }
+
             .date{
                 color: rgba($color: #000000, $alpha: .34); 
-                font-size: $Mtiny;
+                font-size: small;
+                margin-bottom: 0;
             }
           }
 
@@ -412,11 +419,18 @@ $white: rgba(255,255,255,.34);
             display: flex;
             flex-direction: row;
             justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+            height: 30px;
 
             p{
+              text-transform: capitalize;
+              margin-bottom: 0;
               span{
                 padding-left: 10px;
                 color: rgba($color: #000000, $alpha: 0.34);
+                text-transform: none;
+                font-size: small;
               }
             }
 
@@ -466,18 +480,6 @@ $white: rgba(255,255,255,.34);
                   }
                 }
               }
-  
-            }
-          }
-
-          .icons {
-            i {
-              
-            }
-  
-            
-  
-            .number {
   
             }
           }
