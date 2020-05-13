@@ -48,7 +48,7 @@
         </div>
     {% endfor %}
 
-    <div class="container" style="margin-top: 70px">
+    <div class="container container-profil">
         <div class="account">
             <div class="img_wrap">
                 <div class="img"
@@ -60,17 +60,17 @@
 
                 </div>
             </div>
-            <p class="name">{{ user.username }}</p>
+            <p class="name capitalize">{{ user.username }}</p>
             <p class="createdAt">Depuis le {{ user.createdAt|date("m/d/Y", "Europe/Paris") }}</p>
             <p class="description">{{ user.description }}</p>
             <div class="liens">
                 <div>
                     <a href="{{ path('post.follower',{'id': user.id }) }}"><span
-                                class="subscriberCount">{{ user.friendList | length }}</span> abonnés</a>
+                                class="subscriberCount">{{ user.friendList | length }}</span> Abonné{% if user.friendList | length > 1 %}s{% endif %}</a>
                 </div>
                 <div>
                     <a href="{{ path('post.follow',{'id': user.id }) }}"><span
-                                class="subscribeCount">{{ user.friends | length }}</span> abonnements</a>
+                                class="subscribeCount">{{ user.friends | length }}</span> Abonnement{% if user.friends | length > 1 %}s{% endif %}</a>
                 </div>
             </div>
             {% if app.user %}
@@ -102,9 +102,9 @@
             {% endif %}
 
         </div>
-        <div class="mt-30">
+        <div class="mt-30 mt-20Mobile">
             {% if app.user ==  user %}
-                <span class="number-posts">{{ app.user.posts|length }} posts</span>
+                <span class="number-posts">{{ app.user.posts|length }} post{% if app.user.posts | length > 1 %}s{% endif %}</span>
                 <div class="postContainer mt-3">
                     {% set posts = app.user.posts %}
                     {% for post in posts %}

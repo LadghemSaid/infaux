@@ -123,6 +123,10 @@
 
 .menu-collapse {
   background-color: rgba(0, 0, 0, 0.466);
+
+  .modal-dialog {
+    min-width: 100%;
+  }
 }
 
 .modal-header {
