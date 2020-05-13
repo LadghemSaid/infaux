@@ -44,7 +44,7 @@ gtag('config', 'UA-107718823-2');
                 <h2>Débutez dans Infaux</h2>
                 <p>Commençons par ajoutez un avatar à votre profil</p>
                 <div class=" d-flex flex-column align-items-center">
-                <div class="upload-picture-background mt-40 mt-40Mobile mb-10 mb-10Mobile">
+                <div class="upload-picture-background mt-40 mt-40Mobile mb-40 mb-40Mobile">
 
 					<div class="upload-picture">
 						<img src="{{ asset(app.user.image) }}" alt="">
@@ -52,18 +52,15 @@ gtag('config', 'UA-107718823-2');
 						<div class="upload">
 
 							{{ form_start(formAvatar) }}
-							{{ form_row(formAvatar.imageFile,{'attr':{'class': ''},'label': 'Changer d\'avatar'}) }}
-                            <i class="icon-upload"></i>
+							{{ form_row(formAvatar.imageFile,{'attr':{'class': ''},'label': false}) }}
 
 						</div>
                     </div>
                 </div>
-
-                <a href="" class="">Choisir un fichier</a>
                 </div>
                 <div class="d-flex justify-content-between mt-40 mt-40Mobile">
 				<a class="" href="{{ path('tuto.description') }}">Passer</a>
-					{{ form_row(formAvatar.submit,{'attr':{'class': 'btn btn-primary mt-3 settings-modify-button'},'label': 'Valider'}) }}
+					{{ form_row(formAvatar.submit,{'attr':{'class': 'btn mt-3 settings-modify-button'},'label': 'Valider'}) }}
 					{{ form_end(formAvatar) }}
                 </a>
 			</div>
