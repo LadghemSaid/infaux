@@ -73,11 +73,13 @@ gtag('config', 'UA-107718823-2');
 								</button>
 							</div>
 							<div class="modal-body">
+                            <div class="upload">
 								{{ form_start(formAvatar) }}
 								<div class="img" style="background:url('{{ vich_uploader_asset(user, 'imageFile') }}')"></div>
 
-								{{ form_row(formAvatar.imageFile,{'attr':{'class': ''},'label': 'Changer d\'avatar'}) }}
+								{{ form_row(formAvatar.imageFile,{'attr':{'class': ''},'label': false}) }}
                                 </div>
+                            </div>
                                 <div class="modal-footer">
                                     {{ form_row(formAvatar.submit,{'attr':{'class': 'btn mt-3 settings-modify-button'},'label': 'Modifier'}) }}
                                     {{ form_end(formAvatar) }}
