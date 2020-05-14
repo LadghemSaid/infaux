@@ -1,305 +1,317 @@
 {% extends '/base.html.twig' %}
 
 {% block title %}
-	Infaux - Notification
+    Infaux - Notification
 {% endblock %}
 {% block gtag %}
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107718823-2"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107718823-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
 
-function gtag() {
-dataLayer.push(arguments);
-}
+        function gtag() {
+            dataLayer.push(arguments);
+        }
 
-gtag('js', new Date());
+        gtag('js', new Date());
 
-gtag('config', 'UA-107718823-2');
-	</script>
+        gtag('config', 'UA-107718823-2');
+    </script>
 {% endblock %}
 {% block meta_description %}
-	<meta name="description" content="Agence web à Lens. Conception et développement de sites sur mesure. Communication digitale, référencement SEO Google."/>
+    <meta name="description"
+          content="Agence web à Lens. Conception et développement de sites sur mesure. Communication digitale, référencement SEO Google."/>
 {% endblock %}
 {% block meta_keywords %}
-	<meta name="keywords" content="Agence web de communication web marketing, stratégie digitale à Lens, France, creation site internet, agence de développement web, Création site internet, Lens, Lille, France, creation site internet, 59, 62, Nord Pas de Calais, Nord, Haut de France, création site internet vitrine, community management entreprise, community management personnel, création boutique en ligne, site internet, site web, création site internet boutique en ligne, Création site web, 75, Paris, Création site web e commerce, agence de référencement, agence seo, seo, référencement naturel, web marketing, agence web, agence de communication, vidéo promotionnelle, vidéo commercial, création site catalogue, création site internet responsive, généré du trafic sur mon site internet, première page google, référencement google, création de site internet france, conseil et webdesign, référencement internet, agence web, site internet responsive, site responsive, création et optimisation de site web, web design et développement de site internet, communication digitale, webmarketing, création site internet boutique en ligne, boutique en ligne, créer boutique en ligne, refonte boutique en ligne, refonte site internet e-commerce, responsive web design, refonte site internet responsive, site adaptable, site internet, site web, création site internet, création site web, responsive, création site internet e-commerce"/>
+    <meta name="keywords"
+          content="Agence web de communication web marketing, stratégie digitale à Lens, France, creation site internet, agence de développement web, Création site internet, Lens, Lille, France, creation site internet, 59, 62, Nord Pas de Calais, Nord, Haut de France, création site internet vitrine, community management entreprise, community management personnel, création boutique en ligne, site internet, site web, création site internet boutique en ligne, Création site web, 75, Paris, Création site web e commerce, agence de référencement, agence seo, seo, référencement naturel, web marketing, agence web, agence de communication, vidéo promotionnelle, vidéo commercial, création site catalogue, création site internet responsive, généré du trafic sur mon site internet, première page google, référencement google, création de site internet france, conseil et webdesign, référencement internet, agence web, site internet responsive, site responsive, création et optimisation de site web, web design et développement de site internet, communication digitale, webmarketing, création site internet boutique en ligne, boutique en ligne, créer boutique en ligne, refonte boutique en ligne, refonte site internet e-commerce, responsive web design, refonte site internet responsive, site adaptable, site internet, site web, création site internet, création site web, responsive, création site internet e-commerce"/>
 {% endblock %}
 {% block meta_robots %}
-	<meta name="robots" content="unavailable_after: [date ]">
+    <meta name="robots" content="unavailable_after: [date ]">
 {% endblock %}
 {% block google %}
-	<meta name="google" content="unavailable_after: [date ]">
+    <meta name="google" content="unavailable_after: [date ]">
 {% endblock %}
 
 {% block style_custom %}
 
-	<style></style>
+    <style></style>
 {% endblock %}
 {% block body %}
 
 
-	<div class="container">
-		<div class="notif-blk">
-			<div class="title d-flex justify-content-between align-items-center">
-				<h1 class="mb-0">
-					<i class="icon-bell"></i>Notifications</h1>
-				{% if notifsSeen | length >= 1 or notifsNotSeen | length >= 1 %}
-					<p onclick="handleDeleteAllNotification(event)" data-action="{{ path('notification.deleteAll') }}" class="sup-notif mb-0">Tous supprimer</p>
-				{% endif %}
-			</div>
+    <div class="container">
+        <div class="notif-blk">
+            <div class="title d-flex justify-content-between align-items-center">
+                <h1 class="mb-0">
+                    <i class="icon-bell"></i>Notifications</h1>
+                {% if notifsSeen | length >= 1 or notifsNotSeen | length >= 1 %}
+                    <p onclick="handleDeleteAllNotification(event)" data-action="{{ path('notification.deleteAll') }}"
+                       class="sup-notif mb-0">Tous supprimer</p>
+                {% endif %}
+            </div>
 
-			{% if notifsSeen is empty and notifsNotSeen is empty %}
-				<p>Vous n'avez aucune notifications</p>
-			{% endif %}
+            {% if notifsSeen is empty and notifsNotSeen is empty %}
+                <p>Vous n'avez aucune notifications</p>
+            {% endif %}
 
-			{% for notif in notifsSeen %}
-				{% if notif.byUser is not empty %}
-
-
-					<div class="notif d-flex align-items-start justify-content-between mt-10 mb-10 mt-10Mobile mb-10Mobile">
-						<div class="compte-picture">
-							{% if notif.byUser.image  is defined %}
-								{% if notif.byPost is not null %}
-									<a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
-									{% elseif notif.byComment is not null %}
-										<a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
-
-										{% endif %}
-										<img src="{{ vich_uploader_asset(notif.byUser, 'imageFile') }}"/>
-									</a>
-								{% else %}
-									{% if notif.byPost is not null %}
-										<a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
-										{% elseif notif.byComment is not null %}
-											<a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
-
-											{% endif %}
-											<img src="{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}"/>
-										</a>
-									{% endif %}
-								</div>
-								<div>
-									{% if notif.byPost is not null %}
-										<a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
-										{% elseif notif.byComment is not null %}
-											<a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
-
-											{% endif %}
-											<div class="opa nm">
-												<p>{{ notif.message }}</p>
-											</div>
-											<div data-createdat="{{ notif.createdAt |date('U') }}" class="user p-date"></div>
-
-										</a>
-
-									</div>
-									<div class="option ml-auto">
-
-										<button type="button" class="btn" data-toggle="modal" data-target="#delete-notif">
-											<i class="icon-dots-horizontal-triple"></i>
-										</button>
-
-										<div class="modal fade" id="delete-notif" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-											<div class="modal-dialog" role="dialog">
-												<div class="modal-content">
-													<div class="modal-header">
-														<h5 class="modal-title" id="exampleModalLabel"></h5>
-														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-															<span aria-hidden="true">×</span>
-														</button>
-													</div>
-													<div class="modal-body">
-
-														<p onclick="handleDeleteNotification(event)" data-action="{{ path('notification.delete',{'notification':notif.id}) }}" class="">Supprimer cette notification</p>
-
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+            {% for notif in notifsSeen %}
+                {% if notif.byUser is not empty %}
 
 
-							{% else %}
+                    <div class="notif d-flex align-items-start justify-content-between mt-10 mb-10 mt-10Mobile mb-10Mobile">
+                        <div class="compte-picture">
+                            {% if notif.byUser.image  is defined %}
+                            {% if notif.byPost is not null %}
+                            <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
+                                {% elseif notif.byComment is not null %}
+                                <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
+
+                                    {% endif %}
+                                    <img src="{{ vich_uploader_asset(notif.byUser, 'imageFile') }}"/>
+                                </a>
+                                {% else %}
+                                {% if notif.byPost is not null %}
+                                <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
+                                    {% elseif notif.byComment is not null %}
+                                    <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
+
+                                        {% endif %}
+                                        <img src="{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}"/>
+                                    </a>
+                                    {% endif %}
+                        </div>
+                        <div>
+                            {% if notif.byPost is not null %}
+                            <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
+                                {% elseif notif.byComment is not null %}
+                                <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
+
+                                    {% endif %}
+                                    <div class="opa nm">
+                                        <p>{{ notif.message }}</p>
+                                    </div>
+                                    <div data-createdat="{{ notif.createdAt |date('U') }}" class="user p-date"></div>
+
+                                </a>
+
+                        </div>
+                        <div class="option ml-auto">
+
+                            <button type="button" class="btn" data-toggle="modal" data-target="#delete-notif">
+                                <i class="icon-dots-horizontal-triple"></i>
+                            </button>
+
+                            <div class="modal fade" id="delete-notif" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+
+                                            <p onclick="handleDeleteNotification(event)"
+                                               data-action="{{ path('notification.delete',{'notification':notif.id}) }}"
+                                               class="">Supprimer cette notification</p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
-								<div class="notif d-flex align-items-start justify-content-between mt-10 mb-10 mt-10Mobile mb-10Mobile">
-									<div class="compte-picture">
-										{% if notif.byPost is not null %}
-											<a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
-											{% elseif notif.byComment is not null %}
-												<a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
-												{% endif %}
-												<img src="{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}"/>
-											</a>
-										</div>
-										<div>
-											{% if notif.byPost is not null %}
-												<a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
-												{% elseif notif.byComment is not null %}
-													<a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
-													{% endif %}
-													<div class="opa nm">
-														<p>{{ notif.message }}</p>
-													</div>
-													<div data-createdat="{{ notif.createdAt |date('U') }}" class="user p-date"></div>
-												</a>
-											</div>
-										</div>
-									</a>
-								{% endif %}
-							{% endfor %}
-							{% for notif in notifsNotSeen %}
-								{% if notif.byUser is not empty %}
+                {% else %}
 
 
-									<div class="notif not-seen d-flex align-items-center mt-10 mb-10 mt-10Mobile mb-10Mobile">
-										<div class="compte-picture">
-											{% if notif.byPost is not null %}
-												<a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
-												{% elseif notif.byComment is not null %}
-													<a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
-													{% endif %}
-													<img src="/uploads/images/users/{{ notif.byUser.image }}"/>
-												</a>
-											</div>
-											<div>
-												{% if notif.byPost is not null %}
-													<a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
-													{% elseif notif.byComment is not null %}
-														<a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
-														{% endif %}
-														<div class="opa nm">
-															<p>{{ notif.message }}</p>
-														</div>
-														<div data-createdat="{{ notif.createdAt |date('U') }}" class="user p-date"></div>
-													</a>
-												</div>
-											</div>
-										</a>
+                    <div class="notif d-flex align-items-start justify-content-between mt-10 mb-10 mt-10Mobile mb-10Mobile">
+                        <div class="compte-picture">
+                            {% if notif.byPost is not null %}
+                            <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
+                                {% elseif notif.byComment is not null %}
+                                <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
+                                    {% endif %}
+                                    <img src="{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}"/>
+                                </a>
+                        </div>
+                        <div>
+                            {% if notif.byPost is not null %}
+                            <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
+                                {% elseif notif.byComment is not null %}
+                                <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
+                                    {% endif %}
+                                    <div class="opa nm">
+                                        <p>{{ notif.message }}</p>
+                                    </div>
+                                    <div data-createdat="{{ notif.createdAt |date('U') }}" class="user p-date"></div>
+                                </a>
+                        </div>
+                    </div>
+                    </a>
+                {% endif %}
+            {% endfor %}
+            {% for notif in notifsNotSeen %}
+                {% if notif.byUser is not empty %}
 
-									{% else %}
+
+                    <div class="notif not-seen d-flex align-items-center mt-10 mb-10 mt-10Mobile mb-10Mobile">
+                        <div class="compte-picture">
+                            {% if notif.byPost is not null %}
+                            <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
+                                {% elseif notif.byComment is not null %}
+                                <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
+                                    {% endif %}
+                                    <img src="/uploads/images/users/{{ notif.byUser.image }}"/>
+                                </a>
+                        </div>
+                        <div>
+                            {% if notif.byPost is not null %}
+                            <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
+                                {% elseif notif.byComment is not null %}
+                                <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
+                                    {% endif %}
+                                    <div class="opa nm">
+                                        <p>{{ notif.message }}</p>
+                                    </div>
+                                    <div data-createdat="{{ notif.createdAt |date('U') }}" class="user p-date"></div>
+                                </a>
+                        </div>
+                    </div>
+                    </a>
+
+                {% else %}
 
 
-										<div class="notif not-seen d-flex align-items-start justify-content-between mt-10 mb-10 mt-10Mobile mb-10Mobile">
-											<div class="compte-picture">
-												{% if notif.byPost is not null %}
-													<a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
-													{% elseif notif.byComment is not null %}
-														<a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}">
+                    <div class="notif not-seen d-flex align-items-start justify-content-between mt-10 mb-10 mt-10Mobile mb-10Mobile">
+                        <div class="compte-picture">
+                            {% if notif.byPost is not null %}
+                            <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
+                                {% elseif notif.byComment is not null %}
+                                <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}">
 
-														{% endif %}
-														<img src="{{ asset('uploads/images/users/adorable.png') }}"/>
-													</a>
-												</div>
-												<div>
-													{% if notif.byPost is not null %}
-														<a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
-														{% elseif notif.byComment is not null %}
-															<a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}">
+                                    {% endif %}
+                                    <img src="{{ asset('uploads/images/users/adorable.png') }}"/>
+                                </a>
+                        </div>
+                        <div>
+                            {% if notif.byPost is not null %}
+                            <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
+                                {% elseif notif.byComment is not null %}
+                                <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}">
 
-															{% endif %}
-															<div class="opa nm">
-																<p>{{ notif.message }}</p>
-															</div>
-															<div data-createdat="{{ notif.createdAt |date('U') }}" class="user p-date"></div>
-														</a>
-													</div>
-												</div>
-											</a>
-										{% endif %}
-									{% endfor %}
+                                    {% endif %}
+                                    <div class="opa nm">
+                                        <p>{{ notif.message }}</p>
+                                    </div>
+                                    <div data-createdat="{{ notif.createdAt |date('U') }}" class="user p-date"></div>
+                                </a>
+                        </div>
+                    </div>
+                    </a>
+                {% endif %}
+            {% endfor %}
 
-								</div>
+        </div>
 
-							</div>
-						{% endblock %}
+    </div>
+{% endblock %}
 
 
 						{% block javascripts %}
-							<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-							<script>
+                            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+                            <script>
 
-								function handleDeleteNotification(event) {
-console.log(event.target.dataset.action)
-let action = event.target.dataset.action
+                                function handleDeleteNotification(event) {
+                                    console.log(event.target.dataset.action)
+                                    let action = event.target.dataset.action
+                                    console.log(       )
+                                    $.ajax({
+                                        type: "GET",
+                                        url: action,
+                                        success: function (data, dataType) {
+                                            hideModal()
+                                            $(event.target).parents('.notif')[0].remove()
+                                            Toastify({
+                                                text: "Notification supprimé",
+                                                duration: 3000,
+                                                close: true,
+                                                gravity: "top", // `top` or `bottom`
+                                                position: 'left', // `left`, `center` or `right`
+                                                stopOnFocus: true, // Prevents dismissing of toast on hover
+                                                className: "info",
+                                                onClick: function () {
+                                                } // Callback after click
+                                            }).showToast();
+                                        },
+                                        error: function (XMLHttpRequest, textStatus, errorThrown) {
 
-$.ajax({
-type: "GET",
-url: action,
-success: function (data, dataType) {
-$(event.target).prev('a')[0].remove()
-Toastify({
-text: "Notification supprimé",
-duration: 3000,
-close: true,
-gravity: "top", // `top` or `bottom`
-position: 'left', // `left`, `center` or `right`
-stopOnFocus: true, // Prevents dismissing of toast on hover
-className: "info",
-onClick: function () {} // Callback after click
-}).showToast();
-},
-error: function (XMLHttpRequest, textStatus, errorThrown) {
-
-Toastify({
-text: "Une erreur est survenue",
-duration: 3000,
-close: true,
-gravity: "top", // `top` or `bottom`
-position: 'left', // `left`, `center` or `right`
-stopOnFocus: true, // Prevents dismissing of toast on hover
-className: "info",
-onClick: function () {} // Callback after click
-}).showToast();
-}
-});
-
-
-}
-
-function handleDeleteAllNotification(event) {
-{
-
-event.preventDefault();
-console.log(event.target.dataset.action)
-let action = event.target.dataset.action console.log(event.target)$.ajax(
-{
-type: "GET",
-url: action,
-success: function (data, dataType) {
-console.log(event.target)
-Toastify({
-text: "Notifications supprimé",
-duration: 3000,
-close: true,
-gravity: "top", // `top` or `bottom`
-position: 'left', // `left`, `center` or `right`
-stopOnFocus: true, // Prevents dismissing of toast on hover
-className: "info",
-onClick: function () {} // Callback after click
-}).showToast();
-},
-error: function (XMLHttpRequest, textStatus, errorThrown) {
-
-Toastify({
-text: "Une erreur est survenue",
-duration: 3000,
-close: true,
-gravity: "top", // `top` or `bottom`
-position: 'left', // `left`, `center` or `right`
-stopOnFocus: true, // Prevents dismissing of toast on hover
-className: "info",
-onClick: function () {} // Callback after click
-}).showToast();
-}
-}
-);
+                                            Toastify({
+                                                text: "Une erreur est survenue",
+                                                duration: 3000,
+                                                close: true,
+                                                gravity: "top", // `top` or `bottom`
+                                                position: 'left', // `left`, `center` or `right`
+                                                stopOnFocus: true, // Prevents dismissing of toast on hover
+                                                className: "info",
+                                                onClick: function () {
+                                                } // Callback after click
+                                            }).showToast();
+                                        }
+                                    });
 
 
-}
+                                }
 
-}
-							</script>
+                                function handleDeleteAllNotification(event) {
+                                    {
 
-						{% endblock %}
+                                        event.preventDefault();
+                                        console.log(event.target.dataset.action)
+                                        let action = event.target.dataset.action
+                                        $.ajax(
+                                            {
+                                                type: "GET",
+                                                url: action,
+                                                success: function (data, dataType) {
+                                                    $( ".notif" ).remove()
+                                                    Toastify({
+                                                        text: "Notifications supprimé",
+                                                        duration: 3000,
+                                                        close: true,
+                                                        gravity: "top", // `top` or `bottom`
+                                                        position: 'left', // `left`, `center` or `right`
+                                                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                                                        className: "info",
+                                                        onClick: function () {
+                                                        } // Callback after click
+                                                    }).showToast();
+                                                },
+                                                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                                                    Toastify({
+                                                        text: "Une erreur est survenue",
+                                                        duration: 3000,
+                                                        close: true,
+                                                        gravity: "top", // `top` or `bottom`
+                                                        position: 'left', // `left`, `center` or `right`
+                                                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                                                        className: "info",
+                                                        onClick: function () {
+                                                        } // Callback after click
+                                                    }).showToast();
+                                                }
+                                            }
+                                        );
+
+
+                                    }
+
+                                }
+                            </script>
+
+                        {% endblock %}

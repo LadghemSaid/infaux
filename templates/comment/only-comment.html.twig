@@ -58,7 +58,7 @@
                                             <span class="followStatus">Suivre</span>
 
                                         </a>
-                                        <a class="" href="{{ path('conversations.newConversations',{'username':(comment.user.username) ?? 'anonyme' }) }}">
+                                        <a class="message" href="{{ path('conversations.newConversations',{'username':(comment.user.username) ?? 'anonyme' }) }}">
                                             Envoyer un message privé
                                         </a>
                                     {% endif %}
