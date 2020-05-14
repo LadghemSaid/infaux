@@ -1,0 +1,18 @@
+.list-group-item{
+  &.router-link-exact-active{
+    background-color: #6b9;
+    h6{
+      color: white;
+    }
+  }
+}
+
+.chat-box{
+  overflow-y: scroll;
+  min-height: calc(100vh - 260px);
+max-height:  calc(100vh - 260px);
+
+  @include breakpoint(desktop){
+
+  }
+}
