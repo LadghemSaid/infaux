@@ -106,6 +106,22 @@ class IndexController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
+        $notifs = $this->getUser()->getNotificationsMessagerie();
+
+        $notifsSeen = [];
+        $notifsNotSeen = [];
+
+        foreach ($notifs as $notif) {
+            if ($notif->getSeen()) {
+                array_push($notifsSeen, $notif);
+                $notif->setSeen(true);
+            } else {
+                array_push($notifsNotSeen, $notif);
+                $notif->setSeen(true);
+            }
+            $this->em->persist($notif);
+        }
+        $this->em->flush();
         return $this->render('chat/index/index.html.twig', [
             'current_menu' => 'chat',
 
