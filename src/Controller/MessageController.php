@@ -7,6 +7,7 @@ use App\Entity\Message;
 use App\Repository\MessageRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\UserRepository;
+use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -45,18 +46,24 @@ class MessageController extends AbstractController
      * @var PublisherInterface
      */
     private $publisher;
+    /**
+     * @var NotificationService
+     */
+    private $notificationService;
 
     public function __construct(EntityManagerInterface $entityManager,
                                 MessageRepository $messageRepository,
                                 UserRepository $userRepository,
                                 ParticipantRepository $participantRepository,
-                                PublisherInterface $publisher)
+                                PublisherInterface $publisher,
+                                NotificationService $notificationService)
     {
         $this->entityManager = $entityManager;
         $this->messageRepository = $messageRepository;
         $this->userRepository = $userRepository;
         $this->participantRepository = $participantRepository;
         $this->publisher = $publisher;
+        $this->notificationService = $notificationService;
     }
 
     /**
@@ -142,6 +149,7 @@ class MessageController extends AbstractController
         );
 
         $this->publisher->__invoke($update);
+        $this->notificationService->addMessage($recipient->getUser(),$user);
 
         $message->setMine(true);
         return $this->json($message, Response::HTTP_CREATED, [], [

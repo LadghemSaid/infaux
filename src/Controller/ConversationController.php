@@ -119,7 +119,7 @@ class ConversationController extends AbstractController
 
         $hubUrl = $this->getParameter('mercure.default_hub');
 
-        $request->headers->set('Content-Type', 'ok mdr');
+        $request->headers->set('Content-Type', 'text/plain');
 
         $this->addLink($request, new Link('mercure', $hubUrl));
 

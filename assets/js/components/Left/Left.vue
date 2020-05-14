@@ -12,7 +12,11 @@
                     <template v-for="(conversation, index, key) in CONVERSATIONS">
                         <Conversation :conversation="conversation" />
                     </template>
-                    <p class=" px-4  flex text-muted" v-if="CONVERSATIONS.length === 0">
+
+                    <p class=" px-4  flex text-muted" v-if="CONVERSATIONSLOADING">
+                        Chargement...
+                    </p>
+                    <p class=" px-4  flex text-muted" v-if="CONVERSATIONSEMPTY">
                         Aucune conversation
                     </p>
                 </div>
@@ -25,11 +29,17 @@
     import {mapGetters} from 'vuex';
     import Conversation from "./Conversation";
 
-
     export default {
+
         components: {Conversation},
         computed: {
           ...mapGetters(["CONVERSATIONS", "HUBURL", "USERNAME","MERCURETOKEN"])
+        },
+        data: ()=>{
+            return {
+                CONVERSATIONSLOADING: true,
+                CONVERSATIONSEMPTY: false
+            }
         },
         methods: {
             updateConversations(data) {
@@ -37,9 +47,16 @@
             }
         },
         mounted() {
+
             const vm = this;
             this.$store.dispatch("GET_CONVERSATIONS")
                 .then(() => {
+                    if(this.CONVERSATIONS.length ===0){
+                        this.CONVERSATIONSEMPTY= true;
+
+                    }
+                    this.CONVERSATIONSLOADING= false;
+
                     let url = new URL(this.HUBURL);
                     url.searchParams.append('topic', `/conversations/${this.USERNAME}`)
 
@@ -54,7 +71,6 @@
                     }, {withCredentials: false});
 
                     eventSource.onmessage = function (event) {
-                        console.log('message recu');
                         vm.updateConversations(JSON.parse(event.data))
                     }
                     eventSource.onerror = function (event) {

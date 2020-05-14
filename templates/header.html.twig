@@ -12,7 +12,11 @@
                         src="{{ asset("img/logo_infaux.png") }}" alt="Infaux logo"/></a>
         </div>
         <div class="chat-i">
-            <a href="{{ path('index.chat') }}"><i class="icon-bubbles3"></i></a>
+            <a href="{{ path('index.chat') }}"><i class="icon-bubbles3"></i>
+                {% if app.user.notificationsMessagerieNotSeen | length > 0 %}
+                    <span class="number_notif notif">{{ app.user.notificationsMessagerieNotSeen | length }}</span>
+                {% endif %}
+            </a>
         </div>
     </div>
     <nav class="mobile-bottom-nav">
