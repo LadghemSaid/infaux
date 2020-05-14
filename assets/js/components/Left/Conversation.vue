@@ -6,12 +6,16 @@
                  class="rounded-circle">
             <div class="media-body ml-4">
                 <div class="d-flex align-items-center justify-content-between mb-1">
-                    <h6 class="mb-0">{{ conversation.username }}</h6><small class="small font-weight-bold">{{ date
-                    }}</small>
+                    <h6 class="mb-0">{{ conversation.username }}</h6>
+
+<!--                    <small class="small font-weight-bold">{{ date }}</small>-->
+
                     <p class="icon-close btn btn-danger" @click="deleteConv"></p>
 
                 </div>
-                <p class="font-italic mb-0 text-small">{{ conversation.content }}</p>
+
+<!--                <p class="font-italic mb-0 text-small">{{ conversation.content }}</p>-->
+
             </div>
         </div>
     </router-link>
