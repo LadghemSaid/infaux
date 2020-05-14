@@ -93,6 +93,16 @@
 
 
 <script>
+
+    function hideModal(){
+        $(".modal").removeClass("in");
+        $(".modal-backdrop").remove();
+        $('body').removeClass('modal-open');
+        $('body').css('padding-right', '');
+        $(".modal").hide();
+    }
+
+
     document.addEventListener("DOMContentLoaded", function (event) {
 
 
@@ -114,7 +124,7 @@
     });
 
 </script>
-    {{ encore_entry_script_tags('barba') }}
+
 
 
 {% if app.user %}

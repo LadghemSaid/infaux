@@ -59,7 +59,7 @@ class Comment
     private $likes;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Report", mappedBy="comment")
+     * @ORM\OneToMany(targetEntity="App\Entity\Report", mappedBy="comment", orphanRemoval=true)
      */
     private $reports;
 
