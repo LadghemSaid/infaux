@@ -51,7 +51,7 @@ class CommentsController extends AbstractController
 
 
         $comment = new Comment();
-        $user =$this->getUser();
+        $user = $this->getUser();
 
         $post = $postRepo->find($id);
         $comment->setPost($post)
@@ -69,16 +69,16 @@ class CommentsController extends AbstractController
             if ($userFollorwing == $security->getUser()) {
 
             } else {
-                $this->notificationService->add($userFollorwing, $message = "{$user->getUsername()} a commenter sur ce post epinglé",$user,$post);
+                $this->notificationService->add($userFollorwing, $message = "{$user->getUsername()} a commenter sur ce post epinglé", $user, $post);
             }
 
         }
         //Envoie de la notif a l'auteur du post
-        $this->notificationService->add($post->getUser(), $message = "Un commentaire à été ajouter sur votre post",$user,$post);
+        $this->notificationService->add($post->getUser(), $message = "Un commentaire à été ajouter sur votre post", $user, $post);
 
 
         //$this->addFlash('success', "Commentaire ajouté avec succés :)");
-       return  $response = $this->render('comment/only-comment.html.twig', [
+        return $response = $this->render('comment/only-comment.html.twig', [
             'comment' => $comment,
 
         ]);
@@ -91,17 +91,16 @@ class CommentsController extends AbstractController
      */
     public function delete(Comment $comment, Security $security, Request $req)
     {
-        //   $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         if ($security->getUser() === $comment->getUser()) {
-            $referer = explode('/', $req->headers->get('referer'));
-            //dd($jobRepo->find($id));
+            $this->em->remove($comment);
+            $this->em->flush();
 
+            return new Response("-1");
+        } else {
+            return new Response("-0");
 
         }
-
-        return $this->redirect($req->headers->get('referer'));
-
-        //dd($comment);
 
     }
 

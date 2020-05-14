@@ -51,18 +51,16 @@
                                                     href="{{ path('account.show',{'id': comment.user.id ?? 999} ) }}">Voir
                                                 le
                                                 profil</a></div>
-                                        <div data-userId="{{ comment.user.id ?? 999 }}"
+                                        <a data-userId="{{ comment.user.id ?? 999 }}"
                                              onclick="handleAddUserFollow(event)"
                                              data-action="{{ path('follow.add',{"id":comment.user.id ?? 999}) }}"
                                              class="followUser">
                                             <span class="followStatus">Suivre</span>
 
-                                        </div>
-                                        <div>
-                                        <form method="post" action="{{ path('conversations.newConversations',{'username': (comment.user.username) ?? 'anonyme' }) }}">
-                                            <button class="message" type="submit">Envoyer un message privé</button>
-                                        </form>
-                                        </div>
+                                        </a>
+                                        <a class="" href="{{ path('conversations.newConversations',{'username':(comment.user.username) ?? 'anonyme' }) }}">
+                                            Envoyer un message privé
+                                        </a>
                                     {% endif %}
                                 {% else %}
                                     <div class="lien_profil"><a
@@ -111,6 +109,18 @@
                                                             class="number ">Signaler ce contenu</span>
                                                 </div>
                                             </div>
+
+                                            {% if  app.user == comment.user %}
+                                                <div class="icons">
+                                                    <div onclick="handleDeleteComment(event)"
+                                                         data-action="{{ path('comment.delete',{'comment': comment.id} ) }}"
+                                                         class="deleteForm">
+
+                                                        <i class="icon-blocked"></i><span class="number ">Suprimer</span>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+
                                         </div>
                                     </div>
                                 </div>
@@ -140,11 +150,11 @@
                             {% if likedComment %}
                                 <i class="icon-heart heart-like"></i>
                             {% else %}
-                                <i class="icon-heart heart-dilike"></i>
+                                <i class="icon-heart heart-dislike"></i>
                             {% endif %}
 
                         {% else %}
-                            <i class="icon-heart heart-like"></i>
+                            <i class="icon-heart heart-dislike"></i>
                         {% endif %}
 
                         <span class="number">

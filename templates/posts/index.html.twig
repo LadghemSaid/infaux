@@ -89,32 +89,6 @@
                 <input type="hidden" id="post__token" name="post_token" value="{{ csrf_token('add_post') }}"></form>
             </div>
 
-
-            {#
-             <div class="formPost">
-                 {{ form_start(postForm,{'attr':{'class':'postForm'}}) }}
-                 <div class="img"
-                         {% if app.user.image  is defined %}
-                      style="background:url('{{ vich_uploader_asset(app.user, 'imageFile') }}')">
-                     {% else %}
-                         style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}')">
-                     {% endif %}
-
-                 </div>
-                 <div class="form-group">
-                     {{ form_row(postForm.text,{'attr':{'class':'postForm__textarea form-control input-lg txta','placeholder':'Poster un nouveau post', 'onfocus':'affiche()', 'onblur':'afficheplus()'},'label': ' '}) }}
-                 </div>
-                 <div class="d-flex justify-content-end btn-submit">
-                     <div class="form-group">
-
-                         {{ form_row(postForm.submit,{'attr':{'class': 'formPost', 'disabled':'true'},'label': 'Poster'}) }}
-
-                     </div>
-                 </div>
-                 {{ form_end(postForm) }}
-             </div>
-             #}
-
         {% endif %}
 
 
@@ -180,14 +154,14 @@
                   // options
                   path: '.next a',
                   append: '.post-container',
+                  prefill: true,
                   history: false,
                   elementScroll: false,
                   hideNav: '.pagination',
                   status: '.page-load-status'
               });
-              infiniteScroll.on('load.infiniteScroll', function () {
+              infiniteScroll.on('append.infiniteScroll', function () {
                   $(function () {
-                      moment.locale('fr');
                       $(".p-date").map((x, i) => {
                           i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
                       });

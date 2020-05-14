@@ -25,6 +25,7 @@ Encore
     .addEntry('app', './assets/js/app.js')
     .addEntry('ajax', './assets/js/ajax.js')
     .addEntry('login', './assets/js/login.js')
+    .addEntry('search', './assets/js/search.js')
 
     .addStyleEntry('main', './assets/css/scss/imports.scss')
     .splitEntryChunks()
@@ -119,6 +120,7 @@ Encore
     .addEntry('app', './assets/js/app.js')
 
     .addEntry('ajax', './assets/js/ajax.js')
+    .addEntry('search', './assets/js/search.js')
     .addEntry('login', './assets/js/login.js')
     .addStyleEntry('main', './assets/css/scss/imports.scss')
     .splitEntryChunks()

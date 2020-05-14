@@ -24,3 +24,7 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
+        dql:
+            string_functions:
+                # Match agains should have the path to the SOUNDEX class created in the previous step
+                SOUNDEX: App\Extensions\SoundexFunction

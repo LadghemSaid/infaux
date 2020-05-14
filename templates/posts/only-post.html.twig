@@ -39,29 +39,36 @@
                                 </div>
                                 </div>
                                 <div class="username">{{ post.user.username }}</div>
-                                <div class="description">{{post.user.description}}
-                                </div>
+                                <div class="description">{{post.user.description}}</div>
                                 {% if app.user %}
                                     {% if  app.user == post.user %}
                                         <div class="lien_profil"><a
                                                     href="{{ path('account.show',{'id': post.user.id} ) }}">Voir mon
                                                 profil</a></div>
+
                                     {% else %}
                                         <div class="lien_profil"><a
                                                     href="{{ path('account.show',{'id': post.user.id} ) }}">Voir le
                                                 profil</a></div>
-                                        <div data-userId="{{ post.user.id }}"
+
+                                        {% if post.user in app.user.friends %}
+                                        <a href="#" data-userId="{{ post.user.id }}"
                                              onclick="handleAddUserFollow(event)"
                                              data-action="{{ path('follow.add',{"id":post.user.id}) }}"
                                              class="followUser">
-                                            <span class="followStatus">Suivre</span>
+                                            <span class="followStatus">Ne plus suivre</span></a>
+                                        {% else %}
+                                            <a href="#" data-userId="{{ post.user.id }}"
+                                               onclick="handleAddUserFollow(event)"
+                                               data-action="{{ path('follow.add',{"id":post.user.id}) }}"
+                                               class="followUser">
+                                                <span class="followStatus">Suivre</span></a>
+                                        {% endif %}
 
-                                        </div>
-                                        <div>
-                                        <form method="post" action="{{ path('conversations.newConversations',{'username':(post.user.username) ?? 'anonyme' }) }}">
-                                            <button class="message" type="submit">Envoyer un message privé</button>
-                                        </form>
-                                        </div>
+
+                                        <a class="" href="{{ path('conversations.newConversations',{'username':(post.user.username) ?? 'anonyme' }) }}">
+                                          Envoyer un message privé
+                                        </a>
                                     {% endif %}
                                 {% else %}
                                     <div class="lien_profil"><a
@@ -119,6 +126,17 @@
 
                                                     </div>
                                                 </div>
+
+                                            {% if  app.user == post.user %}
+                                                <div class="icons">
+                                                    <div onclick="handleDeletePost(event)"
+                                                         data-action="{{ path('post.delete',{'post': post.id} ) }}"
+                                                         class="deleteForm">
+
+                                                        <i class="icon-blocked"></i><span class="number ">Suprimer</span>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
                                             {% endif %}
                                             <div class="icons">
                                                 <div onclick="handleAddReport(event)"
@@ -158,11 +176,11 @@
                             {% if liked %}
                                 <i class="icon-heart heart-like"></i>
                             {% else %}
-                                <i class="icon-heart heart-dilike"></i>
+                                <i class="icon-heart heart-dislike"></i>
                             {% endif %}
 
                         {% else %}
-                            <i class="icon-heart heart-like"></i>
+                            <i class="icon-heart heart-dislike"></i>
                         {% endif %}
 
                         <span class="number">{{ post.likes|length }}</span>
@@ -181,11 +199,11 @@
                             {% if commented %}
                                 <i class="icon-bubble bubble-true"></i>
                             {% else %}
-                                <i class="icon-bubble "></i>
+                                <i class="icon-bubble bubble-false"></i>
                             {% endif %}
 
                         {% else %}
-                            <i class="icon-bubble bubble-true"></i>
+                            <i class="icon-bubble bubble-false"></i>
                         {% endif %}
 
 
@@ -223,11 +241,11 @@
                             {% if liked %}
                                 <i class="icon-heart heart-like"></i>
                             {% else %}
-                                <i class="icon-heart heart-dilike"></i>
+                                <i class="icon-heart heart-dislike"></i>
                             {% endif %}
 
                         {% else %}
-                            <i class="icon-heart heart-dilike"></i>
+                            <i class="icon-heart heart-dislike"></i>
                         {% endif %}
                         aimer
                     </div>
@@ -249,7 +267,7 @@
                             {% endif %}
 
                         {% else %}
-                            <i class="icon-bubble bubble-true"></i>
+                            <i class="icon-bubble bubble-false"></i>
                         {% endif %}
                         commenter
                     </div>

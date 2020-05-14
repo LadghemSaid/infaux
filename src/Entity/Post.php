@@ -52,7 +52,7 @@ class Post
 
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="post")
+     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="post", orphanRemoval=true)
      */
     private $likes;
 

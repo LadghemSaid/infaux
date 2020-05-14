@@ -47,4 +47,17 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findUsersByString($str)
+    {
+
+        return $this->createQueryBuilder('u')
+            ->where("SOUNDEX(u.username) LIKE SOUNDEX(:val)")
+            //->where('u.username like :val')
+            ->setParameter('val','%'.$str.'%')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+
+    }
 }

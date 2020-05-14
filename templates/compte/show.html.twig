@@ -86,7 +86,7 @@
                          onclick="handleAddUserFollow(event)"
                          data-action="{{ path('follow.add',{"id": user.id}) }}"
                          class="followUser">
-                        <span class="followStatus">Suivi</span>
+                        <span class="followStatus">Ne plus suivre</span>
                     </div>
 
                 {% else %}
@@ -96,6 +96,11 @@
                          class="followUser btn btn-border-green btn-lg mt-20 mt-20Mobile">
                         <span class="followStatus">Suivre</span>
                     </div>
+
+                    <a href="{{ path('conversations.newConversations',{"username": user.username}) }}"
+                         class="followUser btn btn-border-green btn-lg mt-20 mt-20Mobile">
+                        <span class="followStatus">Envoyer un message privé</span>
+                    </a>
 
 
                 {% endif %}
