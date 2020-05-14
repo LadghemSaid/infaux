@@ -14,6 +14,7 @@
   right: 0;
   z-index: 10;
   box-shadow: 0 0px 5px -2px rgb(168, 168, 168);
+  height: 50px;
 
   img {
     height: 50px;
@@ -22,10 +23,10 @@
   .retour {
     position: absolute;
     left: 15px;
+    width: 30px;
+    text-align: center;
 
     a {
-      display: flex;
-      align-items: center;
       color: $green;
 
       &:hover {
@@ -35,6 +36,25 @@
 
     i {
       font-size: 30px;
+    }
+  }
+
+  .chat-i {
+    position: absolute;
+    right: 15px;
+    width: 30px;
+    text-align: center;
+
+    a {
+      color: $green;
+
+      &:hover {
+        color: $dark-green;
+      }
+    }
+
+    i {
+      font-size: 20px;
     }
   }
 }
@@ -89,7 +109,7 @@
 
 .collapse-navbar {
   background-color: $green;
-  border-radius: 0;
+  border-radius: 0 !important;
   width: 90%;
   height: 100vh;
   margin-left: auto;
@@ -103,6 +123,10 @@
 
 .menu-collapse {
   background-color: rgba(0, 0, 0, 0.466);
+
+  .modal-dialog {
+    min-width: 100%;
+  }
 }
 
 .modal-header {
@@ -176,14 +200,16 @@ label::before {
 
 span.notif {
   position: absolute;
-  font-size: 15px;
-  background-color: #B55F5F;
-  color: #000000;
+  font-size: small;
+  background-color: #b55f5f;
+  color: #000;
   border-radius: 100%;
   text-align: center;
-  padding: 3px 6px;
   bottom: 5px;
   z-index: -1;
+  width: 25px;
+  height: 25px;
+  padding-top: 5px;
 }
 
 .disabled {

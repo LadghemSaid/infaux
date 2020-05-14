@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?he6jgv');
-  src:  url('fonts/icomoon.eot?he6jgv#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?he6jgv') format('truetype'),
-    url('fonts/icomoon.woff?he6jgv') format('woff'),
-    url('fonts/icomoon.svg?he6jgv#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?nbtzjs');
+  src:  url('fonts/icomoon.eot?nbtzjs#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?nbtzjs') format('truetype'),
+    url('fonts/icomoon.woff?nbtzjs') format('woff'),
+    url('fonts/icomoon.svg?nbtzjs#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -40,11 +40,14 @@
 .icon-dots-horizontal-triple:before {
   content: "\e902";
 }
-.icon-heart:before {
-  content: "\e904";
+.icon-keyboard_arrow_left:before {
+  content: "\e908";
 }
-.icon-close:before {
-  content: "\e901";
+.icon-keyboard_arrow_down:before {
+  content: "\e909";
+}
+.icon-dots-horizontal-triple:before {
+  content: "\e902";
 }
 .icon-heart-o:before {
   content: "\e903";
@@ -90,6 +93,9 @@
 }
 .icon-bubble2:before {
   content: "\e96e";
+}
+.icon-bubbles3:before {
+  content: "\e96f";
 }
 .icon-user:before {
   content: "\e971";

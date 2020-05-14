@@ -28,6 +28,7 @@
                             </div>
                             <div class="modal-body">
                                 <div class="wrap">
+                                <div class="user-picture">
                                     <div class="img"
                                             {% if post.user.image  is defined %}
                                          style="background:url('{{ vich_uploader_asset(post.user, 'imageFile') }}')">
@@ -35,6 +36,7 @@
                                             style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}')">
                                         {% endif %}
                                      </div>
+                                </div>
                                 </div>
                                 <div class="username">{{ post.user.username }}</div>
                                 <div class="description">{{post.user.description}}</div>
@@ -64,7 +66,7 @@
                                         {% endif %}
 
 
-                                        <a class="" href="{{ path('conversations.newConversations',{'username':(post.user.username) ?? 'anonyme' }) }}">
+                                        <a class="message" href="{{ path('conversations.newConversations',{'username':(post.user.username) ?? 'anonyme' }) }}">
                                           Envoyer un message privé
                                         </a>
                                     {% endif %}

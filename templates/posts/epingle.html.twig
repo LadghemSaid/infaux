@@ -47,7 +47,7 @@
 
 
 
-        <span class="number-posts">{{ posts |length }} posts</span>
+        <span class="number-posts">{{ posts |length }} post{% if posts | length > 1 %}s{% endif %}</span>
         {% if posts is empty %}
             <p>Vous n'avez aucun post epingler !</p>
         {% endif %}

@@ -43,8 +43,8 @@ gtag('config', 'UA-107718823-2');
 	<div class="follow container mt-100">
 		<h1>Abonnements de {{ user.username }}</h1>
         <div class="d-flex justify-content-between nav-followers">
-			<a class="nav-item nav-link" href="{{ path('post.follower',{'id':user.id}) }}"><p class="title">{{ user.friendList| length }} Abonnés</p></a>
-			<a class="nav-item nav-link active" href="{{ path('post.follow',{'id':user.id}) }}"><p class="title">{{ user.friends| length }} Abonnements</p></a>
+			<a class="nav-item nav-link" href="{{ path('post.follower',{'id':user.id}) }}"><p class="title">{{ user.friendList| length }} Abonné{% if user.friendList | length > 1 %}s{% endif %}</p></a>
+			<a class="nav-item nav-link active" href="{{ path('post.follow',{'id':user.id}) }}"><p class="title">{{ user.friends| length }} Abonnement{% if user.friends | length > 1 %}s{% endif %}</p></a>
 		</div>
 
 

@@ -1,14 +1,10 @@
 
-.mt-30 {
-    margin-top: 30px;
-}
-
-.mt-20 {
-    margin-top: 20px;
+.container-profil {
+    margin-top: 90px;
+    margin-bottom: 70px;
 }
 
 .account{
-    margin-top: 100px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -16,14 +12,14 @@
     
     .img_wrap{
         background: rgb(102,187,153);
-background: linear-gradient(311deg, rgba(102,187,153,0.8186624991793592) 0%, rgba(102,187,153,0.4489146000196954) 62%, rgba(102,187,153,0) 100%);
-       min-height: 120px;
-       min-width: 120px;
-       border-radius: 100px;
-       display: flex;
-       align-items: center;
-       justify-content: center;
-       margin-bottom: 20px;
+        background: linear-gradient(311deg, rgba(102,187,153,0.8186624991793592) 0%, rgba(102,187,153,0.4489146000196954) 62%, rgba(102,187,153,0) 100%);
+        min-height: 120px;
+        min-width: 120px;
+        border-radius: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
 
         .img{
             height: 100px;
@@ -36,13 +32,14 @@ background: linear-gradient(311deg, rgba(102,187,153,0.8186624991793592) 0%, rgb
         }
     }
     .name{
-        font-weight: $blackW;
+        font-weight: 600;
         color: black;
         font-size: $Mlarge;
+        margin-bottom: 5px;
     }
     .createdAt{
         color: rgba($color: $dark-grey, $alpha: .62);
-        font-size: $Msmall;
+        font-size: small;
     }
     .description{
         text-align: center;

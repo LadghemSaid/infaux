@@ -1,15 +1,18 @@
 <header class="header-tapbar">
     <div class="logo-header d-flex justify-content-center align-items-center">
-        {% if app.request.get('_route') != 'index' and app.request.get('_route') != 'search' and app.request.get('_route') != 'notification' %}
+        {% if app.request.get('_route') != 'index' and app.request.get('_route') != 'search' and app.request.get('_route') != 'notification.index' and app.request.get('_route') != 'index.chat' %}
         <div class="retour">
             {% set referer = app.request.server.get('HTTP_REFERER')|default('/') %}
-            <a href="{{ referer }}"><i class="icon-keyboard_arrow_left"></i> Retour</a>
+            <a href="{{ referer }}"><i class="icon-keyboard_arrow_left"></i></a>
         </div>
         {% endif %}
         <div>
             <a aria-label="Button permettant de retourner en haut de la page" id="scrollToTop">
                 <img
                         src="{{ asset("img/logo_infaux.png") }}" alt="Infaux logo"/></a>
+        </div>
+        <div class="chat-i">
+            <a href="{{ path('index.chat') }}"><i class="icon-bubbles3"></i></a>
         </div>
     </div>
     <nav class="mobile-bottom-nav">
@@ -58,9 +61,9 @@
                         <i class="icon-close"></i>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body pt-0">
                     <div class="container d-flex flex-column align-items-center">
-                        <div class="user-picture-background mt-40 mt-20Mobile mb-10 mb-10Mobile">
+                        <div class="user-picture-background mt-40 mb-10 mb-10Mobile">
                             <div class="user-picture">
                                 {% if app.user %}
                                     <img src='{{ vich_uploader_asset(app.user, 'imageFile') }}' alt="user"/>
@@ -70,16 +73,16 @@
                             </div>
                         </div>
                         {% if app.user %}
-                            <h3 class="fc-black">{{ app.user.username }}</h3>
+                            <h3 class="fc-black capitalize">{{ app.user.username }}</h3>
                             <a href="{{ path('post.follower',{'id': app.user.id}) }}"><p class="fc-black">{{ app.user.friendList| length }}
-                                    abonnées</p></a>
+                                    Abonné{% if app.user.friendList | length > 1 %}s{% endif %}</p></a>
                             <a href="{{ path('account.show',{'id':app.user.id}) }}">
-                                <button type="button" class="btn btn-black btn-lg btn-block mt-20 mt-20Mobile">Voir le
+                                <button type="button" class="btn btn-black btn-lg btn-block mt-20 mt-5Mobile">Voir le
                                     profil
                                 </button>
                             </a>
                         {% else %}
-                            <h3 class="fc-black">Vous n'êtes pas connecté</h3>
+                            <h3 class="fc-black text-center">Vous n'êtes pas connecté</h3>
                             <a href="{{ path('app_login') }}">
                                 <button type="button" class="btn btn-black btn-lg btn-block mt-20 mt-20Mobile">Se
                                     connecter
@@ -91,31 +94,31 @@
                                 </button>
                             </a>
                         {% endif %}
-                        <div class="d-flex flex-column justify-content-start w-100 mt-40 mt-40Mobile">
+                        <div class="d-flex flex-column justify-content-start w-100 mt-40 mt-30Mobile">
                             <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" id="customSwitch1">
                                 <label class="custom-control-label" for="customSwitch1">Mode nuit</label>
                             </div>
                             {% if is_granted('ROLE_ADMIN') %}
 
-                                <a class="mt-30 mt-30Mobile" href="/admin">Administration</a>
+                                <a class="mt-30 mt-25Mobile" href="/admin">Administration</a>
 
                             {% endif %}
                             {% if app.user %}
-                            <a id="header-notfication-bell" href="{{ path('notification.index') }}" class="mt-30 mt-30Mobile">Notifications
+                            <a id="header-notfication-bell" href="{{ path('notification.index') }}" class="mt-30 mt-25Mobile">Notifications
                                 {% if app.user.notificationNotSeen | length >= 1 %}
                                     (<span class="number_notif">{{ app.user.notificationNotSeen | length }}</span>)</a>
                                 {% endif %}
 
-                                <a href="{{ path('index.chat') }}" class="mt-30 mt-30Mobile">Messagerie</a>
-                                <a href="{{ path('account.settings') }}" class="mt-30 mt-30Mobile">Paramètres</a>
+                                <a href="{{ path('index.chat') }}" class="mt-30 mt-20Mobile">Messagerie</a>
+                                <a href="{{ path('account.settings') }}" class="mt-30 mt-25Mobile">Paramètres</a>
 
 
-                                <a href="{{ path('post.pinned') }}" class="mt-30 mt-30Mobile">Voir mes postes
+                                <a href="{{ path('post.pinned') }}" class="mt-30 mt-25Mobile">Voir mes postes
                                     épinglés</a>
 
 
-                                <a href="{{ path('app_logout') }}" class="mt-30 mt-30Mobile">Déconnexion</a>
+                                <a href="{{ path('app_logout') }}" class="mt-30 mt-25Mobile">Déconnexion</a>
 
                             {% endif %}
                         </div>
