@@ -23,6 +23,7 @@ Encore
     .setManifestKeyPrefix('build/')
     .addEntry('eventSource', './assets/js/eventSource.js')
     .addEntry('app', './assets/js/app.js')
+    .addEntry('barba', './assets/js/barba.js')
     .addEntry('ajax', './assets/js/ajax.js')
     .addEntry('login', './assets/js/login.js')
     .addEntry('search', './assets/js/search.js')
@@ -118,6 +119,7 @@ Encore
     .setManifestKeyPrefix('build/')
     .addEntry('eventSource', './assets/js/eventSource.js')
     .addEntry('app', './assets/js/app.js')
+    .addEntry('barba', './assets/js/barba.js')
 
     .addEntry('ajax', './assets/js/ajax.js')
     .addEntry('search', './assets/js/search.js')

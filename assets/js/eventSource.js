@@ -16,3 +16,5 @@ var { NativeEventSource, EventSourcePolyfill } = require('event-source-polyfill/
 const EventSource = NativeEventSource || EventSourcePolyfill
 global.EventSource = EventSource;
 global.EventSourcePolyfill = EventSourcePolyfill;
+
+

@@ -1,5 +1,5 @@
-const axios = require('axios');
 import Toastify from 'toastify-js';
+const axios = require('axios');
 
 async function handleAddLike(event) {
     console.log("action :: ", event.currentTarget.dataset.action);
@@ -16,7 +16,7 @@ async function handleAddLike(event) {
             //console.log(data);
             if (data === '+1') {
                 targetToChange.innerText = parseInt(targetToChange.innerText) + 1;
-                $(targetToChangeIcon).removeClass("heart-dilike ");
+                $(targetToChangeIcon).removeClass("heart-dislike ");
                 $(targetToChangeIcon).addClass("heart-like");
                 Toastify({
                     text: "J'aime !",
@@ -31,7 +31,7 @@ async function handleAddLike(event) {
                 }).showToast();
             } else {
                 $(targetToChangeIcon).removeClass("heart-like");
-                $(targetToChangeIcon).addClass("heart-dilike ");
+                $(targetToChangeIcon).addClass("heart-dislike ");
                 targetToChange.innerText = parseInt(targetToChange.innerText) - 1;
                 Toastify({
                     text: "Je n'aime pas !",
