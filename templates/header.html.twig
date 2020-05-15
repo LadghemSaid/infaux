@@ -11,13 +11,15 @@
                 <img
                         src="{{ asset("img/logo_infaux.png") }}" alt="Infaux logo"/></a>
         </div>
+        {% if app.user %}
         <div class="chat-i">
             <a href="{{ path('index.chat') }}"><i class="icon-bubbles3"></i>
                 {% if app.user.notificationsMessagerieNotSeen | length > 0 %}
-                    <span class="number_notif notif">{{ app.user.notificationsMessagerieNotSeen | length }}</span>
+                    <span id="notif-messagerie" class="number_notif notif">{{ app.user.notificationsMessagerieNotSeen | length }}</span>
                 {% endif %}
             </a>
         </div>
+        {% endif %}
     </div>
     <nav class="mobile-bottom-nav">
         <div class="mobile-bottom-nav__item">
@@ -39,7 +41,7 @@
                 <div class="mobile-bottom-nav__item-content">
                     <a href="{{ path('notification.index') }}" class="header-notfication-bell"><i class="icon-bell"></i>
                         {% if app.user.notificationNotSeen | length >= 1 %}
-                            <span class="number_notif notif">{{ app.user.notificationNotSeen | length }}</span>
+                            <span id="notif" class="number_notif notif">{{ app.user.notificationNotSeen | length }}</span>
                         {% endif %}
                     </a>
                 </div>
