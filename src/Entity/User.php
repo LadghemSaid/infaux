@@ -91,6 +91,13 @@ class User implements UserInterface,\Serializable
      * @ORM\OneToMany(targetEntity="App\Entity\Notification", mappedBy="user", orphanRemoval=true )
      */
     private $notifications;
+    private $notificationNotSeen;
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\NotificationMessagerie", mappedBy="user", orphanRemoval=true )
+     */
+    private $notificationsMessagerie;
+    private $notificationsMessagerieNotSeen;
+
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Post", mappedBy="followedBy" )
@@ -98,7 +105,7 @@ class User implements UserInterface,\Serializable
     private $postFollowed;
 
 
-    private $notificationNotSeen;
+
 
 
 
@@ -169,6 +176,7 @@ class User implements UserInterface,\Serializable
         $this->friends = new ArrayCollection();
         $this->reports = new ArrayCollection();
         $this->notifications = new ArrayCollection();
+        $this->notificationsMessagerie = new ArrayCollection();
         $this->postFollowed = new ArrayCollection();
         $this->updatedAt= new \DateTimeImmutable();
         $this->createdAt= new \DateTimeImmutable();
@@ -632,6 +640,41 @@ class User implements UserInterface,\Serializable
         return $this;
     }
 
+
+
+    /**
+     * @return Collection|NotificationMessagerie[]
+     */
+    public function getNotificationsMessagerie(): Collection
+    {
+        return $this->notificationsMessagerie;
+    }
+
+    public function addNotificationMessagerie(NotificationMessagerie $notificationsMessagerie): self
+    {
+        if (!$this->notificationsMessagerie->contains($notificationsMessagerie)) {
+            $this->notificationsMessagerie[] = $notificationsMessagerie;
+            $notificationsMessagerie->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotificationsMessagerie(NotificationMessagerie $notificationsMessagerie): self
+    {
+        if ($this->notificationsMessagerie->contains($notificationsMessagerie)) {
+            $this->notificationsMessagerie->removeElement($notificationsMessagerie);
+            // set the owning side to null (unless already changed)
+            if ($notificationsMessagerie->getUser() === $this) {
+                $notificationsMessagerie->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+
     /**
      * @return Collection|Post[]
      */
@@ -681,6 +724,30 @@ class User implements UserInterface,\Serializable
     {
         $this->notificationNotSeen = $notificationNotSeen;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getNotificationsMessagerieNotSeen()
+    {
+        $notificationsMessagerieNotSeen =[];
+        foreach ($this->notificationsMessagerie as $notif){
+            if(!$notif->getSeen()){
+                array_push($notificationsMessagerieNotSeen,$notif);
+            }
+        }
+        return $notificationsMessagerieNotSeen;
+    }
+
+    /**
+     * @param mixed $notificationNotSeen
+     */
+    public function setNotificationsMessagerieNotSeen($notificationsMessagerieNotSeen): void
+    {
+        $this->notificationsMessagerieNotSeen = $notificationsMessagerieNotSeen;
+    }
+
+
 
     /**
      * @return \DateTimeInterface|null

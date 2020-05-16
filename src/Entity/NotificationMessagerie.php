@@ -6,9 +6,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\NotificationRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\NotificationMessagerieRepository")
  */
-class Notification
+class NotificationMessagerie
 {
     /**
      * @ORM\Id()
@@ -18,7 +18,7 @@ class Notification
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="notifications" )
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="notificationsMessagerie" )
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -38,23 +38,13 @@ class Notification
      */
     private $byUser;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Post" )
-     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
 
-     */
-    private $byPost;
 
     /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Comment")
-     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
-     */
-    private $byComment;
 
 
 
@@ -120,17 +110,7 @@ class Notification
         return $this;
     }
 
-    public function getByPost(): ?Post
-    {
-        return $this->byPost;
-    }
 
-    public function setByPost(?Post $byPost): self
-    {
-        $this->byPost = $byPost;
-
-        return $this;
-    }
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
@@ -144,17 +124,7 @@ class Notification
         return $this;
     }
 
-    public function getByComment(): ?Comment
-    {
-        return $this->byComment;
-    }
 
-    public function setByComment(?Comment $byComment): self
-    {
-        $this->byComment = $byComment;
-
-        return $this;
-    }
 
 
 

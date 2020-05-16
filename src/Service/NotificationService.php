@@ -3,7 +3,9 @@
 namespace App\Service;
 
 use App\Entity\Comment;
+use App\Entity\Message;
 use App\Entity\Notification;
+use App\Entity\NotificationMessagerie;
 use App\Entity\Post;
 use App\Mercure\MercureService;
 use App\Repository\LikeRepository;
@@ -51,6 +53,23 @@ class NotificationService
         $this->em->flush();
 
         $this->mercureService->addNotification($user, $message);
+
+    }
+
+    public function addMessage($to,$from)
+    {
+        $notif = new NotificationMessagerie();
+        $message = "Message reçu";
+        $notif->setUser($to);
+        $notif->setSeen(false);
+        $notif->setByUser($from);
+        $notif->setMessage($message);
+
+        $this->em->persist($notif);
+        $this->em->flush();
+
+
+        $this->mercureService->addNotification($to, $message);
 
     }
 }

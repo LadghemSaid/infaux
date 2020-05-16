@@ -4,6 +4,13 @@
             <template v-for="(message, index, key) in MESSAGES">
                 <Message :message="message"/>
             </template>
+
+            <p class=" px-4  flex text-muted" v-if="!MESSAGES">
+                Chargement...
+            </p>
+            <p class=" px-4  flex text-muted" v-if="MESSAGES && MESSAGES.length === 0">
+                Aucun message
+            </p>
         </div>
 
         <Input/>
@@ -29,7 +36,7 @@
         },
         methods: {
             scrollDown() {
-              //  this.$refs.messagesBody.scrollTop = this.$refs.messagesBody.scrollHeight;
+                this.$refs.messagesBody.scrollTop = this.$refs.messagesBody.scrollHeight;
             },
             addMessage(data) {
                 this.$store.commit("ADD_MESSAGE", {

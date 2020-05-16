@@ -158,11 +158,21 @@
                         if (!data.message) {
                             return;
                         }
-                        if ($('.number_notif').length > 0) {
-                            $('.number_notif')[0].innerText++;
-                        } else {
-                            $('.header-notfication-bell').html("<i class='icon-bell'></i><span class='number_notif notif'>1</span>")
+                        console.log(data.message)
+                        if(data.message === "Message reçu"){
+                            if ($('#notif-messagerie').length > 0) {
+                                $('#notif-messagerie')[0].innerText++;
+                            } else {
+                                $('.chat-i').html("<a href='{{ path('index.chat') }}'><i class='icon-bubbles3'></i><span id='notif-messagerie' class='number_notif notif'>1</span></a>")
+                            }
+                        }else{
+                            if ($('#notif').length > 0) {
+                                $('#notif')[0].innerText++;
+                            } else {
+                                $('.header-notfication-bell').html("<i class='icon-bell'></i><span id='notif' class='number_notif notif'>1</span>")
+                            }
                         }
+
 
 
                         //  notifyMe(data.message);
