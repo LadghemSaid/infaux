@@ -1,5 +1,5 @@
 <template>
-    <div class="col-7 px-0">
+    <div class="col-12 px-0">
         <div class="px-4 py-5 chat-box bg-white" ref="messagesBody">
             <template v-for="(message, index, key) in MESSAGES">
                 <Message :message="message"/>
@@ -29,7 +29,7 @@
         },
         methods: {
             scrollDown() {
-                this.$refs.messagesBody.scrollTop = this.$refs.messagesBody.scrollHeight;
+              //  this.$refs.messagesBody.scrollTop = this.$refs.messagesBody.scrollHeight;
             },
             addMessage(data) {
                 this.$store.commit("ADD_MESSAGE", {

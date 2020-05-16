@@ -1,16 +1,20 @@
 <template>
-    <div class="col-5 px-0">
+    <div class="col-12 px-0">
         <div class="bg-white">
 
             <div class="bg-gray px-4 py-2 bg-light">
-                <p class="h5 mb-0 py-1">Recent</p>
+                <p class="h5 mb-0 py-1">Vos conversations récente</p>
             </div>
 
             <div class="messages-box">
-                <div class="list-group rounded-0">
+                <div class="flex overflow-auto">
+
                     <template v-for="(conversation, index, key) in CONVERSATIONS">
                         <Conversation :conversation="conversation" />
                     </template>
+                    <p class=" px-4  flex text-muted" v-if="CONVERSATIONS.length === 0">
+                        Aucune conversation
+                    </p>
                 </div>
             </div>
         </div>

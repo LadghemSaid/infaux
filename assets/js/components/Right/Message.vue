@@ -18,7 +18,9 @@
         },
         computed: {
             date() {
-                return new Date(this.message.createdAt).toLocaleString();
+                console.log(this.message.createdAt)
+                return moment(this.message.createdAt).local().fromNow()
+                //return new Date(this.message.createdAt).toLocaleString();
             }
         }
     }
