@@ -47,9 +47,8 @@
                                                 profil</a></div>
 
                                     {% else %}
-                                        <div class="lien_profil"><a
-                                                    href="{{ path('account.show',{'id': post.user.id} ) }}">Voir le
-                                                profil</a></div>
+                                        <a href="{{ path('account.show',{'id': post.user.id} ) }}">Voir le
+                                                profil</a>
 
                                         {% if post.user in app.user.friends %}
                                         <a href="#" data-userId="{{ post.user.id }}"
