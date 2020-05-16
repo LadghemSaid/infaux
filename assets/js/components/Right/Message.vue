@@ -1,6 +1,6 @@
 <template>
     <!-- Sender Message-->
-    <div class="media w-50 mb-3" :class="{'ml-auto': message.mine}">
+    <div class="media w-75 mb-3" :class="{'ml-auto': message.mine}">
         <img v-if="!message.mine" src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50" class="rounded-circle">
         <div class="media-body ml-3">
             <div class="message-bloc" :class="[message.mine ? 'msg-bg-green' : 'msg-bg-grey']">

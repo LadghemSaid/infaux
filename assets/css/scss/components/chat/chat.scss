@@ -9,8 +9,8 @@
 
 .chat-box{
   overflow-y: scroll;
-  min-height: calc(100vh - 400px);
-    max-height: calc(100vh - 400px);
+  min-height: calc(100vh - 330px);
+    max-height: calc(100vh - 330px);
 
   @include breakpoint(desktop){   
 
@@ -71,15 +71,18 @@
 .input-msg{
   padding-top: 15px;
   padding-bottom: 15px;
+  padding-right: 15px;
+  padding-left: 15px;
 
   input{
     font-size: 1em;
     background-color: transparent !important;
+    
   }
 
-  .btn{
+  i{
     color:$green;
-    font-size: 1em;
+    font-size: 2.3em;
     text-shadow: 0px 3px 6px rgba($color: #000000, $alpha: .16);
   }
 }
