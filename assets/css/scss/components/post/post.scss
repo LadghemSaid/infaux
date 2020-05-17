@@ -395,6 +395,12 @@ $white: rgba(255,255,255,.34);
 
 
   .comments-container {
+    .reply{
+      margin-left: 60px;
+      .l-post.right{
+        background-color: rgba(0,0,0,.1) !important;
+      }
+    }
     .content {
       display: flex;
       flex-direction: column;

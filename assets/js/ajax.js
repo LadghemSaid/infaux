@@ -1,4 +1,5 @@
 import Toastify from 'toastify-js';
+
 const axios = require('axios');
 
 async function handleAddLike(event) {
@@ -109,7 +110,8 @@ async function handleAddReport(event) {
 function handleAddComment(event) {
 
     event.preventDefault();
-    const data = $(event.target).serializeArray()[0].value;
+    const textComment = $(event.target).serializeArray()[0].value;
+    const replyId = $(event.target).serializeArray()[1] ? $(event.target).serializeArray()[1].value : "";
     const action = event.target.dataset.action;
     let target = $(event.target).parent('.formComment').prev('.wrapper-comments');
 
@@ -117,7 +119,10 @@ function handleAddComment(event) {
     $.ajax({
         type: "POST",
         url: action,
-        data: {request: data},
+        data: {
+            textComment: textComment,
+            replyId:replyId,
+        },
         success: function (data, dataType) {
             //console.log(data);
             target.append(data)
@@ -156,6 +161,29 @@ function handleAddComment(event) {
     });
 
 }
+
+function replyComment(event) {
+
+    event.preventDefault();
+    const commentId = event.target.dataset.comment;
+    const postId =$(event.target).parents('.post-container')[0].dataset.id;
+    let target = $(event.target).next('.modal').find('.modal-body')[0];
+    target.innerHTML= '' +
+        '<form onSubmit="handleAddComment(event)" name="comment" data-action="/comment/add/'+postId+'" class="commentForm">'+
+        '<input type="text " id="comment_textComment" name="comment[textComment] " required="required " class="commentForm__textarea form-control input-lg" placeholder="Votre réponse ... " onclick="affiche_comment() " onblur="afficheplus_comment() ">' +
+        '<input type="hidden" id="comment_reply" name="comment[replyComment] " required="required " value="'+commentId+'" hidden>' +
+        '<div class="d-flex justify-content-end"> ' +
+        '<div class="form-group"> ' +
+        '<button type="submit" id="comment_submit-post-81 comment_submit" name="comment[submit]" class="btn btn-pink btn">Envoyer </button> ' +
+        '</div>' +
+        '</div>' +
+    '</form>';
+
+    console.log(commentId, target,postId)
+
+}
+
+
 
 
 function handleAddPost(event) {
@@ -279,8 +307,6 @@ function handleDeleteComment(event) {
         event.preventDefault();
         const action = event.currentTarget.dataset.action;
         let target = $(event.target).parents('.wrapper-comments');
-
-
 
 
         $.ajax({
@@ -465,6 +491,7 @@ window.handleAddComment = handleAddComment;
 window.handleAddUserFollow = handleAddUserFollow;
 window.handleAddPost = handleAddPost;
 window.handleAddPostPinned = handleAddPostPinned;
+window.replyComment = replyComment;
 //window.getNextComment = getNextComment;
 
 

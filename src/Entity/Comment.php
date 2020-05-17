@@ -63,12 +63,30 @@ class Comment
      */
     private $reports;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Comment", inversedBy="commentsReply")
+     */
+    private $replyComments;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Comment", mappedBy="replyComments")
+     */
+    private $commentsReply;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isReply;
+
+
 
 
     public function __construct()
     {
         $this->likes = new ArrayCollection();
         $this->reports = new ArrayCollection();
+        $this->replyComments = new ArrayCollection();
+        $this->commentsReply = new ArrayCollection();
 
     }
 
@@ -211,5 +229,72 @@ class Comment
 
         return $this;
     }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getReplyComments(): Collection
+    {
+        return $this->replyComments;
+    }
+
+    public function addReplyComment(self $replyComment): self
+    {
+        if (!$this->replyComments->contains($replyComment)) {
+            $this->replyComments[] = $replyComment;
+        }
+
+        return $this;
+    }
+
+    public function removeReplyComment(self $replyComment): self
+    {
+        if ($this->replyComments->contains($replyComment)) {
+            $this->replyComments->removeElement($replyComment);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getCommentsReply(): Collection
+    {
+        return $this->commentsReply;
+    }
+
+    public function addCommentsReply(self $commentsReply): self
+    {
+        if (!$this->commentsReply->contains($commentsReply)) {
+            $this->commentsReply[] = $commentsReply;
+            $commentsReply->addReplyComment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentsReply(self $commentsReply): self
+    {
+        if ($this->commentsReply->contains($commentsReply)) {
+            $this->commentsReply->removeElement($commentsReply);
+            $commentsReply->removeReplyComment($this);
+        }
+
+        return $this;
+    }
+
+    public function getIsReply(): ?bool
+    {
+        return $this->isReply;
+    }
+
+    public function setIsReply(bool $isReply): self
+    {
+        $this->isReply = $isReply;
+
+        return $this;
+    }
+
 
 }

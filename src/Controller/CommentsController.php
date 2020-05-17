@@ -30,12 +30,22 @@ class CommentsController extends AbstractController
      * @var NotificationService
      */
     private $notificationService;
+    /**
+     * @var CommentRepository
+     */
+    private $commentRepository;
+    /**
+     * @var PostRepository
+     */
+    private $postRepository;
 
-    public function __construct(EntityManagerInterface $em, NotificationService $notificationService)
+    public function __construct(EntityManagerInterface $em, NotificationService $notificationService,CommentRepository $commentRepository,PostRepository $postRepository)
     {
         $this->em = $em;
 
         $this->notificationService = $notificationService;
+        $this->commentRepository = $commentRepository;
+        $this->postRepository = $postRepository;
     }
 
     /**
@@ -58,7 +68,14 @@ class CommentsController extends AbstractController
             ->setCreatedAt(new \DateTime())
             ->setApproved(true)
             ->setUser($user)
-            ->setTextComment($req->request->get('request'));
+            ->setIsReply(false)
+            ->setTextComment($req->request->get('textComment'));
+
+        if($req->request->get('replyId') !== ""){
+            $replyingComment = $this->commentRepository->findBy(['id'=>$req->request->get('replyId')]);
+            $comment->addReplyComment($replyingComment[0]);
+            $comment->setIsReply(true);
+        }
 
         $this->em->persist($comment);
         $this->em->flush();
@@ -109,7 +126,7 @@ class CommentsController extends AbstractController
      */
     public function edit(Comment $comment, Request $request)
     {
-
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
         // dd($form);
@@ -120,5 +137,7 @@ class CommentsController extends AbstractController
         }
         return new Response;
     }
+
+
 
 }
