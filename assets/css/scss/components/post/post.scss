@@ -215,15 +215,15 @@ $white: rgba(255,255,255,.34);
               .username{
                 font-weight: $blackW;
                 text-transform: capitalize;
+                font-size: larger;
               }
 
               .description{
-                font-size: $Mlarge;
                 text-align: center;
               }
 
               a{
-                padding:20px;
+                padding:10px;
                 color: $green;
               }
             }
@@ -282,17 +282,13 @@ $white: rgba(255,255,255,.34);
                     display: flex;
                     border:0px solid black;
                     flex-direction: column;
-                    
-                    .first{
-                      margin-bottom: 20px;  
-                    }
 
                     .icons{
                       
                       div{
-                        font-size: $Mlarge !important;
+                        font-size: large !important;
                         i{
-                          margin-right: 20px;
+                          margin-right: 10px;
                         }
                       }
                     }
@@ -326,7 +322,6 @@ $white: rgba(255,255,255,.34);
         .icons {
             display: flex;
             flex-direction: row;
-            font-size: 15px !important;
             
             .likeForm{
               padding-right: 15px;
@@ -379,16 +374,6 @@ $white: rgba(255,255,255,.34);
       position: absolute;
       z-index: 1;
       right: 0;
-
-      .icons {
-        i {
-
-        }
-
-        .number {
-
-        }
-      }
     }
 
   }
@@ -480,17 +465,13 @@ $white: rgba(255,255,255,.34);
                       display: flex;
                       border:0px solid black;
                       flex-direction: column;
-                      
-                      .first{
-                        margin-bottom: 20px;  
-                      }
   
                       .icons{
                         
                         div{
-                          font-size: $Mlarge !important;
+                          font-size: large !important;
                           i{
-                            margin-right: 20px;
+                            margin-right: 10px;
                           }
                         }
                       }

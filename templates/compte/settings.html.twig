@@ -66,8 +66,8 @@ gtag('config', 'UA-107718823-2');
 					<div class="modal fade" id="avatar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
-								<div class="modal-header">
-									<h3 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h3>
+								<div class="modal-header d-flex align-items-center">
+									<h3 class="modal-title" id="exampleModalLabel">Modifier mon avatar</h3>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
@@ -75,7 +75,7 @@ gtag('config', 'UA-107718823-2');
 								<div class="modal-body">
 									<div class="upload">
 										{{ form_start(formAvatar) }}
-										<div class="img" style="background:url('{{ vich_uploader_asset(user, 'imageFile') }}')"></div>
+										<div class="img mt-30 mt-30Mobile" style="background:url('{{ vich_uploader_asset(user, 'imageFile') }}')"></div>
 
 										{{ form_row(formAvatar.imageFile,{'attr':{'class': ''},'label': false}) }}
 									</div>
@@ -100,8 +100,8 @@ gtag('config', 'UA-107718823-2');
 					<div class="modal fade" id="description" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
-								<div class="modal-header">
-									<h3 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h3>
+								<div class="modal-header d-flex align-items-center">
+									<h3 class="modal-title" id="exampleModalLabel">Modifier ma description</h3>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
@@ -135,8 +135,8 @@ gtag('config', 'UA-107718823-2');
 					<div class="modal fade" id="email" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
-								<div class="modal-header">
-									<h3 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h3>
+								<div class="modal-header d-flex align-items-center">
+									<h3 class="modal-title" id="exampleModalLabel">Mettre à jour mon adresse email</h3>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
@@ -167,8 +167,8 @@ gtag('config', 'UA-107718823-2');
 					<div class="modal fade" id="mdp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
-								<div class="modal-header">
-									<h3 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h3>
+								<div class="modal-header d-flex align-items-center">
+									<h3 class="modal-title" id="exampleModalLabel">Modifier mon mot de passe</h3>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
@@ -198,14 +198,14 @@ gtag('config', 'UA-107718823-2');
 				<div class="modal fade" id="descativ" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
-							<div class="modal-header">
-								<h3 class="modal-title" id="exampleModalLabel">Confirmer la desactivation définitive du compte</h3>
+							<div class="modal-header d-flex align-items-center">
+								<h3 class="modal-title" id="exampleModalLabel">Désactivation de votre compte</h3>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
 							<div class="modal-body">
-								<a href="{{ path('account.delete') }}">Désactivé le compte</a>
+								<a href="{{ path('account.delete') }}">Confirmer la suppression définitive du compte</a>
 							</div>
 							<div class="modal-footer" style="display:none;"></div>
 						</div>
@@ -222,8 +222,8 @@ gtag('config', 'UA-107718823-2');
 				<div class="modal fade" id="deco" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
-							<div class="modal-header">
-								<h3 class="modal-title" id="exampleModalLabel">Voulez vous vraiment vous déconnecter?</h3>
+							<div class="modal-header d-flex align-items-center">
+								<h3 class="modal-title" id="exampleModalLabel">Voulez vous vraiment vous déconnecter ?</h3>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
@@ -267,7 +267,7 @@ gtag('config', 'UA-107718823-2');
 					<div class="modal fade" id="voir-les-posts" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
-								<div class="modal-header">
+								<div class="modal-header d-flex align-items-center">
 									<h3 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h3>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
@@ -293,15 +293,15 @@ gtag('config', 'UA-107718823-2');
 					<p class="item">Qui peut voir mes posts</p>
 					<p class="mb-0">Tout le monde</p>
 					<!-- Button  modifier la email -->
-					<button type="button" class="btn modifier" data-toggle="modal" data-target="#voir-les-posts">
+					<button type="button" class="btn modifier" data-toggle="modal" data-target="#qui-voit-posts">
 						Modifier
 					</button>
 
 					<!-- Modal -->
-					<div class="modal fade" id="voir-les-posts" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal fade" id="qui-voit-posts" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
-								<div class="modal-header">
+								<div class="modal-header d-flex align-items-center">
 									<h3 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h3>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>

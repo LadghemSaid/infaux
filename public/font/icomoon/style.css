@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?nbtzjs');
-  src:  url('fonts/icomoon.eot?nbtzjs#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?nbtzjs') format('truetype'),
-    url('fonts/icomoon.woff?nbtzjs') format('woff'),
-    url('fonts/icomoon.svg?nbtzjs#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?1nfs45');
+  src:  url('fonts/icomoon.eot?1nfs45#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?1nfs45') format('truetype'),
+    url('fonts/icomoon.woff?1nfs45') format('woff'),
+    url('fonts/icomoon.svg?1nfs45#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -40,14 +40,11 @@
 .icon-dots-horizontal-triple:before {
   content: "\e902";
 }
-.icon-keyboard_arrow_left:before {
-  content: "\e908";
+.icon-paper-plane:before {
+  content: "\e90b";
 }
-.icon-keyboard_arrow_down:before {
-  content: "\e909";
-}
-.icon-dots-horizontal-triple:before {
-  content: "\e902";
+.icon-trash:before {
+  content: "\e90a";
 }
 .icon-heart-o:before {
   content: "\e903";

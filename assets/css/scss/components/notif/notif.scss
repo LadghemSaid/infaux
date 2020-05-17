@@ -14,6 +14,7 @@
         .sup-notif {
             font-size: small;
             color: rgba(70,70,70,.49);
+            cursor: pointer;
         }
     }
 
@@ -68,6 +69,25 @@
             background-color: transparent;
             border: 0 solid #000;
             font-size: initial;
+        }
+
+        #delete-notif {
+            color: #464646;
+            button.close {
+                color: #6b9;
+                background-color: transparent;
+                border: 0 solid #000;
+                font-size: 2em;
+            }
+        }
+
+        .notification-sup {
+            cursor: pointer;
+            font-size: large !important;
+
+            i {
+                margin-right: 10px;
+            }
         }
     }
 }
