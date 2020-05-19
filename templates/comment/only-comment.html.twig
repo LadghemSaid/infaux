@@ -130,7 +130,7 @@
                 </div>
                 <p class="text">{{ comment.textComment }} </p>
                 <div class="icons">
-                    <div onclick="handleAddLike(event)"
+                    <a onclick="handleAddLike(event)"
                          data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
                          class="likeForm">
 
@@ -161,9 +161,47 @@
                                             {{ comment.likes|length }}
                                         </span>
 
+
+                    </a>
+
+                    {% if isReply is defined or onlyOneComment == true %}
+                    {% else %}
+                        {% if app.user %}
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-comment="{{ comment.id }}" onclick="replyComment(event)"
+                            data-target="#commentaire-reply-{{ comment.id }}">
+                        Repondre
+                    </button>
+                            {% endif %}
+                    {% endif %}
+
+
+                    <div class="modal fade" id="commentaire-reply-{{ comment.id }}" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Réponse</h5>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
+    </div>
+    <div class="reply">
+        {% for commentReply in comment.commentsReply %}
+            {% include('/comment/only-comment.html.twig') with {'comment' :commentReply,'isReply':true, 'onlyOneComment':false} %}
+        {% endfor %}
     </div>
 </div>

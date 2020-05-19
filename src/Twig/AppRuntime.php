@@ -31,6 +31,8 @@ class AppRuntime implements RuntimeExtensionInterface
         $arrayComment= $this->commentRepository->findBy([
             'post'=>$postId,
             'approved'=>true,
+            'isReply'=>false,
+
         ], array('created_at' => $order));
 
 

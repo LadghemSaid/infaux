@@ -1,0 +1,29 @@
+<div class="formComment {% if expanded is defined %} formComment_onepost {% endif %} ">
+    <div class="img"
+            {% if app.user.image  is defined %}
+         style="background:url('{{ vich_uploader_asset(app.user, 'imageFile') }}')">
+        {% else %}
+            style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~ "@adorable.io.png") }}')">
+        {% endif %}
+    </div>
+    <form onsubmit="handleAddComment(event)" name="comment"
+          data-action="{{ path('comment.add',{'id':post.id}) }}"
+          class="commentForm">
+        <div class="form-group">
+            {# <label class="sr-only required" for="comment_textComment">Commentaire</label> #}
+            <input type="text" id="comment_textComment" name="comment[textComment]"
+                   required="required"
+                   class="commentForm__textarea form-control input-lg"
+                   placeholder="Votre commentaire ..."
+                   onclick="affiche_comment()"
+                   onblur="afficheplus_comment()">
+        </div>
+        <div class="d-flex justify-content-end">
+            <div class="form-group">
+                <button type="submit" id="comment_submit-post-{{ post.id }} comment_submit" name="comment[submit]"
+                        class="btn btn-pink btn">Envoyer
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
