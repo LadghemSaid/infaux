@@ -167,20 +167,20 @@
                     {% if isReply is defined or onlyOneComment == true %}
                     {% else %}
                         {% if app.user %}
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-comment="{{ comment.id }}" onclick="replyComment(event)"
+                    <button type="button" class="btn btn-repondre" data-toggle="modal" data-comment="{{ comment.id }}" onclick="replyComment(event)"
                             data-target="#commentaire-reply-{{ comment.id }}">
-                        Repondre
+                        Répondre
                     </button>
                             {% endif %}
                     {% endif %}
 
 
-                    <div class="modal fade" id="commentaire-reply-{{ comment.id }}" tabindex="-1" role="dialog"
+                    <div class="modal fade modal-repondre" id="commentaire-reply-{{ comment.id }}" tabindex="-1" role="dialog"
                          aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Réponse</h5>
+                                <div class="modal-header d-flex align-items-center">
+                                    <h3 class="modal-title" id="exampleModalLabel">Votre réponse</h3>
                                     <button type="button" class="close" data-dismiss="modal"
                                             aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
