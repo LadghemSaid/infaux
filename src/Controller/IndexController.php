@@ -149,7 +149,7 @@ class IndexController extends AbstractController
 
 
     /**
-     * @Route("/robot.txt")
+     * @Route("/robots.txt")
      */
     public function showRobot()
     {
