@@ -126,22 +126,20 @@
 
                                 
 
-                                <button type="button" class="btn-deco" data-toggle="modal" data-target="#deconexion">
+                                <button type="button" class="btn-navbar mt-30 mt-25Mobile" data-toggle="modal" data-target="#deconnexion">
                                     Déconnexion
                                 </button>
                                 <!-- Modal -->
-                                <div class="modal fade" id="deconexion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="deconnexion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                     <div class="modal-header">
+                                        <h3 class="modal-title" id="exampleModalLabel">Voulez vous vraiment vous déconnecter ?</h3>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
+                                            <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        Voulez-vous vraiment vous déconnecter?
-                                    </div>
-                                    <div class="modal-footer">
                                         <a style="color:red" href="{{ path('app_logout') }}" class="mt-30 mt-25Mobile">Déconnexion</a>
                                     </div>
                                     </div>

@@ -219,10 +219,31 @@ span.notif {
 }
 
 
-.btn-deco{
+.btn-navbar{
   background-color: transparent !important;
-  border: transparent;
+  border: none;
   text-align: left;
-  margin-top: 25px;
   padding: 0;
+}
+
+.btn-navbar:hover{
+  color: black;
+}
+
+.btn-navbar:focus {
+  outline: none;
+}
+
+#deconnexion {
+  h3 {
+    color: #464646;
+    margin-bottom: 0;
+  }
+
+  button.close {
+    color: #6b9;
+    background-color: transparent;
+    border: 0 solid #000;
+    font-size: 2em;
+  }
 }
