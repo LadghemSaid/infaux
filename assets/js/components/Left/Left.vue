@@ -57,6 +57,7 @@
                     }
                     this.CONVERSATIONSLOADING= false;
 
+
                     let url = new URL(this.HUBURL);
                     url.searchParams.append('topic', `/conversations/${this.USERNAME}`)
 
@@ -72,10 +73,34 @@
 
                     eventSource.onmessage = function (event) {
                         vm.updateConversations(JSON.parse(event.data))
+
+
                     }
                     eventSource.onerror = function (event) {
                         console.log('message erreur');
                     }
+
+                    function getCookie(cname) {
+                        var name = cname + "=";
+                        var decodedCookie = decodeURIComponent(document.cookie);
+                        var ca = decodedCookie.split(';');
+                        for(var i = 0; i <ca.length; i++) {
+                            var c = ca[i];
+                            while (c.charAt(0) == ' ') {
+                                c = c.substring(1);
+                            }
+                            if (c.indexOf(name) == 0) {
+                                return c.substring(name.length, c.length);
+                            }
+                        }
+                        return "";
+                    }
+
+                    if(getCookie("lastConversationId")){
+                        this.$router.push({ name: 'conversation', params: { id: getCookie("lastConversationId") }})
+                    }
+
+
 
                 })
         }

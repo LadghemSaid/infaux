@@ -80,6 +80,7 @@
                 this.deleteConversation(this.conversation)
 
             }
-        }
+        },
+
     }
 </script>

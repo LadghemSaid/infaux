@@ -1,9 +1,7 @@
 <template>
     <div class="col-12 px-0">
         <div class="px-4 py-5 chat-box bg-white" ref="messagesBody">
-            <template v-for="(message, index, key) in MESSAGES">
-                <Message :message="message"/>
-            </template>
+
 
             <p class=" px-4  flex text-muted" v-if="!MESSAGES">
                 Chargement...
@@ -11,6 +9,12 @@
             <p class=" px-4  flex text-muted" v-if="MESSAGES && MESSAGES.length === 0">
                 Aucun message
             </p>
+            <template v-else>
+                <template v-for="(message, index, key) in MESSAGES">
+                    <Message :message="message"/>
+                </template>
+            </template>
+
         </div>
 
         <Input/>
@@ -25,13 +29,13 @@
 
     export default {
         data: () => ({
-            eventSource: null
+            eventSource: null,
         }),
         components: {Message, Input},
         computed: {
-            ...mapGetters(["HUBURL","MERCURETOKEN"]),
+            ...mapGetters(["HUBURL", "MERCURETOKEN"]),
             MESSAGES() {
-                return this.$store.getters.MESSAGES(this.$route.params.id);
+                    return this.$store.getters.MESSAGES(this.$route.params.id);
             }
         },
         methods: {
@@ -46,9 +50,23 @@
             }
         },
         mounted() {
+
+
+
             const vm = this;
             this.$store.dispatch("GET_MESSAGES", this.$route.params.id)
                 .then(() => {
+
+                    function setCookie(cname, cvalue, exdays) {
+                        var d = new Date();
+                        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                        var expires = "expires=" + d.toUTCString();
+                        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/chat";
+                    }
+                    document.cookie = "lastConversationId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/chat;";
+                    setCookie('lastConversationId',  this.$route.params.id, 365)
+
+
                     this.scrollDown();
                     if (this.eventSource === null) {
                         let url = new URL(this.HUBURL);
