@@ -96,7 +96,7 @@
                         return "";
                     }
 
-                    if(getCookie("lastConversationId")){
+                    if(getCookie("lastConversationId") == 3){
                         this.$router.push({ name: 'conversation', params: { id: getCookie("lastConversationId") }})
                     }
 
