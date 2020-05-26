@@ -15,11 +15,17 @@
   z-index: 10;
   box-shadow: 0 0px 5px -2px rgb(168, 168, 168);
   height: 50px;
+  transform: translateY(0px);
+  transition: transform .2s ease-in-out ;
+
 
   img {
     height: 50px;
   }
-
+  &.nav-up{
+    transition: transform .2s ease-in-out ;
+    transform: translateY(-100px);
+  }
   .retour {
     position: absolute;
     left: 15px;
