@@ -5,13 +5,8 @@
     <title>{% block title %}Infaux{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="turbolinks-cache-control" content="no-cache">
-    {% block meta_description %}{% endblock %}
-    {% block meta_keywords %}{% endblock %}
-    {% block meta_robots %}{% endblock %}
-    {% block meta_google %}{% endblock %}
     <link type="text/plain" rel="author" href="/humans.txt"/>
     <link rel="manifest" href="/manifest.json">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
 
     <link rel="icon" type="image/png" href="/img/favicon.png"/>
@@ -24,6 +19,8 @@
 
     <link rel="stylesheet" href="{{ asset('/font/icomoon/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
     <script type="text/javascript"
             src="{{ preload(asset('js/tarteaucitron/tarteaucitron.js'), { as: 'script', importance: 'low' }) }}"></script>
 
@@ -59,7 +56,7 @@
 
 
     </script>
-    {% block gtag %}{% endblock %}
+    {% block meta %}{% endblock %}
 
     {% block stylesheets %}
 
