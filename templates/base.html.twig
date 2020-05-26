@@ -79,7 +79,7 @@
 </div>
 
 
-{# <a aria-label="Button permettant de retourner en haut de la page" id="scrollToTop">Up !</a> #}
+<a aria-label="Button permettant de charger plus de posts" onclick="window.location.reload()" id="refreshButton">Charger plus de posts</a>
 
 <script src="{{ preload('https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js', { as: 'script' }) }}"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
@@ -102,35 +102,35 @@
     }
 
     function detectInputType(event) {
-        switch(event.pointerType) {
+        switch (event.pointerType) {
             case "mouse":
                 //Long press sur les posts
                 var pressTimerPost;
-                $(".post-container").mouseup(function(){
+                $(".post-container").mouseup(function () {
                     clearTimeout(pressTimerPost);
                     // Clear timeout
                     return false;
-                }).mousedown(function(event){
+                }).mousedown(function (event) {
                     // Set timeout
 
-                    pressTimerPost = window.setTimeout(function() {
+                    pressTimerPost = window.setTimeout(function () {
                         $($(event.currentTarget).find('.modal')[1]).modal('show')
-                    },1000);
+                    }, 1000);
                     return false;
                 });
 
                 //LongPress sur les commentaire
                 var pressTimerComment;
-                $(".comments-container").mouseup(function(){
+                $(".comments-container").mouseup(function () {
                     clearTimeout(pressTimerComment);
                     // Clear timeout
                     return false;
-                }).mousedown(function(event){
+                }).mousedown(function (event) {
                     // Set timeout
 
-                    pressTimerComment = window.setTimeout(function() {
+                    pressTimerComment = window.setTimeout(function () {
                         $($(event.currentTarget).find('.modal')[1]).modal('show')
-                    },1000);
+                    }, 1000);
                     return false;
                 });
                 break;
@@ -140,32 +140,32 @@
             case "touch":
                 //Long press sur les posts
                 var pressTimerPost;
-                $(".post-container").on('pointerup',function(){
+                $(".post-container").on('pointerup', function () {
                     clearTimeout(pressTimerPost);
                     // Clear timeout
                     return false;
-                }).on('pointerdown',function(event){
+                }).on('pointerdown', function (event) {
                     // Set timeout
 
-                    pressTimerPost = window.setTimeout(function() {
+                    pressTimerPost = window.setTimeout(function () {
                         $($(event.currentTarget).find('.modal')[1]).modal('show')
-                    },1000);
+                    }, 1000);
                     return false;
                 });
 
                 //LongPress sur les commentaire
                 var pressTimerComment;
-                $(".comments-container").on('pointerup',function(){
+                $(".comments-container").on('pointerup', function () {
                     clearTimeout(pressTimerComment);
                     // Clear timeout
                     return false;
-                }).on('pointerdown',function(event){
+                }).on('pointerdown', function (event) {
 
                     // Set timeout
 
-                    pressTimerComment = window.setTimeout(function() {
+                    pressTimerComment = window.setTimeout(function () {
                         $($(event.currentTarget).find('.modal')[1]).modal('show')
-                    },1000);
+                    }, 1000);
                     return false;
                 });
                 break;
@@ -179,55 +179,82 @@
     document.addEventListener("DOMContentLoaded", function (event) {
 
 
-        $(function () {
-            //Header hidden au scroll bas
-            var didScroll;
-            var lastScrollTop = 0;
-            var delta = 5;
-            var navbarHeight = $('.logo-header').outerHeight();
+        //Apparition du bouton rafraichir si le scroll dépasse 300
+        var prevScrollpos = window.pageYOffset;
+        var showButton;
+        var timer_is_on = 0;
 
-            $(window).scroll(function(event){
-                didScroll = true;
-            });
+        function stopCount() {
+            clearTimeout(showButton);
+            timer_is_on = 0;
+        }
+        function timedCount() {
+            showButton = setTimeout(function () {
+                document.getElementById("refreshButton").classList.add(('visible'))
+            }, 2000)
+        }
+        function startCount() {
+            if (!timer_is_on) {
+                timer_is_on = 1;
+                timedCount();
+            }
+        }
+        window.onscroll = function () {
+            var currentScrollPos = window.pageYOffset;
+            if (prevScrollpos > currentScrollPos) {
+                prevScrollpos = currentScrollPos
+                startCount()
+            } else {
+                stopCount()
+                document.getElementById("refreshButton").classList.remove(('visible'))
+                prevScrollpos = currentScrollPos
+            }
+        }
 
-            setInterval(function() {
-                if (didScroll) {
-                    hasScrolled();
-                    didScroll = false;
+        //Header hidden au scroll bas
+        var didScroll;
+        var lastScrollTop = 0;
+        var delta = 5;
+        var navbarHeight = $('.logo-header').outerHeight();
+
+        $(window).scroll(function (event) {
+            didScroll = true;
+        });
+
+        setInterval(function () {
+            if (didScroll) {
+                hasScrolled();
+                didScroll = false;
+            }
+        }, 250);
+
+        function hasScrolled() {
+            var st = $(this).scrollTop();
+
+            // Make sure they scroll more than delta
+            if (Math.abs(lastScrollTop - st) <= delta)
+                return;
+
+            // If they scrolled down and are past the navbar, add class .nav-up.
+            // This is necessary so you never see what is "behind" the navbar.
+            if (st > lastScrollTop && st > navbarHeight) {
+                // Scroll Down
+                $('.logo-header').removeClass('nav-down').addClass('nav-up');
+            } else {
+                // Scroll Up
+                if (st + $(window).height() < $(document).height()) {
+                    $('.logo-header').removeClass('nav-up').addClass('nav-down');
                 }
-            }, 250);
-
-            function hasScrolled() {
-                var st = $(this).scrollTop();
-
-                // Make sure they scroll more than delta
-                if(Math.abs(lastScrollTop - st) <= delta)
-                    return;
-
-                // If they scrolled down and are past the navbar, add class .nav-up.
-                // This is necessary so you never see what is "behind" the navbar.
-                if (st > lastScrollTop && st > navbarHeight){
-                    // Scroll Down
-                    $('.logo-header').removeClass('nav-down').addClass('nav-up');
-                } else {
-                    // Scroll Up
-                    if(st + $(window).height() < $(document).height()) {
-                        $('.logo-header').removeClass('nav-up').addClass('nav-down');
-                    }
-                }
-
-                lastScrollTop = st;
             }
 
-
-            window.addEventListener("pointerdown", detectInputType, false);
-
-
+            lastScrollTop = st;
+        }
 
 
+        window.addEventListener("pointerdown", detectInputType, false);
 
 
-
+        $(function () {
             //Converstion des date en affiche moment js
             moment.locale('fr');
             $(".p-date").map((x, i) => {
@@ -237,13 +264,6 @@
     });
 
 
-    var btn = $('#scrollToTop');
-
-    btn.on('click', function (e) {
-        e.preventDefault();
-        $('html, body').animate({scrollTop: 0}, '300');
-    });
-
 </script>
 
 
@@ -252,20 +272,21 @@
 
     <script>
         //fonction d'affichage du bouton submit (form comment)
-        function affiche_comment(event){
-            console.log(  $($(event.target).parents("form")[0]).find('button')[0])
+        function affiche_comment(event) {
+            console.log($($(event.target).parents("form")[0]).find('button')[0])
             event.target.focus()
             //$($(event.target).parents("form")[0]).find('button')[0].disabled="";
             $($(event.target).parents("form")[0]).find('button')[0].style.opacity = 1;
             //$('#postForm').addClass('selected');
         }
-        function afficheplus_comment(event){
+
+        function afficheplus_comment(event) {
             console.log(event.target)
-            const str =   event.target.value;
+            const str = event.target.value;
             if (str.length == 0) {
                 $($(event.target).parents("form")[0]).find('button')[0].style.opacity = 0;
-              //  $($(event.target).parents("form")[0]).find('button')[0].disabled = "true";
-             //   $('#postForm').removeClass('selected');
+                //  $($(event.target).parents("form")[0]).find('button')[0].disabled = "true";
+                //   $('#postForm').removeClass('selected');
 
             }
 
@@ -381,8 +402,6 @@
 {% endif %}
 
 <script>
-
-
 
 
 </script>
