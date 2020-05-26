@@ -87,26 +87,27 @@
 
 .reply {
 
-overflow: hidden;
+  overflow: hidden;
   max-height: 0;
+
   transition: all 0.2s ease-in-out;
+
   &.visible {
+    overflow: visible;
     max-height: 1000px;
+
     transition: all 0.2s ease-in-out;
   }
+
   .comments-container {
 
     opacity: 0;
     transform: translateX(150px);
     transition: all 0.2s ease-in-out;
-    cursor: none;
-    pointer-events: none;
+
     &.visible {
-      transform: translateX(0px);
       opacity: 1;
-      cursor:initial;
-      pointer-events:all;
-      transition: all 0.2s ease-in-out;
+      transform: translateX(0px);
     }
 
   }

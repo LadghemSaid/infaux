@@ -202,7 +202,7 @@ function replyComment(event) {
         '<input type="hidden" id="comment_reply" name="comment[replyComment] " required="required " value="' + commentId + '" hidden>' +
         '<div class="d-flex justify-content-end"> ' +
         '<div class="form-group"> ' +
-        '<button type="submit" id="comment_submit-post-81 comment_submit" name="comment[submit]" class="btn btn-pink btn">Envoyer </button> ' +
+        '<button type="submit" id="comment_submit-post-'+postId+'" name="comment[submit]" class="btn btn-pink btn">Envoyer </button> ' +
         '</div>' +
         '</div>' +
         '</form>';

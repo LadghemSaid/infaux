@@ -6,11 +6,12 @@
             <a href="{{ referer }}"><i class="icon-keyboard_arrow_left"></i></a>
         </div>
         {% endif %}
-        <div>
-            <a aria-label="Button permettant de retourner en haut de la page" id="scrollToTop">
+
+
                 <img
-                        src="{{ asset("img/logo_infaux.png") }}" alt="Infaux logo"/></a>
-        </div>
+                        src="{{ asset("img/logo_infaux.png") }}" alt="Infaux logo"/>
+
+
         {% if app.user %}
         <div class="chat-i">
             <a href="{{ path('index.chat') }}"><i class="icon-bubbles3"></i>
@@ -49,7 +50,7 @@
         {% endif %}
         <div class="mobile-bottom-nav__item">
             <div class="mobile-bottom-nav__item-content">
-                <a href="" class="" type="button" class="btn btn-primary" data-toggle="modal"
+                <a href="#"  data-toggle="modal"
                    data-target="#collapse-menu">
                     <i class="icon-menu"></i>
                 </a>
@@ -62,7 +63,7 @@
         <div class="modal-dialog animated fadeInRight mt-0 mb-0 mr-0  m-0Mobile" role="document">
             <div class="modal-content collapse-navbar">
                 <div class="modal-header">
-                    <img src="{{ asset("img/logo_infaux.png") }}" alt="Infaux logo"/></a>
+                    <img src="{{ asset("img/logo_infaux.png") }}" alt="Infaux logo"/>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i class="icon-close"></i>
                     </button>
@@ -113,9 +114,9 @@
                             {% if app.user %}
                             <a id="header-notfication-bell" href="{{ path('notification.index') }}" class="mt-30 mt-25Mobile">Notifications
                                 {% if app.user.notificationNotSeen | length >= 1 %}
-                                    (<span class="number_notif">{{ app.user.notificationNotSeen | length }}</span>)</a>
+                                    (<span class="number_notif">{{ app.user.notificationNotSeen | length }}</span>)
                                 {% endif %}
-
+                            </a>
                                 <a href="{{ path('index.chat') }}" class="mt-30 mt-20Mobile">Messagerie</a>
                                 <a href="{{ path('account.settings') }}" class="mt-30 mt-25Mobile">Paramètres</a>
 
@@ -134,7 +135,7 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                     <div class="modal-header">
-                                        <h3 class="modal-title" id="exampleModalLabel">Voulez vous vraiment vous déconnecter ?</h3>
+                                        <h3 class="modal-title" >Voulez vous vraiment vous déconnecter ?</h3>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>

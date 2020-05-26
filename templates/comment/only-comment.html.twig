@@ -4,7 +4,7 @@
             <div class="top">
 
                 <button type="button" class="btn btn-primary" data-toggle="modal"
-                        data-target="#profil-comment-{{ comment.user.id ?? "999" }}">
+                        data-target="#profil-comment-{{ comment.user.id ?? "999" }}-loop-{{ loop.index }}">
                     <div class="user-picture">
                         <div class="img"
                                 {% if comment.user.image  is defined %}
@@ -16,12 +16,13 @@
                     </div>
                 </button>
 
-                <div class="modal fade" id="profil-comment-{{ comment.user.id ?? "999" }}" tabindex="-1" role="dialog"
+                <div class="modal fade" id="profil-comment-{{ comment.user.id ?? "999" }}-loop-{{ loop.index }}"
+                     tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                <h5 class="modal-title"></h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -39,10 +40,9 @@
                                     </div>
                                 </div>
                                 <div class="username">{{ comment.user.username ?? "Anonyme" }}</div>
-                                <div class="description">{{ comment.user.description ?? " . . . " }}
-                                </div>
+                                <div class="description">{{ comment.user.description ?? " . . . " }}</div>
                                 {% if app.user %}
-                                    {% if  app.user == comment.user %}
+                                    {% if app.user == comment.user %}
                                         <div class="lien_profil"><a
                                                     href="{{ path('account.show',{'id': comment.user.id} ) }}">Voir mon
                                                 profil</a></div>
@@ -83,16 +83,17 @@
                     <div class="option">
 
                         <button type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target="#commentaire-{{ comment.id }}">
+                                data-target="#commentaire-{{ comment.id }}-loop-{{ loop.index }}">
                             <i class="icon-dots-horizontal-triple"></i>
                         </button>
 
-                        <div class="modal fade" id="commentaire-{{ comment.id }}" tabindex="-1" role="dialog"
+                        <div class="modal fade" id="commentaire-{{ comment.id }}-loop-{{ loop.index }}" tabindex="-1"
+                             role="dialog"
                              aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                        <h5 class="modal-title"></h5>
                                         <button type="button" class="close" data-dismiss="modal"
                                                 aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
@@ -128,6 +129,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
                 <p class="text">{{ comment.textComment }} </p>
@@ -166,7 +168,7 @@
 
                     </a>
 
-                    {% if isReply is defined  %}
+                    {% if isReply is defined %}
                         <button type="button" class="btn btn-repondre" onclick="replyCommentParent(event)">
                             Répondre
                         </button>
@@ -174,20 +176,21 @@
                         {% if app.user %}
                             <button type="button" class="btn btn-repondre" data-toggle="modal"
                                     data-comment="{{ comment.id }}" onclick="replyComment(event)"
-                                    data-target="#commentaire-reply-{{ comment.id }}">
+                                    data-target="#commentaire-reply-{{ comment.id }}-loop-{{ loop.index }}">
                                 Répondre
                             </button>
                         {% endif %}
                     {% endif %}
 
 
-                    <div class="modal fade modal-repondre" id="commentaire-reply-{{ comment.id }}" tabindex="-1"
+                    <div class="modal fade modal-repondre" id="commentaire-reply-{{ comment.id }}-loop-{{ loop.index }}"
+                         tabindex="-1"
                          role="dialog"
                          aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header d-flex align-items-center">
-                                    <h3 class="modal-title" id="exampleModalLabel">Votre réponse</h3>
+                                    <h3 class="modal-title" >Votre réponse</h3>
                                     <button type="button" class="close" data-dismiss="modal"
                                             aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
@@ -201,7 +204,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

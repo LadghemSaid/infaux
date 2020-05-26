@@ -140,8 +140,7 @@
 
           function afficheplus() {
               const str = document.getElementById('post_text').value;
-              console.log(str.length);
-              if (str.length == 0) {
+              if (str.length === 0) {
                   document.getElementById('post_submit').style.opacity = 0;
                   document.getElementById('post_submit').disabled = "true";
                     $('#postForm').removeClass('selected');
@@ -200,7 +199,7 @@
                       $(function () {
 
                           //Long press sur les posts
-                          window.addEventListener("pointerdown", detectInputType, false);
+                          //window.addEventListener("pointerdown", detectInputType, false);
 
                           //Affichage des date de creation en format momentJs
                           $(".p-date").map((x, i) => {

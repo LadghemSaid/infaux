@@ -79,6 +79,7 @@
 <a aria-label="Button permettant de charger plus de posts" onclick="window.location.reload()" id="refreshButton">Charger plus de posts</a>
 
 <script src="{{ preload('https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js', { as: 'script' }) }}"></script>
+<script src="//code.jquery.com/mobile/1.5.0-alpha.1/jquery.mobile-1.5.0-alpha.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
 ></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
@@ -98,95 +99,29 @@
         $(".modal").hide();
     }
 
-    var timer_is_on = 0;
-    var timeToWait = 1000
 
-    function stopCount(id) {
-        clearTimeout(id);
-        timer_is_on = 0;
-    }
-    function startCount(event) {
-        if (!timer_is_on) {
-            timer_is_on = 1;
-           return setTimeout(function () {
-               $($(event.currentTarget).find('.modal')[1]).modal('show')
-            }, timeToWait)
-        }
-    }
-    function detectInputType(event) {
-        switch (event.pointerType) {
-            case "mouse":
-                //Long press sur les posts
-                var pressTimerPostDesktop;
-                $(".post-container").mouseup(function () {
-                    stopCount(pressTimerPostDesktop)
-                    //clearTimeout(pressTimerPostDesktop);
-                    // Clear timeout
-                    return false;
-                }).mousedown(function (event) {
-                    // Set timeout
+            $.mobile.defaultPageTransition = "none";
+            $.mobile.defaultDialogTransition = "none";
+            $.mobile.page.prototype.options.domCache = false;
+            $.mobile.autoInitializePage =false
+            $.mobile.linkBindingEnabled =false
+            $.mobile.pushStateEnabled =false
+            $.mobile.ajaxEnabled =false
+            $.mobile.ajaxLinksEnabled  =false
+            $.mobile.touchOverflowEnabled = true;
 
-                    pressTimerPostDesktop = startCount(event)
-                    return false;
-                });
-
-                //LongPress sur les commentaire
-                var pressTimerCommentDesktop;
-                $(".comments-container").mouseup(function () {
-                    stopCount(pressTimerCommentDesktop)
-                    //clearTimeout(pressTimerCommentDesktop);
-                    // Clear timeout
-                    return false;
-                }).mousedown(function (event) {
-                    // Set timeout
-
-                    pressTimerCommentDesktop = startCount(event)
-                    return false;
-                });
-                break;
-            case "pen":
-                /* pen/stylus input detected */
-                break;
-            case "touch":
-                //Long press sur les posts
-                var pressTimerPost;
-                $(".post-container").on('pointermove ', function () {
-                    stopCount(pressTimerPost)
-//                    clearTimeout(pressTimerPost);
-                    // Clear timeout
-                    return false;
-                }).on('pointerdown', function (event) {
-
-                    // Set timeout
-
-                    pressTimerPost = startCount(event)
-                    return false;
-                });
-
-                //LongPress sur les commentaire
-                var pressTimerComment;
-                $(".comments-container").on('pointermove', function () {
-                   stopCount(pressTimerComment)
-                    //clearTimeout(pressTimerComment);
-                    // Clear timeout
-                    return false;
-                }).on('pointerdown', function (event) {
-
-                    // Set timeout
-
-                    pressTimerComment = startCount(event)
-                    return false;
-                });
-                break;
-            default:
-            /* pointerType is empty (could not be detected)
-            or UA-specific custom type */
-        }
-    }
 
 
     document.addEventListener("DOMContentLoaded", function (event) {
 
+        $(".comments-container .content").bind( "taphold", tapholdHandler );
+        $(".post-container .content").bind( "taphold", tapholdHandler );
+
+        function tapholdHandler( event ){
+            event.stopPropagation();
+            console.log($($(event.currentTarget).find('.modal')[1]))
+            $($(event.currentTarget).find('.modal')[1]).modal('show')
+        }
 
 
         //Header hidden au scroll bas
@@ -229,7 +164,7 @@
         }
 
 
-        window.addEventListener("pointerdown", detectInputType, false);
+        //window.addEventListener("pointerdown", detectInputType, false);
 
 
         $(function () {
