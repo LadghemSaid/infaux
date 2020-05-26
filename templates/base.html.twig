@@ -133,7 +133,7 @@
                 //LongPress sur les commentaire
                 var pressTimerCommentDesktop;
                 $(".comments-container").mouseup(function () {
-                    stopCount(pressTimerPostDesktop)
+                    stopCount(pressTimerCommentDesktop)
                     //clearTimeout(pressTimerCommentDesktop);
                     // Clear timeout
                     return false;
@@ -166,7 +166,7 @@
                 //LongPress sur les commentaire
                 var pressTimerComment;
                 $(".comments-container").on('pointermove', function () {
-                   stopCount(pressTimerPost)
+                   stopCount(pressTimerComment)
                     //clearTimeout(pressTimerComment);
                     // Clear timeout
                     return false;
