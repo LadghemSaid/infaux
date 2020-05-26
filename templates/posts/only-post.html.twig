@@ -158,9 +158,9 @@
 
             <div class="actions">
                 <div class="icons">
-                    <div onclick="handleAddLike(event)"
+                    <div onclick="handleAddLike(event,true)"
                          data-action="{{ path('like.add',{"entity":"post",'id':post.id}) }}"
-                         class="likeForm">
+                         class="likeForm onlyPostLike">
                         {% if app.user %}
                             {% set liked = false %}
                             {% for like in post.likes %}
@@ -225,7 +225,8 @@
             </div>
             {% if expanded is defined %}
                 <div class="action_onlypost">
-                    <div>
+                    <div onclick="handleAddLike(event,true)"
+                         data-action="{{ path('like.add',{"entity":"post",'id':post.id}) }}" class="onlyPostLike" >
                         {% if app.user %}
                             {% set liked = false %}
                             {% for like in post.likes %}
@@ -247,7 +248,7 @@
                         {% endif %}
                         aimer
                     </div>
-                    <div>
+                    <div onclick="$('html, body').animate({ scrollTop:  $('.wrapper-comments').offset().top +200 }, 'slow');$('#comment_textComment').focus();">
                         {% if app.user %}
                             {% set commented = false %}
                             {% for comment in post.comments %}

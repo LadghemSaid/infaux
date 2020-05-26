@@ -162,6 +162,40 @@
               });
               infiniteScroll.on('append.infiniteScroll', function () {
                   $(function () {
+                      //Long press sur les posts
+                      var pressTimerPost;
+                      $(".post-container").mouseup(function(){
+                          clearTimeout(pressTimerPost);
+                          // Clear timeout
+                          return false;
+                      }).mousedown(function(event){
+                          // Set timeout
+
+                          pressTimerPost = window.setTimeout(function() {
+                              $($(event.currentTarget).find('.modal')[1]).modal('show')
+                          },1000);
+                          return false;
+                      });
+
+                      //LongPress sur les commentaire
+                      var pressTimerComment;
+                      $(".comments-container").mouseup(function(){
+                          clearTimeout(pressTimerComment);
+                          // Clear timeout
+                          return false;
+                      }).mousedown(function(event){
+                          // Set timeout
+
+                          pressTimerComment = window.setTimeout(function() {
+                              $($(event.currentTarget).find('.modal')[1]).modal('show')
+                              console.log()
+                          },1000);
+                          return false;
+                      });
+
+
+
+
                       $(".p-date").map((x, i) => {
                           i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
                       });

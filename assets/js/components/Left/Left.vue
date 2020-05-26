@@ -13,11 +13,12 @@
                         <Conversation :conversation="conversation" />
                     </template>
 
-                    <p class=" px-4  flex text-muted" v-if="CONVERSATIONSLOADING">
-                        Chargement...
-                    </p>
+
                     <p class=" px-4  flex text-muted" v-if="CONVERSATIONSEMPTY">
                         Aucune conversation
+                    </p>
+                    <p class=" px-4  flex text-muted" v-else-if="CONVERSATIONSLOADING">
+                        Chargement...
                     </p>
                 </div>
             </div>
@@ -33,9 +34,11 @@
 
         components: {Conversation},
         computed: {
-          ...mapGetters(["CONVERSATIONS", "HUBURL", "USERNAME","MERCURETOKEN"])
+          ...mapGetters(["CONVERSATIONS", "HUBURL", "USERNAME","MERCURETOKEN","AVATARS"])
         },
         data: ()=>{
+            //let userImage = window.location.hostname+"uploads/images/users/"+this.AVATARS.filter(x => x.username === this.conversation.username)[0].image
+
             return {
                 CONVERSATIONSLOADING: true,
                 CONVERSATIONSEMPTY: false
@@ -47,15 +50,17 @@
             }
         },
         mounted() {
-
             const vm = this;
             this.$store.dispatch("GET_CONVERSATIONS")
                 .then(() => {
                     if(this.CONVERSATIONS.length ===0){
                         this.CONVERSATIONSEMPTY= true;
 
+                    }else{
+
+                        this.CONVERSATIONSLOADING= false;
+
                     }
-                    this.CONVERSATIONSLOADING= false;
 
 
                     let url = new URL(this.HUBURL);
@@ -96,8 +101,12 @@
                         return "";
                     }
 
-                    if(getCookie("lastConversationId") == 3){
-                        this.$router.push({ name: 'conversation', params: { id: getCookie("lastConversationId") }})
+                    if(getCookie("lastConversationId")){
+                        let id = "/conversation/"+getCookie("lastConversationId")
+                        let target = $("a[href='"+id+"']")[0]
+                        if(target){
+                            target.click();
+                        }
                     }
 
 

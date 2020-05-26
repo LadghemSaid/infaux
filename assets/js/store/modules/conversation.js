@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import store from "../store";
 
 export default {
     state: {
@@ -11,8 +12,12 @@ export default {
                 return a.createdAt < b.createdAt;
             })
         },
+
         MESSAGES: state => conversationId => {
             return state.conversations.find(i => i.conversationId === conversationId).messages
+        },
+        CONVERSATION: state => conversationId => {
+            return state.conversations.find(i => i.conversationId === conversationId)
         },
         HUBURL: state => state.hubUrl
     },
@@ -56,6 +61,9 @@ export default {
                     return result.json()
                 })
                 .then((result) => {
+                    result.map((x, i) => {
+                        x.image = "/uploads/images/users/" + store._vm.AVATARS.filter(y => y.username === x.username)[0].image
+                    })
                     commit("SET_CONVERSATIONS", result)
                 })
         },
@@ -64,6 +72,7 @@ export default {
                 return fetch(`/messages/${conversationId}`)
                     .then(result => result.json())
                     .then((result) => {
+                        console.log(result)
                         commit("SET_MESSAGES", {conversationId, payload: result})
                     });
             }

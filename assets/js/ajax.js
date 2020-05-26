@@ -2,12 +2,16 @@ import Toastify from 'toastify-js';
 
 const axios = require('axios');
 
-async function handleAddLike(event) {
+async function handleAddLike(event,onlypost=false) {
     console.log("action :: ", event.currentTarget.dataset.action);
     const button = event.currentTarget;
     const action = button.dataset.action;
     let targetToChange = button.querySelector('.number');
     let targetToChangeIcon = button.querySelector('.icon-heart');
+    if(onlypost){
+        targetToChange = $('.onlyPostLike .number')[0];
+        targetToChangeIcon = $('.onlyPostLike .icon-heart');
+    }
 
     $.ajax({
         type: "POST",
@@ -16,9 +20,22 @@ async function handleAddLike(event) {
         success: function (data, dataType) {
             //console.log(data);
             if (data === '+1') {
-                targetToChange.innerText = parseInt(targetToChange.innerText) + 1;
-                $(targetToChangeIcon).removeClass("heart-dislike ");
-                $(targetToChangeIcon).addClass("heart-like");
+                if(onlypost){
+                    console.log(targetToChangeIcon)
+
+                    $(targetToChangeIcon[0]).removeClass("heart-dislike ")
+                    $(targetToChangeIcon[1]).removeClass("heart-dislike ")
+                    $(targetToChangeIcon[0]).addClass("heart-like");
+                    $(targetToChangeIcon[1]).addClass("heart-like");
+                    targetToChange.innerText = parseInt(targetToChange.innerText) + 1;
+
+                }else{
+                    $(targetToChangeIcon).removeClass("heart-dislike ");
+                    $(targetToChangeIcon).addClass("heart-like");
+                    targetToChange.innerText = parseInt(targetToChange.innerText) + 1;
+
+                }
+
                 Toastify({
                     text: "J'aime !",
                     duration: 3000,
@@ -31,9 +48,20 @@ async function handleAddLike(event) {
                     } // Callback after click
                 }).showToast();
             } else {
-                $(targetToChangeIcon).removeClass("heart-like");
-                $(targetToChangeIcon).addClass("heart-dislike ");
-                targetToChange.innerText = parseInt(targetToChange.innerText) - 1;
+                if(onlypost){
+                    $(targetToChangeIcon[0]).removeClass("heart-like")
+                    $(targetToChangeIcon[1]).removeClass("heart-like")
+                    $(targetToChangeIcon[0]).addClass("heart-dislike");
+                    $(targetToChangeIcon[1]).addClass("heart-dislike");
+                    targetToChange.innerText = parseInt(targetToChange.innerText) - 1;
+
+                }else {
+                    $(targetToChangeIcon).removeClass("heart-like");
+                    $(targetToChangeIcon).addClass("heart-dislike ");
+                    targetToChange.innerText = parseInt(targetToChange.innerText) - 1;
+
+                }
+
                 Toastify({
                     text: "Je n'aime pas !",
                     duration: 3000,
@@ -121,7 +149,7 @@ function handleAddComment(event) {
         url: action,
         data: {
             textComment: textComment,
-            replyId:replyId,
+            replyId: replyId,
         },
         success: function (data, dataType) {
             //console.log(data);
@@ -166,24 +194,22 @@ function replyComment(event) {
 
     event.preventDefault();
     const commentId = event.target.dataset.comment;
-    const postId =$(event.target).parents('.post-container')[0].dataset.id;
+    const postId = $(event.target).parents('.post-container')[0].dataset.id;
     let target = $(event.target).next('.modal').find('.modal-body')[0];
-    target.innerHTML= '' +
-        '<form onSubmit="handleAddComment(event)" name="comment" data-action="/comment/add/'+postId+'" class="commentForm">'+
+    target.innerHTML = '' +
+        '<form onSubmit="handleAddComment(event)" name="comment" data-action="/comment/add/' + postId + '" class="commentForm">' +
         '<input type="text " id="comment_textComment" name="comment[textComment] " required="required " class="commentForm__textarea form-control input-lg" placeholder="Votre réponse ... " onclick="affiche_comment() " onblur="afficheplus_comment() ">' +
-        '<input type="hidden" id="comment_reply" name="comment[replyComment] " required="required " value="'+commentId+'" hidden>' +
+        '<input type="hidden" id="comment_reply" name="comment[replyComment] " required="required " value="' + commentId + '" hidden>' +
         '<div class="d-flex justify-content-end"> ' +
         '<div class="form-group"> ' +
         '<button type="submit" id="comment_submit-post-81 comment_submit" name="comment[submit]" class="btn btn-pink btn">Envoyer </button> ' +
         '</div>' +
         '</div>' +
-    '</form>';
+        '</form>';
 
-    console.log(commentId, target,postId)
+    console.log(commentId, target, postId)
 
 }
-
-
 
 
 function handleAddPost(event) {

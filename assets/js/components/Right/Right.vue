@@ -6,12 +6,12 @@
             <p class=" px-4  flex text-muted" v-if="!MESSAGES">
                 Chargement...
             </p>
-            <p class=" px-4  flex text-muted" v-if="MESSAGES && MESSAGES.length === 0">
+            <p class=" px-4  flex text-muted" v-else-if="MESSAGES && MESSAGES.length === 0">
                 Aucun message
             </p>
             <template v-else>
                 <template v-for="(message, index, key) in MESSAGES">
-                    <Message :message="message"/>
+                    <Message :avatar="CONVERSATION.image"  :message="message"/>
                 </template>
             </template>
 
@@ -33,9 +33,12 @@
         }),
         components: {Message, Input},
         computed: {
-            ...mapGetters(["HUBURL", "MERCURETOKEN"]),
+            ...mapGetters(["HUBURL", "MERCURETOKEN",]),
             MESSAGES() {
-                    return this.$store.getters.MESSAGES(this.$route.params.id);
+                return this.$store.getters.MESSAGES(this.$route.params.id);
+            }   ,
+            CONVERSATION() {
+                return this.$store.getters.CONVERSATION(this.$route.params.id);
             }
         },
         methods: {
@@ -51,7 +54,7 @@
         },
         mounted() {
 
-
+            console.log(this.CONVERSATION)
 
             const vm = this;
             this.$store.dispatch("GET_MESSAGES", this.$route.params.id)
@@ -66,7 +69,6 @@
                     document.cookie = "lastConversationId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/chat;";
                     setCookie('lastConversationId',  this.$route.params.id, 365)
 
-
                     this.scrollDown();
                     if (this.eventSource === null) {
                         let url = new URL(this.HUBURL);
@@ -79,7 +81,6 @@
                         }, {withCredentials: false});
 
                         eventSource.onmessage = function (event) {
-                            console.log('test');
                             vm.addMessage(JSON.parse(event.data))
                         }
                         eventSource.onerror = function (event) {

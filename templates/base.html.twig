@@ -71,14 +71,12 @@
 
 <body>
 
-    {% include "header.html.twig" %}
+{% include "header.html.twig" %}
 
 <div class="infinite-scroll-wrapper">
     {% block body %}
     {% endblock %}
 </div>
-
-
 
 
 {# <a aria-label="Button permettant de retourner en haut de la page" id="scrollToTop">Up !</a> #}
@@ -90,11 +88,12 @@
 ></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"
 ></script>
+<script src="https://cdn.jsdelivr.net/npm/toastify-js@1.2.2/src/toastify.js"></script>
 
 
 <script>
 
-    function hideModal(){
+    function hideModal() {
         $(".modal").removeClass("in");
         $(".modal-backdrop").remove();
         $('body').removeClass('modal-open');
@@ -108,6 +107,41 @@
 
         $(function () {
 
+
+            //Long press sur les posts
+            var pressTimerPost;
+            $(".post-container").mouseup(function(){
+                clearTimeout(pressTimerPost);
+                // Clear timeout
+                return false;
+            }).mousedown(function(event){
+                // Set timeout
+
+                pressTimerPost = window.setTimeout(function() {
+                    $($(event.currentTarget).find('.modal')[1]).modal('show')
+                },1000);
+                return false;
+            });
+
+            //LongPress sur les commentaire
+            var pressTimerComment;
+            $(".comments-container").mouseup(function(){
+                clearTimeout(pressTimerComment);
+                // Clear timeout
+                return false;
+            }).mousedown(function(event){
+                // Set timeout
+
+                pressTimerComment = window.setTimeout(function() {
+                    $($(event.currentTarget).find('.modal')[1]).modal('show')
+                    console.log()
+                },1000);
+                return false;
+            });
+
+
+
+            //Converstion des date en affiche moment js
             moment.locale('fr');
             $(".p-date").map((x, i) => {
                 i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
@@ -126,7 +160,6 @@
 </script>
 
 
-
 {% if app.user %}
     {{ encore_entry_script_tags('eventSource') }}
 
@@ -139,6 +172,74 @@
             console.log("registration sw error:", registrationError)
         });
 
+        function notify(message, registration) {
+
+            if (message === "Message reçu") {
+                //Cas d'un message de la messagerie
+                if (window.location.pathname === "/chat") {
+
+                } else {
+
+                    if ($('#notif-messagerie').length > 0) {
+                        $('#notif-messagerie')[0].innerText++;
+                    } else {
+                        $('.chat-i').html("<a href='{{ path('index.chat') }}'><i class='icon-bubbles3'></i><span id='notif-messagerie' class='number_notif notif'>1</span></a>")
+                    }
+
+                    Toastify({
+                        text: "Message recu !",
+                        duration: 3000,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: 'left', // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        className: "success",
+                        destination: "/chat",
+                        onClick: function () {
+                        } // Callback after click
+                    }).showToast();
+
+                    registration.showNotification('Tu as reçu une notifications !', {
+                        body: message,
+                        icon: '/img/logo_infaux.png',
+                        badge: '/img/logo_infaux.png',
+                        data: {
+                            url: "/chat"
+                        },
+                        silent: true,
+
+                    });
+
+                }
+
+
+            } else {
+                if ($('#notif').length > 0) {
+                    $('#notif')[0].innerText++;
+                } else {
+                    $('.header-notfication-bell').html("<i class='icon-bell'></i><span id='notif' class='number_notif notif'>1</span>")
+                }
+
+                Toastify({
+                    text: "Tu as reçu une notifications !",
+                    duration: 3000,
+                    close: true,
+                    gravity: "top", // `top` or `bottom`
+                    position: 'left', // `left`, `center` or `right`
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    className: "success",
+                    onClick: function () {
+                    } // Callback after click
+                }).showToast();
+
+                registration.showNotification('Tu as reçu une notifications !', {
+                    body: message,
+                    icon: '/img/logo_infaux.png',
+                });
+            }
+
+
+        }
 
         const url = new URL('{{ mercure_publish_url }}');
         url.searchParams.append('topic', '/message');
@@ -154,44 +255,11 @@
                 navigator.serviceWorker.ready.then(function (registration) {
 
                     eventSource.onmessage = (evt) => {
-                        const data = JSON.parse(evt.data);
+                        let data = JSON.parse(evt.data);
                         if (!data.message) {
                             return;
                         }
-                        console.log(data.message)
-                        if(data.message === "Message reçu"){
-                            if ($('#notif-messagerie').length > 0) {
-                                $('#notif-messagerie')[0].innerText++;
-                            } else {
-                                $('.chat-i').html("<a href='{{ path('index.chat') }}'><i class='icon-bubbles3'></i><span id='notif-messagerie' class='number_notif notif'>1</span></a>")
-                            }
-                        }else{
-                            if ($('#notif').length > 0) {
-                                $('#notif')[0].innerText++;
-                            } else {
-                                $('.header-notfication-bell').html("<i class='icon-bell'></i><span id='notif' class='number_notif notif'>1</span>")
-                            }
-                        }
-
-
-
-                        //  notifyMe(data.message);
-                        Toastify({
-                            text: "Tu as reçu une notifications !",
-                            duration: 3000,
-                            close: true,
-                            gravity: "top", // `top` or `bottom`
-                            position: 'left', // `left`, `center` or `right`
-                            stopOnFocus: true, // Prevents dismissing of toast on hover
-                            className: "success",
-                            onClick: function () {
-                            } // Callback after click
-                        }).showToast();
-
-                        registration.showNotification('Tu as reçu une notifications !', {
-                            body: data.message,
-                            icon: '/img/logo_infaux.png',
-                        });
+                        notify(data.message, registration)
 
                     };
                 })
@@ -206,8 +274,17 @@
 
 {% endif %}
 
+<script>
+
+
+
+
+</script>
 
 {% block javascripts %}
+
+
+
 
 {% endblock %}
 
