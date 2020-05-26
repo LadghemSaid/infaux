@@ -98,36 +98,49 @@
         $(".modal").hide();
     }
 
+    var timer_is_on = 0;
+    var timeToWait = 2000
+
+    function stopCount(id) {
+        clearTimeout(id);
+        timer_is_on = 0;
+    }
+    function startCount(event) {
+        if (!timer_is_on) {
+            timer_is_on = 1;
+           return setTimeout(function () {
+               $($(event.currentTarget).find('.modal')[1]).modal('show')
+            }, timeToWait)
+        }
+    }
     function detectInputType(event) {
         switch (event.pointerType) {
             case "mouse":
                 //Long press sur les posts
-                var pressTimerPost;
+                var pressTimerPostDesktop;
                 $(".post-container").mouseup(function () {
-                    clearTimeout(pressTimerPost);
+                    stopCount(pressTimerPostDesktop)
+                    //clearTimeout(pressTimerPostDesktop);
                     // Clear timeout
                     return false;
                 }).mousedown(function (event) {
                     // Set timeout
 
-                    pressTimerPost = window.setTimeout(function () {
-                        $($(event.currentTarget).find('.modal')[1]).modal('show')
-                    }, 1000);
+                    pressTimerPostDesktop = startCount(event)
                     return false;
                 });
 
                 //LongPress sur les commentaire
-                var pressTimerComment;
+                var pressTimerCommentDesktop;
                 $(".comments-container").mouseup(function () {
-                    clearTimeout(pressTimerComment);
+                    stopCount(pressTimerPostDesktop)
+                    //clearTimeout(pressTimerCommentDesktop);
                     // Clear timeout
                     return false;
                 }).mousedown(function (event) {
                     // Set timeout
 
-                    pressTimerComment = window.setTimeout(function () {
-                        $($(event.currentTarget).find('.modal')[1]).modal('show')
-                    }, 1000);
+                    pressTimerCommentDesktop = startCount(event)
                     return false;
                 });
                 break;
@@ -137,32 +150,31 @@
             case "touch":
                 //Long press sur les posts
                 var pressTimerPost;
-                $(".post-container").on('pointerup', function () {
-                    clearTimeout(pressTimerPost);
+                $(".post-container").on('pointermove ', function () {
+                    stopCount(pressTimerPost)
+//                    clearTimeout(pressTimerPost);
                     // Clear timeout
                     return false;
                 }).on('pointerdown', function (event) {
+
                     // Set timeout
 
-                    pressTimerPost = window.setTimeout(function () {
-                        $($(event.currentTarget).find('.modal')[1]).modal('show')
-                    }, 1000);
+                    pressTimerPost = startCount(event)
                     return false;
                 });
 
                 //LongPress sur les commentaire
                 var pressTimerComment;
-                $(".comments-container").on('pointerup', function () {
-                    clearTimeout(pressTimerComment);
+                $(".comments-container").on('pointermove', function () {
+                   stopCount(pressTimerPost)
+                    //clearTimeout(pressTimerComment);
                     // Clear timeout
                     return false;
                 }).on('pointerdown', function (event) {
 
                     // Set timeout
 
-                    pressTimerComment = window.setTimeout(function () {
-                        $($(event.currentTarget).find('.modal')[1]).modal('show')
-                    }, 1000);
+                    pressTimerComment = startCount(event)
                     return false;
                 });
                 break;
