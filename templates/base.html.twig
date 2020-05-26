@@ -179,37 +179,6 @@
     document.addEventListener("DOMContentLoaded", function (event) {
 
 
-        //Apparition du bouton rafraichir si le scroll dépasse 300
-        var prevScrollpos = window.pageYOffset;
-        var showButton;
-        var timer_is_on = 0;
-
-        function stopCount() {
-            clearTimeout(showButton);
-            timer_is_on = 0;
-        }
-        function timedCount() {
-            showButton = setTimeout(function () {
-                document.getElementById("refreshButton").classList.add(('visible'))
-            }, 2000)
-        }
-        function startCount() {
-            if (!timer_is_on) {
-                timer_is_on = 1;
-                timedCount();
-            }
-        }
-        window.onscroll = function () {
-            var currentScrollPos = window.pageYOffset;
-            if (prevScrollpos > currentScrollPos) {
-                prevScrollpos = currentScrollPos
-                startCount()
-            } else {
-                stopCount()
-                document.getElementById("refreshButton").classList.remove(('visible'))
-                prevScrollpos = currentScrollPos
-            }
-        }
 
         //Header hidden au scroll bas
         var didScroll;
