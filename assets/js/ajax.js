@@ -2,13 +2,13 @@ import Toastify from 'toastify-js';
 
 const axios = require('axios');
 
-async function handleAddLike(event,onlypost=false) {
+async function handleAddLike(event, onlypost = false) {
     console.log("action :: ", event.currentTarget.dataset.action);
     const button = event.currentTarget;
     const action = button.dataset.action;
     let targetToChange = button.querySelector('.number');
     let targetToChangeIcon = button.querySelector('.icon-heart');
-    if(onlypost){
+    if (onlypost) {
         targetToChange = $('.onlyPostLike .number')[0];
         targetToChangeIcon = $('.onlyPostLike .icon-heart');
     }
@@ -20,7 +20,7 @@ async function handleAddLike(event,onlypost=false) {
         success: function (data, dataType) {
             //console.log(data);
             if (data === '+1') {
-                if(onlypost){
+                if (onlypost) {
                     console.log(targetToChangeIcon)
 
                     $(targetToChangeIcon[0]).removeClass("heart-dislike ")
@@ -29,7 +29,7 @@ async function handleAddLike(event,onlypost=false) {
                     $(targetToChangeIcon[1]).addClass("heart-like");
                     targetToChange.innerText = parseInt(targetToChange.innerText) + 1;
 
-                }else{
+                } else {
                     $(targetToChangeIcon).removeClass("heart-dislike ");
                     $(targetToChangeIcon).addClass("heart-like");
                     targetToChange.innerText = parseInt(targetToChange.innerText) + 1;
@@ -48,14 +48,14 @@ async function handleAddLike(event,onlypost=false) {
                     } // Callback after click
                 }).showToast();
             } else {
-                if(onlypost){
+                if (onlypost) {
                     $(targetToChangeIcon[0]).removeClass("heart-like")
                     $(targetToChangeIcon[1]).removeClass("heart-like")
                     $(targetToChangeIcon[0]).addClass("heart-dislike");
                     $(targetToChangeIcon[1]).addClass("heart-dislike");
                     targetToChange.innerText = parseInt(targetToChange.innerText) - 1;
 
-                }else {
+                } else {
                     $(targetToChangeIcon).removeClass("heart-like");
                     $(targetToChangeIcon).addClass("heart-dislike ");
                     targetToChange.innerText = parseInt(targetToChange.innerText) - 1;
@@ -198,7 +198,7 @@ function replyComment(event) {
     let target = $(event.target).next('.modal').find('.modal-body')[0];
     target.innerHTML = '' +
         '<form onSubmit="handleAddComment(event)" name="comment" data-action="/comment/add/' + postId + '" class="commentForm">' +
-        '<input type="text " id="comment_textComment" name="comment[textComment] " required="required " class="commentForm__textarea form-control input-lg" placeholder="Votre réponse ... " onclick="affiche_comment() " onblur="afficheplus_comment() ">' +
+        '<input type="text " id="comment_textComment" name="comment[textComment] " required="required " class="commentForm__textarea form-control input-lg" placeholder="Votre réponse ... " onclick="affiche_comment(event) " onblur="afficheplus_comment(event) ">' +
         '<input type="hidden" id="comment_reply" name="comment[replyComment] " required="required " value="' + commentId + '" hidden>' +
         '<div class="d-flex justify-content-end"> ' +
         '<div class="form-group"> ' +
@@ -208,6 +208,27 @@ function replyComment(event) {
         '</form>';
 
     console.log(commentId, target, postId)
+
+}
+
+function replyCommentParent(event) {
+
+    event.preventDefault();
+    console.log($($(event.target).parents('.comments-container')[1]).find('button.btn.btn-repondre')[0])
+    $($(event.target).parents('.comments-container')[1]).find('button.btn.btn-repondre')[0].click()
+
+}
+
+function showMoreComment(event) {
+    event.preventDefault();
+    $(event.target).next('.reply').find('.comments-container').each((i,comment) => {
+        setTimeout(() => {
+            comment.classList.toggle('visible')
+
+        }, i*50)
+
+    })
+    $(event.target).next('.reply')[0].classList.toggle('visible')
 
 }
 
@@ -518,6 +539,8 @@ window.handleAddUserFollow = handleAddUserFollow;
 window.handleAddPost = handleAddPost;
 window.handleAddPostPinned = handleAddPostPinned;
 window.replyComment = replyComment;
+window.replyCommentParent = replyCommentParent;
+window.showMoreComment = showMoreComment;
 //window.getNextComment = getNextComment;
 
 

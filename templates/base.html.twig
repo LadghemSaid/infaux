@@ -101,6 +101,80 @@
         $(".modal").hide();
     }
 
+    function detectInputType(event) {
+        switch(event.pointerType) {
+            case "mouse":
+                //Long press sur les posts
+                var pressTimerPost;
+                $(".post-container").mouseup(function(){
+                    clearTimeout(pressTimerPost);
+                    // Clear timeout
+                    return false;
+                }).mousedown(function(event){
+                    // Set timeout
+
+                    pressTimerPost = window.setTimeout(function() {
+                        $($(event.currentTarget).find('.modal')[1]).modal('show')
+                    },1000);
+                    return false;
+                });
+
+                //LongPress sur les commentaire
+                var pressTimerComment;
+                $(".comments-container").mouseup(function(){
+                    clearTimeout(pressTimerComment);
+                    // Clear timeout
+                    return false;
+                }).mousedown(function(event){
+                    // Set timeout
+
+                    pressTimerComment = window.setTimeout(function() {
+                        $($(event.currentTarget).find('.modal')[1]).modal('show')
+                    },1000);
+                    return false;
+                });
+                break;
+            case "pen":
+                /* pen/stylus input detected */
+                break;
+            case "touch":
+                //Long press sur les posts
+                var pressTimerPost;
+                $(".post-container").on('pointerup',function(){
+                    clearTimeout(pressTimerPost);
+                    // Clear timeout
+                    return false;
+                }).on('pointerdown',function(event){
+                    // Set timeout
+
+                    pressTimerPost = window.setTimeout(function() {
+                        $($(event.currentTarget).find('.modal')[1]).modal('show')
+                    },1000);
+                    return false;
+                });
+
+                //LongPress sur les commentaire
+                var pressTimerComment;
+                $(".comments-container").on('pointerup',function(){
+                    clearTimeout(pressTimerComment);
+                    // Clear timeout
+                    return false;
+                }).on('pointerdown',function(event){
+
+                    // Set timeout
+
+                    pressTimerComment = window.setTimeout(function() {
+                        $($(event.currentTarget).find('.modal')[1]).modal('show')
+                    },1000);
+                    return false;
+                });
+                break;
+            default:
+            /* pointerType is empty (could not be detected)
+            or UA-specific custom type */
+        }
+    }
+
 
     document.addEventListener("DOMContentLoaded", function (event) {
 
@@ -145,36 +219,12 @@
                 lastScrollTop = st;
             }
 
-            //Long press sur les posts
-            var pressTimerPost;
-            $(".post-container").mouseup(function(){
-                clearTimeout(pressTimerPost);
-                // Clear timeout
-                return false;
-            }).mousedown(function(event){
-                // Set timeout
 
-                pressTimerPost = window.setTimeout(function() {
-                    $($(event.currentTarget).find('.modal')[1]).modal('show')
-                },1000);
-                return false;
-            });
+            window.addEventListener("pointerdown", detectInputType, false);
 
-            //LongPress sur les commentaire
-            var pressTimerComment;
-            $(".comments-container").mouseup(function(){
-                clearTimeout(pressTimerComment);
-                // Clear timeout
-                return false;
-            }).mousedown(function(event){
-                // Set timeout
 
-                pressTimerComment = window.setTimeout(function() {
-                    $($(event.currentTarget).find('.modal')[1]).modal('show')
-                    console.log()
-                },1000);
-                return false;
-            });
+
+
 
 
 
@@ -201,7 +251,26 @@
     {{ encore_entry_script_tags('eventSource') }}
 
     <script>
+        //fonction d'affichage du bouton submit (form comment)
+        function affiche_comment(event){
+            console.log(  $($(event.target).parents("form")[0]).find('button')[0])
+            event.target.focus()
+            //$($(event.target).parents("form")[0]).find('button')[0].disabled="";
+            $($(event.target).parents("form")[0]).find('button')[0].style.opacity = 1;
+            //$('#postForm').addClass('selected');
+        }
+        function afficheplus_comment(event){
+            console.log(event.target)
+            const str =   event.target.value;
+            if (str.length == 0) {
+                $($(event.target).parents("form")[0]).find('button')[0].style.opacity = 0;
+              //  $($(event.target).parents("form")[0]).find('button')[0].disabled = "true";
+             //   $('#postForm').removeClass('selected');
 
+            }
+
+
+        }
 
         navigator.serviceWorker.register('/sw.js', {scope: '/'}).then(function (registration) {
             console.log("sw registred :", registration);

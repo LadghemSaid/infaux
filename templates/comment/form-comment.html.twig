@@ -15,13 +15,13 @@
                    required="required"
                    class="commentForm__textarea form-control input-lg"
                    placeholder="Votre commentaire ..."
-                   onclick="affiche_comment()"
-                   onblur="afficheplus_comment()">
+                   onclick="affiche_comment(event)"
+                   onblur="afficheplus_comment(event)">
         </div>
         <div class="d-flex justify-content-start">
             <div class="form-group">
                 <button type="submit" id="comment_submit-post-{{ post.id }} comment_submit" name="comment[submit]"
-                        class="btn">Envoyer
+                        class="btn" style="opacity: 0;">Envoyer
                 </button>
             </div>
         </div>

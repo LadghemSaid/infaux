@@ -151,6 +151,15 @@
                   });
               })(i);
           }
+
+
+          //Augmentation du margin bottom du dernier commentaire sur la vus show post seulement si il y'a plus de 3 commentaire
+          if($('.wrapper-comments .comments-container').length > 3){
+              $('.wrapper-comments .comments-container').last()[0].style.marginBottom = '100px';
+          }
+
+
+
       </script>
 
   {% endblock %}

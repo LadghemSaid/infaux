@@ -104,7 +104,7 @@
 
     </div>
 
-    <div class="page-load-status">
+    <div class="page-load-status" >
         <div class="infinite-scroll-request">
             <div class="loader-ellips">Chargement
                 <span class="loader-ellips__dot"></span>
@@ -113,8 +113,8 @@
                 <span class="loader-ellips__dot"></span>
             </div>
         </div>
-        <p class="infinite-scroll-last">Plus aucun post a afficher</p>
-        <p class="infinite-scroll-error">No more pages to load</p>
+        <p class="infinite-scroll-last">Plus aucun post à afficher</p>
+        <p class="infinite-scroll-error">Erreur</p>
     </div>
 {% endblock %}
 
@@ -150,57 +150,35 @@
 
 
               //Post infinite scroll
-              var infiniteScroll = $('.infinite-scroll-wrapper .container ').infiniteScroll({
-                  // options
-                  path: '.next a',
-                  append: '.post-container',
-                  prefill: true,
-                  history: false,
-                  elementScroll: false,
-                  hideNav: '.pagination',
-                  status: '.page-load-status'
-              });
-              infiniteScroll.on('append.infiniteScroll', function () {
-                  $(function () {
-                      //Long press sur les posts
-                      var pressTimerPost;
-                      $(".post-container").mouseup(function(){
-                          clearTimeout(pressTimerPost);
-                          // Clear timeout
-                          return false;
-                      }).mousedown(function(event){
-                          // Set timeout
+              if ($('.post-container').length > 2) {
+                  var infiniteScroll = $('.infinite-scroll-wrapper .container ').infiniteScroll({
+                      // options
+                      path: '.next a',
+                      append: '.post-container',
+                      prefill: true,
+                      history: false,
+                      elementScroll: false,
+                      hideNav: '.pagination',
+                      status: '.page-load-status'
+                  });
+                  infiniteScroll.on('append.infiniteScroll', function () {
+                      $(function () {
 
-                          pressTimerPost = window.setTimeout(function() {
-                              $($(event.currentTarget).find('.modal')[1]).modal('show')
-                          },1000);
-                          return false;
-                      });
+                          //Long press sur les posts
+                          window.addEventListener("pointerdown", detectInputType, false);
 
-                      //LongPress sur les commentaire
-                      var pressTimerComment;
-                      $(".comments-container").mouseup(function(){
-                          clearTimeout(pressTimerComment);
-                          // Clear timeout
-                          return false;
-                      }).mousedown(function(event){
-                          // Set timeout
-
-                          pressTimerComment = window.setTimeout(function() {
-                              $($(event.currentTarget).find('.modal')[1]).modal('show')
-                              console.log()
-                          },1000);
-                          return false;
-                      });
-
-
-
-
-                      $(".p-date").map((x, i) => {
-                          i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
+                          //Affichage des date de creation en format momentJs
+                          $(".p-date").map((x, i) => {
+                              i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
+                          });
                       });
                   });
-              });
+
+              }else{
+                $('.infinite-scroll-request').hide()
+                $('.infinite-scroll-error').hide()
+
+              }
 
 
           });
