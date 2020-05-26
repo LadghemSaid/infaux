@@ -279,17 +279,17 @@
 
                         <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
                     {% endblock %}
+
                     <a data-toggle="modal" data-target="#modalShare" href="#">
                         <div>Partager</div>
                     </a>
 
-
-
+                </div>
 
             {% endif %}
 
-        </div>
-            <div class="modal fade" id="modalShare" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="modalShare" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -298,39 +298,40 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                        <div class="actions">
+                            <div class="actions">
 
-                            <div class="icons first">
-                                <div class="fb-share-button"
-                                     data-href="https://infaux.ga{{ path('post.show',{'id': post.id}) }}"
-                                     data-layout="button_count" data-size="small"><a target="_blank"
-                                                                                     href="https://www.facebook.com/sharer/sharer.php?u=https://infaux.ga{{ path('post.show',{'id': post.id}) }}"
-                                                                                     class="fb-xfbml-parse-ignore">Facebook</a>
+                                <div class="icons first">
+                                    <div class="fb-share-button"
+                                         data-href="https://infaux.ga{{ path('post.show',{'id': post.id}) }}"
+                                         data-layout="button_count" data-size="small"><a target="_blank"
+                                                                                         href="https://www.facebook.com/sharer/sharer.php?u=https://infaux.ga{{ path('post.show',{'id': post.id}) }}"
+                                                                                         class="fb-xfbml-parse-ignore">Facebook</a>
+                                    </div>
+
                                 </div>
 
-                            </div>
+                                <div class="icons">
+                                    <a class="twitter-share-button"
+                                       target="_blank"
+                                       href="https://twitter.com/intent/tweet?text=Qu%20en%20pensez%20vous%20&url=https://infaux.ga{{ path('post.show',{'id': post.id}) }}&hashtags=Infaux,Intox,Hoax">
+                                        Tweet</a>
 
-                            <div class="icons">
-                                <a class="twitter-share-button"
-                                   target="_blank"
-                                   href="https://twitter.com/intent/tweet?text=Qu%20en%20pensez%20vous%20&url=https://infaux.ga{{ path('post.show',{'id': post.id}) }}&hashtags=Infaux,Intox,Hoax">
-                                    Tweet</a>
+                                </div>
 
-                            </div>
+                                <div class="icons">
 
-                            <div class="icons">
+                                    <script type="IN/Share"
+                                            data-url="https://infaux.ga{{ path('post.show',{'id': post.id}) }}"></script>
 
-                                <script type="IN/Share" data-url="https://infaux.ga{{ path('post.show',{'id': post.id}) }}"></script>
-
-                            </div>
+                                </div>
                             </div>
 
                         </div>
-                        </div>
-
                     </div>
+
                 </div>
             </div>
+        </div>
     </div>
     <div class="wrapper-comments">
         {% if comments is defined %}
