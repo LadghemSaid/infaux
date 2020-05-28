@@ -4,7 +4,7 @@
             <div class="top">
 
                 <button type="button" class="btn btn-primary" data-toggle="modal"
-                        data-target="#profil-comment-{{ comment.user.id ?? "999" }}-loop-{{ loop.index }}">
+                        data-target="#profil-comment-{{ comment.user.id ?? "999" }}">
                     <div class="user-picture">
                         <div class="img"
                                 {% if comment.user.image  is defined %}
@@ -16,7 +16,7 @@
                     </div>
                 </button>
 
-                <div class="modal fade" id="profil-comment-{{ comment.user.id ?? "999" }}-loop-{{ loop.index }}"
+                <div class="modal fade" id="profil-comment-{{ comment.user.id ?? "999" }}"
                      tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -83,11 +83,11 @@
                     <div class="option">
 
                         <button type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target="#commentaire-{{ comment.id }}-loop-{{ loop.index }}">
+                                data-target="#commentaire-{{ comment.id }}">
                             <i class="icon-dots-horizontal-triple"></i>
                         </button>
 
-                        <div class="modal fade" id="commentaire-{{ comment.id }}-loop-{{ loop.index }}" tabindex="-1"
+                        <div class="modal fade" id="commentaire-{{ comment.id }}" tabindex="-1"
                              role="dialog"
                              aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
@@ -176,14 +176,14 @@
                         {% if app.user %}
                             <button type="button" class="btn btn-repondre" data-toggle="modal"
                                     data-comment="{{ comment.id }}" onclick="replyComment(event)"
-                                    data-target="#commentaire-reply-{{ comment.id }}-loop-{{ loop.index }}">
+                                    data-target="#commentaire-reply-{{ comment.id }}">
                                 Répondre
                             </button>
                         {% endif %}
                     {% endif %}
 
 
-                    <div class="modal fade modal-repondre" id="commentaire-reply-{{ comment.id }}-loop-{{ loop.index }}"
+                    <div class="modal fade modal-repondre" id="commentaire-reply-{{ comment.id }}"
                          tabindex="-1"
                          role="dialog"
                          aria-labelledby="exampleModalLabel" aria-hidden="true">

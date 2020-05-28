@@ -28,10 +28,10 @@ class AppRuntime implements RuntimeExtensionInterface
 
     public function getCommentFunction($postId, $order)
     {
-        $arrayComment= $this->commentRepository->findBy([
-            'post'=>$postId,
-            'approved'=>true,
-            'isReply'=>false,
+        $arrayComment = $this->commentRepository->findBy([
+            'post' => $postId,
+            'approved' => true,
+            'isReply' => false,
 
         ], array('created_at' => $order));
 
@@ -41,21 +41,15 @@ class AppRuntime implements RuntimeExtensionInterface
     }
 
 
-
-
-
-
     public function commentMostLikeFunction($comments)
     {
         $cmt = 0;
         $last = null;
 
         foreach ($comments as $comment) {
-            if (count($comment->getLikes()) >= $cmt &&  $comment->getApproved() === true) {
+            if (count($comment->getLikes()) >= $cmt && $comment->getApproved() === true) {
                 $cmt = count($comment->getLikes());
                 $last = $comment;
-            } else {
-
             }
         }
 

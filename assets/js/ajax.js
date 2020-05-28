@@ -153,7 +153,9 @@ function handleAddComment(event) {
         },
         success: function (data, dataType) {
             //console.log(data);
-            target.append(data)
+            target.html(data);
+            hideModal();
+
             $(function () {
                 moment.locale('fr');
                 $(target).find(".p-date").map((x, i) => {
@@ -198,11 +200,11 @@ function replyComment(event) {
     let target = $(event.target).next('.modal').find('.modal-body')[0];
     target.innerHTML = '' +
         '<form onSubmit="handleAddComment(event)" name="comment" data-action="/comment/add/' + postId + '" class="commentForm">' +
-        '<input type="text " id="comment_textComment" name="comment[textComment] " required="required " class="commentForm__textarea form-control input-lg" placeholder="Votre réponse ... " onclick="affiche_comment(event) " onblur="afficheplus_comment(event) ">' +
+        '<input  type="text " id="comment_textComment" name="comment[textComment] " required="required " class="commentForm__textarea form-control input-lg" placeholder="Votre réponse ... " onclick="affiche_comment(event) " onblur="afficheplus_comment(event)" minlength="1" maxlength="500" >' +
         '<input type="hidden" id="comment_reply" name="comment[replyComment] " required="required " value="' + commentId + '" hidden>' +
         '<div class="d-flex justify-content-end"> ' +
         '<div class="form-group"> ' +
-        '<button type="submit" id="comment_submit-post-'+postId+'" name="comment[submit]" class="btn btn-pink btn">Envoyer </button> ' +
+        '<button type="submit" id="comment_submit-post-' + postId + '" name="comment[submit]" class="btn btn-pink btn">Envoyer </button> ' +
         '</div>' +
         '</div>' +
         '</form>';
@@ -221,11 +223,11 @@ function replyCommentParent(event) {
 
 function showMoreComment(event) {
     event.preventDefault();
-    $(event.target).next('.reply').find('.comments-container').each((i,comment) => {
+    $(event.target).next('.reply').find('.comments-container').each((i, comment) => {
         setTimeout(() => {
             comment.classList.toggle('visible')
 
-        }, i*50)
+        }, i * 50)
 
     })
     $(event.target).next('.reply')[0].classList.toggle('visible')
@@ -237,6 +239,7 @@ function handleAddPost(event) {
     {
 
         event.preventDefault();
+        let textarea = $(event.target).find('textarea')[0]
         const data = $(event.target).serializeArray()[0].value;
         const action = event.target.dataset.action;
         let target = $('.formPost.input-submit-post');
@@ -247,26 +250,81 @@ function handleAddPost(event) {
             url: action,
             data: {request: data},
             success: function (data, dataType) {
-                target.after(data)
-                $(function () {
-                    moment.locale('fr');
-                    $(target).find(".p-date").map((x, i) => {
-                        i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
-                    });
-                });
-                Toastify({
-                    text: "Post ajouté",
-                    duration: 3000,
-                    close: true,
-                    gravity: "top", // `top` or `bottom`
-                    position: 'left', // `left`, `center` or `right`
-                    stopOnFocus: true, // Prevents dismissing of toast on hover
-                    className: "info",
-                    onClick: function () {
-                    } // Callback after click
-                }).showToast();
+
+                switch (data) {
+                    case "spam":
+                        //Cas d'une erreur
+                        Toastify({
+                            text: "Vous devez attendre 1 min entre chaque post !",
+                            duration: 3000,
+                            close: true,
+                            gravity: "top", // `top` or `bottom`
+                            position: 'left', // `left`, `center` or `right`
+                            stopOnFocus: true, // Prevents dismissing of toast on hover
+                            className: "info",
+                            onClick: function () {
+                            } // Callback after click
+                        }).showToast();
+
+                        break;
+                    case "lengthTooShort":
+                        //Cas d'une erreur
+                        Toastify({
+                            text: "Votre post est trop court",
+                            duration: 3000,
+                            close: true,
+                            gravity: "top", // `top` or `bottom`
+                            position: 'left', // `left`, `center` or `right`
+                            stopOnFocus: true, // Prevents dismissing of toast on hover
+                            className: "info",
+                            onClick: function () {
+                            } // Callback after click
+                        }).showToast();
+
+                        break;
+                    case "lengthTooLong":
+                        //Cas d'une erreur
+                        Toastify({
+                            text: "Votre post est trop long",
+                            duration: 3000,
+                            close: true,
+                            gravity: "top", // `top` or `bottom`
+                            position: 'left', // `left`, `center` or `right`
+                            stopOnFocus: true, // Prevents dismissing of toast on hover
+                            className: "info",
+                            onClick: function () {
+                            } // Callback after click
+                        }).showToast();
+                        break;
+                    default:
+                        //Cas d'un post !
+                        target.after(data)
+                        textarea.value = '';
+
+
+                        $(function () {
+                            moment.locale('fr');
+                            $(target).find(".p-date").map((x, i) => {
+                                i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
+                            });
+                        });
+                        Toastify({
+                            text: "Post ajouté",
+                            duration: 3000,
+                            close: true,
+                            gravity: "top", // `top` or `bottom`
+                            position: 'left', // `left`, `center` or `right`
+                            stopOnFocus: true, // Prevents dismissing of toast on hover
+                            className: "info",
+                            onClick: function () {
+                            } // Callback after click
+                        }).showToast();
+                        break;
+                }
+
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
+                textarea.value = '';
 
                 Toastify({
                     text: "Une erreur est survenue",
