@@ -110,18 +110,18 @@
             $.mobile.ajaxLinksEnabled  =false
             $.mobile.touchOverflowEnabled = true;
 
-
+    function tapholdHandler( event ){
+        event.stopPropagation();
+        console.log($($(event.currentTarget).find('.modal')[1]))
+        $($(event.currentTarget).find('.modal')[1]).modal('show')
+    }
 
     document.addEventListener("DOMContentLoaded", function (event) {
 
         $(".comments-container .content").bind( "taphold", tapholdHandler );
         $(".post-container .content").bind( "taphold", tapholdHandler );
 
-        function tapholdHandler( event ){
-            event.stopPropagation();
-            console.log($($(event.currentTarget).find('.modal')[1]))
-            $($(event.currentTarget).find('.modal')[1]).modal('show')
-        }
+
 
 
         //Header hidden au scroll bas

@@ -201,6 +201,9 @@
                           //Long press sur les posts
                           //window.addEventListener("pointerdown", detectInputType, false);
 
+                          $(".comments-container .content").bind( "taphold", tapholdHandler );
+                          $(".post-container .content").bind( "taphold", tapholdHandler );
+
                           //Affichage des date de creation en format momentJs
                           $(".p-date").map((x, i) => {
                               i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
