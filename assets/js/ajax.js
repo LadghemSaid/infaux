@@ -105,7 +105,7 @@ async function handleAddReport(event) {
         const response = await axios.post(action);
         if (response.data === "+1") {
             Toastify({
-                text: "Merci de votre signalement",
+                text: "Merci de ton signalement",
                 duration: 3000,
                 close: true,
                 gravity: "top", // `top` or `bottom`
@@ -117,7 +117,7 @@ async function handleAddReport(event) {
             }).showToast();
         } else {
             Toastify({
-                text: "Vous avez déjà signaler cela",
+                text: "Tu as déjà signaler cela.",
                 duration: 3000,
                 close: true,
                 gravity: "top", // `top` or `bottom`
@@ -198,7 +198,9 @@ function replyComment(event) {
     let target = $(event.target).next('.modal').find('.modal-body')[0];
     target.innerHTML = '' +
         '<form onSubmit="handleAddComment(event)" name="comment" data-action="/comment/add/' + postId + '" class="commentForm">' +
-        '<input type="text " id="comment_textComment" name="comment[textComment] " required="required " class="commentForm__textarea form-control input-lg" placeholder="Votre réponse ... " onclick="affiche_comment(event) " onblur="afficheplus_comment(event) ">' +
+        '<input type="text " id="comment_textComment" name="comment[textComment] " required="required "' +
+        ' class="commentForm__textarea form-control input-lg" placeholder="Ta réponse ... "' +
+        ' onclick="affiche_comment(event) " onblur="afficheplus_comment(event) ">' +
         '<input type="hidden" id="comment_reply" name="comment[replyComment] " required="required " value="' + commentId + '" hidden>' +
         '<div class="d-flex justify-content-end"> ' +
         '<div class="form-group"> ' +
@@ -420,9 +422,9 @@ async function handleAddPostPinned(event) {
     try {
         const response = await axios.post(action);
         if (response.data === "+1") {
-            targetToChange.innerText = "Post epinglé";
+            targetToChange.innerText = "Post épinglé";
             Toastify({
-                text: "Vous suivez ce post",
+                text: "Tu suis ce post",
                 duration: 3000,
                 close: true,
                 gravity: "top", // `top` or `bottom`
@@ -433,9 +435,9 @@ async function handleAddPostPinned(event) {
                 } // Callback after click
             }).showToast();
         } else {
-            targetToChange.innerText = "Epingler ce post";
+            targetToChange.innerText = "Épingler ce post";
             Toastify({
-                text: "Vous ne suivez plus ce post",
+                text: "Tu ne suis plus ce post",
                 duration: 3000,
                 close: true,
                 gravity: "top", // `top` or `bottom`

@@ -190,7 +190,7 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header d-flex align-items-center">
-                                    <h3 class="modal-title" >Votre réponse</h3>
+                                    <h3 class="modal-title" >Ta réponse</h3>
                                     <button type="button" class="close" data-dismiss="modal"
                                             aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
@@ -208,7 +208,7 @@
         </div>
     </div>
     {% if isReply is not  defined  and  comment.commentsReply | length > 0 %}
-        <a onclick="showMoreComment(event)" href="#">Voir les {{ comment.commentsReply| length }} reponses</a>
+        <a onclick="showMoreComment(event)" href="#">Voir {{ comment.commentsReply| length }} réponses</a>
     {% endif %}
     <div class="reply">
         {% for commentReply in comment.commentsReply %}

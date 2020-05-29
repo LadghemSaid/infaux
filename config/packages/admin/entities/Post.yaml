@@ -29,7 +29,8 @@ easy_admin:
           - {property: 'published' }
           - {property: 'createdAt' }
           - { property: comments, label: 'Commentaire', type: embedded_list, type_options: { entity: Comment  } }
-          - { property: CommentToValidate, label: 'Commentaire a validé', type: embedded_list, type_options: {  entity: CommentToValidate ,ext_filters: { 'entity.post': 'form:parent.data.id' } } }
+          - { property: CommentToValidate, label: 'Commentaire à valider', type: embedded_list, type_options: {
+            entity: CommentToValidate ,ext_filters: { 'entity.post': 'form:parent.data.id' } } }
         actions:
           - {name: 'edit', icon: 'pencil', label: false, css_class: 'btn btn-secondary'}
           - {name: 'delete', icon: 'trash', label: false, css_class: 'btn btn-danger'}
@@ -66,7 +67,8 @@ easy_admin:
           - {property: 'published' }
           - {property: 'createdAt' }
           - { property: comments, label: 'Commentaire', type: embedded_list, type_options : { entity: Comment  } }
-          - { property: CommentToValidate, label: 'Commentaire a validé', type: embedded_list, type_options : {  entity: CommentToValidate ,ext_filters: { 'entity.post': 'form:parent.data.id' } } }
+          - { property: CommentToValidate, label: 'Commentaire à valider', type: embedded_list, type_options : {
+            entity: CommentToValidate ,ext_filters: { 'entity.post': 'form:parent.data.id' } } }
         actions:
           - {name: 'edit', icon: 'pencil', label: false, css_class: 'btn btn-secondary'}
           - {name: 'delete', icon: 'trash', label: false, css_class: 'btn btn-danger'}

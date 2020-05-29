@@ -336,7 +336,7 @@
     <div class="wrapper-comments">
         {% if comments is defined %}
             {% if comments is empty and onlyOneComment is not defined %}
-                <p>Aucun commentaire soit le premier !</p>
+                <p>Aucun commentaire, sois le premier !</p>
             {% endif %}
 
             {% for comment in comments %}
@@ -347,7 +347,7 @@
         {% if onlyOneComment is defined %}
 
             {% if onlyOneComment is empty %}
-                <p>Aucun commentaire soit le premier !</p>
+                <p>Aucun commentaire, sois le premier !</p>
             {% else %}
                 {% include('/comment/only-comment.html.twig') with {'comment' : onlyOneComment,'onlyOneComment':true} %}
             {% endif %}
