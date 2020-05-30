@@ -83,10 +83,11 @@ class LikeController extends AbstractController
         if ($user) {
 
             //Notification pour l'user auteur du post/comment
-            $this->notificationService->add($payload->getUser(), $message = "{$user->getUsername()} a aimé votre {$entity}", $user, $payload);
+            $this->notificationService->add($payload->getUser(), $message = "{$user->getUsername()} a aimé ton {$entity}", $user, $payload);
         } else {
             //Notification pour l'user auteur du post/comment
-            $this->notificationService->add($payload->getUser(), $message = "Une personne aime votre {$entity}", $user, $payload);
+            $this->notificationService->add($payload->getUser(), $message = "Une personne aime ton {$entity}", $user,
+                $payload);
         }
 
 

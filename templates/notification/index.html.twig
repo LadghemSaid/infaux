@@ -47,12 +47,12 @@
                     <i class="icon-bell"></i>Notifications</h1>
                 {% if notifsSeen | length >= 1 or notifsNotSeen | length >= 1 %}
                     <p onclick="handleDeleteAllNotification(event)" data-action="{{ path('notification.deleteAll') }}"
-                       class="sup-notif mb-0">Tous supprimer</p>
+                       class="sup-notif mb-0">Supprimer toutes les notifications</p>
                 {% endif %}
             </div>
 
             {% if notifsSeen is empty and notifsNotSeen is empty %}
-                <p>Vous n'avez aucune notifications</p>
+                <p>Tu n'as aucune notification...</p>
             {% endif %}
 
             {% for notif in notifsSeen %}

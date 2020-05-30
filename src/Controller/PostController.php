@@ -85,7 +85,7 @@ class PostController extends AbstractController
             //Ajout du post dans l'user
             $user->addPostFollowed($postCurr);
             //Notification pour l'auteur du post
-            $this->notificationService->add($postCurr->getUser(), $message = "{$postCurr->getUser()} vient d'epingler votre post", $postCurr->getUser(), $postCurr);
+            $this->notificationService->add($postCurr->getUser(), $message = "{$postCurr->getUser()} vient d'épingler ton post", $postCurr->getUser(), $postCurr);
 
             $this->em->persist($postCurr, $user);
             $this->em->flush();

@@ -91,7 +91,8 @@ class CommentsController extends AbstractController
 
         }
         //Envoie de la notif a l'auteur du post
-        $this->notificationService->add($post->getUser(), $message = "Un commentaire à été ajouter sur votre post", $user, $post);
+        $this->notificationService->add($post->getUser(), $message = "Un commentaire a été ajouté à ton post !",
+            $user, $post);
 
 
         //$this->addFlash('success', "Commentaire ajouté avec succés :)");
