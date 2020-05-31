@@ -118,19 +118,23 @@ $background-comment-color: #1b212d;
 $profile-picture-size-comment:45px;
 
 $red : #B55F5F;
-$green: #66BB99;
+$green: #66BB99; //Variabilisé
 $transparent-green: rgba(102, 187, 153, 0.712);
 $light-green: #66BB99;
 $dark-green: #5FAE8E;
 $white: #FFFFFF;
-$fade-white: #f2f2f2;
+$fade-white: #f2f2f2; //Variabilisé
 $fade-white2: #DEDEDE;
 $fade-white-3: #E6E6E6;
-$light-grey: #C2C2C2;
-$grey: #E6E6E6;
+$light-grey: #C2C2C2; //Variabilisé
+$medium-grey: #9c9c9c; //Variabilisé
+$grey: #E6E6E6; //Variabilisé
 $dark-grey: #464646;
-$black: #000000;
 
+
+$black: #464646;
+$radius:15px;
+$white: rgba(255,255,255,.34);
 
 // radius 
 $radius:15px;
@@ -138,3 +142,12 @@ $radiusLarge:50px;
 
 // padding
 $padding:15px;
+
+:root {
+  --main-green: #66BB99;
+  --main-light-grey: #C2C2C2;
+  --main-grey: #E6E6E6;
+  --main-dark-grey: #464646;
+  --main-medium-grey: #9c9c9c;
+  --main-fade-white: #f2f2f2;
+}

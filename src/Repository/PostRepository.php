@@ -79,7 +79,8 @@ class PostRepository extends ServiceEntityRepository
     {
 
         return $this->createQueryBuilder('p')
-            ->where("SOUNDEX(p.text) LIKE SOUNDEX(:val)")
+           // ->where("SOUNDEX(p.text) = SOUNDEX(:val)")
+            ->where("p.text Like  :val")
             //->where('p.text like :val')
             ->setParameter('val',  '%'.$str.'%')
             ->setMaxResults(10)

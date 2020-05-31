@@ -124,7 +124,8 @@
                 </div>
 				
 				<div class="validate-input">
-                	{{ form_widget(registrationForm.agreeTerms) }}
+                        {{ form_widget(registrationForm.agreeTerms) }}
+
 				</div>
 
                 <div class="container-login-form-btn">
@@ -144,10 +145,15 @@
 								Tu as déjà un compte ?
 							</span>
 
+
                     <a class="txt2" href="{{ path('app_login') }}">
                         Connexion
                     </a>
+                    <a class="d-block" href="{{ path('rgpd') }}">
+                        CGU
+                    </a>
                 </div>
+
             </div>
         </div>
     </div>

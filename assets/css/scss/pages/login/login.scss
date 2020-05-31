@@ -22,7 +22,7 @@ a:focus {
 
 a:hover {
 	text-decoration: none;
-  color: $green;
+  color: var(--main-green);
 }
 
 p {
@@ -126,7 +126,7 @@ iframe {
   justify-content: center;
   align-items: center;
   padding: 15px;
-  background: $fade-white;  
+  background:var(--main-fade-white);
 }
 
 .wrap-login {
@@ -212,7 +212,7 @@ iframe {
   -moz-transition: all 0.4s;
   transition: all 0.4s;
 
-  background: $green;
+  background: var(--main-green);
 }
 
 .focus-input::after {
@@ -275,11 +275,11 @@ iframe {
 }
 
 .btn-show-pass:hover {
-  color: $green;
+  color: var(--main-green);
 }
 
 .btn-show-pass.active {
-  color: $green;
+  color: var(--main-green);
 }
 
 /*------------------------------------------------------------------
@@ -321,11 +321,11 @@ iframe {
 }
 
 .login-form-bgbtn:hover {
-  background: $green !important;
+  background: var(--main-green) !important;
 }
 
 .login-form-btn:hover {
-  background: $green !important;
+  background: var(--main-green) !important;
 }
 
 .login-form-btn {

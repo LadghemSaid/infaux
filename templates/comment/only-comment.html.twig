@@ -7,10 +7,10 @@
                         data-target="#profil-comment-{{ comment.user.id ?? "999" }}">
                     <div class="user-picture">
                         <div class="img"
-                                {% if comment.user.image  is defined %}
+                                {% if comment.user.image != "false" %}
                              style="background:url('{{ vich_uploader_asset(comment.user, 'imageFile') }}')">
                             {% else %}
-                                style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}')">
+                                style="background:url('{{ ("https://api.adorable.io/avatars/60/" ~ comment.user.username) }}')">
                             {% endif %}
                         </div>
                     </div>
@@ -31,10 +31,10 @@
                                 <div class="wrap">
                                     <div class="user-picture">
                                         <div class="img"
-                                                {% if comment.user.image  is defined %}
+                                                {% if comment.user.image != "false"%}
                                              style="background:url('{{ vich_uploader_asset(comment.user, 'imageFile') }}')">
                                             {% else %}
-                                                style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}')">
+                                                style="background:url('{{ ("https://api.adorable.io/avatars/60/" ~ comment.user.username) }}')">
                                             {% endif %}
                                         </div>
                                     </div>

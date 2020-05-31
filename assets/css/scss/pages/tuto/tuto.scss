@@ -2,7 +2,7 @@
     width: 100px;
     height: 100px;
     background: rgba(255, 255, 255, 0.527);
-    background: linear-gradient(135deg, rgba(255,255,255,0) 0%, $green 200%);
+    background: linear-gradient(135deg, rgba(255,255,255,0) 0%, var(--main-green) 200%);
     border-radius: 100%;
     margin: auto;
     .upload-picture {
@@ -44,7 +44,7 @@
                 right: 0;
                 padding: 0;
                 line-height: 1.5;
-                color: #464646;
+                color: $dark-grey;
             }
 
             .custom-file-label {
@@ -99,7 +99,7 @@ button.settings-modify-button {
     font-family: Poppins;
     font-size: 14px;
     line-height: 1.7;
-    color: #464646;
+    color: $dark-grey;
     margin: 0 !important;
     transition: all .4s;
     padding: 0;

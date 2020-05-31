@@ -4,7 +4,7 @@
 }
 
 .logo-header {
-  background-color: $fade-white;
+  background-color: var(--main-fade-white);
   padding: 10px 15px;
   position: fixed;
   top: 0;
@@ -33,7 +33,7 @@
     text-align: center;
 
     a {
-      color: $green;
+      color: var(--main-green);
 
       &:hover {
         color: $dark-green;
@@ -52,7 +52,7 @@
     text-align: center;
 
     a {
-      color: $green;
+      color: var(--main-green);
 
       &:hover {
         color: $dark-green;
@@ -80,7 +80,7 @@
   height: 50px;
 
   box-shadow: 0 0px 5px -2px rgb(168, 168, 168);
-  background-color: $fade-white;
+  background-color:var(--main-fade-white);
 
   &__item {
     flex-grow: 1;
@@ -99,7 +99,7 @@
   }
 
   a {
-    color: $green !important;
+    color: var(--main-green) !important;
   }
 }
 
@@ -114,7 +114,7 @@
 }
 
 .collapse-navbar {
-  background-color: $green;
+  background-color: var(--main-green);
   border-radius: 0 !important;
   width: 90%;
   height: 100vh;
@@ -242,12 +242,12 @@ span.notif {
 
 #deconnexion {
   h3 {
-    color: #464646;
+    color: $dark-grey;
     margin-bottom: 0;
   }
 
   button.close {
-    color: #6b9;
+    color:var(--main-green);
     background-color: transparent;
     border: 0 solid #000;
     font-size: 2em;
@@ -256,7 +256,7 @@ span.notif {
 
 #refreshButton {
   white-space: nowrap;
-  background-color: #6b9;
+  background-color: var(--main-green);
   color: white;
   padding: 10px 10px;
   border-radius: 20px;

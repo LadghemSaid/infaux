@@ -20,21 +20,23 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class)
+            ->add('email', EmailType::class,array(
+                'invalid_message' => 'Le mail renseigné n\'est pas valide',
+            ))
             ->add('username', TextType::class)
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
-                'invalid_message' => 'Your password does not match the confirmation.',
+                'invalid_message' => 'Votre mot de passe doit etre identique sur les deux champs',
                 'first_options' => array('label' => 'Password'),
                 'second_options' => array('label' => 'Repeat Password'),
 
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'Merci de renseigner un mot de passe',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'minMessage' => 'Votre mot de passe doit faire au moins {{ limit }} caractères. ',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
@@ -42,9 +44,10 @@ class RegistrationFormType extends AbstractType
             ))
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
+                'label' => "Accepter nos conditions d'utilisation",
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                        'message' => 'Veuillez acceptez nos conditions d\'utilisation',
                     ]),
                 ],
             ]);

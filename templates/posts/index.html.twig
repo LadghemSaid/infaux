@@ -63,10 +63,10 @@
                       class="postForm" id="postForm">
                         <div class="div_img">
                             <div class="img"
-                                    {% if app.user.image  is defined %}
+                                    {% if app.user.image != "false" %}
                                 style="background:url('{{ vich_uploader_asset(app.user, 'imageFile') }}')">
                                 {% else %}
-                                    style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}')">
+                                    style="background:url('{{ ("https://api.adorable.io/avatars/60/" ~ app.user.username) }}')">
                                 {% endif %}
                             </div>
                         </div>

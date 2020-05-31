@@ -47,7 +47,13 @@ gtag('config', 'UA-107718823-2');
                 <div class="upload-picture-background mt-40 mt-40Mobile mb-40 mb-40Mobile">
 
 					<div class="upload-picture">
-						<img src="{{ asset(app.user.image) }}" alt="">
+						{% if app.user.image != "false"  %}
+							<img src="/uploads/images/users/{{ app.user.image }}"/>
+
+						{% else %}
+							<img src="https://api.adorable.io/avatars/60/{{app.user.username }}"/>
+
+						{% endif %}
 
 						<div class="upload">
 

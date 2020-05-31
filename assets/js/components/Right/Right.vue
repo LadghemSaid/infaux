@@ -64,9 +64,9 @@
                         var d = new Date();
                         d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
                         var expires = "expires=" + d.toUTCString();
-                        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/chat";
+                        document.cookie = cname + "=" + cvalue + ";" + expires + "; path=/";
                     }
-                    document.cookie = "lastConversationId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/chat;";
+                    document.cookie = "lastConversationId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
                     setCookie('lastConversationId',  this.$route.params.id, 365)
 
                     this.scrollDown();

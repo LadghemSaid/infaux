@@ -39,7 +39,7 @@ class CommentsController extends AbstractController
      */
     private $postRepository;
 
-    public function __construct(EntityManagerInterface $em, NotificationService $notificationService,CommentRepository $commentRepository,PostRepository $postRepository)
+    public function __construct(EntityManagerInterface $em, NotificationService $notificationService, CommentRepository $commentRepository, PostRepository $postRepository)
     {
         $this->em = $em;
 
@@ -55,13 +55,35 @@ class CommentsController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function add(Request $req, $id, PostRepository $postRepo, Security $security)
+    public function add(Request $req, $id, PostRepository $postRepo, Security $security, CommentRepository $commentRepository)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
 
+        $lastCommentUser = $commentRepository->findOneBy(['user' => $user], ['created_at' => 'DESC']);
+        if ($lastCommentUser) {
+            $now = new \DateTime();
+
+            $last = $lastCommentUser->getCreatedAt();
+            $dif = $last->diff($now);
+            $hourElapsed = $dif->format('%H');
+            $minuteElapsed = $dif->format('%i');
+            $secondElapsed = $dif->format('%s');
+            $difFormated = $hourElapsed . $minuteElapsed . $secondElapsed;
+            //Un commentaire toutes les 10 secondes
+            if ($difFormated < "000010") {
+                return new Response("spam");
+            }
+        }
+        $textComment = $req->request->get('textComment');
+
+        if (strlen($textComment) < 1) {
+            return new Response("lengthTooShort");
+        } elseif (strlen($textComment) > 500) {
+            return new Response("lengthTooLong");
+        }
 
         $comment = new Comment();
-        $user = $this->getUser();
 
         $post = $postRepo->find($id);
         $comment->setPost($post)
@@ -69,10 +91,10 @@ class CommentsController extends AbstractController
             ->setApproved(true)
             ->setUser($user)
             ->setIsReply(false)
-            ->setTextComment($req->request->get('textComment'));
+            ->setTextComment($textComment);
 
-        if($req->request->get('replyId') !== ""){
-            $replyingComment = $this->commentRepository->findBy(['id'=>$req->request->get('replyId')]);
+        if ($req->request->get('replyId') !== "") {
+            $replyingComment = $this->commentRepository->findBy(['id' => $req->request->get('replyId')]);
             $comment->addReplyComment($replyingComment[0]);
             $comment->setIsReply(true);
         }
@@ -138,7 +160,6 @@ class CommentsController extends AbstractController
         }
         return new Response;
     }
-
 
 
 }

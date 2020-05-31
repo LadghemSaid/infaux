@@ -56,7 +56,12 @@ gtag('config', 'UA-107718823-2');
 				<h3>Compte</h3>
 				<div class="group">
 					<p class="item">Avatar</p>
-					<div class="img" style="background:url('{{ vich_uploader_asset(user, 'imageFile') }}')"></div>
+					{% if user.image  != "false" %}
+						<div class="img" style="background:url('{{ vich_uploader_asset(user, 'imageFile') }}')"></div>
+
+					{% else %}
+						<div class="img" style="background:url('{{("https://api.adorable.io/avatars/60/" ~ user.username)}}')"></div>
+					{% endif %}
 					<!-- Button  modifier la description -->
 					<button type="button" class="btn modifier" data-toggle="modal" data-target="#avatar">
 						Modifier
@@ -75,7 +80,13 @@ gtag('config', 'UA-107718823-2');
 								<div class="modal-body">
 									<div class="upload">
 										{{ form_start(formAvatar) }}
+										{% if user.image != "false" %}
 										<div class="img mt-30 mt-30Mobile" style="background:url('{{ vich_uploader_asset(user, 'imageFile') }}')"></div>
+										{% else %}
+											<div class="img mt-30 mt-30Mobile" style="background:url('{{ vich_uploader_asset(user, 'imageFile') }}')"></div>
+
+										{% endif %}
+
 
 										{{ form_row(formAvatar.imageFile,{'attr':{'class': ''},'label': false}) }}
 									</div>

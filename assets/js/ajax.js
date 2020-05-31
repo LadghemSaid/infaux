@@ -135,13 +135,14 @@ async function handleAddReport(event) {
 
 }
 
-function handleAddComment(event) {
+function handleAddComment(event,page) {
 
     event.preventDefault();
-    const textComment = $(event.target).serializeArray()[0].value;
-    const replyId = $(event.target).serializeArray()[1] ? $(event.target).serializeArray()[1].value : "";
+    let input = $(event.target)
+    const textComment = input.serializeArray()[0].value;
+    const replyId = input.serializeArray()[1] ? input.serializeArray()[1].value : "";
     const action = event.target.dataset.action;
-    let target = $(event.target).parent('.formComment').prev('.wrapper-comments');
+    let target = input.parent('.formComment').prev('.wrapper-comments');
 
 
     $.ajax({
@@ -152,27 +153,82 @@ function handleAddComment(event) {
             replyId: replyId,
         },
         success: function (data, dataType) {
-            //console.log(data);
-            target.html(data);
-            hideModal();
 
-            $(function () {
-                moment.locale('fr');
-                $(target).find(".p-date").map((x, i) => {
-                    i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
-                });
-            });
-            Toastify({
-                text: "Commentaire ajouté",
-                duration: 3000,
-                close: true,
-                gravity: "top", // `top` or `bottom`
-                position: 'left', // `left`, `center` or `right`
-                stopOnFocus: true, // Prevents dismissing of toast on hover
-                className: "info",
-                onClick: function () {
-                } // Callback after click
-            }).showToast();
+            switch (data) {
+                case "spam":
+                    Toastify({
+                        text: "Tu dois attendre 10 secondes entre chaque commentaire !",
+                        duration: 3000,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: 'left', // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        className: "info",
+                        onClick: function () {
+                        } // Callback after click
+                    }).showToast();
+                    break;
+                case "lengthTooShort":
+                    //Cas d'une erreur
+                    Toastify({
+                        text: "Ton commentaire est trop court",
+                        duration: 3000,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: 'left', // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        className: "info",
+                        onClick: function () {
+                        } // Callback after click
+                    }).showToast();
+
+                    break;
+                case "lengthTooLong":
+                    //Cas d'une erreur
+                    Toastify({
+                        text: "Ton commentaire est trop long",
+                        duration: 3000,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: 'left', // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        className: "info",
+                        onClick: function () {
+                        } // Callback after click
+                    }).showToast();
+                    break;
+                default:
+                    if(page){
+                        target.append(data);
+
+                    }else{
+                        target.html(data);
+
+                    }
+                    input[0][0].value = ""
+                    hideModal();
+                    $(function () {
+                        moment.locale('fr');
+                        $(target).find(".p-date").map((x, i) => {
+                            i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
+                        });
+                    });
+                    Toastify({
+                        text: "Commentaire ajouté",
+                        duration: 3000,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: 'left', // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        className: "info",
+                        onClick: function () {
+                        } // Callback after click
+                    }).showToast();
+                    break;
+            }
+
+
+
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
 
@@ -192,7 +248,7 @@ function handleAddComment(event) {
 
 }
 
-function replyComment(event) {
+function replyComment(event,page) {
 
     event.preventDefault();
     const commentId = event.target.dataset.comment;

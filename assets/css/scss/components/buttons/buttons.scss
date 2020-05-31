@@ -20,7 +20,7 @@ $radiusBtn: 22px;
 
 
 .btn-green:hover {
-  background-color: $green !important;
+  background-color: var(--main-green) !important;
   border: none;
   border-radius: $radiusBtn;
   color: $black;
@@ -38,8 +38,8 @@ $radiusBtn: 22px;
 }
 
 .btn-border-green:hover {
-  background-color: $green !important;
-  border: $green solid 1px;
+  background-color:var(--main-green) !important;
+  border: var(--main-green) solid 1px;
   border-radius: $radiusBtn;
   color: $black;
   font-size: 15px;
@@ -48,7 +48,7 @@ $radiusBtn: 22px;
 
 .btn-border-green {
   background-color: transparent !important;
-  border: $green solid 1px;
+  border: var(--main-green) solid 1px;
   border-radius: $radiusBtn;
   color: black;
   font-size: 15px;

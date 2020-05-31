@@ -39,3 +39,18 @@ bin/console security:encode-password 'mdptest'
  
  Conf actuelle
  /var/www/mercure_lin/mercure --jwt-key='mdptest' --addr=':3000' --debug  --cors-allowed-origins='*'  acme_hosts='https://s-website.ga/.well-known/mercure/' use_forwarded_headers="true"  
+
+
+UPDATE wp_options
+SET option_value = replace(option_value, 'localhost/mwood', '/localhost/mwood')
+WHERE option_name = 'home'
+OR option_name = 'siteurl';
+
+UPDATE wp_posts
+SET guid = REPLACE (guid, 'localhost/mwood', '/localhost/mwood');
+
+UPDATE wp_posts
+SET post_content = REPLACE (post_content, 'localhost/mwood', '/localhost/mwood');
+
+UPDATE wp_postmeta
+SET meta_value = REPLACE (meta_value, 'localhost/mwood','/localhost/mwood');

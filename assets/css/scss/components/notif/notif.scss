@@ -7,7 +7,7 @@
         margin-bottom: 20px;
 
         i{
-            color: $green;
+            color: var(--main-green);
             margin-right: 10px;
         }
 
@@ -61,20 +61,20 @@
 
         .p-date {
             font-size: small;
-            color: #4646467e;
+            color:var(--main-medium-grey);
         }
 
         .option button {
-            color: #6b9;
+            color: var(--main-green);
             background-color: transparent;
             border: 0 solid #000;
             font-size: initial;
         }
 
         #delete-notif {
-            color: #464646;
+            color: $dark-grey;
             button.close {
-                color: #6b9;
+                color: var(--main-green);
                 background-color: transparent;
                 border: 0 solid #000;
                 font-size: 2em;

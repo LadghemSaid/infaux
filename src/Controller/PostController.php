@@ -169,22 +169,23 @@ class PostController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $user = $this->getUser();
+
         $lastPostUser = $postRepo->findOneBy(['user' => $user], ['createdAt' => 'DESC']);
         if ($lastPostUser) {
             $now = new \DateTime();
             if (intval($lastPostUser->getCreatedAt()->diff($now)->format('%I')) < 1) {
                 return new Response("spam");
-
             }
         }
-        $post = new Post();
         $textPost = $req->request->get('request');
+
         if (strlen($req->request->get('request')) < 10) {
             return new Response("lengthTooShort");
         } elseif (strlen($req->request->get('request')) > 500) {
             return new Response("lengthTooLong");
         }
 
+        $post = new Post();
 
         $post->setFavorite(false)
             ->setPublished(true)

@@ -161,6 +161,15 @@ class IndexController extends AbstractController
 
 
     /**
+     * @Route("/rgpd", name="rgpd")
+     */
+    public function showRgpd()
+    {
+        return $this->render('/seo/rgpd.html.twig', [
+        ]);
+    }
+
+    /**
      * @Route("/robots.txt")
      */
     public function showRobot()
@@ -168,7 +177,6 @@ class IndexController extends AbstractController
         return $this->render('/seo/robots.txt.twig', [
         ]);
     }
-
 
     /**
      * @Route("/sitemaps.xml", name="sitemap")
