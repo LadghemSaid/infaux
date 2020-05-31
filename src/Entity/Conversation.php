@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping\Index;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ConversationRepository")
- * @ORM\Table(indexes={@Index(name="last_message_id_index", columns={"last_message_id"})})
  */
 class Conversation
 {

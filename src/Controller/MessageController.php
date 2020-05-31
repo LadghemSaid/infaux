@@ -121,7 +121,7 @@ class MessageController extends AbstractController
         $message->setUser($user);
 
         $conversation->addMessage($message);
-        $conversation->setLastMessage($message);
+        $conversation->setLastMessage(true);
 
         $this->entityManager->getConnection()->beginTransaction();
         try {
