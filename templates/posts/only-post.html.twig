@@ -1,4 +1,4 @@
-<div class="post-container" data-id="{{ post.id }}">
+<div class="post-container {% if expanded is defined %} post-container-onlyOne {% endif %} " data-id="{{ post.id }}">
     <div class="content">
         <div class="header">
             <div class="top">
@@ -220,6 +220,10 @@
 
                 {% endif %}
 
+                     <a data-toggle="modal" data-target="#modalShare" href="#">
+                        <div>Partager</div>
+                    </a>
+
             </div>
             {% if expanded is defined %}
                 <div class="action_onlypost">
@@ -280,9 +284,7 @@
                         <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
                     {% endblock %}
 
-                    <a data-toggle="modal" data-target="#modalShare" href="#">
-                        <div>Partager</div>
-                    </a>
+                    
 
                 </div>
 
