@@ -57,7 +57,11 @@ gtag('config', 'UA-107718823-2');
 			<div class="single-compte d-flex align-items-center mt-10 mb-10 mt-10Mobile mb-10Mobile">
 				<div class="compte-picture">
 
-					<img src="{{ vich_uploader_asset(friend, 'imageFile') }}" alt="user">
+					{% if friend.image != "false" %}
+						<img src="{{ vich_uploader_asset(friend, 'imageFile') }}" alt="user">
+					{% else %}
+						<img src='{{ ("https://api.adorable.io/avatars/60/" ~ friend.username) }}' alt="user"/>
+					{% endif %}
 				</div>
 				<p class="mb-0">{{ friend.username }}</p>
 			</div>

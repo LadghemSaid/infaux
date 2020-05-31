@@ -393,9 +393,12 @@
 
 
   .comments-container {
-    .reply {
-      margin-left: 60px;
-
+    position: relative;
+    .show-more-comment-button{
+      position: absolute;
+      right: 70px;
+      z-index: 1;
+      transform: translateY(-45px);
     }
     &.visible{
       .content .header .l-post.right {

@@ -10,6 +10,10 @@
 
   .modal .modal-content {
     background-color: #363636;
+    h3{
+      color: var(--main-light-grey);
+    }
+
   }
 
   #collapse-menu {
@@ -56,12 +60,13 @@
   .follow {
     a, p, h1 {
       color: var(--main-light-grey);
-
     }
 
     .users .single-compte {
       background-color: var(--main-grey);
-
+      &:hover{
+        background-color: #323232;
+      }
     }
   }
 
@@ -119,6 +124,12 @@
       }
     }
 
+  }
+  .cgu{
+    h1,p,b{
+      color: var(--main-light-grey);
+
+    }
   }
 }
 

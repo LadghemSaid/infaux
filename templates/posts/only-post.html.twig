@@ -126,7 +126,7 @@
                                                     </div>
                                                 </div>
 
-                                                {% if  app.user == post.user %}
+                                                {% if  app.user == post.user or is_granted('ROLE_ADMIN') %}
                                                     <div class="icons">
                                                         <div onclick="handleDeletePost(event)"
                                                              data-action="{{ path('post.delete',{'post': post.id} ) }}"
@@ -137,6 +137,19 @@
                                                         </div>
                                                     </div>
                                                 {% endif %}
+
+                                                {% if is_granted('ROLE_ADMIN') %}
+                                                    <div class="icons">
+                                                        <div onclick="handleDesactivatePost(event)"
+                                                             data-action="{{ path('post.desactivate',{'post': post.id} ) }}"
+                                                             class="deleteForm">
+
+                                                            <i class="icon-trash"></i><span
+                                                                    class="number ">Désactiver</span>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+
                                             {% endif %}
                                             <div class="icons">
                                                 <div onclick="handleAddReport(event)"
@@ -338,7 +351,7 @@
     <div class="wrapper-comments">
         {% if comments is defined %}
             {% if comments is empty and onlyOneComment is not defined %}
-                <p>Aucun commentaire, sois le premier !</p>
+                <p class="mt-20 mb-50">Aucun commentaire, sois le premier !</p>
             {% endif %}
 
             {% for comment in comments %}
@@ -349,7 +362,7 @@
         {% if onlyOneComment is defined %}
 
             {% if onlyOneComment is empty %}
-                <p>Aucun commentaire, sois le premier !</p>
+                <p  class="mt-20 mb-50">Aucun commentaire, sois le premier !</p>
             {% else %}
                 {% include('/comment/only-comment.html.twig') with {'comment' : onlyOneComment,'onlyOneComment':true} %}
             {% endif %}
