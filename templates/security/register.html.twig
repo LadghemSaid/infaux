@@ -50,7 +50,7 @@
 
 
                 <span class="login-form-title pb-50">
-							<img src="{{ asset("img/logo_infaux.png") }}" alt="Infaux logo"/></a>
+							<img src="{{ asset("img/logo_infaux.png") }}" alt="Infaux logo"/>
 						</span>
 
                 {# For convenience sake of this snippet, store the errors in a variable #}
@@ -124,7 +124,8 @@
                 </div>
 				
 				<div class="validate-input">
-                	{{ form_widget(registrationForm.agreeTerms) }}
+                        {{ form_widget(registrationForm.agreeTerms) }}
+
 				</div>
 
                 <div class="container-login-form-btn">
@@ -141,13 +142,18 @@
 
                 <div class="text-center pt-40 pt-40Mobile">
 							<span class="txt1">
-								Vous avez déjà un compte ?
+								Tu as déjà un compte ?
 							</span>
+
 
                     <a class="txt2" href="{{ path('app_login') }}">
                         Connexion
                     </a>
+                    <a class="d-block" href="{{ path('rgpd') }}">
+                        CGU
+                    </a>
                 </div>
+
             </div>
         </div>
     </div>

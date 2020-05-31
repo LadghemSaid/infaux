@@ -3,7 +3,8 @@
 {% block title %}
     Infaux
 {% endblock %}
-{% block gtag %}
+
+{% block meta %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -19,17 +20,20 @@
 
         gtag('config', 'UA-107718823-2');
     </script>
-{% endblock %}
-{% block meta_description %}
+
     <meta name="description"
-          content="Agence web à Lens. Conception et développement de sites sur mesure. Communication digitale, référencement SEO Google."/>{% endblock %}
-{% block meta_keywords %}
+          content="Agence web à Lens. Conception et développement de sites sur mesure. Communication digitale, référencement SEO Google."/>
+
     <meta name="keywords"
-          content="Agence web de communication web marketing, stratégie digitale à Lens, France, creation site internet, agence de développement web, Création site internet, Lens, Lille, France, creation site internet, 59, 62, Nord Pas de Calais, Nord, Haut de France, création site internet vitrine, community management entreprise, community management personnel, création boutique en ligne, site internet, site web, création site internet boutique en ligne, Création site web, 75, Paris, Création site web e commerce, agence de référencement, agence seo, seo, référencement naturel, web marketing, agence web, agence de communication, vidéo promotionnelle, vidéo commercial, création site catalogue, création site internet responsive, généré du trafic sur mon site internet, première page google, référencement google, création de site internet france, conseil et webdesign, référencement internet, agence web, site internet responsive, site responsive, création et optimisation de site web, web design et développement de site internet, communication digitale, webmarketing, création site internet boutique en ligne, boutique en ligne, créer boutique en ligne, refonte boutique en ligne, refonte site internet e-commerce, responsive web design, refonte site internet responsive, site adaptable, site internet, site web, création site internet, création site web, responsive, création site internet e-commerce"/>{% endblock %}
-{% block meta_robots %}
-    <meta name="robots" content="unavailable_after: [date ]">{% endblock %}
-{% block google %}
-    <meta name="google" content="unavailable_after: [date ]">{% endblock %}
+          content="Agence web de communication web marketing, stratégie digitale à Lens, France, creation site internet, agence de développement web, Création site internet, Lens, Lille, France, creation site internet, 59, 62, Nord Pas de Calais, Nord, Haut de France, création site internet vitrine, community management entreprise, community management personnel, création boutique en ligne, site internet, site web, création site internet boutique en ligne, Création site web, 75, Paris, Création site web e commerce, agence de référencement, agence seo, seo, référencement naturel, web marketing, agence web, agence de communication, vidéo promotionnelle, vidéo commercial, création site catalogue, création site internet responsive, généré du trafic sur mon site internet, première page google, référencement google, création de site internet france, conseil et webdesign, référencement internet, agence web, site internet responsive, site responsive, création et optimisation de site web, web design et développement de site internet, communication digitale, webmarketing, création site internet boutique en ligne, boutique en ligne, créer boutique en ligne, refonte boutique en ligne, refonte site internet e-commerce, responsive web design, refonte site internet responsive, site adaptable, site internet, site web, création site internet, création site web, responsive, création site internet e-commerce"/>
+
+    <meta name="robots" content="unavailable_after: [date ]">
+
+    <meta name="google" content="unavailable_after: [date ]">
+
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v7.0"></script>
+{% endblock %}
 
 {% block style_custom %}
 
@@ -59,10 +63,10 @@
                       class="postForm" id="postForm">
                         <div class="div_img">
                             <div class="img"
-                                    {% if app.user.image  is defined %}
+                                    {% if app.user.image != "false" %}
                                 style="background:url('{{ vich_uploader_asset(app.user, 'imageFile') }}')">
                                 {% else %}
-                                    style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}')">
+                                    style="background:url('{{ ("https://api.adorable.io/avatars/60/" ~ app.user.username) }}')">
                                 {% endif %}
                             </div>
                         </div>
@@ -71,8 +75,8 @@
                             <textarea
                                     id="post_text" name="post[text]" required="required"
                                     class="postForm__textarea form-control input-lg txta txtstuff"
-                                    placeholder="Poster un nouveau post" onfocus="affiche()"
-                                    onblur="afficheplus()"></textarea></div>
+                                    placeholder="Nouveau post" onfocus="affiche()"
+                                    onblur="afficheplus()" minlength="10" maxlength="500"></textarea></div>
                     </div>
                     <div class="d-flex justify-content-end btn-submit">
                         <div class="form-group">
@@ -104,7 +108,7 @@
 
     </div>
 
-    <div class="page-load-status">
+    <div class="page-load-status" >
         <div class="infinite-scroll-request">
             <div class="loader-ellips">Chargement
                 <span class="loader-ellips__dot"></span>
@@ -113,8 +117,8 @@
                 <span class="loader-ellips__dot"></span>
             </div>
         </div>
-        <p class="infinite-scroll-last">Plus aucun post a afficher</p>
-        <p class="infinite-scroll-error">No more pages to load</p>
+        <p class="infinite-scroll-last">Plus aucun post à afficher</p>
+        <p class="infinite-scroll-error">Erreur</p>
     </div>
 {% endblock %}
 
@@ -136,8 +140,7 @@
 
           function afficheplus() {
               const str = document.getElementById('post_text').value;
-              console.log(str.length);
-              if (str.length == 0) {
+              if (str.length === 0) {
                   document.getElementById('post_submit').style.opacity = 0;
                   document.getElementById('post_submit').disabled = "true";
                     $('#postForm').removeClass('selected');
@@ -147,26 +150,72 @@
 
 
           document.addEventListener("DOMContentLoaded", function (event) {
+              //Apparition du bouton rafraichir si le scroll dépasse 300
+              var prevScrollpos = window.pageYOffset;
+              var showButton;
+              var timer_is_on = 0;
+
+              function stopCount() {
+                  clearTimeout(showButton);
+                  timer_is_on = 0;
+              }
+              function timedCount() {
+                  showButton = setTimeout(function () {
+                      document.getElementById("refreshButton").classList.add(('visible'))
+                  }, 2000)
+              }
+              function startCount() {
+                  if (!timer_is_on) {
+                      timer_is_on = 1;
+                      timedCount();
+                  }
+              }
+              window.onscroll = function () {
+                  var currentScrollPos = window.pageYOffset;
+                  if (prevScrollpos > currentScrollPos) {
+                      prevScrollpos = currentScrollPos
+                      startCount()
+                  } else {
+                      stopCount()
+                      document.getElementById("refreshButton").classList.remove(('visible'))
+                      prevScrollpos = currentScrollPos
+                  }
+              }
 
 
               //Post infinite scroll
-              var infiniteScroll = $('.infinite-scroll-wrapper .container ').infiniteScroll({
-                  // options
-                  path: '.next a',
-                  append: '.post-container',
-                  prefill: true,
-                  history: false,
-                  elementScroll: false,
-                  hideNav: '.pagination',
-                  status: '.page-load-status'
-              });
-              infiniteScroll.on('append.infiniteScroll', function () {
-                  $(function () {
-                      $(".p-date").map((x, i) => {
-                          i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
+              if ($('.post-container').length > 2) {
+                  var infiniteScroll = $('.infinite-scroll-wrapper .container ').infiniteScroll({
+                      // options
+                      path: '.next a',
+                      append: '.post-container',
+                      prefill: true,
+                      history: false,
+                      elementScroll: false,
+                      hideNav: '.pagination',
+                      status: '.page-load-status'
+                  });
+                  infiniteScroll.on('append.infiniteScroll', function () {
+                      $(function () {
+
+                          //Long press sur les posts
+                          //window.addEventListener("pointerdown", detectInputType, false);
+
+                          $(".comments-container .content").bind( "taphold", tapholdHandler );
+                          $(".post-container .content").bind( "taphold", tapholdHandler );
+
+                          //Affichage des date de creation en format momentJs
+                          $(".p-date").map((x, i) => {
+                              i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
+                          });
                       });
                   });
-              });
+
+              }else{
+                $('.infinite-scroll-request').hide()
+                $('.infinite-scroll-error').hide()
+
+              }
 
 
           });

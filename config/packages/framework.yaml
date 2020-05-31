@@ -1,4 +1,5 @@
 framework:
+    disallow_search_engine_index: false
     translator:
       fallbacks: ["fr"]
     secret: '%env(APP_SECRET)%'

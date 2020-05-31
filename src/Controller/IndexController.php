@@ -8,8 +8,10 @@ use App\Form\ContactType;
 use App\Form\PostType;
 use App\Mercure\CookieGenerator;
 use App\Repository\CommentRepository;
+use App\Repository\ConversationRepository;
 use App\Repository\PostRepository;
 use App\Repository\MaillingListRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -102,11 +104,20 @@ class IndexController extends AbstractController
      *
      * @Route("/chat", name="index.chat")
      */
-    public function indexChat()
+    public function indexChat(ConversationRepository $conversationRepository,UserRepository $userRepository)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
-        $notifs = $this->getUser()->getNotificationsMessagerie();
+        $user=$this->getUser();
+        $allConversation=$conversationRepository->findConversationsByUser($user->getId());
+        $allConversationUserAvatar=[];
+        foreach ($allConversation as $item)
+        {
+            array_push($allConversationUserAvatar,[
+                'username' => $item['username'],
+                'image' => $userRepository->findBy(['username'=>$item['username']])[0]->getImage(),
+            ]);
+        }
+        $notifs =$user->getNotificationsMessagerie();
 
         $notifsSeen = [];
         $notifsNotSeen = [];
@@ -124,6 +135,7 @@ class IndexController extends AbstractController
         $this->em->flush();
         return $this->render('chat/index/index.html.twig', [
             'current_menu' => 'chat',
+            'avatar'=>json_encode($allConversationUserAvatar),
 
         ]);
     }
@@ -149,6 +161,15 @@ class IndexController extends AbstractController
 
 
     /**
+     * @Route("/rgpd", name="rgpd")
+     */
+    public function showRgpd()
+    {
+        return $this->render('/seo/rgpd.html.twig', [
+        ]);
+    }
+
+    /**
      * @Route("/robots.txt")
      */
     public function showRobot()
@@ -156,7 +177,6 @@ class IndexController extends AbstractController
         return $this->render('/seo/robots.txt.twig', [
         ]);
     }
-
 
     /**
      * @Route("/sitemaps.xml", name="sitemap")

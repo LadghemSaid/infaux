@@ -5,13 +5,8 @@
     <title>{% block title %}Infaux{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="turbolinks-cache-control" content="no-cache">
-    {% block meta_description %}{% endblock %}
-    {% block meta_keywords %}{% endblock %}
-    {% block meta_robots %}{% endblock %}
-    {% block meta_google %}{% endblock %}
     <link type="text/plain" rel="author" href="/humans.txt"/>
     <link rel="manifest" href="/manifest.json">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
 
     <link rel="icon" type="image/png" href="/img/favicon.png"/>
@@ -24,6 +19,8 @@
 
     <link rel="stylesheet" href="{{ asset('/font/icomoon/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
     <script type="text/javascript"
             src="{{ preload(asset('js/tarteaucitron/tarteaucitron.js'), { as: 'script', importance: 'low' }) }}"></script>
 
@@ -59,7 +56,7 @@
 
 
     </script>
-    {% block gtag %}{% endblock %}
+    {% block meta %}{% endblock %}
 
     {% block stylesheets %}
 
@@ -71,7 +68,7 @@
 
 <body>
 
-    {% include "header.html.twig" %}
+{% include "header.html.twig" %}
 
 <div class="infinite-scroll-wrapper">
     {% block body %}
@@ -79,22 +76,65 @@
 </div>
 
 
+<a aria-label="Button permettant de charger plus de posts" onclick="window.location.reload()" id="refreshButton">Charger
+    plus de posts</a>
+<script async>
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
 
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";" + "path=/";
+    }
 
-{# <a aria-label="Button permettant de retourner en haut de la page" id="scrollToTop">Up !</a> #}
+    //Verifie le cookie du theme
+    if (getCookie("theme") === "dark") {
+        document.body.classList.add("dark-mode");
+        document.getElementById('customSwitch1').checked = true;
+    }
 
+</script>
 <script src="{{ preload('https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js', { as: 'script' }) }}"></script>
+<script src="//code.jquery.com/mobile/1.5.0-alpha.1/jquery.mobile-1.5.0-alpha.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
 ></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
 ></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"
 ></script>
+<script src="https://cdn.jsdelivr.net/npm/toastify-js@1.2.2/src/toastify.js"></script>
 
 
 <script>
 
-    function hideModal(){
+
+    function handleTheme(event) {
+        if (document.body.classList.contains("dark-mode")) {
+            document.cookie = "theme=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+            setCookie('theme', "light", 365)
+        } else {
+            document.cookie = "theme=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+            setCookie('theme', "dark", 365)
+        }
+        document.body.classList.toggle("dark-mode");
+    }
+
+    function hideModal() {
         $(".modal").removeClass("in");
         $(".modal-backdrop").remove();
         $('body').removeClass('modal-open');
@@ -103,11 +143,75 @@
     }
 
 
+    $.mobile.defaultPageTransition = "none";
+    $.mobile.defaultDialogTransition = "none";
+    $.mobile.page.prototype.options.domCache = false;
+    $.mobile.autoInitializePage = false
+    $.mobile.linkBindingEnabled = false
+    $.mobile.pushStateEnabled = false
+    $.mobile.ajaxEnabled = false
+    $.mobile.ajaxLinksEnabled = false
+    $.mobile.touchOverflowEnabled = true;
+
+    function tapholdHandler(event) {
+        event.stopPropagation();
+        //console.log($($(event.currentTarget).find('.modal')[1]))
+        $($(event.currentTarget).find('.modal')[1]).modal('show')
+    }
+
     document.addEventListener("DOMContentLoaded", function (event) {
 
 
-        $(function () {
+        //Ajoute les listerner pour le longpress
+        $(".comments-container .content").bind("taphold", tapholdHandler);
+        $(".post-container .content").bind("taphold", tapholdHandler);
 
+
+        //Header hidden au scroll bas
+        var didScroll;
+        var lastScrollTop = 0;
+        var delta = 5;
+        var navbarHeight = $('.logo-header').outerHeight();
+
+        $(window).scroll(function (event) {
+            didScroll = true;
+        });
+
+        setInterval(function () {
+            if (didScroll) {
+                hasScrolled();
+                didScroll = false;
+            }
+        }, 250);
+
+        function hasScrolled() {
+            var st = $(this).scrollTop();
+
+            // Make sure they scroll more than delta
+            if (Math.abs(lastScrollTop - st) <= delta)
+                return;
+
+            // If they scrolled down and are past the navbar, add class .nav-up.
+            // This is necessary so you never see what is "behind" the navbar.
+            if (st > lastScrollTop && st > navbarHeight) {
+                // Scroll Down
+                $('.logo-header').removeClass('nav-down').addClass('nav-up');
+            } else {
+                // Scroll Up
+                if (st + $(window).height() < $(document).height()) {
+                    $('.logo-header').removeClass('nav-up').addClass('nav-down');
+                }
+            }
+
+            lastScrollTop = st;
+        }
+
+
+        //window.addEventListener("pointerdown", detectInputType, false);
+
+
+        $(function () {
+            //Converstion des date en affiche moment js
             moment.locale('fr');
             $(".p-date").map((x, i) => {
                 i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
@@ -116,29 +220,108 @@
     });
 
 
-    var btn = $('#scrollToTop');
-
-    btn.on('click', function (e) {
-        e.preventDefault();
-        $('html, body').animate({scrollTop: 0}, '300');
-    });
-
 </script>
-
 
 
 {% if app.user %}
     {{ encore_entry_script_tags('eventSource') }}
 
     <script>
+        //fonction d'affichage du bouton submit (form comment)
+        function affiche_comment(event) {
+            console.log($($(event.target).parents("form")[0]).find('button')[0])
+            event.target.focus()
+            //$($(event.target).parents("form")[0]).find('button')[0].disabled="";
+            $($(event.target).parents("form")[0]).find('button')[0].style.opacity = 1;
+            //$('#postForm').addClass('selected');
+        }
 
+        function afficheplus_comment(event) {
+            console.log(event.target)
+            const str = event.target.value;
+            if (str.length == 0) {
+                $($(event.target).parents("form")[0]).find('button')[0].style.opacity = 0;
+                //  $($(event.target).parents("form")[0]).find('button')[0].disabled = "true";
+                //   $('#postForm').removeClass('selected');
+
+            }
+
+
+        }
 
         navigator.serviceWorker.register('/sw.js', {scope: '/'}).then(function (registration) {
-            console.log("sw registred :", registration);
         }).catch(registrationError => {
             console.log("registration sw error:", registrationError)
         });
 
+        function notify(message, registration) {
+
+            if (message === "Message reçu") {
+                //Cas d'un message de la messagerie
+                if (window.location.pathname === "/chat") {
+
+                } else {
+
+                    if ($('#notif-messagerie').length > 0) {
+                        $('#notif-messagerie')[0].innerText++;
+                    } else {
+                        $('.chat-i').html("<a href='{{ path('index.chat') }}'><i class='icon-bubbles3'></i><span id='notif-messagerie' class='number_notif notif'>1</span></a>")
+                    }
+
+                    Toastify({
+                        text: "Message recu !",
+                        duration: 3000,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: 'left', // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        className: "success",
+                        destination: "/chat",
+                        onClick: function () {
+                        } // Callback after click
+                    }).showToast();
+
+                    registration.showNotification('Tu as reçu une notifications !', {
+                        body: message,
+                        icon: '/img/logo_infaux.png',
+                        badge: '/img/logo_infaux.png',
+                        data: {
+                            url: "/chat"
+                        },
+                        silent: true,
+
+                    });
+
+                }
+
+
+            } else {
+                if ($('#notif').length > 0) {
+                    $('#notif')[0].innerText++;
+                } else {
+                    $('.header-notfication-bell').html("<i class='icon-bell'></i><span id='notif' class='number_notif notif'>1</span>")
+                }
+
+                Toastify({
+                    text: "Tu as reçu une notifications !",
+                    duration: 3000,
+                    close: true,
+                    gravity: "top", // `top` or `bottom`
+                    position: 'left', // `left`, `center` or `right`
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    className: "success",
+                    onClick: function () {
+                    } // Callback after click
+                }).showToast();
+
+                registration.showNotification('Tu as reçu une notifications !', {
+                    body: message,
+                    icon: '/img/logo_infaux.png',
+                });
+            }
+
+
+        }
 
         const url = new URL('{{ mercure_publish_url }}');
         url.searchParams.append('topic', '/message');
@@ -154,44 +337,11 @@
                 navigator.serviceWorker.ready.then(function (registration) {
 
                     eventSource.onmessage = (evt) => {
-                        const data = JSON.parse(evt.data);
+                        let data = JSON.parse(evt.data);
                         if (!data.message) {
                             return;
                         }
-                        console.log(data.message)
-                        if(data.message === "Message reçu"){
-                            if ($('#notif-messagerie').length > 0) {
-                                $('#notif-messagerie')[0].innerText++;
-                            } else {
-                                $('.chat-i').html("<a href='{{ path('index.chat') }}'><i class='icon-bubbles3'></i><span id='notif-messagerie' class='number_notif notif'>1</span></a>")
-                            }
-                        }else{
-                            if ($('#notif').length > 0) {
-                                $('#notif')[0].innerText++;
-                            } else {
-                                $('.header-notfication-bell').html("<i class='icon-bell'></i><span id='notif' class='number_notif notif'>1</span>")
-                            }
-                        }
-
-
-
-                        //  notifyMe(data.message);
-                        Toastify({
-                            text: "Tu as reçu une notifications !",
-                            duration: 3000,
-                            close: true,
-                            gravity: "top", // `top` or `bottom`
-                            position: 'left', // `left`, `center` or `right`
-                            stopOnFocus: true, // Prevents dismissing of toast on hover
-                            className: "success",
-                            onClick: function () {
-                            } // Callback after click
-                        }).showToast();
-
-                        registration.showNotification('Tu as reçu une notifications !', {
-                            body: data.message,
-                            icon: '/img/logo_infaux.png',
-                        });
+                        notify(data.message, registration)
 
                     };
                 })
@@ -206,8 +356,15 @@
 
 {% endif %}
 
+<script>
+
+
+</script>
 
 {% block javascripts %}
+
+
+
 
 {% endblock %}
 

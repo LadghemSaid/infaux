@@ -71,7 +71,7 @@ gtag('config', 'UA-107718823-2');
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel"></h5>
+							<h5 class="modal-title" ></h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
@@ -79,10 +79,10 @@ gtag('config', 'UA-107718823-2');
 						<div class="modal-body">
 							<div class="wrap">
 								<div class="img" 
-										{% if friend.image  is defined %}
+										{% if friend.image != "false" %}
 									 style="background:url('{{ vich_uploader_asset(friend, 'imageFile') }}')">
 									{% else %}
-										style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}')">
+										style="background:url('{{ ("https://api.adorable.io/avatars/60/" ~ friend.username) }}')">
 									{% endif %}
 								</div>
 							</div>

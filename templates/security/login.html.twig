@@ -50,7 +50,7 @@
 
 					{% if app.user %}
 						<div class="mb-3 pb-60">
-							Vous etes connecté en tant que :
+							Tu es connecté en tant que :
 							{{ app.user.username }},
 							<a href="{{ path('app_logout') }}">Déconnexion</a>
 						</div>
@@ -58,7 +58,7 @@
 
 						<form method="post" class="login-form validate-form">
 							<span class="login-form-title pb-50 pb-50Mobile">
-								<img src="{{ asset("img/logo_infaux.png") }}" alt="Infaux logo"/></a>
+								<img src="{{ asset("img/logo_infaux.png") }}" alt="Infaux logo"/>
 							</span>
 							{% if error %}
 								<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -89,7 +89,7 @@
 
 							<div class="text-center pt-110 pt-40Mobile">
 								<span class="txt1">
-									Vous n'avez pas de compte ?
+									Tu n'as pas de compte ?
 								</span>
 
 								<a class="txt2" href="{{ path('app_register') }}">

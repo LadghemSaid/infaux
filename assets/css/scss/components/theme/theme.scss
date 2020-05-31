@@ -1,0 +1,96 @@
+.dark-mode {
+  --main-light-grey: #C2C2C2;
+  --main-fade-white: #252525;
+  --main-grey: #080808;
+  --main-dark-grey: #d9d9d9;
+
+  .infinite-scroll-wrapper {
+    background-color: var(--main-fade-white);
+  }
+
+  .modal .modal-content {
+    background-color: #363636;
+  }
+
+  #collapse-menu {
+    p, span, a, label, button, h3 {
+      color: var(--main-light-grey);
+    }
+  }
+
+  .notif-blk {
+    h1, p {
+      color: var(--main-light-grey);
+
+    }
+  }
+
+  .epingle {
+    h1, span {
+      color: var(--main-light-grey);
+
+    }
+  }
+
+  .search {
+    color: var(--main-light-grey);
+
+    .compte .single-compte {
+      background-color: var(--main-grey);
+
+    }
+  }
+
+  .account {
+    a, p, span, button,span.number-posts {
+      color: var(--main-light-grey);
+
+    }
+
+  }
+  span.number-posts {
+    color: var(--main-light-grey) ;
+
+  }
+
+  .follow {
+    a, p, h1 {
+      color: var(--main-light-grey);
+
+    }
+
+    .users .single-compte {
+      background-color: var(--main-grey);
+
+    }
+  }
+
+  .reply {
+    .right {
+      background-color: #212121 !important;
+    }
+  }
+
+  .setting {
+    .mon-compte, .card.general {
+      background-color: var(--main-grey);
+
+      .group p.item {
+        color: var(--main-light-grey);
+      }
+    }
+
+    h3, h1 {
+      color: var(--main-light-grey);
+    }
+
+    .group p {
+      color: #656565;
+
+    }
+  }
+}
+
+* {
+  //transition: background-color 0.2s ease-in-out;
+}

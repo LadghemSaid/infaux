@@ -1,12 +1,12 @@
 <div class="formComment {% if expanded is defined %} formComment_onepost {% endif %} ">
     <div class="img"
-            {% if app.user.image  is defined %}
+            {% if app.user.image != "false" %}
          style="background:url('{{ vich_uploader_asset(app.user, 'imageFile') }}')">
         {% else %}
-            style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~ "@adorable.io.png") }}')">
+            style="background:url('{{ ("https://api.adorable.io/avatars/60/" ~ app.user.username) }}')">
         {% endif %}
     </div>
-    <form onsubmit="handleAddComment(event)" name="comment"
+    <form onsubmit="handleAddComment(event, {% if expanded is defined %} true {% else %} false {% endif %})" name="comment"
           data-action="{{ path('comment.add',{'id':post.id}) }}"
           class="commentForm">
         <div class="form-group">
@@ -14,14 +14,17 @@
             <input type="text" id="comment_textComment" name="comment[textComment]"
                    required="required"
                    class="commentForm__textarea form-control input-lg"
-                   placeholder="Votre commentaire ..."
-                   onclick="affiche_comment()"
-                   onblur="afficheplus_comment()">
+                   placeholder="Ton commentaire ..."
+                   onclick="affiche_comment(event)"
+                   onblur="afficheplus_comment(event)"
+                   maxlength="500"
+                   minlength="1"
+            >
         </div>
         <div class="d-flex justify-content-start">
             <div class="form-group">
-                <button type="submit" id="comment_submit-post-{{ post.id }} comment_submit" name="comment[submit]"
-                        class="btn">Envoyer
+                <button type="submit" id="comment_submit-post-{{ post.id }}" name="comment[submit]"
+                        class="btn" style="opacity: 0;">Envoyer
                 </button>
             </div>
         </div>

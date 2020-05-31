@@ -9,15 +9,11 @@ function precache() {
     return caches.open(CACHE) // Open a cache it's just key-value map system
         .then(function(cache){
             cache.addAll([ // add all files and directoy you want to cache
-                './index.html',
                 './', // Alias for index.html,
-                './css/style.css'
-                // ...
-                // TODO add all file you want to CACHE HERE
             ]);
         })
 }
-
+/*
 self.addEventListener('fetch', function(evt) {
     //console.log('The service worker intercept the following network\'s request : ', evt.request.url);
 
@@ -29,6 +25,8 @@ self.addEventListener('fetch', function(evt) {
             })
     );
 })
+*/
+
 
 /**
  * Handle a request and try it if return error or delay it's too big return cache

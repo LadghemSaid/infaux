@@ -6,43 +6,43 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal"
                         data-target="#profil-comment-{{ comment.user.id ?? "999" }}">
                     <div class="user-picture">
-                    <div class="img"
-                            {% if comment.user.image  is defined %}
-                         style="background:url('{{ vich_uploader_asset(comment.user, 'imageFile') }}')">
-                        {% else %}
-                            style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}')">
-                        {% endif %}
-                    </div>
+                        <div class="img"
+                                {% if comment.user.image != "false" %}
+                             style="background:url('{{ vich_uploader_asset(comment.user, 'imageFile') }}')">
+                            {% else %}
+                                style="background:url('{{ ("https://api.adorable.io/avatars/60/" ~ comment.user.username) }}')">
+                            {% endif %}
+                        </div>
                     </div>
                 </button>
 
-                <div class="modal fade" id="profil-comment-{{ comment.user.id ?? "999" }}" tabindex="-1" role="dialog"
+                <div class="modal fade" id="profil-comment-{{ comment.user.id ?? "999" }}"
+                     tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                <h5 class="modal-title"></h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
                                 <div class="wrap">
-                                <div class="user-picture">
-                                    <div class="img"
-                                        {% if comment.user.image  is defined %}
-                                         style="background:url('{{ vich_uploader_asset(comment.user, 'imageFile') }}')">
-                                        {% else %}
-                                            style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}')">
-                                        {% endif %}
+                                    <div class="user-picture">
+                                        <div class="img"
+                                                {% if comment.user.image != "false"%}
+                                             style="background:url('{{ vich_uploader_asset(comment.user, 'imageFile') }}')">
+                                            {% else %}
+                                                style="background:url('{{ ("https://api.adorable.io/avatars/60/" ~ comment.user.username) }}')">
+                                            {% endif %}
+                                        </div>
                                     </div>
                                 </div>
-                                </div>
                                 <div class="username">{{ comment.user.username ?? "Anonyme" }}</div>
-                                <div class="description">{{ comment.user.description ?? " . . . " }}
-                                </div>
+                                <div class="description">{{ comment.user.description ?? " . . . " }}</div>
                                 {% if app.user %}
-                                    {% if  app.user == comment.user %}
+                                    {% if app.user == comment.user %}
                                         <div class="lien_profil"><a
                                                     href="{{ path('account.show',{'id': comment.user.id} ) }}">Voir mon
                                                 profil</a></div>
@@ -52,13 +52,14 @@
                                                 le
                                                 profil</a></div>
                                         <a data-userId="{{ comment.user.id ?? 999 }}"
-                                             onclick="handleAddUserFollow(event)"
-                                             data-action="{{ path('follow.add',{"id":comment.user.id ?? 999}) }}"
-                                             class="followUser">
+                                           onclick="handleAddUserFollow(event)"
+                                           data-action="{{ path('follow.add',{"id":comment.user.id ?? 999}) }}"
+                                           class="followUser">
                                             <span class="followStatus">Suivre</span>
 
                                         </a>
-                                        <a class="message" href="{{ path('conversations.newConversations',{'username':(comment.user.username) ?? 'anonyme' }) }}">
+                                        <a class="message"
+                                           href="{{ path('conversations.newConversations',{'username':(comment.user.username) ?? 'anonyme' }) }}">
                                             Envoyer un message privé
                                         </a>
                                     {% endif %}
@@ -86,12 +87,13 @@
                             <i class="icon-dots-horizontal-triple"></i>
                         </button>
 
-                        <div class="modal fade" id="commentaire-{{ comment.id }}" tabindex="-1" role="dialog"
+                        <div class="modal fade" id="commentaire-{{ comment.id }}" tabindex="-1"
+                             role="dialog"
                              aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                        <h5 class="modal-title"></h5>
                                         <button type="button" class="close" data-dismiss="modal"
                                                 aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
@@ -116,7 +118,8 @@
                                                          data-action="{{ path('comment.delete',{'comment': comment.id} ) }}"
                                                          class="deleteForm">
 
-                                                        <i class="icon-blocked"></i><span class="number ">Suprimer</span>
+                                                        <i class="icon-trash"></i><span
+                                                                class="number ">Suprimer</span>
                                                     </div>
                                                 </div>
                                             {% endif %}
@@ -126,13 +129,14 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
                 <p class="text">{{ comment.textComment }} </p>
                 <div class="icons">
                     <a onclick="handleAddLike(event)"
-                         data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
-                         class="likeForm">
+                       data-action="{{ path('like.add',{"entity":"comment",'id':comment.id}) }}"
+                       class="likeForm">
 
                         {% if app.user %}
 
@@ -164,23 +168,29 @@
 
                     </a>
 
-                    {% if isReply is defined or onlyOneComment == true %}
+                    {% if isReply is defined %}
+                        <button type="button" class="btn btn-repondre" onclick="replyCommentParent(event)">
+                            Répondre
+                        </button>
                     {% else %}
                         {% if app.user %}
-                    <button type="button" class="btn btn-repondre" data-toggle="modal" data-comment="{{ comment.id }}" onclick="replyComment(event)"
-                            data-target="#commentaire-reply-{{ comment.id }}">
-                        Répondre
-                    </button>
-                            {% endif %}
+                            <button type="button" class="btn btn-repondre" data-toggle="modal"
+                                    data-comment="{{ comment.id }}" onclick="replyComment(event)"
+                                    data-target="#commentaire-reply-{{ comment.id }}">
+                                Répondre
+                            </button>
+                        {% endif %}
                     {% endif %}
 
 
-                    <div class="modal fade modal-repondre" id="commentaire-reply-{{ comment.id }}" tabindex="-1" role="dialog"
+                    <div class="modal fade modal-repondre" id="commentaire-reply-{{ comment.id }}"
+                         tabindex="-1"
+                         role="dialog"
                          aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header d-flex align-items-center">
-                                    <h3 class="modal-title" id="exampleModalLabel">Votre réponse</h3>
+                                    <h3 class="modal-title" >Ta réponse</h3>
                                     <button type="button" class="close" data-dismiss="modal"
                                             aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
@@ -189,16 +199,17 @@
                                 <div class="modal-body">
 
 
-
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
+    {% if isReply is not  defined  and  comment.commentsReply | length > 0 %}
+        <a onclick="showMoreComment(event)" href="#">Voir {{ comment.commentsReply| length }} réponses</a>
+    {% endif %}
     <div class="reply">
         {% for commentReply in comment.commentsReply %}
             {% include('/comment/only-comment.html.twig') with {'comment' :commentReply,'isReply':true, 'onlyOneComment':false} %}

@@ -56,7 +56,12 @@ gtag('config', 'UA-107718823-2');
 				<h3>Compte</h3>
 				<div class="group">
 					<p class="item">Avatar</p>
-					<div class="img" style="background:url('{{ vich_uploader_asset(user, 'imageFile') }}')"></div>
+					{% if user.image  != "false" %}
+						<div class="img" style="background:url('{{ vich_uploader_asset(user, 'imageFile') }}')"></div>
+
+					{% else %}
+						<div class="img" style="background:url('{{("https://api.adorable.io/avatars/60/" ~ user.username)}}')"></div>
+					{% endif %}
 					<!-- Button  modifier la description -->
 					<button type="button" class="btn modifier" data-toggle="modal" data-target="#avatar">
 						Modifier
@@ -67,7 +72,7 @@ gtag('config', 'UA-107718823-2');
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header d-flex align-items-center">
-									<h3 class="modal-title" id="exampleModalLabel">Modifier mon avatar</h3>
+									<h3 class="modal-title" >Modifier mon avatar</h3>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
@@ -75,7 +80,13 @@ gtag('config', 'UA-107718823-2');
 								<div class="modal-body">
 									<div class="upload">
 										{{ form_start(formAvatar) }}
+										{% if user.image != "false" %}
 										<div class="img mt-30 mt-30Mobile" style="background:url('{{ vich_uploader_asset(user, 'imageFile') }}')"></div>
+										{% else %}
+											<div class="img mt-30 mt-30Mobile" style="background:url('{{ vich_uploader_asset(user, 'imageFile') }}')"></div>
+
+										{% endif %}
+
 
 										{{ form_row(formAvatar.imageFile,{'attr':{'class': ''},'label': false}) }}
 									</div>
@@ -101,7 +112,7 @@ gtag('config', 'UA-107718823-2');
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header d-flex align-items-center">
-									<h3 class="modal-title" id="exampleModalLabel">Modifier ma description</h3>
+									<h3 class="modal-title" >Modifier ma description</h3>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
@@ -136,7 +147,7 @@ gtag('config', 'UA-107718823-2');
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header d-flex align-items-center">
-									<h3 class="modal-title" id="exampleModalLabel">Mettre à jour mon adresse email</h3>
+									<h3 class="modal-title" >Mettre à jour mon adresse email</h3>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
@@ -168,7 +179,7 @@ gtag('config', 'UA-107718823-2');
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header d-flex align-items-center">
-									<h3 class="modal-title" id="exampleModalLabel">Modifier mon mot de passe</h3>
+									<h3 class="modal-title" >Modifier mon mot de passe</h3>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
@@ -199,7 +210,7 @@ gtag('config', 'UA-107718823-2');
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header d-flex align-items-center">
-								<h3 class="modal-title" id="exampleModalLabel">Désactivation de votre compte</h3>
+								<h3 class="modal-title" >Désactivation de ton compte</h3>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
@@ -223,7 +234,7 @@ gtag('config', 'UA-107718823-2');
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header d-flex align-items-center">
-								<h3 class="modal-title" id="exampleModalLabel">Voulez vous vraiment vous déconnecter ?</h3>
+								<h3 class="modal-title">Voulez vous vraiment vous déconnecter ?</h3>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
@@ -268,7 +279,7 @@ gtag('config', 'UA-107718823-2');
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header d-flex align-items-center">
-									<h3 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h3>
+									<h3 class="modal-title" >Modifications des informations du compte</h3>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
@@ -302,7 +313,7 @@ gtag('config', 'UA-107718823-2');
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header d-flex align-items-center">
-									<h3 class="modal-title" id="exampleModalLabel">Modifications des informations du compte</h3>
+									<h3 class="modal-title">Modifications des informations du compte</h3>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>

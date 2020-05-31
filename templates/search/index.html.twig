@@ -58,12 +58,12 @@
 
         <h3 class="title mt-40 mt-40Mobile mb-10 mb-10Mobile">Compte</h3>
         <div class="compte" id="compte-container">
-            Aucun resultat
+            Aucun résultat
         </div>
 
         <h3 class="title mt-40 mt-40Mobile mb-10 mb-10Mobile">Posts</h3>
         <div class="post" id="post-container">
-            Aucun resultat
+            Aucun résultat
         </div>
 
     </div>
@@ -93,27 +93,36 @@
                             //we need to check if the value is the same
                             if (value == $(that).val()) {
                                 var result = JSON.parse(msg);
-                                console.log(result.list.posts);
+                                //  console.log(result.list.posts);
                                 $.each(result, function (key, arr) {
-                                    if (arr.users.length >0 ) {
+                                    if (arr.users.length > 0) {
                                         usersSelector.find($('.single-compte').remove());
                                         usersSelector.html(arr.users);
-                                    }else{
-                                        usersSelector.text('Aucun resultat');
+                                    } else {
+                                        usersSelector.text('Aucun résultat');
                                     }
                                     if (arr.posts.length > 0) {
                                         postsSelector.find($('.post-container').remove());
-                                        postsSelector.html(arr.posts);
+                                        postsSelector.html('');
+                                        arr.posts.map((x, i) => {
+                                            changed = $(x).find('.text')[0].innerText.replace(value, '<span class="highlight ">' + value + '</span>')
+                                            console.log(changed)
+                                            return postsSelector.append(x.replace($(x).find('.text')[0].innerText, changed))
 
-                                    }else{
-                                        postsSelector.text('Aucun resultat');
+                                        })
+                                        //
+                                        console.log(value)
+
+
+                                    } else {
+                                        postsSelector.text('Aucun résultat');
 
                                     }
 
                                 });
                             }
                         },
-                        error:function(msg){
+                        error: function (msg) {
 
 
                         }

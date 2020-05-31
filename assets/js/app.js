@@ -32,6 +32,7 @@ if ($("#app").length) {
 
     store.commit("SET_MERCURETOKEN", document.querySelector('#app').dataset.token);
     store.commit("SET_USERNAME", document.querySelector('#app').dataset.username);
+    store.commit("SET_AVATARS",JSON.parse(document.querySelector('#app').dataset.avatars));
 
 
     new Vue({

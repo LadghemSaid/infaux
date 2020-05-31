@@ -9,7 +9,7 @@
 
     i {
       margin-right: 10px;
-      color: $green;
+      color: var(--main-green);
     }
   }
 
@@ -40,7 +40,7 @@
         right: 0;
         padding: 0;
         line-height: 1.5;
-        color: #464646;
+        color:$dark-grey;
     }
 
     .custom-file-label {
@@ -71,7 +71,7 @@
 
   .modifier{
     margin-bottom: 0px;
-    color: $green;
+    color: var(--main-green);
     border:none;
     font-size: $MmediumS;
     padding:10px;
@@ -90,7 +90,7 @@
   }
 
   button.close {
-    color: #6b9;
+    color: var(--main-green);
     background-color: transparent;
     border: 0 solid #000;
     font-size: 2em;
@@ -117,7 +117,7 @@
         border-top:none;
         border-right:none;
         border-left:none;
-        border-bottom: 2px $green solid;
+        border-bottom: 2px var(--main-green) solid;
         width: 100%;
         font-size: medium;
 
@@ -134,7 +134,7 @@
       button{
         margin-bottom: 0px;
         border-radius: $radiusLarge;
-        background-color: $green;
+        background-color: var(--main-green);
         border:none;
         font-size: $Msmall;
         padding:10px;
@@ -161,7 +161,7 @@
   }
 
   .mon-compte {
-    background-color: rgba($color: #E6E6E6, $alpha: 1.0);
+    background-color: rgba($color: $grey, $alpha: 1.0);
     border-radius: 15px;
     padding: 15px;
     border: 0px black solid;
@@ -196,7 +196,7 @@
   }
 
   .general {
-    background-color: rgba($color: #E6E6E6, $alpha: 1.0);
+    background-color: rgba($color: $grey, $alpha: 1.0);
     border-radius: 15px;
     padding: 15px;
     border: 0px black solid;

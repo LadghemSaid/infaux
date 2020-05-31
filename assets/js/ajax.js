@@ -2,12 +2,16 @@ import Toastify from 'toastify-js';
 
 const axios = require('axios');
 
-async function handleAddLike(event) {
+async function handleAddLike(event, onlypost = false) {
     console.log("action :: ", event.currentTarget.dataset.action);
     const button = event.currentTarget;
     const action = button.dataset.action;
     let targetToChange = button.querySelector('.number');
     let targetToChangeIcon = button.querySelector('.icon-heart');
+    if (onlypost) {
+        targetToChange = $('.onlyPostLike .number')[0];
+        targetToChangeIcon = $('.onlyPostLike .icon-heart');
+    }
 
     $.ajax({
         type: "POST",
@@ -16,9 +20,22 @@ async function handleAddLike(event) {
         success: function (data, dataType) {
             //console.log(data);
             if (data === '+1') {
-                targetToChange.innerText = parseInt(targetToChange.innerText) + 1;
-                $(targetToChangeIcon).removeClass("heart-dislike ");
-                $(targetToChangeIcon).addClass("heart-like");
+                if (onlypost) {
+                    console.log(targetToChangeIcon)
+
+                    $(targetToChangeIcon[0]).removeClass("heart-dislike ")
+                    $(targetToChangeIcon[1]).removeClass("heart-dislike ")
+                    $(targetToChangeIcon[0]).addClass("heart-like");
+                    $(targetToChangeIcon[1]).addClass("heart-like");
+                    targetToChange.innerText = parseInt(targetToChange.innerText) + 1;
+
+                } else {
+                    $(targetToChangeIcon).removeClass("heart-dislike ");
+                    $(targetToChangeIcon).addClass("heart-like");
+                    targetToChange.innerText = parseInt(targetToChange.innerText) + 1;
+
+                }
+
                 Toastify({
                     text: "J'aime !",
                     duration: 3000,
@@ -31,9 +48,20 @@ async function handleAddLike(event) {
                     } // Callback after click
                 }).showToast();
             } else {
-                $(targetToChangeIcon).removeClass("heart-like");
-                $(targetToChangeIcon).addClass("heart-dislike ");
-                targetToChange.innerText = parseInt(targetToChange.innerText) - 1;
+                if (onlypost) {
+                    $(targetToChangeIcon[0]).removeClass("heart-like")
+                    $(targetToChangeIcon[1]).removeClass("heart-like")
+                    $(targetToChangeIcon[0]).addClass("heart-dislike");
+                    $(targetToChangeIcon[1]).addClass("heart-dislike");
+                    targetToChange.innerText = parseInt(targetToChange.innerText) - 1;
+
+                } else {
+                    $(targetToChangeIcon).removeClass("heart-like");
+                    $(targetToChangeIcon).addClass("heart-dislike ");
+                    targetToChange.innerText = parseInt(targetToChange.innerText) - 1;
+
+                }
+
                 Toastify({
                     text: "Je n'aime pas !",
                     duration: 3000,
@@ -77,7 +105,7 @@ async function handleAddReport(event) {
         const response = await axios.post(action);
         if (response.data === "+1") {
             Toastify({
-                text: "Merci de votre signalement",
+                text: "Merci de ton signalement",
                 duration: 3000,
                 close: true,
                 gravity: "top", // `top` or `bottom`
@@ -89,7 +117,7 @@ async function handleAddReport(event) {
             }).showToast();
         } else {
             Toastify({
-                text: "Vous avez déjà signaler cela",
+                text: "Tu as déjà signaler cela.",
                 duration: 3000,
                 close: true,
                 gravity: "top", // `top` or `bottom`
@@ -107,13 +135,14 @@ async function handleAddReport(event) {
 
 }
 
-function handleAddComment(event) {
+function handleAddComment(event,page) {
 
     event.preventDefault();
-    const textComment = $(event.target).serializeArray()[0].value;
-    const replyId = $(event.target).serializeArray()[1] ? $(event.target).serializeArray()[1].value : "";
+    let input = $(event.target)
+    const textComment = input.serializeArray()[0].value;
+    const replyId = input.serializeArray()[1] ? input.serializeArray()[1].value : "";
     const action = event.target.dataset.action;
-    let target = $(event.target).parent('.formComment').prev('.wrapper-comments');
+    let target = input.parent('.formComment').prev('.wrapper-comments');
 
 
     $.ajax({
@@ -121,28 +150,85 @@ function handleAddComment(event) {
         url: action,
         data: {
             textComment: textComment,
-            replyId:replyId,
+            replyId: replyId,
         },
         success: function (data, dataType) {
-            //console.log(data);
-            target.append(data)
-            $(function () {
-                moment.locale('fr');
-                $(target).find(".p-date").map((x, i) => {
-                    i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
-                });
-            });
-            Toastify({
-                text: "Commentaire ajouté",
-                duration: 3000,
-                close: true,
-                gravity: "top", // `top` or `bottom`
-                position: 'left', // `left`, `center` or `right`
-                stopOnFocus: true, // Prevents dismissing of toast on hover
-                className: "info",
-                onClick: function () {
-                } // Callback after click
-            }).showToast();
+
+            switch (data) {
+                case "spam":
+                    Toastify({
+                        text: "Tu dois attendre 10 secondes entre chaque commentaire !",
+                        duration: 3000,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: 'left', // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        className: "info",
+                        onClick: function () {
+                        } // Callback after click
+                    }).showToast();
+                    break;
+                case "lengthTooShort":
+                    //Cas d'une erreur
+                    Toastify({
+                        text: "Ton commentaire est trop court",
+                        duration: 3000,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: 'left', // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        className: "info",
+                        onClick: function () {
+                        } // Callback after click
+                    }).showToast();
+
+                    break;
+                case "lengthTooLong":
+                    //Cas d'une erreur
+                    Toastify({
+                        text: "Ton commentaire est trop long",
+                        duration: 3000,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: 'left', // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        className: "info",
+                        onClick: function () {
+                        } // Callback after click
+                    }).showToast();
+                    break;
+                default:
+                    if(page){
+                        target.append(data);
+
+                    }else{
+                        target.html(data);
+
+                    }
+                    input[0][0].value = ""
+                    hideModal();
+                    $(function () {
+                        moment.locale('fr');
+                        $(target).find(".p-date").map((x, i) => {
+                            i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
+                        });
+                    });
+                    Toastify({
+                        text: "Commentaire ajouté",
+                        duration: 3000,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: 'left', // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        className: "info",
+                        onClick: function () {
+                        } // Callback after click
+                    }).showToast();
+                    break;
+            }
+
+
+
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
 
@@ -162,34 +248,54 @@ function handleAddComment(event) {
 
 }
 
-function replyComment(event) {
+function replyComment(event,page) {
 
     event.preventDefault();
     const commentId = event.target.dataset.comment;
-    const postId =$(event.target).parents('.post-container')[0].dataset.id;
+    const postId = $(event.target).parents('.post-container')[0].dataset.id;
     let target = $(event.target).next('.modal').find('.modal-body')[0];
-    target.innerHTML= '' +
-        '<form onSubmit="handleAddComment(event)" name="comment" data-action="/comment/add/'+postId+'" class="commentForm">'+
-        '<input type="text " id="comment_textComment" name="comment[textComment] " required="required " class="commentForm__textarea form-control input-lg" placeholder="Votre réponse ... " onclick="affiche_comment() " onblur="afficheplus_comment() ">' +
-        '<input type="hidden" id="comment_reply" name="comment[replyComment] " required="required " value="'+commentId+'" hidden>' +
+    target.innerHTML = '' +
+        '<form onSubmit="handleAddComment(event)" name="comment" data-action="/comment/add/' + postId + '" class="commentForm">' +
+        '<input  type="text " id="comment_textComment" name="comment[textComment] " required="required " class="commentForm__textarea form-control input-lg" placeholder="Votre réponse ... " onclick="affiche_comment(event) " onblur="afficheplus_comment(event)" minlength="1" maxlength="500" >' +
+        '<input type="hidden" id="comment_reply" name="comment[replyComment] " required="required " value="' + commentId + '" hidden>' +
         '<div class="d-flex justify-content-end"> ' +
         '<div class="form-group"> ' +
-        '<button type="submit" id="comment_submit-post-81 comment_submit" name="comment[submit]" class="btn btn-pink btn">Envoyer </button> ' +
+        '<button type="submit" id="comment_submit-post-' + postId + '" name="comment[submit]" class="btn btn-pink btn">Envoyer </button> ' +
         '</div>' +
         '</div>' +
-    '</form>';
+        '</form>';
 
-    console.log(commentId, target,postId)
+    console.log(commentId, target, postId)
 
 }
 
+function replyCommentParent(event) {
 
+    event.preventDefault();
+    console.log($($(event.target).parents('.comments-container')[1]).find('button.btn.btn-repondre')[0])
+    $($(event.target).parents('.comments-container')[1]).find('button.btn.btn-repondre')[0].click()
+
+}
+
+function showMoreComment(event) {
+    event.preventDefault();
+    $(event.target).next('.reply').find('.comments-container').each((i, comment) => {
+        setTimeout(() => {
+            comment.classList.toggle('visible')
+
+        }, i * 50)
+
+    })
+    $(event.target).next('.reply')[0].classList.toggle('visible')
+
+}
 
 
 function handleAddPost(event) {
     {
 
         event.preventDefault();
+        let textarea = $(event.target).find('textarea')[0]
         const data = $(event.target).serializeArray()[0].value;
         const action = event.target.dataset.action;
         let target = $('.formPost.input-submit-post');
@@ -200,26 +306,81 @@ function handleAddPost(event) {
             url: action,
             data: {request: data},
             success: function (data, dataType) {
-                target.after(data)
-                $(function () {
-                    moment.locale('fr');
-                    $(target).find(".p-date").map((x, i) => {
-                        i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
-                    });
-                });
-                Toastify({
-                    text: "Post ajouté",
-                    duration: 3000,
-                    close: true,
-                    gravity: "top", // `top` or `bottom`
-                    position: 'left', // `left`, `center` or `right`
-                    stopOnFocus: true, // Prevents dismissing of toast on hover
-                    className: "info",
-                    onClick: function () {
-                    } // Callback after click
-                }).showToast();
+
+                switch (data) {
+                    case "spam":
+                        //Cas d'une erreur
+                        Toastify({
+                            text: "Vous devez attendre 1 min entre chaque post !",
+                            duration: 3000,
+                            close: true,
+                            gravity: "top", // `top` or `bottom`
+                            position: 'left', // `left`, `center` or `right`
+                            stopOnFocus: true, // Prevents dismissing of toast on hover
+                            className: "info",
+                            onClick: function () {
+                            } // Callback after click
+                        }).showToast();
+
+                        break;
+                    case "lengthTooShort":
+                        //Cas d'une erreur
+                        Toastify({
+                            text: "Votre post est trop court",
+                            duration: 3000,
+                            close: true,
+                            gravity: "top", // `top` or `bottom`
+                            position: 'left', // `left`, `center` or `right`
+                            stopOnFocus: true, // Prevents dismissing of toast on hover
+                            className: "info",
+                            onClick: function () {
+                            } // Callback after click
+                        }).showToast();
+
+                        break;
+                    case "lengthTooLong":
+                        //Cas d'une erreur
+                        Toastify({
+                            text: "Votre post est trop long",
+                            duration: 3000,
+                            close: true,
+                            gravity: "top", // `top` or `bottom`
+                            position: 'left', // `left`, `center` or `right`
+                            stopOnFocus: true, // Prevents dismissing of toast on hover
+                            className: "info",
+                            onClick: function () {
+                            } // Callback after click
+                        }).showToast();
+                        break;
+                    default:
+                        //Cas d'un post !
+                        target.after(data)
+                        textarea.value = '';
+
+
+                        $(function () {
+                            moment.locale('fr');
+                            $(target).find(".p-date").map((x, i) => {
+                                i.innerText = moment.unix(i.dataset.createdat).local().fromNow();
+                            });
+                        });
+                        Toastify({
+                            text: "Post ajouté",
+                            duration: 3000,
+                            close: true,
+                            gravity: "top", // `top` or `bottom`
+                            position: 'left', // `left`, `center` or `right`
+                            stopOnFocus: true, // Prevents dismissing of toast on hover
+                            className: "info",
+                            onClick: function () {
+                            } // Callback after click
+                        }).showToast();
+                        break;
+                }
+
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
+                textarea.value = '';
 
                 Toastify({
                     text: "Une erreur est survenue",
@@ -373,9 +534,9 @@ async function handleAddPostPinned(event) {
     try {
         const response = await axios.post(action);
         if (response.data === "+1") {
-            targetToChange.innerText = "Post epinglé";
+            targetToChange.innerText = "Post épinglé";
             Toastify({
-                text: "Vous suivez ce post",
+                text: "Tu suis ce post",
                 duration: 3000,
                 close: true,
                 gravity: "top", // `top` or `bottom`
@@ -386,9 +547,9 @@ async function handleAddPostPinned(event) {
                 } // Callback after click
             }).showToast();
         } else {
-            targetToChange.innerText = "Epingler ce post";
+            targetToChange.innerText = "Épingler ce post";
             Toastify({
-                text: "Vous ne suivez plus ce post",
+                text: "Tu ne suis plus ce post",
                 duration: 3000,
                 close: true,
                 gravity: "top", // `top` or `bottom`
@@ -492,6 +653,8 @@ window.handleAddUserFollow = handleAddUserFollow;
 window.handleAddPost = handleAddPost;
 window.handleAddPostPinned = handleAddPostPinned;
 window.replyComment = replyComment;
+window.replyCommentParent = replyCommentParent;
+window.showMoreComment = showMoreComment;
 //window.getNextComment = getNextComment;
 
 

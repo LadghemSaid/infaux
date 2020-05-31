@@ -5,10 +5,10 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal"
                         data-target="#profil-{{ post.user.id }}">
                     <div class="img"
-                            {% if post.user.image  is defined %}
+                            {% if post.user.image  != "false" %}
                          style="background:url('{{ vich_uploader_asset(post.user, 'imageFile') }}')">
                         {% else %}
-                            style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}')">
+                            style="background:url('{{ ("https://api.adorable.io/avatars/60/" ~ post.user.username) }}')">
                         {% endif %}
 
 
@@ -20,25 +20,25 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                <h5 class="modal-title" ></h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
                                 <div class="wrap">
-                                <div class="user-picture">
-                                    <div class="img"
-                                            {% if post.user.image  is defined %}
-                                         style="background:url('{{ vich_uploader_asset(post.user, 'imageFile') }}')">
-                                        {% else %}
-                                            style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}')">
-                                        {% endif %}
-                                     </div>
-                                </div>
+                                    <div class="user-picture">
+                                        <div class="img"
+                                                {% if post.user.image != "false" %}
+                                             style="background:url('{{ vich_uploader_asset(post.user, 'imageFile') }}')">
+                                            {% else %}
+                                                style="background:url('{{ ("https://api.adorable.io/avatars/60/" ~ post.user.username) }}')">
+                                            {% endif %}
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="username">{{ post.user.username }}</div>
-                                <div class="description">{{post.user.description}}</div>
+                                <div class="description">{{ post.user.description }}</div>
                                 {% if app.user %}
                                     {% if  app.user == post.user %}
                                         <div class="lien_profil"><a
@@ -47,14 +47,14 @@
 
                                     {% else %}
                                         <a href="{{ path('account.show',{'id': post.user.id} ) }}">Voir le
-                                                profil</a>
+                                            profil</a>
 
                                         {% if post.user in app.user.friends %}
-                                        <a href="#" data-userId="{{ post.user.id }}"
-                                             onclick="handleAddUserFollow(event)"
-                                             data-action="{{ path('follow.add',{"id":post.user.id}) }}"
-                                             class="followUser">
-                                            <span class="followStatus">Ne plus suivre</span></a>
+                                            <a href="#" data-userId="{{ post.user.id }}"
+                                               onclick="handleAddUserFollow(event)"
+                                               data-action="{{ path('follow.add',{"id":post.user.id}) }}"
+                                               class="followUser">
+                                                <span class="followStatus">Ne plus suivre</span></a>
                                         {% else %}
                                             <a href="#" data-userId="{{ post.user.id }}"
                                                onclick="handleAddUserFollow(event)"
@@ -64,8 +64,9 @@
                                         {% endif %}
 
 
-                                        <a class="message" href="{{ path('conversations.newConversations',{'username':(post.user.username) ?? 'anonyme' }) }}">
-                                          Envoyer un message privé
+                                        <a class="message"
+                                           href="{{ path('conversations.newConversations',{'username':(post.user.username) ?? 'anonyme' }) }}">
+                                            Envoyer un message privé
                                         </a>
                                     {% endif %}
                                 {% else %}
@@ -100,7 +101,7 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                        <h5 class="modal-title" ></h5>
                                         <button type="button" class="close" data-dismiss="modal"
                                                 aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
@@ -125,15 +126,16 @@
                                                     </div>
                                                 </div>
 
-                                            {% if  app.user == post.user %}
-                                                <div class="icons">
-                                                    <div onclick="handleDeletePost(event)"
-                                                         data-action="{{ path('post.delete',{'post': post.id} ) }}"
-                                                         class="deleteForm">
+                                                {% if  app.user == post.user %}
+                                                    <div class="icons">
+                                                        <div onclick="handleDeletePost(event)"
+                                                             data-action="{{ path('post.delete',{'post': post.id} ) }}"
+                                                             class="deleteForm">
 
-                                                        <i class="icon-blocked"></i><span class="number ">Suprimer</span>
+                                                            <i class="icon-trash"></i><span
+                                                                    class="number ">Suprimer</span>
+                                                        </div>
                                                     </div>
-                                                </div>
                                                 {% endif %}
                                             {% endif %}
                                             <div class="icons">
@@ -158,9 +160,9 @@
 
             <div class="actions">
                 <div class="icons">
-                    <div onclick="handleAddLike(event)"
+                    <div onclick="handleAddLike(event,true)"
                          data-action="{{ path('like.add',{"entity":"post",'id':post.id}) }}"
-                         class="likeForm">
+                         class="likeForm onlyPostLike">
                         {% if app.user %}
                             {% set liked = false %}
                             {% for like in post.likes %}
@@ -205,17 +207,13 @@
                         {% endif %}
 
 
-
-
-
-
                         <span class="number">{{ post.id | getComment('DESC') | length }}</span>
                     </div>
                 </div>
                 {% if expanded is not defined %}
 
                     <a
-                            class="btn btn-primaire "
+                            class="btn btn-primaire  show-more-button"
                             href="{{ path('post.show',{'id': post.id}) }}"
                     >Voir plus
                     </a>
@@ -225,7 +223,9 @@
             </div>
             {% if expanded is defined %}
                 <div class="action_onlypost">
-                    <div>
+
+                    <div onclick="handleAddLike(event,true)"
+                         data-action="{{ path('like.add',{"entity":"post",'id':post.id}) }}" class="onlyPostLike">
                         {% if app.user %}
                             {% set liked = false %}
                             {% for like in post.likes %}
@@ -247,7 +247,7 @@
                         {% endif %}
                         aimer
                     </div>
-                    <div>
+                    <div onclick="$('html, body').animate({ scrollTop:  $('.wrapper-comments').offset().top +200 }, 'slow');$('#comment_textComment').focus();">
                         {% if app.user %}
                             {% set commented = false %}
                             {% for comment in post.comments %}
@@ -269,26 +269,85 @@
                         {% endif %}
                         commenter
                     </div>
-                </div>
-            {% endif %}
-        </div>
 
+                    {% block meta %}
+                        <meta property="og:url" content="hhttps://infaux.ga{{ path('post.show',{'id': post.id}) }}"/>
+                        <meta property="og:type" content="Infaux"/>
+                        <meta property="og:title" content="Post Infaux"/>
+                        <meta property="og:description" content="{{ post.text }}"/>
+                        <meta property="og:image" content="https://infaux.ga/img/favicon192.png"/>
+
+                        <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
+                    {% endblock %}
+
+                    <a data-toggle="modal" data-target="#modalShare" href="#">
+                        <div>Partager</div>
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+            <div class="modal fade" id="modalShare" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="actions">
+
+                                <div class="icons first">
+                                    <div class="fb-share-button"
+                                         data-href="https://infaux.ga{{ path('post.show',{'id': post.id}) }}"
+                                         data-layout="button_count" data-size="small"><a target="_blank"
+                                                                                         href="https://www.facebook.com/sharer/sharer.php?u=https://infaux.ga{{ path('post.show',{'id': post.id}) }}"
+                                                                                         class="fb-xfbml-parse-ignore">Facebook</a>
+                                    </div>
+
+                                </div>
+
+                                <div class="icons">
+                                    <a class="twitter-share-button"
+                                       target="_blank"
+                                       href="https://twitter.com/intent/tweet?text=Qu%20en%20pensez%20vous%20&url=https://infaux.ga{{ path('post.show',{'id': post.id}) }}&hashtags=Infaux,Intox,Hoax">
+                                        Tweet</a>
+
+                                </div>
+
+                                <div class="icons">
+
+                                    <script type="IN/Share"
+                                            data-url="https://infaux.ga{{ path('post.show',{'id': post.id}) }}"></script>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
     <div class="wrapper-comments">
         {% if comments is defined %}
             {% if comments is empty and onlyOneComment is not defined %}
-                <p>Aucun commentaire soit le premier !</p>
+                <p>Aucun commentaire, sois le premier !</p>
             {% endif %}
 
             {% for comment in comments %}
-                {% include('/comment/only-comment.html.twig')with {'comment' : comment,'onlyOneComment':false}  %}
+                {% include('/comment/only-comment.html.twig')with {'comment' : comment,'onlyOneComment':false} %}
             {% endfor %}
         {% endif %}
 
         {% if onlyOneComment is defined %}
 
             {% if onlyOneComment is empty %}
-                <p>Aucun commentaire soit le premier !</p>
+                <p>Aucun commentaire, sois le premier !</p>
             {% else %}
                 {% include('/comment/only-comment.html.twig') with {'comment' : onlyOneComment,'onlyOneComment':true} %}
             {% endif %}
@@ -297,32 +356,9 @@
     </div>
 
     {% if app.user %}
-        {%  include('/comment/form-comment.html.twig') %}
+        {% include('/comment/form-comment.html.twig') %}
     {% endif %}
 
 
 </div>
-
-
-<script>
-
-    //fonction d'affichage du bouton submit (form comment)
-    function affiche_comment(){
-        //document.getElementById('comment_submit').style.opacity=1;
-        document.getElementById('comment_submit').disabled="";
-        console.log('ok comment');
-    }
-    function afficheplus_comment(){
-            const str = document.getElementById('comment_textComment').value;
-            console.log(str.length);
-            if (str.length==0) {
-                //document.getElementById('comment_submit').style.opacity=0;
-                //document.getElementById('comment_submit').disabled="true";
-            }
-    }
-
-
-
-
-</script>
 

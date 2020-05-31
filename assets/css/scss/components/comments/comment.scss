@@ -1,49 +1,52 @@
-.wrapper-comments{
 
-}
-
-
-.commentForm{
-  background-color: #E6E6E6;
+.commentForm {
+  background-color:var(--main-grey);
   padding: 20px;
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width:100%;
+  width: 100%;
+
   label {
     margin-bottom: 0px;
   }
-  .same-align{
+
+  .same-align {
     display: inline-grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 30px;
     width: 400px;
   }
+
   .form-control {
-    color: #495057;
+    color: var(--main-dark-grey);
     background-color: #fdfdfd;
     border: 0.5px solid #cecece;
     border-radius: .2rem;
-}
+  }
+
   .form-control:focus {
-    color: #495057;
+    color: var(--main-dark-grey);
     background-color: #fff;
     border: 1px solid #b0b4b8;
     outline: 0;
     box-shadow: none !important;
   }
+
   .btn-pink {
     background-color: #F60052;
     border-color: #F60052;
     color: white;
   }
+
   .btn-pink:hover {
     background-color: rgb(214, 5, 75);
     border-color: rgb(214, 5, 75);
     color: white;
   }
-  &__textarea{
+
+  &__textarea {
     padding: 5px 5px 5px 10px;
     min-height: 93px !important;
     transition: 0.2s;
@@ -53,22 +56,24 @@
 }
 
 
-.edit_input{
+.edit_input {
 
   border-top: 0;
   border-right: 0;
   border-left: 0;
   width: 100%;
 }
-.edit_input:focus{
+
+.edit_input:focus {
   border-bottom-color: orange;
 }
 
 
 //--Ajout Said
-.slide-up{
+.slide-up {
   animation: slide-up 0.4s ease;
 }
+
 @keyframes slide-up {
   0% {
     opacity: 0;
@@ -80,4 +85,32 @@
   }
 }
 
+.reply {
+overflow: hidden;
+  max-height: 0;
+  transition: all 0.2s ease-in-out;
 
+  &.visible {
+    max-height:1000px;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .comments-container {
+
+    opacity: 0;
+    transform: translateX(150px);
+    transition: all 0.2s ease-in-out;
+
+    &.visible {
+      opacity: 1;
+      transform:unset;
+    }
+
+  }
+}
+
+.show-post.connected{
+  .post-container{
+        margin-bottom: 170px;
+    }
+}

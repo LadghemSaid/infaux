@@ -52,10 +52,10 @@
         <div class="account">
             <div class="img_wrap">
                 <div class="img"
-                        {% if user.image  is defined %}
+                        {% if user.image  != "false" %}
                      style="background:url('{{ vich_uploader_asset(user, 'imageFile') }}')">
                     {% else %}
-                        style="background:url('{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~ "@adorable.io.png") }}')">
+                        style="background:url('{{ ("https://api.adorable.io/avatars/60/" ~ user.username) }}')">
                     {% endif %}
 
                 </div>
@@ -87,14 +87,18 @@
                 <div data-userId="{{ user.id }}"
                      onclick="handleAddUserFollow(event)"
                      data-action="{{ path('follow.add',{"id": user.id}) }}"
-                     class="followUser">
+                     class="followUser btn btn-border-green btn-lg mt-20 mt-20Mobile">
                     <span class="followStatus">Ne plus suivre</span>
                 </div>
 
+                <a href="{{ path('conversations.newConversations',{"username": user.username}) }}"
+                   class="followUser btn btn-border-green btn-lg mt-20 mt-20Mobile">
+                    <span class="followStatus">Envoyer un message privé</span>
+                </a>
             {% else %}
                 <div data-userId="{{ user.id }}"
                      onclick="handleAddUserFollow(event)"
-                     data-action="{{ path('follow.add',{"id": user.id}) }}"
+                     data-action="{{ path('follow.add',{"id": user.id}) }}"Accepter nos conditions d'utilisation
                      class="followUser btn btn-border-green btn-lg mt-20 mt-20Mobile">
                     <span class="followStatus">Suivre</span>
                 </div>

@@ -37,7 +37,6 @@ class SearchController extends AbstractController
         $resultsUsers = $userRepository->findUsersByString($searchTerm);
         $resultsPosts = $postRepository->findPostsByString($searchTerm);
 
-
         if (count($resultsPosts) > 0) {
             $renderResultsPosts=[];
             foreach ($resultsPosts as $post){

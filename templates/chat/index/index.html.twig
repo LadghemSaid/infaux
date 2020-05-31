@@ -4,18 +4,83 @@
 
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 {% block body %}
-    <div class="container chat-app" style="margin-top: 40px">
-        <div id="app" data-token="{{ token_generator.generateToken(app.user) }}"  data-username="{{ app.user.username }}" ></div>
+    <div class="search container mt-70 mb-0" >
+
+        <div class="input-group mt-20 mt-20Mobile">
+            <div class="input-group-prepend">
+				<span class="input-group-text">
+					<i class="icon-search"></i>
+				</span>
+            </div>
+            <input id="search" class="form-control" placeholder="Rechercher"/>
+        </div>
+
+
+        <h3 class="title mt-40 mt-40Mobile ">Compte</h3>
+        <div class="compte" id="compte-container">
+            Aucun résultat
+        </div>
+
+    </div>
+    <div class="container chat-app" style=" ;margin-bottom: 100px">
+
+
+        <div id="app" data-token="{{ token_generator.generateToken(app.user) }}"  data-username="{{ app.user.username }}" data-avatars="{{ avatar }}"></div>
     </div>
 
 {% endblock %}
 
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
+    {{ encore_entry_script_tags('ajax') }}
+
+        <script>
+            jQuery(document).ready(function () {
+                var searchRequest = null;
+                $("#search").keyup(function () {
+                    var minlength = 3;
+                    var that = this;
+                    var value = $(this).val();
+                    var usersSelector = $("#compte-container");
+                    if (value.length >= minlength) {
+                        if (searchRequest != null)
+                            searchRequest.abort();
+                        searchRequest = $.ajax({
+                            type: "GET",
+                            url: "{{ path('search.query') }}",
+                            data: {
+                                'q': value
+                            },
+                            dataType: "text",
+                            success: function (msg) {
+                                //we need to check if the value is the same
+                                if (value === $(that).val()) {
+                                    var result = JSON.parse(msg);
+                                    $.each(result, function (key, arr) {
+                                        if (arr.users.length >0 ) {
+                                            usersSelector.find($('.single-compte').remove());
+                                            usersSelector.html(arr.users);
+                                        }else{
+                                            usersSelector.text('Aucun résultat');
+                                        }
+
+
+                                    });
+                                }
+                            },
+                            error:function(msg){
+
+
+                            }
+                        });
+                    }
+                });
+            })
+        </script>
+
 
 
 {% endblock %}

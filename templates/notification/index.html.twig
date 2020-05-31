@@ -47,117 +47,16 @@
                     <i class="icon-bell"></i>Notifications</h1>
                 {% if notifsSeen | length >= 1 or notifsNotSeen | length >= 1 %}
                     <p onclick="handleDeleteAllNotification(event)" data-action="{{ path('notification.deleteAll') }}"
-                       class="sup-notif mb-0">Tous supprimer</p>
+                       class="sup-notif mb-0">Supprimer toutes les notifications</p>
                 {% endif %}
             </div>
 
             {% if notifsSeen is empty and notifsNotSeen is empty %}
-                <p>Vous n'avez aucune notifications</p>
+                <p>Tu n'as aucune notification...</p>
             {% endif %}
 
-            {% for notif in notifsSeen %}
-                {% if notif.byUser is not empty %}
-
-
-                    <div class="notif d-flex align-items-start justify-content-between mt-10 mb-10 mt-10Mobile mb-10Mobile">
-                        <div class="compte-picture">
-                            {% if notif.byUser.image  is defined %}
-                            {% if notif.byPost is not null %}
-                            <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
-                                {% elseif notif.byComment is not null %}
-                                <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
-
-                                    {% endif %}
-                                    <img src="{{ vich_uploader_asset(notif.byUser, 'imageFile') }}"/>
-                                </a>
-                                {% else %}
-                                {% if notif.byPost is not null %}
-                                <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
-                                    {% elseif notif.byComment is not null %}
-                                    <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
-
-                                        {% endif %}
-                                        <img src="{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}"/>
-                                    </a>
-                                    {% endif %}
-                        </div>
-                        <div>
-                            {% if notif.byPost is not null %}
-                            <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
-                                {% elseif notif.byComment is not null %}
-                                <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
-
-                                    {% endif %}
-                                    <div class="opa nm">
-                                        <p>{{ notif.message }}</p>
-                                    </div>
-                                    <div data-createdat="{{ notif.createdAt |date('U') }}" class="user p-date"></div>
-
-                                </a>
-
-                        </div>
-                        <div class="option ml-auto">
-
-                            <button type="button" class="btn" data-toggle="modal" data-target="#delete-notif">
-                                <i class="icon-dots-horizontal-triple"></i>
-                            </button>
-
-                            <div class="modal fade" id="delete-notif" tabindex="-1" role="dialog"
-                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel"></h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-
-                                            <p onclick="handleDeleteNotification(event)"
-                                               data-action="{{ path('notification.delete',{'notification':notif.id}) }}"
-                                               class="notification-sup mb-30 mb-30Mobile"><i class="icon-trash"></i> Supprimer cette notification</p>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                {% else %}
-
-
-                    <div class="notif d-flex align-items-start justify-content-between mt-10 mb-10 mt-10Mobile mb-10Mobile">
-                        <div class="compte-picture">
-                            {% if notif.byPost is not null %}
-                            <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
-                                {% elseif notif.byComment is not null %}
-                                <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
-                                    {% endif %}
-                                    <img src="{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}"/>
-                                </a>
-                        </div>
-                        <div>
-                            {% if notif.byPost is not null %}
-                            <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
-                                {% elseif notif.byComment is not null %}
-                                <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
-                                    {% endif %}
-                                    <div class="opa nm">
-                                        <p>{{ notif.message }}</p>
-                                    </div>
-                                    <div data-createdat="{{ notif.createdAt |date('U') }}" class="user p-date"></div>
-                                </a>
-                        </div>
-                    </div>
-                    </a>
-                {% endif %}
-            {% endfor %}
             {% for notif in notifsNotSeen %}
                 {% if notif.byUser is not empty %}
-
 
                     <div class="notif not-seen d-flex align-items-center mt-10 mb-10 mt-10Mobile mb-10Mobile">
                         <div class="compte-picture">
@@ -166,7 +65,12 @@
                                 {% elseif notif.byComment is not null %}
                                 <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
                                     {% endif %}
-                                    <img src="/uploads/images/users/{{ notif.byUser.image }}"/>
+                                    {% if notif.byUser.image == "false"  %}
+                                        <img src="https://api.adorable.io/avatars/60/{{ notif.byUser.username }}"/>
+                                    {% else %}
+                                        <img src="/uploads/images/users/{{ notif.byUser.image }}"/>
+
+                                    {% endif %}
                                 </a>
                         </div>
                         <div>
@@ -215,6 +119,114 @@
                     </a>
                 {% endif %}
             {% endfor %}
+
+            {% for notif in notifsSeen %}
+
+                {% if notif.byUser is not empty %}
+                    <div class="notif d-flex align-items-start justify-content-between mt-10 mb-10 mt-10Mobile mb-10Mobile">
+                        <div class="compte-picture">
+                            {% if notif.byUser.image  is defined %}
+                            {% if notif.byPost is not null %}
+                            <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
+                                {% elseif notif.byComment is not null %}
+                                <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
+
+                                    {% endif %}
+                                    {% if notif.byUser.image == "false"  %}
+                                        <img src="https://api.adorable.io/avatars/60/{{ notif.byUser.username }}"/>
+                                    {% else %}
+                                        <img src="{{ vich_uploader_asset(notif.byUser, 'imageFile') }}"/>
+
+
+                                    {% endif %}
+
+                                </a>
+                                {% else %}
+                                {% if notif.byPost is not null %}
+                                <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
+                                    {% elseif notif.byComment is not null %}
+                                    <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
+
+                                        {% endif %}
+                                        <img src="{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}"/>
+                                    </a>
+                                    {% endif %}
+                        </div>
+                        <div>
+                            {% if notif.byPost is not null %}
+                            <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
+                                {% elseif notif.byComment is not null %}
+                                <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
+
+                                    {% endif %}
+                                    <div class="opa nm">
+                                        <p>{{ notif.message }}</p>
+                                    </div>
+                                    <div data-createdat="{{ notif.createdAt |date('U') }}" class="user p-date"></div>
+
+                                </a>
+
+                        </div>
+                        <div class="option ml-auto">
+
+                            <button type="button" class="btn" data-toggle="modal" data-target="#delete-notif">
+                                <i class="icon-dots-horizontal-triple"></i>
+                            </button>
+
+                            <div class="modal fade" id="delete-notif" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" ></h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+
+                                            <p onclick="handleDeleteNotification(event)"
+                                               data-action="{{ path('notification.delete',{'notification':notif.id}) }}"
+                                               class="notification-sup mb-30 mb-30Mobile"><i class="icon-trash"></i> Supprimer cette notification</p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                {% else %}
+
+
+                    <div class="notif d-flex align-items-start justify-content-between mt-10 mb-10 mt-10Mobile mb-10Mobile">
+                        <div class="compte-picture">
+                            {% if notif.byPost is not null %}
+                            <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
+                                {% elseif notif.byComment is not null %}
+                                <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
+                                    {% endif %}
+                                    <img src="{{ ("https://api.adorable.io/avatars/285/anonyme" ~ random(50, 100) ~"@adorable.io.png") }}"/>
+                                </a>
+                        </div>
+                        <div>
+                            {% if notif.byPost is not null %}
+                            <a href="{{ path('post.show',{"id":notif.byPost.id}) }}">
+                                {% elseif notif.byComment is not null %}
+                                <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
+                                    {% endif %}
+                                    <div class="opa nm">
+                                        <p>{{ notif.message }}</p>
+                                    </div>
+                                    <div data-createdat="{{ notif.createdAt |date('U') }}" class="user p-date"></div>
+                                </a>
+                        </div>
+                    </div>
+                    </a>
+                {% endif %}
+            {% endfor %}
+
 
         </div>
 
