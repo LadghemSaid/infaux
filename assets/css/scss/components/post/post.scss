@@ -317,6 +317,9 @@
         line-height: 150% !important;
         font-size: $MmediumS;
         font-style: $light;
+        .highlight{
+          color: $green;
+        }
       }
 
       .actions {

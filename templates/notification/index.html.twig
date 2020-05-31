@@ -132,7 +132,14 @@
                                 <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
 
                                     {% endif %}
-                                    <img src="{{ vich_uploader_asset(notif.byUser, 'imageFile') }}"/>
+                                    {% if notif.byUser.image == "false"  %}
+                                        <img src="https://api.adorable.io/avatars/60/{{ notif.byUser.username }}"/>
+                                    {% else %}
+                                        <img src="{{ vich_uploader_asset(notif.byUser, 'imageFile') }}"/>
+
+
+                                    {% endif %}
+
                                 </a>
                                 {% else %}
                                 {% if notif.byPost is not null %}

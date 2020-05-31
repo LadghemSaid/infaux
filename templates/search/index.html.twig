@@ -93,30 +93,28 @@
                             //we need to check if the value is the same
                             if (value == $(that).val()) {
                                 var result = JSON.parse(msg);
-                              //  console.log(result.list.posts);
+                                //  console.log(result.list.posts);
                                 $.each(result, function (key, arr) {
-                                    if (arr.users.length >0 ) {
+                                    if (arr.users.length > 0) {
                                         usersSelector.find($('.single-compte').remove());
                                         usersSelector.html(arr.users);
-                                    }else{
+                                    } else {
                                         usersSelector.text('Aucun résultat');
                                     }
                                     if (arr.posts.length > 0) {
                                         postsSelector.find($('.post-container').remove());
-
-                                        arr.posts.map((x,i)=>{
-                                            console.log( )
-                                            var textBrut = $($(x)[0]).find('.text')[0];
-                                                textBrut.replace(value, '<span class="highlight fc-white">'+value+'</span>');
-                                            var postEntier = $((x)[0]);
-                                            postsSelector.append(x.replace(new RegExp('('+value+')','ig'), '<span class="highlight fc-white">$1</span>'))
+                                        postsSelector.html('');
+                                        arr.posts.map((x, i) => {
+                                            changed = $(x).find('.text')[0].innerText.replace(value, '<span class="highlight ">' + value + '</span>')
+                                            console.log(changed)
+                                            return postsSelector.append(x.replace($(x).find('.text')[0].innerText, changed))
 
                                         })
-                                       // postsSelector.html(arr.posts);
+                                        //
                                         console.log(value)
 
 
-                                    }else{
+                                    } else {
                                         postsSelector.text('Aucun résultat');
 
                                     }
@@ -124,7 +122,7 @@
                                 });
                             }
                         },
-                        error:function(msg){
+                        error: function (msg) {
 
 
                         }
