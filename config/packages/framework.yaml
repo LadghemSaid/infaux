@@ -1,7 +1,6 @@
 framework:
     disallow_search_engine_index: false
-    translator:
-      fallbacks: ["fr"]
+    translator: { fallbacks: fr }
     secret: '%env(APP_SECRET)%'
     #csrf_protection: true
     #http_method_override: true

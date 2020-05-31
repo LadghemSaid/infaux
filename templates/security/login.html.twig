@@ -29,81 +29,95 @@
 {% block google %}
     <meta name="google" content="unavailable_after: [date ]">{% endblock %}
 {% block stylesheets %}
-<style>
-.has-val.input + .focus-input::after {
-  top: -15px;
-}
+    <style>
+        .has-val.input + .focus-input::after {
+            top: -15px;
+        }
 
-.has-val.input + .focus-input::before {
-  width: 100%;
-}
-</style>
+        .has-val.input + .focus-input::before {
+            width: 100%;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
 
-		<div class="login limiter">
-			<div class="container-login">
-				<div class="wrap-login">
+    <div class="login limiter">
+        <div class="container-login">
+            <div class="wrap-login">
                 <a href="{{ path("index") }}" class="pb-60 d-flex justify-content-end"><i class="icon-close"></i></a>
 
 
-					{% if app.user %}
-						<div class="mb-3 pb-60">
-							Tu es connecté en tant que :
-							{{ app.user.username }},
-							<a href="{{ path('app_logout') }}">Déconnexion</a>
-						</div>
-					{% else %}
+                {% if app.user %}
+                    <div class="mb-3 pb-60">
+                        Tu es connecté en tant que :
+                        {{ app.user.username }},
+                        <a href="{{ path('app_logout') }}">Déconnexion</a>
+                    </div>
+                {% else %}
 
-						<form method="post" class="login-form validate-form">
+                    <form method="post" class="login-form validate-form">
 							<span class="login-form-title pb-50 pb-50Mobile">
-								<img src="{{ asset("img/logo_infaux.png") }}" alt="Infaux logo"/>
+								<img class="img-logo-header" src="{{ asset("img/logo_infaux.png") }}"
+                                     alt="Infaux logo"/>
 							</span>
-							{% if error %}
+                        {% if error %}
+                            {% if error.messageKey == "Invalid credentials." or "Email could not be found." %}
+								<div class="alert alert-danger">Identifiant inconnue</div>
+							{% else %}
 								<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-							{% endif %}
-							<div class="wrap-input validate-input" data-validate="Valid email is: a@b.c">
-								<input class="input" type="email" value="{{ last_username }}" name="email" id="inputEmail" required autofocus>
-								<span class="focus-input" data-placeholder="Email"></span>
-							</div>
 
-							<div class="wrap-input validate-input" data-validate="Enter password">
+							{% endif %}
+                        {% endif %}
+                        <div class="wrap-input validate-input" data-validate="Valid email is: a@b.c">
+                            <input class="input" type="email" {% if error %} value="{{ last_username }}"    {% endif %}
+                                   name="email" id="inputEmail" autocomplete="off" required autofocus>
+                            <span class="focus-input" data-placeholder="Email"></span>
+                        </div>
+
+                        <div class="wrap-input validate-input" data-validate="Enter password">
 								<span class="btn-show-pass">
 									<i class="icon-eye"></i>
 								</span>
-								<input class="input" type="password" name="password" id="inputPassword" required>
-								<span class="focus-input" data-placeholder="Mot de passe"></span>
-							</div>
-							<input
-							type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                            <input class="input" type="password" name="password" id="inputPassword" autocomplete="off"
+                                   required>
+                            <span class="focus-input" data-placeholder="Mot de passe"></span>
+                        </div>
+                        <input
+                                type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-							<div class="container-login-form-btn">
-								<div class="wrap-login-form-btn">
-									<div class="login-form-bgbtn"></div>
-									<button class="login-form-btn" type="submit">
-										Connexion
-									</button>
-								</div>
-							</div>
+                        <div class="container-login-form-btn">
+                            <div class="wrap-login-form-btn">
+                                <div class="login-form-bgbtn"></div>
+                                <button class="login-form-btn" type="submit">
+                                    Connexion
+                                </button>
+                            </div>
+                        </div>
 
-							<div class="text-center pt-110 pt-40Mobile">
+                        <div class="text-center pt-110 pt-40Mobile">
 								<span class="txt1">
 									Tu n'as pas de compte ?
 								</span>
 
-								<a class="txt2" href="{{ path('app_register') }}">
-									Inscription
-								</a>
-							</div>
-						</form>
-					{% endif %}
-				</div>
-			</div>
-		</div>
+                            <a class="txt2" href="{{ path('app_register') }}">
+                                Inscription
+                            </a>
+                        </div>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 
-		{% endblock %}
+{% endblock %}
 
 	{% block javascripts %}
-		{{ encore_entry_script_tags('login') }}
-	{% endblock %}
+        {{ encore_entry_script_tags('login') }}
+        <script>
+            if (getCookie("theme") === "dark") {
+                document.getElementById('img-logo-header').src = "{{ asset("img/logonigh.png") }}";
+            }
+
+        </script>
+    {% endblock %}

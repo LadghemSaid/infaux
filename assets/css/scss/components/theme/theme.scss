@@ -89,6 +89,37 @@
 
     }
   }
+  .login{
+    .wrap-login{
+      background-color: var(--main-grey);
+       .focus-input:after,label{
+        color: var(--main-light-grey);
+
+      }
+      input{
+        background-color: transparent;
+
+        &:active{
+          background-color: transparent;
+
+
+        }
+        &:focus{
+          background-color: transparent;
+
+        }
+        &:valid{
+          background-color: transparent;
+
+        }
+        &:invalid{
+        background-color: transparent;
+
+      }
+      }
+    }
+
+  }
 }
 
 * {

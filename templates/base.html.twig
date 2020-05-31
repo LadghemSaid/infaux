@@ -78,7 +78,9 @@
 
 <a aria-label="Button permettant de charger plus de posts" onclick="window.location.reload()" id="refreshButton">Charger
     plus de posts</a>
-<script async>
+
+<script src="{{ preload('https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js', { as: 'script' }) }}"></script>
+<script >
     function getCookie(cname) {
         var name = cname + "=";
         var decodedCookie = decodeURIComponent(document.cookie);
@@ -105,11 +107,16 @@
     //Verifie le cookie du theme
     if (getCookie("theme") === "dark") {
         document.body.classList.add("dark-mode");
+
         document.getElementById('customSwitch1').checked = true;
+
+        $('.img-logo-header').each((x,i) => {
+            i.src = "{{ asset("img/logonigh.png") }}";
+        })
     }
 
 </script>
-<script src="{{ preload('https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js', { as: 'script' }) }}"></script>
+
 <script src="//code.jquery.com/mobile/1.5.0-alpha.1/jquery.mobile-1.5.0-alpha.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
 ></script>
@@ -127,9 +134,19 @@
         if (document.body.classList.contains("dark-mode")) {
             document.cookie = "theme=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
             setCookie('theme', "light", 365)
+
+            console.log(document.getElementById('img-logo-header'))
+            $('.img-logo-header').each((x,i) => {
+                i.src = "{{ asset("img/logo_infaux.png") }}";
+            })
+
         } else {
             document.cookie = "theme=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
             setCookie('theme', "dark", 365)
+            $('.img-logo-header').each((x,i) => {
+                i.src = "{{ asset("img/logonigh.png") }}";
+            })
+
         }
         document.body.classList.toggle("dark-mode");
     }
