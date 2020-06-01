@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Form\ResetPasswordType;
 use App\Security\AppCustomAuthenticator;
 use App\Service\MailerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -90,59 +91,55 @@ class RegistrationController extends AbstractController
         }
     }
     /**
-     * @Route("/send-token-confirmation", name="send_confirmation_token")
+     * @Route("/send-token-confirmation/{email}", name="send_confirmation_token")
      * @param Request $request
      * @param MailerService $mailerService
      * @param \Swift_Mailer $mailer
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Exception
      */
-    public function sendConfirmationToken(Request $request, MailerService $mailerService, \Swift_Mailer $mailer): RedirectResponse
+    public function sendConfirmationToken(Request $request, MailerService $mailerService, \Swift_Mailer $mailer,$email)
     {
         $em = $this->getDoctrine()->getManager();
-        $email = $request->request->get('email');
+       // $email = $request->request->get('email');
         $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $email]);
         if($user === null) {
-            $this->addFlash('not-user-exist', 'utilisateur non trouvé');
+            $this->addFlash('error', 'utilisateur non trouvé');
             return $this->redirectToRoute('app_register');
         }
         $user->setConfirmationToken($this->generateToken());
         $em->persist($user);
         $em->flush();
         $token = $user->getConfirmationToken();
-        $email = $user->getEmail();
-        $username = $user->getUsername();
         $mailerService->sendToken( $token, $user, 'registration.html.twig');
         return $this->redirectToRoute('app_login');
     }
 
     /**
-     * @Route("/mot-de-passe-oublier", name="forgotten_password")
+     * @Route("/reset-password", name="forgotten_password")
      * @param Request $request
      * @param MailerService $mailerService
      * @param \Swift_Mailer $mailer
      * @return Response
      * @throws \Exception
      */
-    public function forgottenPassword(Request $request, MailerService $mailerService, \Swift_Mailer $mailer): Response
+    public function forgottenPassword(Request $request, MailerService $mailerService): Response
     {
         if($request->isMethod('POST')) {
             $email = $request->get('email');
+            $csrf = $request->request->get('_csrf_token');
             $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $email]);
             if($user === null) {
-                $this->addFlash('user-error', 'utilisateur non trouvé');
-                return $this->redirectToRoute('app_register');
+                $this->addFlash('error', 'Utilisateur non trouvé');
+                return $this->redirectToRoute('forgotten_password');
             }
             $user->setTokenPassword($this->generateToken());
-            $user->setCreatedTokenPasswordAt(new \DateTime());
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
             $token = $user->getTokenPassword();
-            $email = $user->getEmail();
-            $username = $user->getUsername();
             $mailerService->sendToken( $token,$user, 'forgotten_password.html.twig');
-            return $this->redirectToRoute('home');
+            $this->addFlash('success', 'Un mail vous a été envoyé');
+            return $this->redirectToRoute('forgotten_password');
         }
         return $this->render('security/forgotten_password.html.twig');
     }
@@ -155,7 +152,7 @@ class RegistrationController extends AbstractController
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @return Response
      */
-    public function resetPassword(Request $request, $token, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function resetPassword(Request $request, $token, UserPasswordEncoderInterface $passwordEncoder,GuardAuthenticatorHandler $security,AppCustomAuthenticator $login): Response
     {
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(ResetPasswordType::class);
@@ -163,19 +160,26 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $em->getRepository(User::class)->findOneBy(['tokenPassword' => $token]);
             if($user === null) {
-                $this->addFlash('not-user-exist', 'utilisateur non trouvé');
-                return $this->redirectToRoute('app_register');
+                $this->addFlash('error', 'utilisateur non trouvé');
+
+                return $this->redirectToRoute('app_login');
             }
             $user->setTokenPassword(null);
-            $user->setCreatedTokenPasswordAt(null);
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
-                    $form->get('password')->getData()
+                    $form->get('plainPassword')->getData()
                 )
             );
             $em->flush();
-            return $this->redirectToRoute('app_login');
+            $this->addFlash('success', 'Modification enregistrer');
+            $security->authenticateUserAndHandleSuccess(
+                $user,
+                $request,
+                $login,
+                'main'
+            );
+            return $this->redirectToRoute('index');
         }
         return $this->render('security/reset-password.html.twig', [
             'form' => $form->createView()

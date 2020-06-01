@@ -77,7 +77,7 @@
                             {% if error.messageKey == "Invalid credentials." %}
 								<div class="alert alert-danger">Identifiant inconnue</div>
 							{% else %}
-								<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+								<div class="alert alert-danger">{{ error.messageKey |raw }}</div>
 
 							{% endif %}
                         {% endif %}
@@ -107,7 +107,7 @@
                             </div>
                         </div>
 
-                        <div class="text-center pt-110 pt-40Mobile">
+                        <div class="text-center pt-40 pt-40Mobile">
 								<span class="txt1">
 									Tu n'as pas de compte ?
 								</span>
@@ -115,7 +115,10 @@
                             <a class="txt2" href="{{ path('app_register') }}">
                                 Inscription
                             </a>
-                        </div>
+                            <br>
+                            <a class="txt2" href="{{ path('forgotten_password') }}">
+                                Mot de passe oublié
+                            </a>
                     </form>
                 {% endif %}
             </div>

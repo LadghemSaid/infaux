@@ -85,7 +85,7 @@
       }
     }
 
-    h3, h1 {
+    h3, h1,label {
       color: var(--main-light-grey);
     }
 
@@ -95,6 +95,10 @@
     }
   }
   .login{
+    h2,p,a,button,label:after{
+      color: var(--main-light-grey) !important;
+
+    }
     .wrap-login{
       background-color: var(--main-grey);
        .focus-input:after,label{

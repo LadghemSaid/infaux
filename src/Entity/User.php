@@ -181,6 +181,11 @@ class User implements UserInterface,\Serializable
      */
     private $accountConfirmed;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $tokenPassword;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -823,6 +828,18 @@ class User implements UserInterface,\Serializable
     public function setAccountConfirmed(bool $accountConfirmed): self
     {
         $this->accountConfirmed = $accountConfirmed;
+
+        return $this;
+    }
+
+    public function getTokenPassword(): ?string
+    {
+        return $this->tokenPassword;
+    }
+
+    public function setTokenPassword(?string $tokenPassword): self
+    {
+        $this->tokenPassword = $tokenPassword;
 
         return $this;
     }

@@ -60,8 +60,8 @@ class UserFormType extends AbstractType
                 'invalid_message' => 'Les mots de passe doivent etre identique !',
                 'options' => ['attr' => ['class' => 'password-field']],
                 'required' => false,
-                'first_options' => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Confirmation du mot de passe'],
+                'first_options' => ['label' => 'Nouveau mot de passe'],
+                'second_options' => ['label' => 'Confirmez votre mot de passe'],
 
                 "mapped" => false,
                 'constraints' => array(

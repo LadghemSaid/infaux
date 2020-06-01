@@ -70,12 +70,25 @@ class CompteController extends AbstractController
         $formDescription = $this->get('form.factory')->createNamedBuilder('formDescription')
             ->add('description', TextType::class, [
                 'attr' => [
-                    'value' => $user->getDescription()
+                    'value' => $user->getDescription(),
+                    'maxlength' => "500",
+                    'minlength' => "0",
+                    'required' => "true",
                 ],
                 'constraints' => array(
                     new NotBlank([
                         'message' => 'Ce champ ne doit pas etre vide'
-                    ])
+                    ]),
+                    new Length([
+                            'max' => 500,
+                            'min' => 0,
+                            'maxMessage' => "Ta description est trop longue elle doit faire au maximum {{ limit }} caractéres",
+                            'minMessage' => "Ta description est trop courte elle doit faire au minimum {{ limit }} caractéres",
+                            'allowEmptyString' => true
+
+                        ]
+                    )
+
                 )])
             ->add('submit', SubmitType::class, [
 
@@ -101,26 +114,37 @@ class CompteController extends AbstractController
 
         $formMdp = $this->get('form.factory')->createNamedBuilder('formMdp')
             ->add('actualPassword', PasswordType::class, [
+                'attr' => [
+                    'maxlength' => "20",
+                    'minlength' => "5",
+                    'required' => "true",
+                ],
                 "mapped" => false,
                 'constraints' => array(
 
                     new Length([
-                        'min' => 2,
+                        'min' => 5,
                         'minMessage' => 'Longueur minimal du mot de passe est de 5 charactere',
                         'max' => 20,
                         'maxMessage' => 'Longueur maximal du mot de passe est de 20 charactere',
+                        'allowEmptyString' => false
                     ]),
                 ),
 
 
             ])
             ->add('newPassword', RepeatedType::class, [
+                'attr' => [
+                    'maxlength' => "20",
+                    'minlength' => "5",
+                    'required' => "true",
+                ],
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les mots de passe doivent etre identique !',
                 'options' => ['attr' => ['class' => 'password-field']],
                 'required' => false,
-                'first_options' => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Confirmation du mot de passe'],
+                'first_options' => ['label' => 'Nouveau mot de passe'],
+                'second_options' => ['label' => 'Confirmez votre mot de passe'],
 
                 "mapped" => false,
                 'constraints' => array(
@@ -130,6 +154,8 @@ class CompteController extends AbstractController
                         'minMessage' => 'Longueur minimal du mot de passe est de 5 charactere',
                         'max' => 20,
                         'maxMessage' => 'Longueur maximal du mot de passe est de 20 charactere',
+                        'allowEmptyString' => false
+
                     ]),
 
                 ),
@@ -173,6 +199,7 @@ class CompteController extends AbstractController
         $formMdp->handleRequest($request);
         if ($formMdp->isSubmitted() && $formMdp->isValid()) {
             $actualPassword = $formMdp->get("actualPassword")->getData();
+
             $newPassword = $formMdp->get("newPassword")->getData();
             if ($actualPassword !== "**********") {
 
@@ -180,7 +207,17 @@ class CompteController extends AbstractController
                     //C'est le bon mot de passe on modifie le mot de passe de l'user
                     $encoded = $encoder->encodePassword($user, $newPassword);
                     $user->setPassword($encoded);
+                    $this->em->persist($user);
+                    $this->em->flush();
+                    $this->addFlash('success', 'Modification enregistrer avec succés');
+
+                } else {
+                    $this->addFlash('error', 'Mot de passe invalide');
                 }
+
+
+            } else {
+                $this->addFlash('error', 'Mot de passe invalide');
 
             }
         }
