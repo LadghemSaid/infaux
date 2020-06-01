@@ -42,6 +42,7 @@
 
 {% block body %}
 
+
     <div class="login limiter">
         <div class="container-login">
             <div class="wrap-login">
@@ -61,8 +62,19 @@
 								<img class="img-logo-header" src="{{ asset("img/logo_infaux.png") }}"
                                      alt="Infaux logo"/>
 							</span>
+                        {% for message in app.flashes('success') %}
+                            <div class="alert alert-success">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                        {% for message in app.flashes('error') %}
+                            <div class="alert alert-danger">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+
                         {% if error %}
-                            {% if error.messageKey == "Invalid credentials." or "Email could not be found." %}
+                            {% if error.messageKey == "Invalid credentials." %}
 								<div class="alert alert-danger">Identifiant inconnue</div>
 							{% else %}
 								<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>

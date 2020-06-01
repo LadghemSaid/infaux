@@ -68,8 +68,12 @@ class AppCustomAuthenticator extends AbstractFormLoginAuthenticator
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Email could not be found.');
+            throw new CustomUserMessageAuthenticationException('Identifiant inconnue');
+        }else if(!$user->getAccountConfirmed()){
+            throw new CustomUserMessageAuthenticationException('Un email de confirmation vous a été envoyer');
+
         }
+
 
         return $user;
     }

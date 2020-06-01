@@ -698,10 +698,9 @@
     position: fixed;
     bottom: 50px !important;
     background-color: var(--main-grey);
-    left: 0;
-    margin-left: 15px;
-    margin-right: 15px;
-    width: 92.5vw;
+    left: 50%;
+    width: 100%;
+    transform: translateX(-50%);
     padding: 15px;
     border-radius: $radius;
   }

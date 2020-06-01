@@ -1,4 +1,5 @@
-<div class="formComment {% if expanded is defined %} formComment_onepost {% endif %} ">
+
+<div class="formComment container {% if expanded is defined %} formComment_onepost {% endif %} ">
     <div class="img"
             {% if app.user.image != "false" %}
          style="background:url('{{ vich_uploader_asset(app.user, 'imageFile') }}')">

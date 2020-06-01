@@ -185,7 +185,7 @@
 
               //Post infinite scroll
               if ($('.post-container').length > 2) {
-                  var infiniteScroll = $('.infinite-scroll-wrapper .container ').infiniteScroll({
+                  var infiniteScroll = $('.infinite-scroll-wrapper .container').first().infiniteScroll({
                       // options
                       path: '.next a',
                       append: '.post-container',
