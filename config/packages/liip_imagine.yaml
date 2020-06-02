@@ -1,0 +1,24 @@
+liip_imagine:
+
+    # paramètre de chargement des fichiers d’origine
+    loaders:
+
+        # nom du loader
+        uploaded_files:
+            filesystem:
+    data_loader: uploaded_files
+    # Liste des filter set (ensemble de filtres) container mt-100 cgude l’application
+    filter_sets:
+        cache: ~
+        user_mini_thumbnail:
+
+            # il existe de nombreux filtres prédéfinis (http://symfony.com/doc/master/bundles/LiipImagineBundle/filters.html) mais il est aussi possible d’en créer.
+            quality: 75
+            filters:
+                auto_rotate: ~
+                thumbnail: { size: [100, 100], mode: outbound }
+        user_thumbnail:
+            quality: 75
+            filters:
+                auto_rotate: ~
+                thumbnail: { size: [300, 300], mode: outbound }

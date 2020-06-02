@@ -76,7 +76,7 @@
                 <div class="group">
                     <p class="item">Avatar</p>
                     {% if user.image  != "false" %}
-                        <div class="img" style="background:url('{{ vich_uploader_asset(user, 'imageFile') }}')"></div>
+                        <div class="img" style="background:url('{{ vich_uploader_asset(user, 'imageFile') | imagine_filter('user_mini_thumbnail')  }}')"></div>
 
                     {% else %}
                         <div class="img"
@@ -103,10 +103,10 @@
                                         {{ form_start(formAvatar) }}
                                         {% if user.image != "false" %}
                                             <div class="img mt-30 mt-30Mobile"
-                                                 style="background:url('{{ vich_uploader_asset(user, 'imageFile') }}')"></div>
+                                                 style="background:url('{{ vich_uploader_asset(user, 'imageFile')  | imagine_filter('user_thumbnail')  }}')"></div>
                                         {% else %}
                                             <div class="img mt-30 mt-30Mobile"
-                                                 style="background:url('{{ vich_uploader_asset(user, 'imageFile') }}')"></div>
+                                                 style="background:url('{{ ("https://api.adorable.io/avatars/60/" ~ user.username) }}')"></div>
 
                                         {% endif %}
 

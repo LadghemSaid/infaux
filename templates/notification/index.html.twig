@@ -132,10 +132,11 @@
                                 <a href="{{ path('post.show',{"id":notif.byComment.post.id}) }}#comment-{{ notif.byComment.id }}">
 
                                     {% endif %}
-                                    {% if notif.byUser.image == "false"  %}
-                                        <img src="https://api.adorable.io/avatars/60/{{ notif.byUser.username }}"/>
+                                    {% if notif.byUser.image != "false"  %}
+                                        <img src="{{ vich_uploader_asset(notif.byUser, 'imageFile') | imagine_filter('user_mini_thumbnail') }}"/>
+
                                     {% else %}
-                                        <img src="{{ vich_uploader_asset(notif.byUser, 'imageFile') }}"/>
+                                        <img src="https://api.adorable.io/avatars/60/{{ notif.byUser.username }}"/>
 
 
                                     {% endif %}

@@ -64,7 +64,7 @@
                         <button type="button" class="btn" data-toggle="modal"
                                 data-target="#profil-{{ friend.id }}">
                             {% if friend.image != "false" %}
-                                <img src="{{ vich_uploader_asset(friend, 'imageFile') }}" alt="user">
+                                <img src="{{ vich_uploader_asset(friend, 'imageFile') | imagine_filter('user_mini_thumbnail') }}" alt="user">
                             {% else %}
 								<img src='{{ ("https://api.adorable.io/avatars/60/" ~ friend.username) }}' alt="user"/>
 							{% endif %}
@@ -90,7 +90,7 @@
                                 <div class="wrap">
                                     <div class="img"
                                             {% if friend.image != "false" %}
-                                         style="background:url('{{ vich_uploader_asset(friend, 'imageFile') }}')">
+                                         style="background:url('{{ vich_uploader_asset(friend, 'imageFile') | imagine_filter('user_thumbnail') }}')">
                                         {% else %}
                                             style="background:url('{{ ("https://api.adorable.io/avatars/60/" ~ friend.username) }}')">
                                         {% endif %}

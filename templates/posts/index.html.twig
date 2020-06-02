@@ -64,7 +64,7 @@
                         <div class="div_img">
                             <div class="img"
                                     {% if app.user.image != "false" %}
-                                style="background:url('{{ vich_uploader_asset(app.user, 'imageFile') }}')">
+                                style="background:url('{{ vich_uploader_asset(app.user, 'imageFile') | imagine_filter('user_thumbnail') }}')">
                                 {% else %}
                                     style="background:url('{{ ("https://api.adorable.io/avatars/60/" ~ app.user.username) }}')">
                                 {% endif %}
