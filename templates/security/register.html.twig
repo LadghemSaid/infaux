@@ -50,7 +50,7 @@
 
 
                 <span class="login-form-title pb-50">
-							<img src="{{ asset("img/logo_infaux.png") }}" alt="Infaux logo"/>
+							<img class="img-logo-header" src="{{ asset("img/logo_infaux.png") }}" alt="Infaux logo"/>
 						</span>
 
                 {# For convenience sake of this snippet, store the errors in a variable #}
@@ -65,6 +65,16 @@
                     </ul>
                 {% endif %}
 
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                {% for message in app.flashes('error') %}
+                    <div class="alert alert-danger">
+                        {{ message }}
+                    </div>
+                {% endfor %}
 
 
                 {{ form_start(registrationForm) }}
@@ -115,7 +125,7 @@
 						<i class="icon-eye"></i>
 					</span>
                     {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'input'}}) }}
-                    <span class="focus-input" data-placeholder="Mot de passe"></span>
+                    <span class="focus-input" data-placeholder="Confirmez votre mot de passe"></span>
 
 
                     <div class="form-error">

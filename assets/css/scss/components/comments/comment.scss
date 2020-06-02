@@ -86,7 +86,9 @@
 }
 
 .reply {
-overflow: hidden;
+  margin-left: 60px;
+
+  overflow: hidden;
   max-height: 0;
   transition: all 0.2s ease-in-out;
 

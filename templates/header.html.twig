@@ -8,8 +8,7 @@
         {% endif %}
 
 
-        <img
-                src="{{ asset("img/logo_infaux.png") }}" alt="Infaux logo"/>
+        <img class="img-logo-header" src="{{ asset("img/logo_infaux.png") }}" alt="Infaux logo"/>
 
 
         {% if app.user %}
@@ -65,7 +64,7 @@
         <div class="modal-dialog animated fadeInRight mt-0 mb-0 mr-0  m-0Mobile" role="document">
             <div class="modal-content collapse-navbar">
                 <div class="modal-header">
-                    <img src="{{ asset("img/logo_infaux.png") }}" alt="Infaux logo"/>
+                    <img class="img-logo-header" src="{{ asset("img/logo_infaux.png") }}" alt="Infaux logo"/>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i class="icon-close"></i>
                     </button>
@@ -76,7 +75,7 @@
                             <div class="user-picture">
                                 {% if app.user %}
                                     {% if app.user.image != "false" %}
-                                        <img src='{{ vich_uploader_asset(app.user, 'imageFile') }}' alt="user"/>
+                                        <img src='{{ vich_uploader_asset(app.user, 'imageFile') | imagine_filter('user_thumbnail') }}' alt="user"/>
                                     {% else %}
                                         <img src='{{ ("https://api.adorable.io/avatars/60/" ~ app.user.username) }}' alt="user"/>
 

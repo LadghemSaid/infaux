@@ -15,19 +15,15 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\IsTrue;
 
-class RegistrationFormType extends AbstractType
+class ResetPasswordType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class,array(
-                'invalid_message' => 'Le mail renseigné n\'est pas valide',
-            ))
-            ->add('username', TextType::class)
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'invalid_message' => 'Votre mot de passe doit etre identique sur les deux champs',
-                'first_options' => array('label' => 'Mot de passe'),
+                'first_options' => array('label' => 'Nouveau mot de passe'),
                 'second_options' => array('label' => 'Confirmez votre mot de passe'),
 
                 'constraints' => [
@@ -41,16 +37,8 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                 ]
-            ))
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'label' => "Accepter nos conditions d'utilisation",
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'Veuillez acceptez nos conditions d\'utilisation',
-                    ]),
-                ],
-            ]);
+            ));
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

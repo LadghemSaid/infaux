@@ -80,7 +80,7 @@
   height: 50px;
 
   box-shadow: 0 0px 5px -2px rgb(168, 168, 168);
-  background-color:var(--main-fade-white);
+  background-color: var(--main-fade-white);
 
   &__item {
     flex-grow: 1;
@@ -128,10 +128,33 @@
 }
 
 .menu-collapse {
+
+  &.show .collapse-navbar {
+    transform: translateX(0px);
+    transition: transform 0.3s ease-in-out;
+
+  }
+  .collapse-navbar{
+    transform: translateX(400px);
+    transition: transform 0.3s ease-in-out;
+  }
+
   background-color: rgba(0, 0, 0, 0.466);
+  padding-right: 0px !important;
 
   .modal-dialog {
     min-width: 100%;
+  }
+}
+
+.modal-backdrop{
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+
+  .show{
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+
   }
 }
 
@@ -247,7 +270,7 @@ span.notif {
   }
 
   button.close {
-    color:var(--main-green);
+    color: var(--main-green);
     background-color: transparent;
     border: 0 solid #000;
     font-size: 2em;

@@ -10,6 +10,10 @@
 
   .modal .modal-content {
     background-color: #363636;
+    h3{
+      color: var(--main-light-grey);
+    }
+
   }
 
   #collapse-menu {
@@ -56,12 +60,13 @@
   .follow {
     a, p, h1 {
       color: var(--main-light-grey);
-
     }
 
     .users .single-compte {
       background-color: var(--main-grey);
-
+      &:hover{
+        background-color: #323232;
+      }
     }
   }
 
@@ -80,12 +85,53 @@
       }
     }
 
-    h3, h1 {
-      color: var(--main-light-grey);
+    h3, h1,label {
+      color: var(--main-light-grey)!important;
     }
 
     .group p {
       color: #656565;
+
+    }
+  }
+  .login{
+    h2,p,a,button,label:after{
+      color: var(--main-light-grey) !important;
+
+    }
+    .wrap-login{
+      background-color: var(--main-grey);
+       .focus-input:after,label{
+        color: var(--main-light-grey);
+
+      }
+      input{
+        background-color: transparent;
+
+        &:active{
+          background-color: transparent;
+
+
+        }
+        &:focus{
+          background-color: transparent;
+
+        }
+        &:valid{
+          background-color: transparent;
+
+        }
+        &:invalid{
+        background-color: transparent;
+
+      }
+      }
+    }
+
+  }
+  .cgu{
+    h1,p,b{
+      color: var(--main-light-grey);
 
     }
   }

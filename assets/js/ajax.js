@@ -279,6 +279,18 @@ function replyCommentParent(event) {
 
 function showMoreComment(event) {
     event.preventDefault();
+   // console.log( $(event.target).attr('show',"false"))
+
+    if(  $(event.target).attr("data-show") === "true"){
+        $(event.target).attr("data-show","false")
+        event.target.innerText= event.target.innerText.replace("Cacher","Voir")
+
+    }else{
+        $(event.target).attr("data-show","true")
+        event.target.innerText= event.target.innerText.replace("Voir","Cacher")
+
+    }
+
     $(event.target).next('.reply').find('.comments-container').each((i, comment) => {
         setTimeout(() => {
             comment.classList.toggle('visible')
@@ -289,7 +301,62 @@ function showMoreComment(event) {
     $(event.target).next('.reply')[0].classList.toggle('visible')
 
 }
+function handleDesactivatePost(event){
+    event.preventDefault();
+    const action = event.currentTarget.dataset.action;
+    let target = $(event.target).parents('.post-container');
 
+
+    $.ajax({
+        type: "GET",
+        url: action,
+        success: function (data, dataType) {
+
+            if (data === '-1') {
+                hideModal()
+                target.remove();
+                Toastify({
+                    text: "Post désactivé",
+                    duration: 3000,
+                    close: true,
+                    gravity: "top", // `top` or `bottom`
+                    position: 'left', // `left`, `center` or `right`
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    className: "success",
+                    onClick: function () {
+                    } // Callback after click
+                }).showToast();
+            } else {
+                Toastify({
+                    text: "Une erreur est survenue",
+                    duration: 3000,
+                    close: true,
+                    gravity: "top", // `top` or `bottom`
+                    position: 'left', // `left`, `center` or `right`
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    className: "info",
+                    onClick: function () {
+                    } // Callback after click
+                }).showToast();
+            }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+            Toastify({
+                text: "Une erreur est survenue",
+                duration: 3000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: 'left', // `left`, `center` or `right`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                className: "info",
+                onClick: function () {
+                } // Callback after click
+            }).showToast();
+        }
+    });
+
+}
 
 function handleAddPost(event) {
     {
@@ -655,6 +722,7 @@ window.handleAddPostPinned = handleAddPostPinned;
 window.replyComment = replyComment;
 window.replyCommentParent = replyCommentParent;
 window.showMoreComment = showMoreComment;
+window.handleDesactivatePost = handleDesactivatePost;
 //window.getNextComment = getNextComment;
 
 

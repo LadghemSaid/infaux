@@ -132,7 +132,7 @@ class CommentsController extends AbstractController
     public function delete(Comment $comment, Security $security, Request $req)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        if ($security->getUser() === $comment->getUser()) {
+        if ($security->getUser() === $comment->getUser()  || $this->isGranted('ROLE_ADMIN') ) {
             $this->em->remove($comment);
             $this->em->flush();
 
@@ -143,6 +143,26 @@ class CommentsController extends AbstractController
         }
 
     }
+
+    /**
+     * @Route("/desactivate/comment/{comment}", name="desactivate", methods={"GET"})
+     */
+    public function desactivate(Comment $comment, Security $security, Request $req)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        if ($this->isGranted('ROLE_ADMIN') ) {
+            $comment->setPublished(false);
+            $this->em->persist($comment);
+            $this->em->flush();
+
+            return new Response("-1");
+        } else {
+            return new Response("-0");
+
+        }
+
+    }
+
 
     /**
      * @Route("/edit/{comment}", name="edit")

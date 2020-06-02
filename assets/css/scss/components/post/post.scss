@@ -393,9 +393,12 @@
 
 
   .comments-container {
-    .reply {
-      margin-left: 60px;
-
+    position: relative;
+    .show-more-comment-button{
+      position: absolute;
+      right: 70px;
+      z-index: 1;
+      transform: translateY(-45px);
     }
     &.visible{
       .content .header .l-post.right {
@@ -695,10 +698,9 @@
     position: fixed;
     bottom: 50px !important;
     background-color: var(--main-grey);
-    left: 0;
-    margin-left: 15px;
-    margin-right: 15px;
-    width: 92.5vw;
+    left: 50%;
+    width: 100%;
+    transform: translateX(-50%);
     padding: 15px;
     border-radius: $radius;
   }

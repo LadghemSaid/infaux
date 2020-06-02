@@ -68,8 +68,12 @@ class AppCustomAuthenticator extends AbstractFormLoginAuthenticator
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Email could not be found.');
+            throw new CustomUserMessageAuthenticationException('Identifiant inconnue');
+        }else if(!$user->getAccountConfirmed()){
+            throw new CustomUserMessageAuthenticationException('Vous n\'avez pas confirmer votre email.<br><a href="'.$this->urlGenerator->generate('send_confirmation_token',['email'=>$user->getEmail()],true) .'">Pour renvoyer un lien de confirmation cliquer sur ce lien</a>');
+
         }
+
 
         return $user;
     }

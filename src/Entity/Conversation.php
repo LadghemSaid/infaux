@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping\Index;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ConversationRepository")
- * @ORM\Table(indexes={@Index(name="last_message_id_index", columns={"last_message_id"})})
  */
 class Conversation
 {
@@ -26,8 +25,7 @@ class Conversation
     private $participants;
 
     /**
-     * @ORM\OneToOne(targetEntity="Message", mappedBy="id", cascade={"remove"} )
-     * @ORM\JoinColumn(name="last_message_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     * @ORM\Column(type="boolean",nullable=true)
      */
     private $lastMessage;
 
@@ -78,17 +76,23 @@ class Conversation
         return $this;
     }
 
-    public function getLastMessage(): ?Message
+
+
+
+    public function getLastMessage(): ?bool
     {
         return $this->lastMessage;
     }
 
-    public function setLastMessage(?Message $lastMessage): self
+    public function setLastMessage(bool $lastMessage): self
     {
         $this->lastMessage = $lastMessage;
 
         return $this;
     }
+
+
+
 
     /**
      * @return Collection|Message[]

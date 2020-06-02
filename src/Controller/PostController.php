@@ -214,9 +214,30 @@ class PostController extends AbstractController
      */
     public function delete(Post $post, Security $security, Request $req)
     {
-        if ($security->getUser() === $post->getUser()) {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user =$this->getUser();
+        if ($user === $post->getUser()  || $this->isGranted('ROLE_ADMIN') ) {
 
             $this->em->remove($post);
+            $this->em->flush();
+
+            return new Response("-1");
+        } else {
+            return new Response("-0");
+
+        }
+
+    }
+
+    /**
+     * @Route("/desactivate/post/{post}", name="desactivate", methods={"GET"})
+     */
+    public function desactivate(Post $post, Security $security, Request $req)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        if ($this->isGranted('ROLE_ADMIN') ) {
+            $post->setPublished(false);
+            $this->em->persist($post);
             $this->em->flush();
 
             return new Response("-1");

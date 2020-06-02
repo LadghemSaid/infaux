@@ -171,6 +171,21 @@ class User implements UserInterface,\Serializable
      */
     private $messages;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $confirmationToken;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $accountConfirmed;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $tokenPassword;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -789,6 +804,42 @@ class User implements UserInterface,\Serializable
     public function setDisplaySetting(string $displaySetting): self
     {
         $this->displaySetting = $displaySetting;
+
+        return $this;
+    }
+
+    public function getConfirmationToken(): ?string
+    {
+        return $this->confirmationToken;
+    }
+
+    public function setConfirmationToken(?string $confirmationToken): self
+    {
+        $this->confirmationToken = $confirmationToken;
+
+        return $this;
+    }
+
+    public function getAccountConfirmed(): ?bool
+    {
+        return $this->accountConfirmed;
+    }
+
+    public function setAccountConfirmed(bool $accountConfirmed): self
+    {
+        $this->accountConfirmed = $accountConfirmed;
+
+        return $this;
+    }
+
+    public function getTokenPassword(): ?string
+    {
+        return $this->tokenPassword;
+    }
+
+    public function setTokenPassword(?string $tokenPassword): self
+    {
+        $this->tokenPassword = $tokenPassword;
 
         return $this;
     }

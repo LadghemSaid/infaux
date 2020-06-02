@@ -8,7 +8,7 @@
                     <div class="user-picture">
                         <div class="img"
                                 {% if comment.user.image != "false" %}
-                             style="background:url('{{ vich_uploader_asset(comment.user, 'imageFile') }}')">
+                             style="background:url('{{ vich_uploader_asset(comment.user, 'imageFile')  | imagine_filter('user_mini_thumbnail')  }}')">
                             {% else %}
                                 style="background:url('{{ ("https://api.adorable.io/avatars/60/" ~ comment.user.username) }}')">
                             {% endif %}
@@ -32,7 +32,7 @@
                                     <div class="user-picture">
                                         <div class="img"
                                                 {% if comment.user.image != "false"%}
-                                             style="background:url('{{ vich_uploader_asset(comment.user, 'imageFile') }}')">
+                                             style="background:url('{{ vich_uploader_asset(comment.user, 'imageFile')  | imagine_filter('user_mini_thumbnail')  }}')">
                                             {% else %}
                                                 style="background:url('{{ ("https://api.adorable.io/avatars/60/" ~ comment.user.username) }}')">
                                             {% endif %}
@@ -112,14 +112,25 @@
                                                 </div>
                                             </div>
 
-                                            {% if  app.user == comment.user %}
+                                            {% if  app.user == comment.user or  is_granted('ROLE_ADMIN')  %}
                                                 <div class="icons">
                                                     <div onclick="handleDeleteComment(event)"
-                                                         data-action="{{ path('comment.delete',{'comment': comment.id} ) }}"
+                                                         data-action="{{ path('comment.delete',{'comment': comment.id} ) }}"sé
                                                          class="deleteForm">
 
                                                         <i class="icon-trash"></i><span
                                                                 class="number ">Suprimer</span>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                            {% if  is_granted('ROLE_ADMIN') %}
+                                                <div class="icons">
+                                                    <div onclick="handleDesactivatePost(event)"
+                                                         data-action="{{ path('comment.desactivate',{'comment': comment.id} ) }}"
+                                                         class="deleteForm">
+
+                                                        <i class="icon-trash"></i><span
+                                                                class="number ">Désactiver</span>
                                                     </div>
                                                 </div>
                                             {% endif %}
@@ -208,7 +219,7 @@
         </div>
     </div>
     {% if isReply is not  defined  and  comment.commentsReply | length > 0 %}
-        <a onclick="showMoreComment(event)" href="#">Voir {{ comment.commentsReply| length }} réponses</a>
+        <a class="show-more-comment-button" data-show="false" onclick="showMoreComment(event)" href="#">Voir {{ comment.commentsReply| length }} réponses</a>
     {% endif %}
     <div class="reply">
         {% for commentReply in comment.commentsReply %}

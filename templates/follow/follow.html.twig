@@ -1,126 +1,136 @@
 {% extends '/base.html.twig' %}
 
 {% block title %}
-	Infaux - Abonnements
+    Infaux - Abonnements
 {% endblock %}
 {% block gtag %}
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107718823-2"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107718823-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
 
-function gtag() {
-dataLayer.push(arguments);
-}
+        function gtag() {
+            dataLayer.push(arguments);
+        }
 
-gtag('js', new Date());
+        gtag('js', new Date());
 
-gtag('config', 'UA-107718823-2');
-	</script>
+        gtag('config', 'UA-107718823-2');
+    </script>
 {% endblock %}
 {% block meta_description %}
-	<meta name="description" content="Agence web à Lens. Conception et développement de sites sur mesure. Communication digitale, référencement SEO Google."/>
+    <meta name="description"
+          content="Agence web à Lens. Conception et développement de sites sur mesure. Communication digitale, référencement SEO Google."/>
 {% endblock %}
 {% block meta_keywords %}
-	<meta name="keywords" content="Agence web de communication web marketing, stratégie digitale à Lens, France, creation site internet, agence de développement web, Création site internet, Lens, Lille, France, creation site internet, 59, 62, Nord Pas de Calais, Nord, Haut de France, création site internet vitrine, community management entreprise, community management personnel, création boutique en ligne, site internet, site web, création site internet boutique en ligne, Création site web, 75, Paris, Création site web e commerce, agence de référencement, agence seo, seo, référencement naturel, web marketing, agence web, agence de communication, vidéo promotionnelle, vidéo commercial, création site catalogue, création site internet responsive, généré du trafic sur mon site internet, première page google, référencement google, création de site internet france, conseil et webdesign, référencement internet, agence web, site internet responsive, site responsive, création et optimisation de site web, web design et développement de site internet, communication digitale, webmarketing, création site internet boutique en ligne, boutique en ligne, créer boutique en ligne, refonte boutique en ligne, refonte site internet e-commerce, responsive web design, refonte site internet responsive, site adaptable, site internet, site web, création site internet, création site web, responsive, création site internet e-commerce"/>
+    <meta name="keywords"
+          content="Agence web de communication web marketing, stratégie digitale à Lens, France, creation site internet, agence de développement web, Création site internet, Lens, Lille, France, creation site internet, 59, 62, Nord Pas de Calais, Nord, Haut de France, création site internet vitrine, community management entreprise, community management personnel, création boutique en ligne, site internet, site web, création site internet boutique en ligne, Création site web, 75, Paris, Création site web e commerce, agence de référencement, agence seo, seo, référencement naturel, web marketing, agence web, agence de communication, vidéo promotionnelle, vidéo commercial, création site catalogue, création site internet responsive, généré du trafic sur mon site internet, première page google, référencement google, création de site internet france, conseil et webdesign, référencement internet, agence web, site internet responsive, site responsive, création et optimisation de site web, web design et développement de site internet, communication digitale, webmarketing, création site internet boutique en ligne, boutique en ligne, créer boutique en ligne, refonte boutique en ligne, refonte site internet e-commerce, responsive web design, refonte site internet responsive, site adaptable, site internet, site web, création site internet, création site web, responsive, création site internet e-commerce"/>
 {% endblock %}
 {% block meta_robots %}
-	<meta name="robots" content="unavailable_after: [date ]">
+    <meta name="robots" content="unavailable_after: [date ]">
 {% endblock %}
 {% block google %}
-	<meta name="google" content="unavailable_after: [date ]">
+    <meta name="google" content="unavailable_after: [date ]">
 {% endblock %}
 {% block stylesheets %}
-	<style>
-		.mt-100 {
-			margin-top: 100px;
-		}
-	</style>
+    <style>
+        .mt-100 {
+            margin-top: 100px;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
 
-	<div class="follow container mt-100">
-		<h1>Abonnements de {{ user.username }}</h1>
+    <div class="follow container mt-100">
+        <h1>Abonnements de {{ user.username }}</h1>
         <div class="d-flex justify-content-between nav-followers">
-			<a class="nav-item nav-link" href="{{ path('post.follower',{'id':user.id}) }}"><p class="title">{{ user.friendList| length }} Abonné{% if user.friendList | length > 1 %}s{% endif %}</p></a>
-			<a class="nav-item nav-link active" href="{{ path('post.follow',{'id':user.id}) }}"><p class="title">{{ user.friends| length }} Abonnement{% if user.friends | length > 1 %}s{% endif %}</p></a>
-		</div>
+            <a class="nav-item nav-link" href="{{ path('post.follower',{'id':user.id}) }}"><p
+                        class="title">{{ user.friendList| length }}
+                    Abonné{% if user.friendList | length > 1 %}s{% endif %}</p></a>
+            <a class="nav-item nav-link active" href="{{ path('post.follow',{'id':user.id}) }}"><p
+                        class="title">{{ user.friends| length }}
+                    Abonnement{% if user.friends | length > 1 %}s{% endif %}</p></a>
+        </div>
 
 
-	<div class="users">
-		{% if user.friends is empty %}
-			<h3>Aucun abonnements</h3>
-		{% endif %}
-		{% for friend in user.friends %}
-		<div class="single-compte d-flex align-items-center mt-10 mb-10 mt-10Mobile mb-10Mobile">
-			<div class="compte-picture">
-				<button type="button" class="btn" data-toggle="modal"
-						data-target="#profil-{{ friend.id }}">
-					<img src="{{ vich_uploader_asset(friend, 'imageFile') }}" alt="user">
-				</button>
-
-			</div>
-			<p class="mb-0">{{ friend.username }}</p>
-		</div>
-
-
-
-			<div class="modal fade" id="profil-{{ friend.id }}" tabindex="-1" role="dialog"
-				 aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" ></h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<div class="wrap">
-								<div class="img" 
-										{% if friend.image != "false" %}
-									 style="background:url('{{ vich_uploader_asset(friend, 'imageFile') }}')">
-									{% else %}
-										style="background:url('{{ ("https://api.adorable.io/avatars/60/" ~ friend.username) }}')">
-									{% endif %}
-								</div>
-							</div>
-							<div class="username">{{ friend.username }}</div>
-							<div class="description">{{ friend.description }}
-							</div>
-							{% if app.user %}
-
-									<div class="lien_profil"><a
-												href="{{ path('account.show',{'id': friend.id} ) }}">Voir le
-											profil</a></div>
-									<div data-userId="{{friend.id }}"
-										 onclick="handleAddUserFollow(event)"
-										 data-action="{{ path('follow.add',{"id":friend.id}) }}"
-										 class="followUser">
-										<span class="followStatus">Suivre</span>
-
-									</div>
-
-							{% else %}
-								<div class="lien_profil"><a
-											href="{{ path('account.show',{'id': friend.id} ) }}">Voir le
-										profil</a></div>
+        <div class="users">
+            {% if user.friends is empty %}
+                <h3>Aucun abonnements</h3>
+            {% endif %}
+            {% for friend in user.friends %}
+                <div class="single-compte d-flex align-items-center mt-10 mb-10 mt-10Mobile mb-10Mobile">
+                    <div class="compte-picture">
+                        <button type="button" class="btn" data-toggle="modal"
+                                data-target="#profil-{{ friend.id }}">
+                            {% if friend.image != "false" %}
+                                <img src="{{ vich_uploader_asset(friend, 'imageFile') | imagine_filter('user_mini_thumbnail') }}" alt="user">
+                            {% else %}
+								<img src='{{ ("https://api.adorable.io/avatars/60/" ~ friend.username) }}' alt="user"/>
 							{% endif %}
+                        </button>
+
+                    </div>
+                    <p class="mb-0">{{ friend.username }}</p>
+                </div>
 
 
-						</div>
-					</div>
-				</div>
-			</div>
 
-		{% endfor %}
+                <div class="modal fade" id="profil-{{ friend.id }}" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="wrap">
+                                    <div class="img"
+                                            {% if friend.image != "false" %}
+                                         style="background:url('{{ vich_uploader_asset(friend, 'imageFile') | imagine_filter('user_thumbnail') }}')">
+                                        {% else %}
+                                            style="background:url('{{ ("https://api.adorable.io/avatars/60/" ~ friend.username) }}')">
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="username">{{ friend.username }}</div>
+                                <div class="description">{{ friend.description }}
+                                </div>
+                                {% if app.user %}
+
+                                    <div class="lien_profil"><a
+                                                href="{{ path('account.show',{'id': friend.id} ) }}">Voir le
+                                            profil</a></div>
+                                    <div data-userId="{{ friend.id }}"
+                                         onclick="handleAddUserFollow(event)"
+                                         data-action="{{ path('follow.add',{"id":friend.id}) }}"
+                                         class="followUser">
+                                        <span class="followStatus">Suivre</span>
+
+                                    </div>
+
+                                {% else %}
+                                    <div class="lien_profil"><a
+                                                href="{{ path('account.show',{'id': friend.id} ) }}">Voir le
+                                            profil</a></div>
+                                {% endif %}
 
 
-	</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-</div>
+            {% endfor %}
+
+
+        </div>
+
+    </div>
 {% endblock %}
 {% block javascripts %}
-{{ encore_entry_script_tags('app') }}
+    {{ encore_entry_script_tags('app') }}
 {% endblock %}

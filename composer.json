@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-curl": "*",
         "ext-iconv": "*",
+        "ext-json": "*",
         "alterphp/easyadmin-extension-bundle": "^3.0",
         "cocur/slugify": "^4.0",
         "easycorp/easyadmin-bundle": "^2.3",
@@ -16,6 +17,7 @@
         "knplabs/knp-paginator-bundle": "^5.1",
         "knplabs/knp-time-bundle": "^1.9",
         "lcobucci/jwt": "^3.3",
+        "liip/imagine-bundle": "^2.3",
         "sensio/framework-extra-bundle": "^5.1",
         "stof/doctrine-extensions-bundle": "^1.4",
         "symfony/asset": "4.4.*",
@@ -44,8 +46,7 @@
         "symfony/webpack-encore-bundle": "^1.7",
         "symfony/yaml": "4.4.*",
         "twig/extensions": "^1.5",
-        "vich/uploader-bundle": "^1.12",
-      "ext-json": "*"
+        "vich/uploader-bundle": "^1.12"
     },
     "require-dev": {
         "hautelook/alice-bundle": "^2.6",
