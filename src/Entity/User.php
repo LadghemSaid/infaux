@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity("email",message="Cet email est déjà utilisé")
  *
  */
-class User implements UserInterface,\Serializable
+class User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id()
@@ -109,21 +109,13 @@ class User implements UserInterface,\Serializable
     private $postFollowed;
 
 
-
-
-
-
-
     /**
      * @Vich\UploadableField(mapping="users_images", fileNameProperty="image")
-     * @Assert\Image(mimeTypes={"image/png", "image/jpeg", "image/jpg", "image/gif"})
-     * @Assert\File(
-     *     maxSize = "1024k",
-     *     mimeTypes = {"image/png", "image/jpeg", "image/jpg"},
-     *     mimeTypesMessage = "Please upload a valid valid IMAGE"
-     * )
      */
     private $imageFile;
+
+
+
 
     /**
      * @ORM\Column(type="string")
@@ -197,12 +189,13 @@ class User implements UserInterface,\Serializable
         $this->notifications = new ArrayCollection();
         $this->notificationsMessagerie = new ArrayCollection();
         $this->postFollowed = new ArrayCollection();
-        $this->updatedAt= new \DateTimeImmutable();
-        $this->createdAt= new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
+        $this->createdAt = new \DateTimeImmutable();
         $this->participants = new ArrayCollection();
         $this->messages = new ArrayCollection();
 
     }
+
 
 
     public function serialize()
@@ -323,7 +316,6 @@ class User implements UserInterface,\Serializable
     }
 
 
-
     /**
      * @see UserInterface
      */
@@ -347,7 +339,7 @@ class User implements UserInterface,\Serializable
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return (string)$this->password;
     }
 
     public function setPassword(string $password): self
@@ -465,11 +457,11 @@ class User implements UserInterface,\Serializable
      * * @param File|UploadedFile|null $imageFile
      * @throws \Exception
      */
-    public function setImageFile(?File $imageFile =null): void
+    public function setImageFile(?File $imageFile = null): void
     {
         $this->imageFile = $imageFile;
-        if(null !== $imageFile){
-            $this->updatedAt= new \DateTimeImmutable();
+        if (null !== $imageFile) {
+            $this->updatedAt = new \DateTimeImmutable();
         }
     }
 
@@ -660,7 +652,6 @@ class User implements UserInterface,\Serializable
     }
 
 
-
     /**
      * @return Collection|NotificationMessagerie[]
      */
@@ -691,7 +682,6 @@ class User implements UserInterface,\Serializable
 
         return $this;
     }
-
 
 
     /**
@@ -727,10 +717,10 @@ class User implements UserInterface,\Serializable
      */
     public function getNotificationNotSeen()
     {
-        $notificationNotSeen =[];
-        foreach ($this->notifications as $notif){
-            if(!$notif->getSeen()){
-                array_push($notificationNotSeen,$notif);
+        $notificationNotSeen = [];
+        foreach ($this->notifications as $notif) {
+            if (!$notif->getSeen()) {
+                array_push($notificationNotSeen, $notif);
             }
         }
         return $notificationNotSeen;
@@ -749,10 +739,10 @@ class User implements UserInterface,\Serializable
      */
     public function getNotificationsMessagerieNotSeen()
     {
-        $notificationsMessagerieNotSeen =[];
-        foreach ($this->notificationsMessagerie as $notif){
-            if(!$notif->getSeen()){
-                array_push($notificationsMessagerieNotSeen,$notif);
+        $notificationsMessagerieNotSeen = [];
+        foreach ($this->notificationsMessagerie as $notif) {
+            if (!$notif->getSeen()) {
+                array_push($notificationsMessagerieNotSeen, $notif);
             }
         }
         return $notificationsMessagerieNotSeen;
@@ -765,7 +755,6 @@ class User implements UserInterface,\Serializable
     {
         $this->notificationsMessagerieNotSeen = $notificationsMessagerieNotSeen;
     }
-
 
 
     /**

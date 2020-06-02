@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Vich\UploaderBundle\Form\Type\VichImageType;
@@ -37,7 +38,7 @@ class CompteController extends AbstractController
      */
     private $liipImagineBundle;
 
-    public function __construct(EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder,FilterManager $liipImagineBundle)
+    public function __construct(EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder, FilterManager $liipImagineBundle)
     {
         $this->em = $em;
         $this->passwordEncoder = $passwordEncoder;
@@ -56,11 +57,32 @@ class CompteController extends AbstractController
 
         $formAvatar = $this->get('form.factory')->createNamedBuilder('formAvatar')
             ->add('imageFile', VichImageType::class, [
-                'required' => false,
+                'required' => true,
                 'allow_delete' => false,
                 'download_uri' => false,
                 'image_uri' => false,
                 'asset_helper' => false,
+                'constraints' => array(
+                    new NotBlank([
+                        'message' => 'Ce champ ne doit pas etre vide'
+                    ]),
+                    new File([
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/gif',
+                            'image/png',
+                        ],
+                        'mimeTypesMessage' => "Merci de fournir une image au format valide",
+                        'maxSizeMessage' => "Ton image est trop grande !",
+                        'uploadIniSizeErrorMessage' => "Ton image est trop grande !",
+                        'disallowEmptyMessage' => "Merci de fournir une image valide",
+                        'notFoundMessage' => "Merci de fournir une image valide",
+                        'notReadableMessage' => "Merci de fournir une image valide",
+                        'uploadErrorMessage' => "Merci de fournir une image valide",
+                    ])
+                )
+
+
                 //    'data_class'=>null
             ])
             ->add('submit', SubmitType::class, [

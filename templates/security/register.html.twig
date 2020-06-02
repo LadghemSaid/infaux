@@ -60,18 +60,18 @@
                 {% if formErrors|length %}
                     <ul class="error-registration-ul">
                         {% for error in formErrors %}
-                            <li class="alert alert-danger">{{ error.message }}</li>
+                            <li class="alert alert-danger mb-50">{{ error.message }}</li>
                         {% endfor %}
                     </ul>
                 {% endif %}
 
                 {% for message in app.flashes('success') %}
-                    <div class="alert alert-success">
+                    <div class="alert alert-success mb-50">
                         {{ message }}
                     </div>
                 {% endfor %}
                 {% for message in app.flashes('error') %}
-                    <div class="alert alert-danger">
+                    <div class="alert alert-danger mb-50">
                         {{ message }}
                     </div>
                 {% endfor %}

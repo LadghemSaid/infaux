@@ -10,6 +10,7 @@ App\Entity\User:
     description: <fr_FR:text(100)>
     displaySetting: 'recent'
     visibility: 'public'
+    accountConfirmed: 1
 
   user_2:
     username: 'writer'
@@ -22,6 +23,7 @@ App\Entity\User:
     description: <fr_FR:text(100)>
     displaySetting: 'popular'
     visibility: 'public'
+    accountConfirmed: 1
 
 
   user_3:
@@ -35,6 +37,7 @@ App\Entity\User:
     description: <fr_FR:text(100)>
     displaySetting: 'friend'
     visibility: 'public'
+    accountConfirmed: 1
 
 
 
