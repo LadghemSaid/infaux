@@ -6,6 +6,7 @@ liip_imagine:
         # nom du loader
         uploaded_files:
             filesystem:
+                data_root: '%kernel.root_dir%/../public'
     data_loader: uploaded_files
     # Liste des filter set (ensemble de filtres) container mt-100 cgude l’application
     filter_sets:
