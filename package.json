@@ -23,7 +23,7 @@
         "build-dev": "encore production --config-name dev"
     },
     "dependencies": {
-        "axios": "^0.19.2",
+        "axios": "^0.21.1",
         "bootstrap": "^4.4.1",
         "event-source-polyfill": "^1.0.12",
         "glob-all": "^3.2.1",
